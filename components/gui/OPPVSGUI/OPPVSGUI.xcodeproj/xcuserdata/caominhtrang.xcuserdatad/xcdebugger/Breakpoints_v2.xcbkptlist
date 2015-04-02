@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/ViewController.mm"
-            timestampString = "449598420.645346"
+            timestampString = "449655026.400655"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449599301.951523"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "-windowControllerDidLoadNib:"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449599301.951523"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
             landmarkName = "-makeWindowControllers"
             landmarkType = "5">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449599301.951523"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
             landmarkType = "7">
          </BreakpointContent>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/ViewController.mm"
-            timestampString = "449598420.645346"
+            timestampString = "449655026.400655"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
             landmarkName = "-renderFrame:"
             landmarkType = "5">
          </BreakpointContent>
@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/CapturePreview.mm"
-            timestampString = "449033000.308193"
+            timestampString = "449653204.94711"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
             landmarkName = "-drawInCGLContext:pixelFormat:forLayerTime:displayTime:"
             landmarkType = "5">
          </BreakpointContent>
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/CapturePreview.mm"
-            timestampString = "449595498.069235"
+            timestampString = "449655026.400655"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
             landmarkName = "-setup"
             landmarkType = "5">
          </BreakpointContent>
@@ -218,7 +218,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449599301.951523"
+            timestampString = "449655600.760816"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "initVideoEngine(id document, id view)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/Document.mm"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "102"
@@ -234,27 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449599301.951523"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
-            landmarkName = "initVideoEngine(id document, id view)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449597342.606629"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "-startRecording"
             landmarkType = "5">
          </BreakpointContent>
@@ -266,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449599301.951523"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
             landmarkType = "7">
          </BreakpointContent>
@@ -282,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449599301.951523"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
             landmarkType = "7">
          </BreakpointContent>
@@ -312,11 +312,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/CapturePreview.mm"
-            timestampString = "449595498.069235"
+            timestampString = "449655026.400655"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
             landmarkName = "-setup"
             landmarkType = "5">
          </BreakpointContent>
@@ -376,11 +376,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449599301.951523"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
             landmarkType = "7">
          </BreakpointContent>
@@ -424,11 +424,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449599301.951523"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
             landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
             landmarkType = "7">
          </BreakpointContent>
@@ -440,11 +440,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449599301.951523"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
             landmarkType = "7">
          </BreakpointContent>
@@ -456,11 +456,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449599301.951523"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
             landmarkType = "7">
          </BreakpointContent>
@@ -632,11 +632,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/ViewController.mm"
-            timestampString = "449598420.645346"
+            timestampString = "449655026.400655"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "-setSelectedVideoDevice:"
             landmarkType = "5">
          </BreakpointContent>
@@ -648,27 +648,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449597117.652099"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "-startRecording"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449597342.606629"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "-startRecording"
             landmarkType = "5">
          </BreakpointContent>
@@ -680,11 +664,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/CapturePreview.mm"
-            timestampString = "449596326.069749"
+            timestampString = "449653204.94711"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "-drawInCGLContext:pixelFormat:forLayerTime:displayTime:"
             landmarkType = "5">
          </BreakpointContent>
@@ -744,11 +728,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/Document.mm"
-            timestampString = "449599301.951523"
+            timestampString = "449655600.760816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
             landmarkType = "7">
          </BreakpointContent>

@@ -85,7 +85,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "DYLD_LIBRARY_PATH"
-            value = "/Users/caominhtrang/Documents/ForthProject/code/libs"
+            value = "${SRCROOT}/../../../libs"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

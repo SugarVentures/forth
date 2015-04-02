@@ -75,4 +75,10 @@ oppvs::PixelBuffer localbuf;
     NSInteger port = [serverPort integerValue];
     [document initReceiver:ip withPort:port];
 }
+
+- (IBAction)rotate:(id)sender {
+    RenderingLayer *view = (RenderingLayer*)previewView;
+    [view setReverse:!view.reverse];
+    
+}
 @end

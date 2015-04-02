@@ -21,6 +21,7 @@
     CAOpenGLLayer *previewView;
 }
 - (IBAction)Play:(id)sender;
+- (IBAction)rotate:(id)sender;
 
 @property (retain) CAOpenGLLayer *previewView;
 

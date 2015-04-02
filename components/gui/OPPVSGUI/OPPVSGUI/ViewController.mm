@@ -87,14 +87,16 @@
     }
     videoDeviceIndex = [videoDevices indexOfObject:device];
     NSRange range = [device rangeOfString:@"Screen Capturing" options:NSCaseInsensitiveSearch];
-    
+    CapturePreview *view = (CapturePreview*)previewView;
     if (range.location != NSNotFound)
     {
         [self setWindowInputs: document.windowCaptureInputs];
+        [view setReverse:false];
     }
     else
     {
         [self setWindowInputs:nil];
+        [view setReverse:true];
     }
     
  

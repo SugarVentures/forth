@@ -73,8 +73,6 @@ static inline const char * GetGLErrorString(GLenum error)
 GLuint texName;
 
 
-static int count = 0;
-
 - (id) init
 {
     self = [super init];
@@ -158,21 +156,44 @@ static int count = 0;
  
     glPushMatrix();
 
-    glBegin(GL_QUADS);
+    if ([self isReverse])
     {
-        glTexCoord2f(0.0, 0.0);
-        glVertex3f(1.0, 1.0, 0.0);
+        glBegin(GL_QUADS);
+        {
+            glTexCoord2f(0.0, 0.0);
+            glVertex3f(1.0, 1.0, 0.0);
+            
+            glTexCoord2f(0.0, 1.0);
+            glVertex3f(1.0, -1.0, 0.0);
+            
+            glTexCoord2f(1.0, 1.0);
+            glVertex3f(-1.0, -1.0, 0.0);
+            
+            glTexCoord2f(1.0, 0.0);
+            glVertex3f(-1.0, 1.0, 0.0);
+        }
         
-        glTexCoord2f(0.0, 1.0);
-        glVertex3f(1.0, -1.0, 0.0);
-        
-        glTexCoord2f(1.0, 1.0);
-        glVertex3f(-1.0, -1.0, 0.0);
-        
-        glTexCoord2f(1.0, 0.0);
-        glVertex3f(-1.0, 1.0, 0.0);
+        glEnd();
     }
-    glEnd();
+    else
+    {
+        glBegin(GL_QUADS);
+        {
+            glTexCoord2f(0.0, 0.0);
+            glVertex3f(-1.0, -1.0, 0.0);
+            
+            glTexCoord2f(0.0, 1.0);
+            glVertex3f(-1.0, 1.0, 0.0);
+            
+            glTexCoord2f(1.0, 1.0);
+            glVertex3f(1.0, 1.0, 0.0);
+            
+            glTexCoord2f(1.0, 0.0);
+            glVertex3f(1.0, -1.0, 0.0);
+        }
+        
+        glEnd();
+    }
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 

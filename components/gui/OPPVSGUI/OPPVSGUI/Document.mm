@@ -31,8 +31,6 @@ oppvs::Stream* oppvsStream;
 - (void) startRecording
 {
     oppvs::window_rect_t rect(0, 0, 500, 500); //Currently not use yet
-    videoEngine->stopRecording();
-    videoEngine->removeAllSource();
     ViewController* view = (ViewController*)viewController;
     [view reset];
     
@@ -57,6 +55,7 @@ oppvs::Stream* oppvsStream;
 - (void) stopRecording
 {
     videoEngine->stopRecording();
+    videoEngine->removeAllSource();
     
 }
 

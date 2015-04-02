@@ -17,5 +17,6 @@
 
 @property oppvs::PixelBuffer* pixelBuffer;
 @property (assign,getter=isReset) BOOL reset;
+@property (assign,getter=isReverse) BOOL reverse;
 
 @end

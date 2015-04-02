@@ -231,13 +231,13 @@
     screenDeviceInput = screen_input;
 
     //Setup session
-    if ([session canSetSessionPreset:AVCaptureSessionPresetMedium]) {
-        [session setSessionPreset: AVCaptureSessionPresetMedium];
+    if ([session canSetSessionPreset:AVCaptureSessionPreset1280x720]) {
+        [session setSessionPreset: AVCaptureSessionPreset1280x720];
     }
     else {
         NSLog(@"Cannot set prest\n");
     }
-    [session commitConfiguration];
+    
     //[self showPreview];
 
     AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
@@ -253,6 +253,14 @@
     }
 
     [output setAlwaysDiscardsLateVideoFrames: YES];
+
+    NSDictionary *pixelBufferOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithDouble:1280], (id)kCVPixelBufferWidthKey,
+                              [NSNumber numberWithDouble:720], (id)kCVPixelBufferHeightKey,
+                              [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA], (id)kCVPixelBufferPixelFormatTypeKey,
+                              nil];
+    [output setVideoSettings:pixelBufferOptions];
+
     [session addOutput: output];
     self->videoDataOuput = output;
 
@@ -260,8 +268,8 @@
     [videoDataOuput setSampleBufferDelegate:self queue:queue];
     dispatch_release(queue);
 
-    output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
-
+    //output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+    [session commitConfiguration];
     return oppvs::ERR_VIDEO_CAPTURE_NONE;
  }
 
