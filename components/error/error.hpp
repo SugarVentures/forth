@@ -1,0 +1,17 @@
+/*
+	Error code
+*/
+
+#ifndef OPPVS_ERROR_HPP
+#define OPPVS_ERROR_HPP
+
+namespace oppvs {
+	typedef enum ERRS_VIDEO_CAPTURE {
+		ERR_VIDEO_CAPTURE_NONE,
+		ERR_VIDEO_CAPTURE_SESSION_INIT_FAILED,
+		ERR_VIDEO_CAPTURE_INPUT_DEVICE_FAILED,
+		ERR_VIDEO_CAPTURE_OUTPUT_DEVICE_FAILED
+	} error_video_capture_t;
+}
+
+#endif

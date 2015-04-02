@@ -1,0 +1,465 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D91D106C1AC8305600564686 /* RenderingLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D91D106B1AC8305600564686 /* RenderingLayer.mm */; };
+		D9250F381AC558DB00858FF5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F371AC558DB00858FF5 /* AppDelegate.m */; };
+		D9250F3A1AC558DB00858FF5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F391AC558DB00858FF5 /* main.m */; };
+		D9250F3D1AC558DB00858FF5 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9250F3C1AC558DB00858FF5 /* ViewController.mm */; };
+		D9250F401AC558DB00858FF5 /* Document.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9250F3F1AC558DB00858FF5 /* Document.mm */; };
+		D9250F421AC558DB00858FF5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9250F411AC558DB00858FF5 /* Images.xcassets */; };
+		D9250F451AC558DB00858FF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9250F431AC558DB00858FF5 /* Main.storyboard */; };
+		D9250F511AC558DB00858FF5 /* OPPVSClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */; };
+		D9250F5B1AC5592C00858FF5 /* liboppvs.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9250F5A1AC5592C00858FF5 /* liboppvs.so */; };
+		D9250F5D1AC55CB100858FF5 /* libnetworkengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9250F5C1AC55CB100858FF5 /* libnetworkengine.so */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D9250F4B1AC558DB00858FF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9250F291AC558DB00858FF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D9250F301AC558DB00858FF5;
+			remoteInfo = OPPVSClient;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D91D106A1AC8305600564686 /* RenderingLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderingLayer.h; sourceTree = "<group>"; };
+		D91D106B1AC8305600564686 /* RenderingLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RenderingLayer.mm; sourceTree = "<group>"; };
+		D9250F311AC558DB00858FF5 /* OPPVSClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPPVSClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9250F351AC558DB00858FF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9250F361AC558DB00858FF5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D9250F371AC558DB00858FF5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D9250F391AC558DB00858FF5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D9250F3B1AC558DB00858FF5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		D9250F3C1AC558DB00858FF5 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		D9250F3E1AC558DB00858FF5 /* Document.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Document.h; sourceTree = "<group>"; };
+		D9250F3F1AC558DB00858FF5 /* Document.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Document.mm; sourceTree = "<group>"; };
+		D9250F411AC558DB00858FF5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D9250F441AC558DB00858FF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D9250F4A1AC558DB00858FF5 /* OPPVSClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OPPVSClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9250F4F1AC558DB00858FF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPPVSClientTests.m; sourceTree = "<group>"; };
+		D9250F5A1AC5592C00858FF5 /* liboppvs.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liboppvs.so; path = ../../../libs/liboppvs.so; sourceTree = "<group>"; };
+		D9250F5C1AC55CB100858FF5 /* libnetworkengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetworkengine.so; path = ../../../libs/libnetworkengine.so; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D9250F2E1AC558DB00858FF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9250F5D1AC55CB100858FF5 /* libnetworkengine.so in Frameworks */,
+				D9250F5B1AC5592C00858FF5 /* liboppvs.so in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9250F471AC558DB00858FF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D9250F281AC558DB00858FF5 = {
+			isa = PBXGroup;
+			children = (
+				D9250F5C1AC55CB100858FF5 /* libnetworkengine.so */,
+				D9250F5A1AC5592C00858FF5 /* liboppvs.so */,
+				D9250F331AC558DB00858FF5 /* OPPVSClient */,
+				D9250F4D1AC558DB00858FF5 /* OPPVSClientTests */,
+				D9250F321AC558DB00858FF5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D9250F321AC558DB00858FF5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9250F311AC558DB00858FF5 /* OPPVSClient.app */,
+				D9250F4A1AC558DB00858FF5 /* OPPVSClientTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9250F331AC558DB00858FF5 /* OPPVSClient */ = {
+			isa = PBXGroup;
+			children = (
+				D9250F361AC558DB00858FF5 /* AppDelegate.h */,
+				D9250F371AC558DB00858FF5 /* AppDelegate.m */,
+				D9250F3B1AC558DB00858FF5 /* ViewController.h */,
+				D9250F3C1AC558DB00858FF5 /* ViewController.mm */,
+				D9250F3E1AC558DB00858FF5 /* Document.h */,
+				D9250F3F1AC558DB00858FF5 /* Document.mm */,
+				D9250F411AC558DB00858FF5 /* Images.xcassets */,
+				D9250F431AC558DB00858FF5 /* Main.storyboard */,
+				D91D106A1AC8305600564686 /* RenderingLayer.h */,
+				D91D106B1AC8305600564686 /* RenderingLayer.mm */,
+				D9250F341AC558DB00858FF5 /* Supporting Files */,
+			);
+			path = OPPVSClient;
+			sourceTree = "<group>";
+		};
+		D9250F341AC558DB00858FF5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D9250F351AC558DB00858FF5 /* Info.plist */,
+				D9250F391AC558DB00858FF5 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D9250F4D1AC558DB00858FF5 /* OPPVSClientTests */ = {
+			isa = PBXGroup;
+			children = (
+				D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */,
+				D9250F4E1AC558DB00858FF5 /* Supporting Files */,
+			);
+			path = OPPVSClientTests;
+			sourceTree = "<group>";
+		};
+		D9250F4E1AC558DB00858FF5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D9250F4F1AC558DB00858FF5 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D9250F301AC558DB00858FF5 /* OPPVSClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9250F541AC558DB00858FF5 /* Build configuration list for PBXNativeTarget "OPPVSClient" */;
+			buildPhases = (
+				D9250F2D1AC558DB00858FF5 /* Sources */,
+				D9250F2E1AC558DB00858FF5 /* Frameworks */,
+				D9250F2F1AC558DB00858FF5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OPPVSClient;
+			productName = OPPVSClient;
+			productReference = D9250F311AC558DB00858FF5 /* OPPVSClient.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D9250F491AC558DB00858FF5 /* OPPVSClientTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9250F571AC558DB00858FF5 /* Build configuration list for PBXNativeTarget "OPPVSClientTests" */;
+			buildPhases = (
+				D9250F461AC558DB00858FF5 /* Sources */,
+				D9250F471AC558DB00858FF5 /* Frameworks */,
+				D9250F481AC558DB00858FF5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D9250F4C1AC558DB00858FF5 /* PBXTargetDependency */,
+			);
+			name = OPPVSClientTests;
+			productName = OPPVSClientTests;
+			productReference = D9250F4A1AC558DB00858FF5 /* OPPVSClientTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D9250F291AC558DB00858FF5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Cao Minh Trang";
+				TargetAttributes = {
+					D9250F301AC558DB00858FF5 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+					D9250F491AC558DB00858FF5 = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = D9250F301AC558DB00858FF5;
+					};
+				};
+			};
+			buildConfigurationList = D9250F2C1AC558DB00858FF5 /* Build configuration list for PBXProject "OPPVSClient" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D9250F281AC558DB00858FF5;
+			productRefGroup = D9250F321AC558DB00858FF5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D9250F301AC558DB00858FF5 /* OPPVSClient */,
+				D9250F491AC558DB00858FF5 /* OPPVSClientTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D9250F2F1AC558DB00858FF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9250F421AC558DB00858FF5 /* Images.xcassets in Resources */,
+				D9250F451AC558DB00858FF5 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9250F481AC558DB00858FF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D9250F2D1AC558DB00858FF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9250F401AC558DB00858FF5 /* Document.mm in Sources */,
+				D91D106C1AC8305600564686 /* RenderingLayer.mm in Sources */,
+				D9250F3D1AC558DB00858FF5 /* ViewController.mm in Sources */,
+				D9250F3A1AC558DB00858FF5 /* main.m in Sources */,
+				D9250F381AC558DB00858FF5 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9250F461AC558DB00858FF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9250F511AC558DB00858FF5 /* OPPVSClientTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D9250F4C1AC558DB00858FF5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D9250F301AC558DB00858FF5 /* OPPVSClient */;
+			targetProxy = D9250F4B1AC558DB00858FF5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D9250F431AC558DB00858FF5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9250F441AC558DB00858FF5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D9250F521AC558DB00858FF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D9250F531AC558DB00858FF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D9250F551AC558DB00858FF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Users/caominhtrang/Documents/ForthProject/code/components/include,
+					/Users/caominhtrang/Documents/ForthProject/code/libs/libsrtp/crypto/include,
+					/Users/caominhtrang/Documents/ForthProject/code/libs/libsrtp/include,
+					/Users/caominhtrang/Documents/ForthProject/code/components/interface,
+				);
+				INFOPLIST_FILE = OPPVSClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/caominhtrang/Documents/ForthProject/code/libs,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D9250F561AC558DB00858FF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Users/caominhtrang/Documents/ForthProject/code/components/include,
+					/Users/caominhtrang/Documents/ForthProject/code/libs/libsrtp/crypto/include,
+					/Users/caominhtrang/Documents/ForthProject/code/libs/libsrtp/include,
+					/Users/caominhtrang/Documents/ForthProject/code/components/interface,
+				);
+				INFOPLIST_FILE = OPPVSClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/caominhtrang/Documents/ForthProject/code/libs,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D9250F581AC558DB00858FF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = OPPVSClientTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OPPVSClient.app/Contents/MacOS/OPPVSClient";
+			};
+			name = Debug;
+		};
+		D9250F591AC558DB00858FF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = OPPVSClientTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OPPVSClient.app/Contents/MacOS/OPPVSClient";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D9250F2C1AC558DB00858FF5 /* Build configuration list for PBXProject "OPPVSClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9250F521AC558DB00858FF5 /* Debug */,
+				D9250F531AC558DB00858FF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9250F541AC558DB00858FF5 /* Build configuration list for PBXNativeTarget "OPPVSClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9250F551AC558DB00858FF5 /* Debug */,
+				D9250F561AC558DB00858FF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9250F571AC558DB00858FF5 /* Build configuration list for PBXNativeTarget "OPPVSClientTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9250F581AC558DB00858FF5 /* Debug */,
+				D9250F591AC558DB00858FF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D9250F291AC558DB00858FF5 /* Project object */;
+}
