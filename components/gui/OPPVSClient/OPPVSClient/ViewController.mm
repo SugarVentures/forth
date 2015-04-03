@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "RenderingLayer.h"
 
-oppvs::PixelBuffer localbuf;
 
 @implementation ViewController
 
@@ -19,6 +18,7 @@ oppvs::PixelBuffer localbuf;
 {
     
     self = [super init];
+    nbytes = 0;
     return self;
 }
 
@@ -33,11 +33,6 @@ oppvs::PixelBuffer localbuf;
     
     [serverIP setStringValue:@"127.0.0.1"];
     [serverPort setStringValue:@"33432"];
-    
-    localbuf.width[0] = 1280;
-    localbuf.height[0] = 720;
-    localbuf.nbytes = 3686400;
-    localbuf.plane[0] = new uint8_t[localbuf.nbytes];
     
 }
 
@@ -58,6 +53,18 @@ oppvs::PixelBuffer localbuf;
 {
     if (pf != NULL)
     {
+        if (pf->nbytes != nbytes)
+        {
+            localbuf.width[0] = pf->width[0];
+            localbuf.height[0] = pf->height[0];
+            localbuf.nbytes = pf->nbytes;
+            delete [] localbuf.plane[0];
+            localbuf.plane[0] = new uint8_t[pf->nbytes];
+            nbytes = localbuf.nbytes;
+        }
+        if (nbytes == 0)
+            return;
+        
         memcpy(localbuf.plane[0], pf->plane[0], pf->nbytes);
         RenderingLayer *view = (RenderingLayer*)previewView;
         [view setPixelBuffer:&localbuf];

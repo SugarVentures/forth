@@ -21,7 +21,7 @@ namespace oppvs
 
 		int Bind(const SocketAddress& addr);
 		int Create(int family, int type, int protocol);
-		void Close();
+		virtual int Close();
 		virtual int Listen();
 		virtual int Connect(const SocketAddress& dest);
 		virtual int Accept(const SocketAddress& remote);

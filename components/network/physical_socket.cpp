@@ -61,9 +61,9 @@ namespace oppvs
 		return close(destsock);
 	}
 
-	void PhysicalSocket::Close()
+	int PhysicalSocket::Close()
 	{
-		close(m_socketfd);
+		return close(m_socketfd);
 	}
 
 

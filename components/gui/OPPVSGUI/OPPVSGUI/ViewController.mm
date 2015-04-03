@@ -113,7 +113,7 @@
 
 
 - (IBAction)startRecording:(id)sender {
-    [self setRecording:true];
+    [self setRecording:true];    
     [document startRecording];
     
 }
@@ -133,7 +133,7 @@
 - (void) renderFrame: (oppvs::PixelBuffer*) pf
 {
     if (pf != NULL)
-    {
+    {        
         CapturePreview *view = (CapturePreview*)previewView;
         [view setPixelBuffer:pf];
         
@@ -148,6 +148,12 @@
 {
     CapturePreview *view = (CapturePreview*)previewView;
     [view setReset: true];
+}
+
+- (IBAction)stopStreaming:(id)sender {
+    [self setStreaming:false];
+    [document stopStreaming];
+    
 }
 
 - (IBAction)startStreaming:(id)sender {

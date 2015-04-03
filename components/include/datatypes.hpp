@@ -65,12 +65,13 @@ namespace oppvs {
 
 		uint8_t* pixels;	/* When data is one continuous block of member you can use this, otherwise it points to the same location as plane[0]. */
     	uint8_t* plane[3];  /* Pointers to the pixel data; when we're a planar format all members are set, if packets only plane[0] */
-    	size_t stride[3];
-    	size_t width[3];
-    	size_t height[3];
+    	uint16_t stride[3];
+    	uint16_t width[3];
+    	uint16_t height[3];
     	size_t offset[3];	/* When the data is planar but packed, these contains the byte offsets from the first byte / plane. e.g. you can use this with YUV420P. */ 
     	size_t nbytes;
     	pixel_format_t format;
+    	uint8_t flip;	//For different capture sources, the frame can be fliped when rendering
     	void* user;
 	};
 

@@ -717,21 +717,10 @@
                                     <action selector="Play:" target="5gI-5U-AMq" id="g0x-JS-9Pu"/>
                                 </connections>
                             </button>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tpD-sQ-hwD">
-                                <rect key="frame" x="457" y="549" width="93" height="18"/>
-                                <buttonCell key="cell" type="check" title="Rotate" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7s2-fn-YBB">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="rotate:" target="5gI-5U-AMq" id="gvN-PF-jpS"/>
-                                </connections>
-                            </button>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="hostPreviewLayer" destination="D5G-5L-wqE" id="3xU-hX-5fY"/>
-                        <outlet property="rotate" destination="tpD-sQ-hwD" id="1qN-GO-MAq"/>
                         <outlet property="serverIP" destination="Uhu-D9-zjP" id="zj7-Hp-Ghv"/>
                         <outlet property="serverPort" destination="ids-kN-z36" id="U64-dO-unf"/>
                     </connections>

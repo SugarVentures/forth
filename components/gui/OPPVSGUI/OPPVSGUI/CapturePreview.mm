@@ -64,6 +64,9 @@ static inline const char * GetGLErrorString(GLenum error)
     GLsizei frameHeight;
 }
 
+- (void) drawForScreenInput;
+- (void) drawForWebCamInput;
+
 @end
 
 @implementation CapturePreview
@@ -112,18 +115,10 @@ GLuint texName;
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    /*NSRect bounds = [self bounds];
-    size_t height = bounds.size.height;
-    size_t width = bounds.size.width;*/
-    
     if (pixelBuffer == NULL)
     {
         return;
     }
-    
-    //For testing only
-    //pixels = (GLubyte*)malloc(pixelBuffer->nbytes);
-    //memcpy(pixels, pixelBuffer->plane[0], pixelBuffer->nbytes);
     
     if ([self isReset] == true)
     {
@@ -136,7 +131,6 @@ GLuint texName;
     
     // This call is crucial, to ensure we are working with the correct context
     CGLSetCurrentContext(glContext);
-
     glBindTexture(GL_TEXTURE_2D, texName);
     glTexSubImage2D(GL_TEXTURE_2D,
                     0,
@@ -153,49 +147,19 @@ GLuint texName;
     
     glLoadIdentity();
     glEnable(GL_TEXTURE_2D);
- 
+    
     glPushMatrix();
-
+    
     if ([self isReverse])
     {
-        glBegin(GL_QUADS);
-        {
-            glTexCoord2f(0.0, 0.0);
-            glVertex3f(1.0, 1.0, 0.0);
-            
-            glTexCoord2f(0.0, 1.0);
-            glVertex3f(1.0, -1.0, 0.0);
-            
-            glTexCoord2f(1.0, 1.0);
-            glVertex3f(-1.0, -1.0, 0.0);
-            
-            glTexCoord2f(1.0, 0.0);
-            glVertex3f(-1.0, 1.0, 0.0);
-        }
-        
-        glEnd();
+        [self drawForWebCamInput];
     }
     else
     {
-        glBegin(GL_QUADS);
-        {
-            glTexCoord2f(0.0, 0.0);
-            glVertex3f(-1.0, -1.0, 0.0);
-            
-            glTexCoord2f(0.0, 1.0);
-            glVertex3f(-1.0, 1.0, 0.0);
-            
-            glTexCoord2f(1.0, 1.0);
-            glVertex3f(1.0, 1.0, 0.0);
-            
-            glTexCoord2f(1.0, 0.0);
-            glVertex3f(1.0, -1.0, 0.0);
-        }
-        
-        glEnd();
+        [self drawForScreenInput];
     }
+    
     glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
 
     // Call super to finalize the drawing. By default all it does is call glFlush().
     [super drawInCGLContext:glContext pixelFormat:pixelFormat forLayerTime:timeInterval displayTime:timeStamp];
@@ -208,13 +172,23 @@ GLuint texName;
     
     glClear(GL_COLOR_BUFFER_BIT);
     
+    /*NSRect bounds = [self bounds];
+    int height = bounds.size.height;
+    int width = bounds.size.width;*/
+    
+    
+    //[self resizeWindow:width :height];
+    
     glGenTextures(1, &texName);
     glBindTexture(GL_TEXTURE_2D, texName);
     
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    
     
     glTexImage2D(GL_TEXTURE_2D,
                  0,
@@ -232,8 +206,8 @@ GLuint texName;
 
 - (void) resizeWindow: (int) w : (int) h
 {
-    float viewWidth = 1.1;
-    float viewHeight = 1.1;
+    float viewWidth = 1;
+    float viewHeight = 1;
     glViewport(0, 0, w, h);
     h = (h==0) ? 1 : h;
     w = (w==0) ? 1 : w;
@@ -245,13 +219,45 @@ GLuint texName;
     else {
         viewHeight *= (float)h/(float)w;
     }
-    glOrtho( -viewWidth, viewWidth, -viewHeight, viewHeight, -1.0, 1.0 );
+    glOrtho( 0.0f, w, 0.0f, h, -1.0, 1.0 );
     
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
 
+- (void) drawForScreenInput
+{
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(-1.0, 1.0, 0.0);
+    
+    glTexCoord2f(1.0, 0.0);
+    glVertex3f(1.0, 1.0, 0.0);
+    
+    glTexCoord2f(1.0, 1.0);
+    glVertex3f(1.0, -1.0, 0.0);
+    
+    glTexCoord2f(0.0, 1.0);
+    glVertex3f(-1.0, -1.0, 0.0);
+    glEnd();
+}
 
+- (void) drawForWebCamInput
+{
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(1.0, 1.0, 0.0);
+    
+    glTexCoord2f(0.0, 1.0);
+    glVertex3f(1.0, -1.0, 0.0);
+    
+    glTexCoord2f(1.0, 1.0);
+    glVertex3f(-1.0, -1.0, 0.0);
+    
+    glTexCoord2f(1.0, 0.0);
+    glVertex3f(-1.0, 1.0, 0.0);
+    glEnd();
+}
 
 -(void)releaseCGLContext:(CGLContextObj)glContext
 {

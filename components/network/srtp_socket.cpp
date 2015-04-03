@@ -28,6 +28,24 @@ namespace oppvs
 		return 0;
 	}
 
+	int SRTPSocket::Close()
+	{
+		if (m_sender != NULL)
+		{
+			rtp_sender_deinit_srtp(m_sender);
+			rtp_sender_dealloc(m_sender);
+			m_sender = NULL;
+		}
+		if (m_receiver != NULL)
+		{
+			rtp_receiver_deinit_srtp(m_receiver);
+			rtp_receiver_deinit_srtp(m_receiver);
+			m_receiver = NULL;
+		}
+		close(m_socketfd);
+		srtp_shutdown();
+		return 0;
+	}
 
 	int SRTPSocket::initSRTPLib()
 	{

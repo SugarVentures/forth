@@ -21,6 +21,9 @@ namespace oppvs
 	struct StreamSetting
 	{
 		uint16_t port;
+		uint16_t frameWidth;
+		uint16_t frameHeight;
+		uint16_t frameStride;
 
 		StreamSetting() : port(OPPVS_DEFAULT_SERVER_LISTEN_PORT) {}		
 	};
@@ -85,6 +88,8 @@ namespace oppvs
 		SRTPSocket* getStreamingSocket() { return &m_srtpSocket; }
 		void setting(const StreamSetting& st) { m_setting = st;}
 
+		const bool isInterrupt() { return interrupt; }
+
 	private:
 		ConQueue<Frame*> m_sendingQueue;
 		uint16_t m_maxSendingQueueLength;
@@ -98,7 +103,7 @@ namespace oppvs
 		char m_srtpKey[MAX_SRTP_KEY_LENGTH];
 		uint32_t m_currentTS;
 
-		//void sendData();
+		bool interrupt;
 	};
 }
 

@@ -52,6 +52,7 @@ namespace oppvs
 
 		int Accept(const SocketAddress& remote);
 		int Connect(const SocketAddress& remote);
+		int Close();
 
 		void releaseSender();
 		void releaseReceiver();

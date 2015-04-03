@@ -18,29 +18,33 @@ namespace oppvs
 	{
 		if (pixelbuf.nbytes == 0)
 			return;
-		m_length = pixelbuf.nbytes;
+		m_length = 6 + pixelbuf.nbytes;	//width (2 bytes), height (2 bytes), stride (2 bytes)
 		m_data = new uint8_t[m_length];
 		m_timestamp = ts;
-		//printf("Width: %lu %lu %lu\n", pixelbuf.width[0], pixelbuf.height[0], m_length);
-		memcpy(m_data, pixelbuf.plane[0], m_length);
+		memcpy(m_data, &pixelbuf.width[0], 2);
+		memcpy(m_data + 2, &pixelbuf.height[0], 2);
+		memcpy(m_data + 4, &pixelbuf.stride[0], 2);
+		memcpy(m_data + 6, &pixelbuf.flip, 1);
+		memcpy(m_data + 7, pixelbuf.plane[0], m_length);
 	}
 
 	Frame::~Frame()
 	{
-		delete [] m_data;
+		if (m_data != NULL)
+			delete [] m_data;
 		m_length = 0;
 		m_timestamp = 0;
 		m_data = NULL;
 	}
 
 	Stream::Stream() : m_maxSendingQueueLength(OPPVS_MAX_SENDING_QUEUE_LENGTH), m_numSubscribers(0), m_isStreaming(false),
-		m_currentTS(0)
+		m_currentTS(0), interrupt(0)
 	{
 		pthread_mutex_init(&m_mutex, NULL);
 	}
 
 	Stream::Stream(const StreamSetting& setting) : m_maxSendingQueueLength(OPPVS_MAX_SENDING_QUEUE_LENGTH), m_numSubscribers(0),
-	m_isStreaming(false), m_currentTS(0)
+	m_isStreaming(false), m_currentTS(0), interrupt(0)
 	{
 		pthread_mutex_init(&m_mutex, NULL);
 		m_setting = setting;
@@ -49,12 +53,14 @@ namespace oppvs
 	Stream::~Stream()
 	{
 		Frame *frame;
+		interrupt = true;
 		while (!m_sendingQueue.empty())
 		{
 			frame = m_sendingQueue.front();
 			m_sendingQueue.pop();
 			delete frame;
 		}
+		m_srtpSocket.Close();
 		m_server.Close();
 	}
 
@@ -92,7 +98,7 @@ namespace oppvs
 				sendLength = msgLength > OPPVS_NETWORK_PACKET_LENGTH ? OPPVS_NETWORK_PACKET_LENGTH : msgLength;
 				usleep(10);
 			}
-			//printf("Number of packet per frame: %d\n", count);
+			//printf("Number of packet per frame: %d total bytes: %u\n", count, frame.getLength());
 
 			queue->try_pop(ptr_frame);
 			delete ptr_frame;
@@ -159,9 +165,11 @@ namespace oppvs
 		Stream* stream = (Stream*)svr;
 		ServerSocket* server = stream->getServer();
 		if (server->Listen() < 0)
+		{
+			printf("Error when creating signaling server\n");
 			return NULL;
-
-		while (1)
+		}
+		while (!stream->isInterrupt())
 		{
 			SocketAddress remoteAddr;
 			int sockfd = server->Accept(remoteAddr);

@@ -7,7 +7,7 @@
 //
 
 #import "Document.h"
-
+#include <errno.h>
 
 oppvs::Stream* oppvsStream;
 
@@ -60,6 +60,7 @@ oppvs::Stream* oppvsStream;
     if (signalSocket.Connect(serverSocketAddr) < 0)
     {
         NSLog(@"Cannot connect signaling server\n");
+        printf("Connect error %s\n", strerror(errno));
         return;
     }
     signalSocket.Close();
@@ -99,11 +100,6 @@ oppvs::Stream* oppvsStream;
     char buffer[OPPVS_NETWORK_PACKET_LENGTH];
     int len = OPPVS_NETWORK_PACKET_LENGTH;
     oppvs::PixelBuffer pf;
-    pf.width[0] = 1280;
-    pf.height[0] = 720;
-    pf.nbytes = 3686400;
-    pf.plane[0] = new uint8_t[pf.nbytes];
-    memset(pf.plane[0], 0, pf.nbytes);
     
     bool isNextFrame = false;
     uint32_t curPos = 0;
@@ -111,21 +107,35 @@ oppvs::Stream* oppvsStream;
     ViewController *view = (ViewController*)viewController;
     bool interrupt = false;
     int count = 0;
+    uint32_t oldNBytes = 0;
     while (!interrupt)
     {
         memset(buffer, 0, sizeof(buffer));
         int recvLen = socket.RecvFrom(buffer, &len, &isNextFrame);
         if (recvLen > -1)
         {
-
             if (isNextFrame)
             {
                 //NSLog(@"No of received pieces: %d\n", count);
                 [view renderFrame: &pf];
-                    //interrupt = true;
-                    //continue;
-                memcpy(pf.plane[0], buffer, recvLen);
-                curPos = recvLen;
+
+                //Convert message to pixel buffer
+                memcpy(&pf.width[0], buffer, 2);
+                memcpy(&pf.height[0], buffer + 2, 2);
+                memcpy(&pf.stride[0], buffer + 4, 2);
+                memcpy(&pf.flip, buffer + 6, 1);
+                uint32_t nb = pf.stride[0] * pf.height[0];
+                pf.nbytes = nb;
+                if (nb <= 0)
+                    continue;
+                if (oldNBytes != nb && nb > 0)
+                {
+                    delete pf.plane[0];
+                    pf.plane[0] = new uint8_t[nb];
+                    oldNBytes = nb;
+                }
+                memcpy(pf.plane[0], buffer+7, recvLen - 7);
+                curPos = recvLen - 7;
                 count = 1;
             }
             else
@@ -135,9 +145,6 @@ oppvs::Stream* oppvsStream;
                 curPos += recvLen;
                 //NSLog(@"No of received pieces: %d\n", count);
                 count++;
-                //if (count == 3600)
-                //    [view renderFrame:&pf];
-                
             }
         }
         else

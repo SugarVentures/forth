@@ -38,6 +38,7 @@
  - (void) dealloc;
  - (oppvs::error_video_capture_t) openCaptureDevice;
  - (oppvs::error_video_capture_t) openScreenDevice;
+ - (void) captureWindow: (int) wid for: (CGRect) rect;
  - (void) closeDevice;
  - (void) startRecording;
  - (void) stopRecording;
@@ -101,6 +102,8 @@
  }
 
  - (oppvs::error_video_capture_t) openCaptureDevice {
+    //Set flip
+    pixel_buffer.flip = 1;
     // Create session
     session = [[AVCaptureSession alloc] init];
     if(session == nil) {
@@ -208,6 +211,8 @@
  }
 
  - (oppvs::error_video_capture_t) openScreenDevice {
+    //Set flip
+    pixel_buffer.flip = 0;
     // Create session
     session = [[AVCaptureSession alloc] init];
     if(session == nil) {
@@ -216,10 +221,8 @@
     }
     
     [session beginConfiguration];
-
-
     CGDirectDisplayID screen_id = CGMainDisplayID();
-    AVCaptureScreenInput *screen_input = [[[AVCaptureScreenInput alloc] initWithDisplayID: screen_id] autorelease];
+    AVCaptureScreenInput *screen_input = [[AVCaptureScreenInput alloc] initWithDisplayID: screen_id];
     if ([session canAddInput: screen_input] == NO)
     {
         printf("Can't add the screen input \n");
@@ -268,7 +271,6 @@
     [videoDataOuput setSampleBufferDelegate:self queue:queue];
     dispatch_release(queue);
 
-    //output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
     [session commitConfiguration];
     return oppvs::ERR_VIDEO_CAPTURE_NONE;
  }

@@ -110,44 +110,11 @@ static int count = 0;
     
     glPushMatrix();
     
-    if ([self isReverse])
-    {
-        glBegin(GL_QUADS);
-        {
-            glTexCoord2f(0.0, 0.0);
-            glVertex3f(1.0, 1.0, 0.0);
-            
-            glTexCoord2f(0.0, 1.0);
-            glVertex3f(1.0, -1.0, 0.0);
-            
-            glTexCoord2f(1.0, 1.0);
-            glVertex3f(-1.0, -1.0, 0.0);
-            
-            glTexCoord2f(1.0, 0.0);
-            glVertex3f(-1.0, 1.0, 0.0);
-        }
-        
-        glEnd();
-    }
+    if (pixelBuffer->flip)
+        [self drawForWebCamInput];
     else
-    {
-        glBegin(GL_QUADS);
-        {
-            glTexCoord2f(0.0, 0.0);
-            glVertex3f(-1.0, -1.0, 0.0);
-            
-            glTexCoord2f(0.0, 1.0);
-            glVertex3f(-1.0, 1.0, 0.0);
-            
-            glTexCoord2f(1.0, 1.0);
-            glVertex3f(1.0, 1.0, 0.0);
-            
-            glTexCoord2f(1.0, 0.0);
-            glVertex3f(1.0, -1.0, 0.0);
-        }
-        
-        glEnd();
-    }
+        [self drawForScreenInput];
+    
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
     
@@ -205,6 +172,39 @@ static int count = 0;
     glLoadIdentity();
 }
 
+- (void) drawForScreenInput
+{
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(-1.0, 1.0, 0.0);
+    
+    glTexCoord2f(1.0, 0.0);
+    glVertex3f(1.0, 1.0, 0.0);
+    
+    glTexCoord2f(1.0, 1.0);
+    glVertex3f(1.0, -1.0, 0.0);
+    
+    glTexCoord2f(0.0, 1.0);
+    glVertex3f(-1.0, -1.0, 0.0);
+    glEnd();
+}
+
+- (void) drawForWebCamInput
+{
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(1.0, 1.0, 0.0);
+    
+    glTexCoord2f(0.0, 1.0);
+    glVertex3f(1.0, -1.0, 0.0);
+    
+    glTexCoord2f(1.0, 1.0);
+    glVertex3f(-1.0, -1.0, 0.0);
+    
+    glTexCoord2f(1.0, 0.0);
+    glVertex3f(-1.0, 1.0, 0.0);
+    glEnd();
+}
 
 
 -(void)releaseCGLContext:(CGLContextObj)glContext

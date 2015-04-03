@@ -73,7 +73,7 @@ oppvs::Stream* oppvsStream;
 }
 
 - (void) stopStreaming
-{
+{    
     delete oppvsStream;
 }
 
