@@ -30,13 +30,25 @@ oppvs::Stream* oppvsStream;
 
 - (void) startRecording
 {
-    oppvs::window_rect_t rect(0, 0, 500, 500); //Currently not use yet
+    CGDirectDisplayID displayID = CGMainDisplayID();
+    CGRect mainMonitor = CGDisplayBounds(displayID);
+    CGFloat displayHeight = CGRectGetHeight(mainMonitor);
+    CGFloat displayWidth = CGRectGetWidth(mainMonitor);
+    
+    oppvs::window_rect_t rect(0, displayWidth, displayHeight, 0); //Currently not use yet
     ViewController* view = (ViewController*)viewController;
-    [view reset];
+    [view reset];    
     
     NSRange range = [[view selectedVideoDevice] rangeOfString:@"Screen Capturing" options:NSCaseInsensitiveSearch];
     if (range.location != NSNotFound)
-        videoEngine->addSource(oppvs::VST_WINDOW, 0, 1, rect);
+    {
+        if ([view selectedWindowInput])
+        {
+            videoEngine->addSource(oppvs::VST_WINDOW, [[view selectedWindowInput] intValue], 1, rect);
+        }
+        else
+            videoEngine->addSource(oppvs::VST_WINDOW, 0, 1, rect);
+    }
     else
     {
         std::string title([[view selectedVideoDevice] UTF8String]);

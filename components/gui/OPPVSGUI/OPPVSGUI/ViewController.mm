@@ -103,7 +103,7 @@
 }
 
 - (NSString *) selectedWindowInput {
-    return [windowInputs objectForKey:windowInputKey];
+    return windowInputKey;
 }
 
 - (void) setSelectedWindowInput:(NSString *)input
