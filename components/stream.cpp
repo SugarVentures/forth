@@ -75,6 +75,8 @@ namespace oppvs
 			//queue->lockpop();
 			ptr_frame = queue->front();
 			frame = *ptr_frame;
+			queue->try_pop(ptr_frame);
+			delete ptr_frame;
 			//queue->unlockpop();
 			uint32_t ts = frame.getTimeStamp();
 			int msgLength = frame.getLength();
@@ -100,8 +102,7 @@ namespace oppvs
 			}
 			//printf("Number of packet per frame: %d total bytes: %u\n", count, frame.getLength());
 
-			queue->try_pop(ptr_frame);
-			delete ptr_frame;
+			
 		}
 		//stream->setIsStreaming(true);
 		pthread_exit(NULL);
