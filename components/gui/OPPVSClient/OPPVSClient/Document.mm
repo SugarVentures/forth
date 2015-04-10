@@ -21,6 +21,11 @@ oppvs::Stream* oppvsStream;
 
 @implementation Document
 
+const int expireTime = 2;    //5 seconds
+const int maxTimeout = 3;
+int numTimeOut = 0;
+oppvs::SRTPSocket clientSocket;
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -66,7 +71,7 @@ oppvs::Stream* oppvsStream;
     signalSocket.Close();
     
     char key[oppvs::MAX_SRTP_KEY_LENGTH];
-    oppvs::SRTPSocket clientSocket;
+ 
     clientSocket.initSRTPLib();
     clientSocket.setPolicy(key);
     
@@ -88,11 +93,19 @@ oppvs::Stream* oppvsStream;
     }
     clientSocket.initReceiver();
     
+    
+    //dispatch_queue_t queue = dispatch_queue_create("oppvs.receive.queue", DISPATCH_QUEUE_SERIAL);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self runStreaming: clientSocket];
     });
-    
-   
+
+    /*dispatch_group_t myGroup = dispatch_group_create();
+    dispatch_group_async(myGroup, queue, ^{
+        [self runStreaming: clientSocket];
+    });
+    dispatch_group_notify(myGroup, queue, ^{
+        NSLog(@"Work is done!");
+    });*/
 }
 
 - (void) runStreaming: (oppvs::SRTPSocket) socket
@@ -103,11 +116,14 @@ oppvs::Stream* oppvsStream;
     
     bool isNextFrame = false;
     uint32_t curPos = 0;
-    
+
     ViewController *view = (ViewController*)viewController;
     bool interrupt = false;
     int count = 0;
     uint32_t oldNBytes = 0;
+    socket.setReceiveTimeOut(expireTime);
+    bool waitNextFrame = false;
+    
     while (!interrupt)
     {
         memset(buffer, 0, sizeof(buffer));
@@ -117,7 +133,12 @@ oppvs::Stream* oppvsStream;
             if (isNextFrame)
             {
                 //NSLog(@"No of received pieces: %d\n", count);
-                [view renderFrame: &pf];
+                if (!waitNextFrame)
+                {
+                    [view renderFrame: &pf];
+                }
+                else
+                    waitNextFrame = false;
 
                 //Convert message to pixel buffer
                 memcpy(&pf.width[0], buffer, 2);
@@ -137,23 +158,44 @@ oppvs::Stream* oppvsStream;
                 memcpy(pf.plane[0], buffer+7, recvLen - 7);
                 curPos = recvLen - 7;
                 count = 1;
+                
             }
             else
             {
-                //NSLog(@"Data: %d %d\n", len, recvLen);
-                memcpy(pf.plane[0] + curPos, buffer, recvLen);
-                curPos += recvLen;
-                //NSLog(@"No of received pieces: %d\n", count);
-                count++;
+                if (!waitNextFrame)
+                {
+                    //NSLog(@"Data: %d %d\n", len, recvLen);
+                    memcpy(pf.plane[0] + curPos, buffer, recvLen);
+                    curPos += recvLen;
+                    //NSLog(@"No of received pieces: %d\n", count);
+                    count++;
+                }
             }
         }
         else
-            NSLog(@"Error\n");
+        {
+            if (errno == EAGAIN || errno == EWOULDBLOCK)
+            {
+                if (numTimeOut > maxTimeout)
+                {
+                    interrupt = true;
+                }
+                numTimeOut++;
+            }
+            else
+            {
+                waitNextFrame = true;
+                NSLog(@"Error. Discard frame\n");
+            }
+        }
+
     }
     
-    //socket.releaseReceiver();
-    //socket.Close();
+    socket.releaseReceiver();
+    socket.Close();
+
 }
+
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
     [super windowControllerDidLoadNib:aController];

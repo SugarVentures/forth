@@ -15,7 +15,7 @@ namespace oppvs
 
 	int PhysicalSocket::Create(int family, int type, int protocol)
 	{
-		int on = 0;
+		int on = 1;
 		m_socketfd = socket(family, type, protocol);
 		int status = setsockopt(m_socketfd, SOL_SOCKET, SO_REUSEADDR, (const char *) &on, sizeof(on));
 		if (status == -1)
@@ -66,5 +66,12 @@ namespace oppvs
 		return close(m_socketfd);
 	}
 
-
+	void PhysicalSocket::setReceiveTimeOut(int expire)
+	{
+		struct timeval tv;
+		tv.tv_sec = expire;
+		tv.tv_usec = 0;
+		if (setsockopt(m_socketfd, SOL_SOCKET, SO_RCVTIMEO, (char*)&tv, sizeof(struct timeval)) < 0)
+			printf("Can not set receive time out\n");
+	}
 }

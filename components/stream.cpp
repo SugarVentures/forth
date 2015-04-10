@@ -75,8 +75,7 @@ namespace oppvs
 			//queue->lockpop();
 			ptr_frame = queue->front();
 			frame = *ptr_frame;
-			queue->try_pop(ptr_frame);
-			delete ptr_frame;
+			//queue->pop();
 			//queue->unlockpop();
 			uint32_t ts = frame.getTimeStamp();
 			int msgLength = frame.getLength();
@@ -87,7 +86,6 @@ namespace oppvs
 			uint count = 0;
 			while (msgLength > 0)
 			{
-				//memset(curPos, 1, sendLength);
 				int len = stream->getStreamingSocket()->SendTo(curPos, sendLength, ts);
 				if (len < 0)
 				{

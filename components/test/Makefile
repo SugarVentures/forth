@@ -17,7 +17,7 @@ OBJS = $(subst .cpp,.o,$(SRCS))
 
 rootDir = .
 
-all: testvideoengine proclib
+all: testnetworkengine proclib
 
 testvideoengine: $(OBJS)
 	$(CXX) $(INCDIR) $(CFLAGS) $(VIDEOLDFLAGS) $(VIDEOLIBS) $(OBJS) -o testvideoengine

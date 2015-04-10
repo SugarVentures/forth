@@ -9,6 +9,7 @@ namespace oppvs
 		m_sender = NULL;
 		m_receiver = NULL;
 		m_timestamp = 0;
+		m_seq = 0;
 	}
 
 	SRTPSocket::~SRTPSocket()
@@ -32,15 +33,11 @@ namespace oppvs
 	{
 		if (m_sender != NULL)
 		{
-			rtp_sender_deinit_srtp(m_sender);
-			rtp_sender_dealloc(m_sender);
-			m_sender = NULL;
+			releaseSender();
 		}
 		if (m_receiver != NULL)
 		{
-			rtp_receiver_deinit_srtp(m_receiver);
-			rtp_receiver_deinit_srtp(m_receiver);
-			m_receiver = NULL;
+			releaseReceiver();
 		}
 		close(m_socketfd);
 		srtp_shutdown();
@@ -124,7 +121,6 @@ namespace oppvs
 	int SRTPSocket::SendTo(const void* msg, int len, uint32_t ts)
 	{
 		//printHashCode(msg, len);
-
 		if (!m_sender)
 		{
 			printf("Sender object null\n");
@@ -146,21 +142,30 @@ namespace oppvs
 	{
 		int recvLen = rtp_recvfrom(m_receiver, msg, len);
 		uint32_t ts = ntohl(m_receiver->message.header.ts);
-		//printf("Timestamp: %u seq: %d\n", ts, ntohs(m_receiver->message.header.seq));
+		uint16_t seq = ntohs(m_receiver->message.header.seq);
+		//printf("Timestamp: %u %u recv: %d\n", ts, m_timestamp, recvLen);
 		
-		//printHashCode(msg, recvLen - SRTP_HEADER_LEN);
+		printHashCode(msg, recvLen);
 
 		if (recvLen < 0)
 			return recvLen;
-		if (m_timestamp < ts)
+
+		if (m_timestamp == ts && seq - m_seq != 1 && m_seq != 0 && seq != 0)
+		{
+			//printf("Error in seq: %d %d. Lost piece of frame\n", seq, m_seq);
+			m_seq = seq;
+			return -1;
+		}
+		m_seq = seq;
+		if (m_timestamp != ts)
 		{
 			*isNext = true;
 			m_timestamp = ts;
 		}
 		else
 			*isNext = false;
-		//printf("Timestamp: %u next: %d seq: %u\n", ts, *isNext, ntohs(m_receiver->message.header.seq));
-		return recvLen - SRTP_HEADER_LEN;
+		//printf("Timestamp: %u old: %u next: %d seq: %u\n", ts, m_timestamp, *isNext, ntohs(m_receiver->message.header.seq));
+		return recvLen;
 	}
 
 	void SRTPSocket::releaseSender()
@@ -169,6 +174,7 @@ namespace oppvs
 		{
 			rtp_sender_deinit_srtp(m_sender);
 	    	rtp_sender_dealloc(m_sender);
+	    	m_sender = NULL;
 	    }
 	}
 
@@ -178,6 +184,7 @@ namespace oppvs
 		{
 			rtp_receiver_deinit_srtp(m_receiver);
 			rtp_receiver_dealloc(m_receiver);
+			m_receiver = NULL;
 		}
 	}
 
@@ -271,7 +278,7 @@ namespace oppvs
 		int pkt_len = len + SRTP_HEADER_LEN;
 
 		/* marshal data */
-		//printHashCode(msg, len);
+		printHashCode(msg, len);
 		//strncpy(sender->message.body, (const char*)msg, len);
 		memcpy(sender->message.body, msg, len);
 		//printHashCode(sender->message.body, len);
@@ -296,7 +303,7 @@ namespace oppvs
 		if (octets_sent != pkt_len) {
     		printf("error: couldn't send message %s", (char *)msg);
     	}
-    	//printf("Seq: %u\n", ntohs(sender->message.header.seq));
+    	//printf("Ts: %u, Seq: %u\n", timestamp, ntohs(sender->message.header.seq));
 		return octets_sent;
   
 	}
@@ -320,7 +327,7 @@ namespace oppvs
 			*len = 0;
 			return -1;
 		}
-
+		octets_recvd -= SRTP_HEADER_LEN;
 		//printf("%d octets received from SSRC %u\n", octets_recvd, receiver->message.header.ssrc);
 
 		/* apply srtp */
@@ -365,7 +372,7 @@ namespace oppvs
 		sha1_update(&ctx, (uint8_t*)msg, len);
 		sha1_final(&ctx, hashcode);
 			
-		printf("len: computed hash value:  %d, %u %u %u %u\n", len, 
-			 hashcode[0], hashcode[1], hashcode[2], hashcode[3]);
+		//printf("len: computed hash value:  %d, %u %u %u %u\n", len, 
+		//	 hashcode[0], hashcode[1], hashcode[2], hashcode[3]);
 	}
 }

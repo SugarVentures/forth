@@ -104,6 +104,7 @@ namespace oppvs
 		uint32_t m_currentTS;
 
 		bool interrupt;
+		uint32_t m_streamCode;
 	};
 }
 

@@ -82,6 +82,7 @@ namespace oppvs
 		rtp_receiver_ctx_t* m_receiver;
 
 		uint32_t m_timestamp;
+		uint16_t m_seq;
 
 		void printHashCode(const void* msg, int len);
 
