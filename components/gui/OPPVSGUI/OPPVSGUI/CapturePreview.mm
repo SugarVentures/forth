@@ -87,7 +87,7 @@ GLuint texName;
         texName = 0;
         frameWidth = 0;
         frameHeight = 0;
-        
+        [self setReset:true];
     }
     return self;
 }

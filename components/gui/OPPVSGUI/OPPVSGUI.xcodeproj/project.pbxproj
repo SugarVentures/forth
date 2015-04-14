@@ -14,6 +14,7 @@
 		D924C6CB1AB805B100586413 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6CA1AB805B100586413 /* QuartzCore.framework */; };
 		D924C6CD1AB83E6600586413 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6CC1AB83E6600586413 /* CoreGraphics.framework */; };
 		D9250F271AC4F8B300858FF5 /* libnetworkengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9250F261AC4F8B300858FF5 /* libnetworkengine.so */; };
+		D95FEEC91ADCFFA8005AC18F /* VideoPreview.mm in Sources */ = {isa = PBXBuildFile; fileRef = D95FEEC81ADCFFA8005AC18F /* VideoPreview.mm */; };
 		D97FC54C1AB2EA4D00E3988E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FC54B1AB2EA4D00E3988E /* AppDelegate.m */; };
 		D97FC54E1AB2EA4D00E3988E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FC54D1AB2EA4D00E3988E /* main.m */; };
 		D97FC5511AB2EA4D00E3988E /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D97FC5501AB2EA4D00E3988E /* ViewController.mm */; };
@@ -54,6 +55,8 @@
 		D924C6CA1AB805B100586413 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D924C6CC1AB83E6600586413 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D9250F261AC4F8B300858FF5 /* libnetworkengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetworkengine.so; path = ../../../libs/libnetworkengine.so; sourceTree = "<group>"; };
+		D95FEEC71ADCFFA8005AC18F /* VideoPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPreview.h; sourceTree = "<group>"; };
+		D95FEEC81ADCFFA8005AC18F /* VideoPreview.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VideoPreview.mm; sourceTree = "<group>"; };
 		D97FC5451AB2EA4D00E3988E /* OPPVSGUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPPVSGUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97FC5491AB2EA4D00E3988E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D97FC54A1AB2EA4D00E3988E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -125,6 +128,8 @@
 				D97FC54B1AB2EA4D00E3988E /* AppDelegate.m */,
 				D97FC54F1AB2EA4D00E3988E /* ViewController.h */,
 				D97FC5501AB2EA4D00E3988E /* ViewController.mm */,
+				D95FEEC71ADCFFA8005AC18F /* VideoPreview.h */,
+				D95FEEC81ADCFFA8005AC18F /* VideoPreview.mm */,
 				D9225EBD1AB6D91200B2C804 /* CapturePreview.h */,
 				D9225EBE1AB6D91200B2C804 /* CapturePreview.mm */,
 				D97FC5521AB2EA4D00E3988E /* Document.h */,
@@ -262,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D95FEEC91ADCFFA8005AC18F /* VideoPreview.mm in Sources */,
 				D9225EBF1AB6D91200B2C804 /* CapturePreview.mm in Sources */,
 				D97FC5541AB2EA4D00E3988E /* Document.mm in Sources */,
 				D97FC5511AB2EA4D00E3988E /* ViewController.mm in Sources */,

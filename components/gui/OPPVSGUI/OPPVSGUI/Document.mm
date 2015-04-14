@@ -9,6 +9,7 @@
 #import "Document.h"
 
 oppvs::Stream* oppvsStream;
+int userArrays[5] = {1, 2, 3, 4, 5};
 
 @interface Document ()
 {
@@ -37,29 +38,39 @@ oppvs::Stream* oppvsStream;
     
     oppvs::window_rect_t rect(0, displayWidth, displayHeight, 0); //Currently not use yet
     ViewController* view = (ViewController*)viewController;
-    [view reset];    
+    [view reset];
     
-    NSRange range = [[view selectedVideoDevice] rangeOfString:@"Screen Capturing" options:NSCaseInsensitiveSearch];
-    if (range.location != NSNotFound)
+    for (id obj in [view listCaptureSources])
     {
-        if ([view selectedWindowInput])
+        NSMutableDictionary *dict = (NSMutableDictionary*)obj;
+        NSString* device = [dict valueForKey:@"CSName"];
+        void* user = (__bridge void*)[dict valueForKey:@"User"];
+
+        //NSRange range = [[view selectedVideoDevice] rangeOfString:@"Screen Capturing" options:NSCaseInsensitiveSearch];
+        NSRange range = [device rangeOfString:@"Screen Capturing" options:NSCaseInsensitiveSearch];
+        if (range.location != NSNotFound)
         {
-            videoEngine->addSource(oppvs::VST_WINDOW, [[view selectedWindowInput] intValue], 1, rect);
+            if ([view selectedWindowInput])
+            {
+                videoEngine->addSource(oppvs::VST_WINDOW, [[view selectedWindowInput] intValue], 1, rect, user);
+            }
+            else
+                videoEngine->addSource(oppvs::VST_WINDOW, 0, 1, rect, user);
         }
         else
-            videoEngine->addSource(oppvs::VST_WINDOW, 0, 1, rect);
-    }
-    else
-    {
-        std::string title([[view selectedVideoDevice] UTF8String]);
-        int index = videoEngine->getDeviceID(title);
-        if (index < 0)
         {
-            NSLog(@"Device not found\n");
-            return;
+            std::string title([[view selectedVideoDevice] UTF8String]);
+            int index = videoEngine->getDeviceID(title);
+            if (index < 0)
+            {
+                NSLog(@"Device not found\n");
+                return;
+            }
+            videoEngine->addSource(oppvs::VST_WEBCAM, index, 1, rect, user);
         }
-        videoEngine->addSource(oppvs::VST_WEBCAM, index, 1, rect);
     }
+    
+    
     videoEngine->setupCaptureSessions();
     videoEngine->startRecording();
 }
@@ -94,13 +105,21 @@ void frameCallback(oppvs::PixelBuffer& pf)
     if (pf.nbytes == 0)
         return;
 
-    ViewController* view = (__bridge ViewController*)pf.user;
+    /*ViewController* view = (__bridge ViewController*)pf.user;
     
     if (view.isStreaming)
         oppvsStream->pushData(pf);
     
     if (view.isRecording)
-        [view renderFrame: &pf];
+        [view renderFrame: &pf];*/
+    CapturePreview* view = (__bridge CapturePreview*)pf.user;
+    [view setPixelBuffer:&pf];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [view setNeedsDisplay];
+    });
+    
+
 }
 
 oppvs::MacVideoEngine* initVideoEngine(id document, id view)

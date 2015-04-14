@@ -32,6 +32,8 @@
 
 @synthesize previewView;
 
+NSString* kCSName = @"CSName";
+
 - (id) init
 {
     
@@ -43,11 +45,18 @@
     [super viewDidLoad];
     [serverPort setStringValue:@"33432" ];
     
-    [hostPreviewLayer setWantsLayer:YES];
+    /*[hostPreviewLayer setWantsLayer:YES];
     previewView = [CapturePreview layer];
     [previewView setAsynchronous:NO];
     [previewView setNeedsDisplay];
-    [hostPreviewLayer setLayer:previewView];
+    [hostPreviewLayer setLayer:previewView];*/
+    
+    [tableView setDataSource:self];
+    [tableView setDelegate: self];
+    
+    
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [self setListCaptureSources: array];
     
 }
 
@@ -113,7 +122,12 @@
 
 
 - (IBAction)startRecording:(id)sender {
-    [self setRecording:true];    
+    if ([self.listCaptureSources count] == 0)
+    {
+        NSLog(@"Please choose at least a catpure device\n");
+        return;
+    }
+    [self setRecording:true];
     [document startRecording];
     
 }
@@ -127,7 +141,29 @@
 
 
 - (IBAction)AddClick:(id)sender {
-    NSLog(@"%tu %@", videoDeviceIndex, windowInputKey);
+    VideoPreview *superview = (VideoPreview*)hostPreviewLayer;
+    int i = [self.listCaptureSources count];
+    NSRect frame;
+    if (i == 0)
+        frame = [superview bounds];
+    else
+        frame = NSMakeRect(200, 200, 300, 200);
+    //NSButton *button = [[NSButton alloc] initWithFrame:frame];
+    //VideoPreview* pv = [[VideoPreview alloc] initWithFrame:frame];
+    //[button setTitle:@"Click me!"];
+    //[superview addSubview:pv];
+    //[superview addSubview:button];
+    id user = [superview addWindow:frame];
+
+    
+    @autoreleasepool {
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        [dict setObject:self.selectedVideoDevice forKey:kCSName];
+        [dict setObject:user forKey:@"User"];
+        [self.listCaptureSources addObject:dict];
+    }
+    [tableView reloadData];
+    
 }
 
 - (void) renderFrame: (oppvs::PixelBuffer*) pf
@@ -171,6 +207,27 @@
 - (void)dealloc
 {
 }
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)atableView {
+    return [self.listCaptureSources count];
+}
+
+- (NSView*)tableView:(NSTableView *)atableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    NSString *identifier = [tableColumn identifier];
+    NSMutableDictionary *dict = [self.listCaptureSources objectAtIndex:row];
+    NSTableCellView *result = [atableView makeViewWithIdentifier:kCSName owner:self];
+    if (result == nil)
+    {
+        result = [[NSTableCellView alloc] init];
+        result.identifier = kCSName;
+    }
+    result.textField.stringValue = [dict valueForKey:identifier];
+
+    return result;
+}
+
+
 
 
 @end

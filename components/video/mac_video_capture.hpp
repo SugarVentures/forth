@@ -7,6 +7,17 @@
 #include "../interface/video_capture.hpp"
 
 namespace oppvs {
+
+	class MacVideoCapture : public VideoCapture {
+		public:
+			MacVideoCapture(frame_callback fc, void* user, const VideoActiveSource& source);
+			~MacVideoCapture();
+
+			void setup();
+			void start();
+			void stop();
+	};
+
 	class MacVideoEngine : public VideoEngine {
 	public:
 		MacVideoEngine();

@@ -8,11 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Document.h"
+#import "VideoPreview.h"
 
 
 @class Document;
+@class VideoPreview;
 
-@interface ViewController : NSViewController
+@interface ViewController : NSViewController<NSTableViewDataSource, NSTableViewDelegate>
 {
     NSArray *videoDevices;
     NSDictionary *windowInputs;
@@ -25,6 +27,8 @@
     
     IBOutlet NSView *hostPreviewLayer;
     CAOpenGLLayer *previewView;
+    
+    IBOutlet NSTableView *tableView;
 }
 
 @property (retain) NSArray *videoDevices;
@@ -35,6 +39,7 @@
 
 @property (retain) CAOpenGLLayer *previewView;
 
+@property (retain) NSMutableArray *listCaptureSources;
 
 @property (assign,getter=isRecording) BOOL recording;
 @property (assign,getter=isStreaming) BOOL streaming;

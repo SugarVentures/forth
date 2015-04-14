@@ -12,10 +12,10 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <ApplicationServices/ApplicationServices.h> //For saving screenshots
 
+
 @interface MacVideoAVFoundationCapture : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, 
     AVCaptureFileOutputDelegate,AVCaptureFileOutputRecordingDelegate> {
 @private
-    NSMutableArray              *sessionList;
     AVCaptureSession            *session;
     AVCaptureDeviceInput        *videoDeviceInput;
     AVCaptureScreenInput        *screenDeviceInput;
@@ -53,10 +53,12 @@
  - (void) setFrameRate: (int) fps;
  - (int) setPixelFormat: (int) pf;
  - (int) listDisplay;
- - (void) saveScreenShot: (CGImageRef) image_ref;
+ - (void) saveScreenShot: (CGImageRef) image_ref as: (NSString*) filename;
 @end
 
 @implementation MacVideoAVFoundationCapture {
+
+ AVCaptureOutput *oldOutput;
 
 }
  - (id) init {
@@ -72,6 +74,7 @@
     pixels = NULL;
     captureTimer = nil;
     captureStream = nil;
+
  	return self;
  }
  - (void) dealloc {
@@ -83,9 +86,9 @@
  }
 
 //For testing
- - (void) saveScreenShot: (CGImageRef) image_ref
+ - (void) saveScreenShot: (CGImageRef) image_ref as: (NSString*) filename
  {
-    NSURL * url = [NSURL fileURLWithPath:@"/Users/caominhtrang/Desktop/blabla.jpg" isDirectory:NO];
+    NSURL * url = [NSURL fileURLWithPath:filename isDirectory:NO];
     CGImageDestinationRef fileDest = CGImageDestinationCreateWithURL((__bridge CFURLRef)url,kUTTypeJPEG,1,NULL);
     CGImageDestinationAddImage(fileDest, image_ref, NULL);
     CGImageDestinationFinalize(fileDest);
@@ -231,6 +234,12 @@
     
     [session beginConfiguration];
     CGDirectDisplayID screen_id = CGMainDisplayID();
+    /*CGRect mainMonitor = CGDisplayBounds(screen_id);
+    CGFloat displayHeight = CGRectGetHeight(mainMonitor)/2;
+    CGFloat displayWidth = CGRectGetWidth(mainMonitor)/2;
+    CGRect cropRect = CGRectMake(0, 0, displayWidth, displayHeight);*/
+
+
     AVCaptureScreenInput *screen_input = [[AVCaptureScreenInput alloc] initWithDisplayID: screen_id];
     if ([session canAddInput: screen_input] == NO)
     {
@@ -240,6 +249,7 @@
     screen_input.removesDuplicateFrames = 1;
     
     [session addInput: screen_input];
+    //[screen_input setCropRect: cropRect];
     screenDeviceInput = screen_input;
 
     //Setup session
@@ -276,7 +286,7 @@
     [session addOutput: output];
     self->videoDataOuput = output;
 
-    dispatch_queue_t queue = dispatch_queue_create("oppvs.videocapture.queue", DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t queue = dispatch_queue_create("oppvs.screencapture.queue", DISPATCH_QUEUE_SERIAL);
     [videoDataOuput setSampleBufferDelegate:self queue:queue];
     dispatch_release(queue);
 
@@ -285,7 +295,7 @@
  }
 
  - (void) closeDevice {
-    if (session != nil)
+    /*if (session != nil)
     {
         if (self->videoDeviceInput != nil)
         {
@@ -305,13 +315,13 @@
         }
         [session release];
         pixel_buffer.reset();
-    }
+    }*/
 
     is_pixel_buffer_set = 0;
     videoDeviceInput = nil;
     screenDeviceInput = nil;
     videoDataOuput = nil;
-    session = nil;
+    //session = nil;
     
  }
 
@@ -367,7 +377,9 @@
 
  - (void) startRecording {
     printf("Start recording \n");
+ 
     [session startRunning];
+    
     //Create a recording file
 
     /*char* outfile = strdup([[[NSString stringWithFormat: @"~/Desktop/testoppvs_%i", windowid] stringByStandardizingPath] fileSystemRepresentation]);
@@ -413,6 +425,25 @@
     if (is_pixel_buffer_set)
         [self closeStream];
  }
+
+ -(CGImageRef)imageRefFromSampleBuffer:(CMSampleBufferRef)sampleBuffer {
+ 
+    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer); 
+    CVPixelBufferLockBaseAddress(imageBuffer,0); 
+    uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer); 
+    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer); 
+    size_t width = CVPixelBufferGetWidth(imageBuffer); 
+    size_t height = CVPixelBufferGetHeight(imageBuffer); 
+     
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB(); 
+    CGContextRef context = CGBitmapContextCreate(baseAddress, width, height, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst); 
+    CGImageRef newImage = CGBitmapContextCreateImage(context); 
+    CVPixelBufferUnlockBaseAddress(imageBuffer,0);
+    CGContextRelease(context); 
+    CGColorSpaceRelease(colorSpace);
+    return newImage;
+ 
+}
 
  - (void) captureOutput: (AVCaptureOutput*) captureOutput didOutputSampleBuffer: (CMSampleBufferRef) sampleBuffer fromConnection: (AVCaptureConnection*) connection {
     CVPixelBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
@@ -712,12 +743,12 @@
     return (void*)[[MacVideoAVFoundationCapture alloc] init];
  }
 
- oppvs::error_video_capture_t oppvs_setup_capture_sessions(void* cap, std::vector<oppvs::VideoActiveSource>& sources) {
-    for (std::vector<oppvs::VideoActiveSource>::const_iterator i = sources.begin(); i != sources.end(); ++i)
+ int oppvs_setup_capture_session(void* cap, oppvs::VideoActiveSource& source) {
+    /*for (std::vector<oppvs::VideoActiveSource>::const_iterator i = sources.begin(); i != sources.end(); ++i)
     {
         NSLog(@"Source: %d type: %d\n", i->video_source_id, i->video_source_type);
         if (i->video_source_type == oppvs::VST_WEBCAM)
-            return [(id)cap openCaptureDevice];
+            [(id)cap openCaptureDevice];
         if (i->video_source_type == oppvs::VST_WINDOW)
         {
             if (i->video_source_id > 0)
@@ -726,9 +757,13 @@
                 return [(id)cap captureWindow: i->video_source_id for: rect];
             }
             else
-                return [(id)cap openScreenDevice];
+                [(id)cap openScreenDevice];
         }
-    }
+    }*/
+    if (source.video_source_type == oppvs::VST_WEBCAM)
+        return [(id)cap openCaptureDevice];
+    if (source.video_source_type == oppvs::VST_WINDOW)
+        return [(id)cap openScreenDevice];
     return oppvs::ERR_VIDEO_CAPTURE_SESSION_INIT_FAILED;
  }
 
@@ -747,6 +782,7 @@ void oppvs_av_set_callback(void* cap, oppvs::frame_callback fc, void* user) {
 void oppvs_set_window_id(void* cap, int wid) {
     return [(id)cap setWindowId: wid];
 }
+
 
 @end
 

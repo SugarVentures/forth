@@ -67,6 +67,7 @@ namespace oppvs {
 		uint8_t pixel_format;
 		video_source_type_t video_source_type;
 		window_rect_t rect;
+		void* user;
 
 		bool operator == (const VideoActiveSource& m) const {
 			return ((m.video_source_id == video_source_id) && (m.video_source_type == video_source_type));
@@ -84,13 +85,30 @@ namespace oppvs {
 		}
 	};
 
+	class VideoCapture {
+	public:
+		VideoCapture() {}
+		VideoCapture(frame_callback cbf, void* user, const VideoActiveSource& source) : 
+			callback_frame(cbf), callback_user(user), m_source(source) {}
+
+		virtual ~VideoCapture() {}
+		virtual void setup() {}
+		virtual void start() {}
+		virtual void stop()	{}
+	protected:
+		frame_callback callback_frame;
+		void* callback_user;
+		void* m_cap;
+		VideoActiveSource m_source;
+	};
+
 	class VideoEngine {
 	public:
 		VideoEngine() {
 			
 		}
 		VideoEngine(frame_callback cbf, void* user) : callback_frame(cbf), callback_user(user) {
-			printf("Init video Engine with call back \n");
+			
 		}
 		virtual ~VideoEngine() {}
 		//Get list of video capture devices: webcam, external devices
@@ -111,7 +129,7 @@ namespace oppvs {
 		std::vector<VideoScreenSource> screen_sources;
 		std::vector<VideoCaptureDevice> capture_devices;
 
-		int addSource(video_source_type_t type, uint16_t sid, uint8_t capability, window_rect_t rect) {
+		int addSource(video_source_type_t type, uint16_t sid, uint8_t capability, window_rect_t rect, void* user) {
 			if (active_sources.size() >= MAX_ACTIVE_SOURCES)
 			{
 				return -1;
@@ -122,6 +140,7 @@ namespace oppvs {
 			src.video_source_id = sid;
 			src.capability = capability;
 			src.rect = rect;
+			src.user = user;
 			active_sources.push_back(src);
 			return 0;
 		}
@@ -157,11 +176,15 @@ namespace oppvs {
 		int windowid;
 	private:
 		const static uint8_t MAX_ACTIVE_SOURCES = 5;
-		frame_callback callback_frame;
-		void* callback_user;
+		
+		
 		uint8_t numVideoSources;	//Number of selected capturing sources
+
 	protected:
 		std::vector<VideoActiveSource> active_sources;	//Sources used to record
+		std::vector<VideoCapture*> 	videoCaptures;
+		frame_callback callback_frame;
+		void* callback_user;
 	};
 
 }
