@@ -88,6 +88,7 @@ GLuint texName;
         frameWidth = 0;
         frameHeight = 0;
         [self setReset:true];
+        [self setBorderWidth:1];
     }
     return self;
 }
@@ -120,6 +121,9 @@ GLuint texName;
         return;
     }
     
+    if (pixelBuffer->nbytes == 0)
+        return;
+        
     if ([self isReset] == true)
     {
         if (texName)
@@ -277,6 +281,9 @@ GLuint texName;
 
 }
 
+- (void)redraw
+{
 
+}
 
 @end

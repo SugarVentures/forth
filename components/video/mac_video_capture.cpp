@@ -58,7 +58,12 @@ namespace oppvs {
 	}
 
 	void MacVideoEngine::stopRecording() {
-		oppvs_stop_video_recording(cap);
+		//oppvs_stop_video_recording(cap);
+		for (std::vector<VideoCapture*>::const_iterator i = videoCaptures.begin(); i != videoCaptures.end(); ++i)
+	    {
+	        VideoCapture* vc = *i;
+	        vc->stop();
+	    }
 	}
 
 	int MacVideoEngine::getDeviceID(std::string& title) {
@@ -86,7 +91,7 @@ namespace oppvs {
 
 	void MacVideoCapture::stop()
 	{
-
+		oppvs_stop_video_recording(m_cap);
 	}
 
 	void MacVideoCapture::setup()

@@ -20,6 +20,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+
+}
+
 - (id)initWithFrame: (NSRect)frame {
     self = [super initWithFrame:frame];
     if (self)
@@ -32,6 +37,7 @@
 - (void)resetToDefault: sender
 {
     [self setLocation:NSMakePoint(0.0, 0.0)];
+    viewList = [[NSMutableArray alloc] init];
     
 }
 
@@ -62,9 +68,49 @@
     renderView = [CapturePreview layer];
     [renderView setAsynchronous:NO];
     [renderView setNeedsDisplay];
-    [view setLayer:renderView];    
+    [view setLayer:renderView];
     [self addSubview:view];
+
     return (id)renderView;
+}
+
+- (void)mouseDown:(NSEvent *)event
+{
+    NSPoint clickLocation;
+    clickLocation = [self convertPoint:[event locationInWindow] fromView:nil];
+    NSView* view = nil;
+    //[viewList exchangeObjectAtIndex:[viewList indexOfObject:view] withObjectAtIndex:[viewList count] - 1];
+    //[self setSubviews:viewList];
+    for (NSView *subView in [self subviews]) {
+        if (![subView isHidden] && [subView hitTest:clickLocation])
+            view = subView;
+    }
+    if (view != nil)
+    {
+        dragging = YES;
+        currentDraggingView = view;
+        lastLocation = clickLocation;
+
+    }
+}
+
+- (void)mouseDragged:(NSEvent *)event
+{
+    if (dragging) {
+        NSPoint newDragLocation=[self convertPoint:[event locationInWindow] fromView:nil];
+        NSPoint newOrigin = [currentDraggingView frame].origin;
+        newOrigin.x += newDragLocation.x - lastLocation.x;
+        newOrigin.y += newDragLocation.y - lastLocation.y;
+        [currentDraggingView setFrameOrigin:newOrigin];
+        lastLocation = newDragLocation;
+    }
+
+}
+
+- (void)mouseUp:(NSEvent *)event
+{
+    dragging = NO;
+
 }
 
 @end

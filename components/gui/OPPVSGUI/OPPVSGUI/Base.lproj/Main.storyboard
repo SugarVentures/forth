@@ -838,16 +838,6 @@
                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DPL-0r-M1M" customClass="VideoPreview">
                                 <rect key="frame" x="20" y="72" width="739" height="575"/>
                             </customView>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Lz-oX-GJ3">
-                                <rect key="frame" x="938" y="564" width="140" height="32"/>
-                                <buttonCell key="cell" type="push" title="Add new source" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rN5-Eq-CVD">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="AddClick:" target="5gI-5U-AMq" id="tN0-Su-Z8x"/>
-                                </connections>
-                            </button>
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MOZ-4B-hV1">
                                 <rect key="frame" x="888" y="425" width="240" height="135"/>
                                 <clipView key="contentView" misplaced="YES" id="Jpr-k8-aRV">
@@ -919,6 +909,16 @@
                                 <connections>
                                     <action selector="stopRecording:" target="5gI-5U-AMq" id="EQb-Mt-ICl"/>
                                     <binding destination="5gI-5U-AMq" name="enabled" keyPath="recording" id="6FH-Xv-b23"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Lz-oX-GJ3">
+                                <rect key="frame" x="882" y="573" width="140" height="32"/>
+                                <buttonCell key="cell" type="push" title="Add new source" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rN5-Eq-CVD">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="AddClick:" target="5gI-5U-AMq" id="tN0-Su-Z8x"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -9,7 +9,7 @@
 #import "Document.h"
 
 oppvs::Stream* oppvsStream;
-int userArrays[5] = {1, 2, 3, 4, 5};
+bool isStreaming;
 
 @interface Document ()
 {
@@ -59,7 +59,7 @@ int userArrays[5] = {1, 2, 3, 4, 5};
         }
         else
         {
-            std::string title([[view selectedVideoDevice] UTF8String]);
+            std::string title([device UTF8String]);
             int index = videoEngine->getDeviceID(title);
             if (index < 0)
             {
@@ -91,6 +91,7 @@ int userArrays[5] = {1, 2, 3, 4, 5};
     oppvsStream = initStream();
     oppvsStream->setting(ss);
     status = oppvsStream->initServer();
+    isStreaming = true;
     if (status < 0)
         NSLog(@"Failed to create signaling server\n");
 }
@@ -105,13 +106,10 @@ void frameCallback(oppvs::PixelBuffer& pf)
     if (pf.nbytes == 0)
         return;
 
-    /*ViewController* view = (__bridge ViewController*)pf.user;
     
-    if (view.isStreaming)
+    if (isStreaming)
         oppvsStream->pushData(pf);
     
-    if (view.isRecording)
-        [view renderFrame: &pf];*/
     CapturePreview* view = (__bridge CapturePreview*)pf.user;
     [view setPixelBuffer:&pf];
     

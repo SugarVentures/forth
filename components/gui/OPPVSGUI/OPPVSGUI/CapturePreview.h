@@ -19,4 +19,6 @@
 @property (assign,getter=isReset) BOOL reset;
 @property (assign,getter=isReverse) BOOL reverse;
 
+- (void)redraw;
+
 @end

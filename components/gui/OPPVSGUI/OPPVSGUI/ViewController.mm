@@ -148,11 +148,6 @@ NSString* kCSName = @"CSName";
         frame = [superview bounds];
     else
         frame = NSMakeRect(200, 200, 300, 200);
-    //NSButton *button = [[NSButton alloc] initWithFrame:frame];
-    //VideoPreview* pv = [[VideoPreview alloc] initWithFrame:frame];
-    //[button setTitle:@"Click me!"];
-    //[superview addSubview:pv];
-    //[superview addSubview:button];
     id user = [superview addWindow:frame];
 
     

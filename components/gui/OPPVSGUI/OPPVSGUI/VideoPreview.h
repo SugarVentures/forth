@@ -16,9 +16,11 @@
     NSPoint location;
     NSColor *backgroundColor;
     BOOL dragging;
-    NSPoint *lastLocation;
+    NSPoint lastLocation;
     
     CAOpenGLLayer *renderView;
+    NSMutableArray *viewList;
+    NSView* currentDraggingView;
 }
 
 - (id)initWithFrame:(NSRect)frameRect;
@@ -28,5 +30,9 @@
 - (NSPoint)location;
 
 - (id)addWindow:(NSRect)frameRect;
+
+-(void)mouseDown:(NSEvent *)event;
+-(void)mouseDragged:(NSEvent *)event;
+-(void)mouseUp:(NSEvent *)event;
 
 @end

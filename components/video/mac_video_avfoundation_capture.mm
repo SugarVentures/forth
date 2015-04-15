@@ -155,7 +155,7 @@
             return oppvs::ERR_VIDEO_CAPTURE_INPUT_DEVICE_FAILED;
         }
         [session addInput: input];
-        self->videoDeviceInput = input;
+        videoDeviceInput = input;
 
         
         /*CGDirectDisplayID screen_id = CGMainDisplayID();
@@ -295,33 +295,34 @@
  }
 
  - (void) closeDevice {
-    /*if (session != nil)
+    if (session != nil)
     {
-        if (self->videoDeviceInput != nil)
+        if (videoDeviceInput != nil)
         {
             [session removeInput: videoDeviceInput];
             //[videoDeviceInput release];
         }
 
-        if (self->screenDeviceInput != nil)
+        if (screenDeviceInput != nil)
         {
             [session removeInput: screenDeviceInput];
+            [screenDeviceInput release];
         }
 
-        if (self->videoDataOuput != nil)
+        if (videoDataOuput != nil)
         {
             [session removeOutput: videoDataOuput];
-            //[videoDataOuput release];
+            [videoDataOuput release];
         }
         [session release];
         pixel_buffer.reset();
-    }*/
+    }
 
     is_pixel_buffer_set = 0;
     videoDeviceInput = nil;
     screenDeviceInput = nil;
     videoDataOuput = nil;
-    //session = nil;
+    session = nil;
     
  }
 
@@ -417,8 +418,8 @@
 
     if ([session isRunning] == YES)
     {
-        [self closeDevice];
         [session stopRunning];
+        [self closeDevice];        
         return;
     }
 
