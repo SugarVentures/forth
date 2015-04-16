@@ -2,12 +2,12 @@
 CXX = g++
 RM = rm -f
 
-INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  \
+INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../thread \
 		-I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include  
 CFLAGS	= -Wall -g
 
-VIDEOLDFLAGS = -L$(rootDir)/../video
-VIDEOLIBS = -lvideoengine
+VIDEOLDFLAGS = -L$(rootDir)/../../libs
+VIDEOLIBS = -lvideoengine -lstreaming
 
 NETWORKLDFLAGS = -L$(rootDir)/../network -L$(rootDir)/../../libs/libsrtp
 NETWORKLIBS = -lnetworkengine 
@@ -35,6 +35,8 @@ testnetworkengine.o: testnetworkengine.cpp
 proclib:
 	cp $(rootDir)/../video/*.so $(rootDir)
 	cp $(rootDir)/../network/*.so $(rootDir)
+	cp $(rootDir)/../thread/*.so $(rootDir)
+	cp $(rootDir)/../streaming/*.so $(rootDir)
 	cp $(rootDir)/../*.so $(rootDir)
 	cp $(rootDir)/../../libs/libsrtp/*.a $(rootDir)
 

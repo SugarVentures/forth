@@ -12,8 +12,7 @@
 #include "../interface/network.hpp"
 #include "../thread/concurrent_queue.hpp"
 
-#define OPPVS_DEFAULT_SERVER_LISTEN_PORT 33432
-#define OPPVS_IDLE_TIME	500
+
 #define OPPVS_MAX_SENDING_QUEUE_LENGTH 10
 
 namespace oppvs 
@@ -106,6 +105,9 @@ namespace oppvs
 		bool interrupt;
 		uint32_t m_streamCode;
 	};
+
+
+
 }
 
 #endif

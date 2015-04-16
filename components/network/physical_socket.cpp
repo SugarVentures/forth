@@ -74,4 +74,18 @@ namespace oppvs
 		if (setsockopt(m_socketfd, SOL_SOCKET, SO_RCVTIMEO, (char*)&tv, sizeof(struct timeval)) < 0)
 			printf("Can not set receive time out\n");
 	}
+
+	SocketAddress PhysicalSocket::getLocalAddress()
+	{
+		if (m_socketfd == -1)
+		{
+			return m_localAddress;
+		}
+		struct sockaddr_in saddr;
+		socklen_t len;
+		if (getsockname(m_socketfd, (struct sockaddr*)&saddr, &len) == -1)
+			return m_localAddress;
+		m_localAddress.setPort(saddr.sin_port);
+		return m_localAddress;
+	}
 }

@@ -29,7 +29,9 @@ namespace oppvs
 		virtual int Send(int destsock, void* msg, uint16_t len);
 		virtual int Receive(void* msg, uint16_t len);
 		virtual int Close(int destsock);
+
 		void setReceiveTimeOut(int expire);
+		SocketAddress getLocalAddress();
 	
 	protected:
 		int m_socketfd;

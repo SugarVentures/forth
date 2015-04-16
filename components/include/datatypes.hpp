@@ -10,7 +10,10 @@
 //#include "brg_types.h"
 
 #include <stdio.h>
+#include <errno.h>
 
+#define OPPVS_IDLE_TIME	500
+#define OPPVS_DEFAULT_SERVER_LISTEN_PORT 33432
 #define OPPVS_NETWORK_PACKET_LENGTH 1024
 
 namespace oppvs {
@@ -30,6 +33,12 @@ namespace oppvs {
 		PF_H264 = 13,		/* H264 */
 		PF_MJPEG = 14
 	} pixel_format_t;
+
+	struct ControllerLinker {
+		void* render;
+		void* streamer;
+		void* origin;
+	};
 
 	class PixelBuffer {
 	public:

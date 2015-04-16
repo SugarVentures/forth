@@ -4,6 +4,10 @@
 #include "../interface/video_capture.hpp"
 #include "../video/mac_video_capture.hpp"
 #include "../error/error.hpp"
+#include "../streaming/video_stream.hpp"
+#include "../interface/stream.hpp"
+#include "../streaming/streaming_engine.hpp"
+
 #include <stdio.h>
 
 #include <iostream>
@@ -35,6 +39,9 @@ int main(int argc, char* argv[])
     int user2 = 2;
     void* user;
 
+    oppvs::ControllerLinker controller;
+    controller.render = &user1;
+
     signal(SIGINT, signalvideohandler);
 
     oppvs::window_rect_t rect(0, 0, 500, 500);
@@ -53,7 +60,7 @@ int main(int argc, char* argv[])
         std::cout << "Cap: " << i->capabilities.front().width << ' ' << i->capabilities.front().height;
         std::cout << "Format: " << i->capabilities.front().fps;
         std::cout << '\n';*/
-        ve->addSource(oppvs::VST_WEBCAM, device_index, 1, rect, &user1);
+        ve->addSource(oppvs::VST_WEBCAM, device_index, 1, rect, &controller);
         device_index++;
     }
 
@@ -75,9 +82,13 @@ int main(int argc, char* argv[])
     std::string str = "FaceTime";
     ve->getDeviceID(str);
     
-	ve->setupCaptureSessions();
-    ve->startRecording();
+	//ve->setupCaptureSessions();
+    //ve->startRecording();
 
+    oppvs::StreamingEngine se;
+    se.initPublishChannel();
+    oppvs::VideoStream vs(400, 300);
+    vs.addSource();
     while (1)
     {
         usleep(100);
@@ -86,7 +97,8 @@ int main(int argc, char* argv[])
 
 void fcallback(oppvs::PixelBuffer& buffer)
 {
-    printf("Process frame callback %d \n", *(int*)buffer.user);
+    printf("Process frame callback \n");
+    
     //printf("Frame callback: %lu bytes, stride: %lu width: %d height: %d\n", buffer.nbytes, buffer.stride[0],
     //    buffer.width, buffer.height);
     //printf("%s %d", (const char*)buffer.plane[0], buffer.nbytes);

@@ -232,4 +232,7 @@ namespace oppvs
 	{
 		m_isStreaming = value;
 	}
+
+
+	
 }
