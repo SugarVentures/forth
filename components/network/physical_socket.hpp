@@ -24,7 +24,7 @@ namespace oppvs
 		virtual int Close();
 		virtual int Listen();
 		virtual int Connect(const SocketAddress& dest);
-		virtual int Accept(const SocketAddress& remote);
+		virtual int Accept(SocketAddress& remote);
 
 		virtual int Send(int destsock, void* msg, uint16_t len);
 		virtual int Receive(void* msg, uint16_t len);

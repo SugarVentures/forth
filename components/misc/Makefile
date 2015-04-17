@@ -6,7 +6,7 @@ OBJLIBS = libmisc.so
 SRCS = md5.c random_unique32.c
 OBJS = $(subst .c,.o,$(SRCS))
 
-all: $(OBJLIBS) md5driver.o
+all: $(OBJLIBS) md5driver.o install
 
 $(OBJLIBS): $(OBJS)
 	$(CC) $(CFLAGS) -fgnu-runtime -shared -o $(OBJLIBS) $(OBJS)
@@ -16,6 +16,9 @@ $(OBJLIBS): $(OBJS)
 
 md5driver.o: md5main.c
 	$(CC) $(CFLAGS)  -o $@ -L. -lmisc $<
+
+install:
+	cp *.so ./../../libs
 
 clean:
 	rm *.o

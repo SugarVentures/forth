@@ -14,4 +14,12 @@ namespace oppvs
 	{
 		return true;
 	}
+
+	IPAddress::IPAddress(const std::string& hostname) : m_addressFamily(AF_INET)
+	{
+		struct in_addr in;
+		inet_pton(AF_INET, hostname.c_str(), &in);
+		memset(&mu_address, 0, sizeof(mu_address));
+	    mu_address.ip4 = in;
+	}
 }

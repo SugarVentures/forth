@@ -29,6 +29,8 @@ namespace oppvs
 				mu_address.ip4.s_addr = htonl(INADDR_ANY);
 			}
 
+			IPAddress(const std::string& hostname);
+
 			virtual ~IPAddress() {}
 
 			explicit IPAddress(const in_addr& ip4) : m_addressFamily(AF_INET) {

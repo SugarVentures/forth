@@ -17,7 +17,7 @@ namespace oppvs
 
 	}
 
-	int SRTPSocket::Accept(const SocketAddress& remote)
+	int SRTPSocket::Accept(SocketAddress& remote)
 	{
 		m_remoteAddress = remote;
 		return m_socketfd;

@@ -13,6 +13,7 @@ namespace oppvs
 	class SocketAddress {
 	public:
 		SocketAddress();
+		SocketAddress(const struct sockaddr_in& addr);
 
 		void setIP(const IPAddress& ip);
 		const IPAddress& getIP() const;

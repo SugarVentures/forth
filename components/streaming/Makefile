@@ -4,12 +4,12 @@ RM = rm -f
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error  \
 		 -I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include  \
-		 -I$(rootDir)/../thread
+		 -I$(rootDir)/../thread -I$(rootDir)/../misc
 
 CFLAGS = -Wall -g
 
 LDFLAGS = -L$(rootDir)/../../libs
-LIBS = -lsrtp -lnetworkengine -lthreadengine
+LIBS = -lsrtp -lnetworkengine -lthreadengine -lmisc
 
 OBJLIBS = libstreaming.so
 

@@ -37,12 +37,12 @@ namespace oppvs
 		return listen(m_socketfd, m_backlog);
 	}
 
-	int PhysicalSocket::Accept(const SocketAddress& remote)
+	int PhysicalSocket::Accept(SocketAddress& remote)
 	{
 		struct  sockaddr_in addr;
 		socklen_t len;
 		int newsockfd = accept(m_socketfd, (struct sockaddr*)&addr, &len);
-		m_remoteAddress = remote;
+		remote = SocketAddress(addr);
 		return newsockfd;
 	}
 
@@ -82,9 +82,10 @@ namespace oppvs
 			return m_localAddress;
 		}
 		struct sockaddr_in saddr;
-		socklen_t len;
+		socklen_t len = sizeof(saddr);
 		if (getsockname(m_socketfd, (struct sockaddr*)&saddr, &len) == -1)
 			return m_localAddress;
+
 		m_localAddress.setPort(saddr.sin_port);
 		return m_localAddress;
 	}

@@ -8,6 +8,12 @@ namespace oppvs
 		clear();
 	}
 
+	SocketAddress::SocketAddress(const struct sockaddr_in& addr)
+	{
+		m_ip = IPAddress(addr.sin_addr);
+		m_port = addr.sin_port;
+	}
+
 	void SocketAddress::clear()
 	{
 		m_ip = IPAddress();

@@ -50,7 +50,7 @@ namespace oppvs
 		int RecvFrom(void* msg, int *len);
 		int RecvFrom(void* msg, int *len, bool *isNext);
 
-		int Accept(const SocketAddress& remote);
+		int Accept(SocketAddress& remote);
 		int Connect(const SocketAddress& remote);
 		int Close();
 
