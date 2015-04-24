@@ -14,6 +14,7 @@ namespace oppvs
 	public:
 		SocketAddress();
 		SocketAddress(const struct sockaddr_in& addr);
+		SocketAddress(const struct sockaddr& addr);
 
 		void setIP(const IPAddress& ip);
 		const IPAddress& getIP() const;
@@ -24,11 +25,17 @@ namespace oppvs
 		void clear();
 
 		void toSocketAddr(struct sockaddr_in* addr) const;
-
+		std::string toString() const;
 	
 	private:
 		IPAddress m_ip;
 		uint16_t m_port;
+	};
+
+	struct SocketAddressPair
+	{
+		SocketAddress local;
+		SocketAddress remote;
 	};
 }
 

@@ -13,8 +13,10 @@ namespace oppvs
 	class Thread
 	{
 	public:
+		Thread() {}
 		Thread(thread_routine routine, void* param);
 		int create();
+		void waitUntilNextEvent();
 		virtual ~Thread() {}
 	private:
 		pthread_t m_threadId;

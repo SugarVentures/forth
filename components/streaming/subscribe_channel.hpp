@@ -10,7 +10,8 @@ namespace oppvs
 	{
 	public:
 		SubscribeChannel(std::string server, uint16_t port, const ServiceInfo& info);
-		int registerInterest();
+		int registerInterest(PixelBuffer* pf);
+		const SocketAddress& getRemoteAddress() const;
 	private:
 		SocketAddress m_remoteAddress;
 		ClientSocket m_client;

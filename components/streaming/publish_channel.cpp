@@ -2,7 +2,8 @@
 
 namespace oppvs
 {
-	PublishChannel::PublishChannel(void* owner, on_new_subscriber_event event) : m_interrupt(false)
+	PublishChannel::PublishChannel(void* owner, PixelBuffer* pf, on_new_subscriber_event event) : m_interrupt(false),
+	m_pixelBuffer(pf)
 	{
 		m_event = event;
 		m_owner = owner;
@@ -34,15 +35,27 @@ namespace oppvs
 	void PublishChannel::waitingSubscribers()
 	{
 		SocketAddress remoteAddr;
+		SocketAddress peerAddr;
+		ChannelMessage msg;
+		msg.width = m_pixelBuffer->width[0];
+		msg.height = m_pixelBuffer->height[0];
+		msg.stride = m_pixelBuffer->stride[0];
+		msg.flip = 1;
 		printf("Waiting subscribers\n");
 		while (!m_interrupt)
 		{
 			int sockfd = m_server.Accept(remoteAddr);
 			if (sockfd >= 0)
 			{
-				printf("New subscriber at address %s %d\n", remoteAddr.getIP().toString().c_str(), remoteAddr.getPort());
-				m_event(m_owner, remoteAddr);
-				m_server.increaseNumSubscribers();
+				m_event(m_owner, remoteAddr, peerAddr);
+				peerAddr.toSocketAddr((struct sockaddr_in*)&msg.destination);
+				if (m_server.Send(sockfd, (void*)&msg, sizeof(msg)) < 0)
+				{
+					m_server.Close(sockfd);
+					continue;
+				}
+				
+				m_server.Close(sockfd);
 			}
 			usleep(OPPVS_IDLE_TIME);
 		}

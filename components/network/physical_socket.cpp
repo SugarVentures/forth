@@ -40,7 +40,7 @@ namespace oppvs
 	int PhysicalSocket::Accept(SocketAddress& remote)
 	{
 		struct  sockaddr_in addr;
-		socklen_t len;
+		socklen_t len = sizeof(addr);
 		int newsockfd = accept(m_socketfd, (struct sockaddr*)&addr, &len);
 		remote = SocketAddress(addr);
 		return newsockfd;
@@ -75,7 +75,7 @@ namespace oppvs
 			printf("Can not set receive time out\n");
 	}
 
-	SocketAddress PhysicalSocket::getLocalAddress()
+	SocketAddress& PhysicalSocket::getLocalAddress()
 	{
 		if (m_socketfd == -1)
 		{
@@ -86,7 +86,12 @@ namespace oppvs
 		if (getsockname(m_socketfd, (struct sockaddr*)&saddr, &len) == -1)
 			return m_localAddress;
 
-		m_localAddress.setPort(saddr.sin_port);
+		m_localAddress.setPort(ntohs(saddr.sin_port));
 		return m_localAddress;
+	}
+
+	SocketAddress& PhysicalSocket::getRemoteAddress()
+	{
+		return m_remoteAddress;
 	}
 }

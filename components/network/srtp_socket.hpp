@@ -39,10 +39,11 @@ namespace oppvs
 	{
 	public:
 		SRTPSocket();
+		SRTPSocket(uint32_t ssrc);
 		~SRTPSocket();
 		void setPolicy(char* key);
-		int initSRTPLib();
-		void setSecurityService(int mode);
+		static int initSRTPLib();
+		static void setSecurityService(int mode);
 		int initSender();
 		int initReceiver();
 
@@ -59,7 +60,7 @@ namespace oppvs
 
 	private:
 		srtp_policy_t m_policy;
-		sec_serv_t m_securityService;
+		static sec_serv_t m_securityService;
 		uint32_t m_ssrc;
 
 		int rtp_sender_init(rtp_sender_ctx_t* sender, int sock, const struct sockaddr_in& dest, uint32_t ssrc);

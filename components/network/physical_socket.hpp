@@ -31,7 +31,8 @@ namespace oppvs
 		virtual int Close(int destsock);
 
 		void setReceiveTimeOut(int expire);
-		SocketAddress getLocalAddress();
+		SocketAddress& getLocalAddress();
+		SocketAddress& getRemoteAddress();
 	
 	protected:
 		int m_socketfd;

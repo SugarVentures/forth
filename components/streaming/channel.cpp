@@ -9,7 +9,7 @@ namespace oppvs
 		m_localAddress.setPort(0);
 	}
 
-	const ServiceInfo& Channel::getServiceInfo() {
+	const ServiceInfo& Channel::getServiceInfo() const {
 		return m_service;
 	}
 	
@@ -24,9 +24,15 @@ namespace oppvs
 		memcpy(&m_service, &s, sizeof(s));
 	}
 
-	const uint32_t Channel::getServiceKey()
+	uint32_t Channel::getServiceKey() const
 	{
 		return m_service.key;
 	}
+
+	const SocketAddress& Channel::getLocalAddress() const
+	{
+		return m_localAddress;
+	}
+
 
 }

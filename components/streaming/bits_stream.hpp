@@ -10,13 +10,14 @@
 
 namespace oppvs
 {
+
 	class BitsStream
 	{
 		public:
 			BitsStream();
-			BitsStream(uint8_t* data, uint32_t length);
 			virtual ~BitsStream();
 
+			
 		private:
 			uint8_t* m_data;
 			uint32_t m_length;

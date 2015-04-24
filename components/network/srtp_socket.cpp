@@ -4,7 +4,17 @@
 
 namespace oppvs
 {
-	SRTPSocket::SRTPSocket()
+	sec_serv_t SRTPSocket::m_securityService = sec_serv_none;
+	
+	SRTPSocket::SRTPSocket() : m_ssrc(0xab43de12)
+	{
+		m_sender = NULL;
+		m_receiver = NULL;
+		m_timestamp = 0;
+		m_seq = 0;
+	}
+
+	SRTPSocket::SRTPSocket(uint32_t ssrc) : m_ssrc(ssrc)
 	{
 		m_sender = NULL;
 		m_receiver = NULL;
@@ -49,7 +59,6 @@ namespace oppvs
 		/* initialize srtp library */
 		err_status_t status = srtp_init();
 		setSecurityService(0);
-		m_ssrc = 0xab43de12;	//fixed temporarily
 		if (status)
 			return -1;
 		return 0;
@@ -193,8 +202,7 @@ namespace oppvs
 		/* set header values */
 		sender->message.header.ssrc    = htonl(ssrc);
 		sender->message.header.ts      = 0;
-		//sender->message.header.seq     = (uint16_t) rand();
-		sender->message.header.seq     = 0;
+		sender->message.header.seq     = (uint16_t) rand();
 		sender->message.header.m       = 0;
 		sender->message.header.pt      = 0x1;
 		sender->message.header.version = 2;

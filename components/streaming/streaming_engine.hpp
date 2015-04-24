@@ -10,6 +10,9 @@
 #include "thread.hpp"
 #include "publish_channel.hpp"
 #include "subscribe_channel.hpp"
+#include "network_stream.hpp"
+
+#include <vector>
 
 extern "C"
 {
@@ -18,27 +21,49 @@ extern "C"
 
 namespace oppvs
 {
-
+	
 	class StreamingEngine
 	{
 	public:
-		StreamingEngine() : m_ssrc(0) {}
-		virtual ~StreamingEngine() {}
+		StreamingEngine(PixelBuffer* pf);
+		~StreamingEngine();
 
 		void setSSRC(uint32_t value) { m_ssrc = value; }
 		uint32_t getSSRC() { return m_ssrc;}
-		int initUploadStream();
+		int initUploadStream(SocketAddress& localaddr, const SocketAddress& remoteaddr);
+		int initDownloadStream();
 		int initPublishChannel();
 		int initSubscribeChannel(const std::string& publisher, uint16_t port, const ServiceInfo& service);
 
-		void pushData(const PixelBuffer& pf);
-		void pullData(PixelBuffer& pf);
+		void setStreamInfo(PixelBuffer& pf);
+		void pushData(PixelBuffer& pf);
+		void pullData();
+
+		bool getIsRunning();
+		void setIsRunning(bool value);
+		void registerCallback(frame_callback cb);
 		
+		void updateQueue();
 	private:
 		uint32_t m_ssrc;
 		PublishChannel* m_publisher;
-		SubscribeChannel* m_subscribe;
+		SubscribeChannel* m_subscribe;		
+		std::vector<NetworkStream*> m_subscribers;
+		NetworkStream *m_broadcaster;
+		NetworkStream *m_receiver;
+		bool m_isRunning;
+
 		uint32_t generateSSRC();
+
+		pthread_mutex_t m_mutex;
+		Thread* m_sendThread;
+		Thread* m_receiveThread;
+		Thread* m_thread;
+		frame_callback m_callback;
+
+		ConQueue<RawData*> m_sendingQueue;	//Shared buffer of all upload streams
+		PixelBuffer* pixelBuffer;
+
 	};
 
 }
