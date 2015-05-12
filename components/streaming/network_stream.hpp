@@ -41,6 +41,20 @@ namespace oppvs
 		uint32_t length;
 		uint8_t* data;
 		int8_t count;
+		uint16_t width;
+		uint16_t height;
+	};
+
+	struct FrameBegin
+	{
+		uint8_t flag;
+		uint16_t width;
+		uint16_t height;
+	};
+
+	struct FrameEnd
+	{
+		uint8_t flag;
 	};
 
 
@@ -65,7 +79,7 @@ namespace oppvs
 		void waitStream();
 
 		void registerCallback(void* owner, void* squeue, on_send_done_event event);
-		void registerCallback(void* owner, uint8_t* data, uint32_t length, on_receive_event event);
+		void registerCallback(void* owner, PixelBuffer* pf, on_receive_event event);
 		SocketAddress& getLocalAddress();
 
 		void unlock();
@@ -85,7 +99,7 @@ namespace oppvs
 		on_receive_event m_receiveEvent;
 
 		ConQueue<RawData*> *p_sendingQueue;
-		RawData* m_buffer;
+		PixelBuffer* m_buffer;
 
 		void sendDone(int* error);
 	};

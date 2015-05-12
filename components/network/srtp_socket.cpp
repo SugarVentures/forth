@@ -154,25 +154,30 @@ namespace oppvs
 		uint16_t seq = ntohs(m_receiver->message.header.seq);
 		//printf("Timestamp: %u %u recv: %d\n", ts, m_timestamp, recvLen);
 		
-		printHashCode(msg, recvLen);
+		//printHashCode(msg, recvLen);
 
 		if (recvLen < 0)
 			return recvLen;
 
-		if (m_timestamp == ts && seq - m_seq != 1 && m_seq != 0 && seq != 0)
+		if (m_timestamp == ts && seq - m_seq != 1)
 		{
-			//printf("Error in seq: %d %d. Lost piece of frame\n", seq, m_seq);
+			printf("Error in seq: %d %d. Lost piece of frame\n", seq, m_seq);
 			m_seq = seq;
 			return -1;
 		}
 		m_seq = seq;
+		//First time received
+		if (m_timestamp == 0)
+			m_timestamp = ts;
 		if (m_timestamp != ts)
 		{
 			*isNext = true;
 			m_timestamp = ts;
 		}
 		else
+		{
 			*isNext = false;
+		}
 		//printf("Timestamp: %u old: %u next: %d seq: %u\n", ts, m_timestamp, *isNext, ntohs(m_receiver->message.header.seq));
 		return recvLen;
 	}
@@ -286,7 +291,7 @@ namespace oppvs
 		int pkt_len = len + SRTP_HEADER_LEN;
 
 		/* marshal data */
-		printHashCode(msg, len);
+		//printHashCode(msg, len);
 		//strncpy(sender->message.body, (const char*)msg, len);
 		memcpy(sender->message.body, msg, len);
 		//printHashCode(sender->message.body, len);
@@ -311,7 +316,7 @@ namespace oppvs
 		if (octets_sent != pkt_len) {
     		printf("error: couldn't send message %s", (char *)msg);
     	}
-    	//printf("Ts: %u, Seq: %u\n", timestamp, ntohs(sender->message.header.seq));
+    	//printf("Sent packet ts: %u, Seq: %u\n", timestamp, ntohs(sender->message.header.seq));
 		return octets_sent;
   
 	}
@@ -348,6 +353,7 @@ namespace oppvs
   		}*/
   		//strncpy((char*)msg, receiver->message.body, octets_recvd);
 		memcpy(msg, receiver->message.body, octets_recvd);
+		//printf("Receive Packet ts: %u seq: %u\n", ntohl(receiver->message.header.ts), ntohs(receiver->message.header.seq));
 		return octets_recvd;
 	}
 
@@ -380,7 +386,7 @@ namespace oppvs
 		sha1_update(&ctx, (uint8_t*)msg, len);
 		sha1_final(&ctx, hashcode);
 			
-		//printf("len: computed hash value:  %d, %u %u %u %u\n", len, 
-		//	 hashcode[0], hashcode[1], hashcode[2], hashcode[3]);
+		printf("len: computed hash value:  %d, %u %u %u %u\n", len, 
+			 hashcode[0], hashcode[1], hashcode[2], hashcode[3]);
 	}
 }

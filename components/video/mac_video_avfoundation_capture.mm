@@ -35,13 +35,15 @@
     dispatch_source_t captureTimer; //Used in window capture
     CGRect windowBound;
     CGDisplayStreamRef captureStream;
+
+    NSDictionary *pixelBufferOptions;
 }
 
 
  - (id) init;
  - (void) dealloc;
- - (oppvs::error_video_capture_t) openCaptureDevice;
- - (oppvs::error_video_capture_t) openScreenDevice;
+ - (oppvs::error_video_capture_t) openCaptureDevice: (CGRect) rect : (int) pixelformat : (int) fps;
+ - (oppvs::error_video_capture_t) openScreenDevice: (CGRect) rect : (int) pixelformat : (int) fps;
  - (oppvs::error_video_capture_t) captureWindow: (int) wid for: (CGRect) rect;
  - (void) closeDevice;
  - (void) startRecording;
@@ -54,6 +56,7 @@
  - (int) setPixelFormat: (int) pf;
  - (int) listDisplay;
  - (void) saveScreenShot: (CGImageRef) image_ref as: (NSString*) filename;
+ - (void) updateConfiguration: (CGRect) rect : (int) pixelformat : (int) fps;
 @end
 
 @implementation MacVideoAVFoundationCapture {
@@ -61,9 +64,11 @@
  AVCaptureOutput *oldOutput;
 
 }
- - (id) init {
+ - (id) init
+ {
  	self = [super init];
-    if (self) {
+    if (self)
+    {
         NSLog(@"Init av foundation capture engine\n");
         is_pixel_buffer_set = 0;
     }
@@ -77,10 +82,13 @@
 
  	return self;
  }
+
  - (void) dealloc {
     [self closeDevice];
     if (captureTimer || captureStream)
         [self closeStream];
+
+    [pixelBufferOptions release];
  	[super dealloc];
 
  }
@@ -104,18 +112,21 @@
     mainDisplay = CGMainDisplayID();
     err = CGGetOnlineDisplayList(maxDisplays, onlineDisplay, &displayCount);
 
-    for (i = 0; i < displayCount; i++)
+    /*for (i = 0; i < displayCount; i++)
     {
         CGDirectDisplayID did = onlineDisplay[i];
         printf("%-16p %lux%lu %32s", did, CGDisplayPixelsWide(did), CGDisplayPixelsHigh(did),
             (did == mainDisplay) ? "[main display]\n" : "\n");
-    }
+    }*/
     return 0;
  }
 
- - (oppvs::error_video_capture_t) openCaptureDevice {
+ - (oppvs::error_video_capture_t) openCaptureDevice: (CGRect) rect : (int) pixelformat : (int) fps
+ {
     //Set flip
     pixel_buffer.flip = 1;
+    pixel_buffer.originx = CGRectGetMinX(rect);
+    pixel_buffer.originy = CGRectGetMinY(rect);
     // Create session
     session = [[AVCaptureSession alloc] init];
     if(session == nil) {
@@ -130,19 +141,9 @@
     {
         [session beginConfiguration];
 
-
-        if ([device lockForConfiguration: NULL] == YES)
-        {
-            device.activeVideoMinFrameDuration = CMTimeMake(1, 15);
-            [device unlockForConfiguration];
-        }
         videoDevice = device;
+        [self setFrameRate: fps];
 
-        //Setup session
-        session.sessionPreset = AVCaptureSessionPreset1280x720;
-
-        //Webcam
-        
         AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice: videoDevice error:&nserror];
         if (input == nil)
         {
@@ -157,34 +158,7 @@
         [session addInput: input];
         videoDeviceInput = input;
 
-        
-        /*CGDirectDisplayID screen_id = CGMainDisplayID();
-        CGRect mainMonitor = CGDisplayBounds(screen_id);
-        CGFloat displayHeight = CGRectGetHeight(mainMonitor)/2;
-        CGFloat displayWidth = CGRectGetWidth(mainMonitor)/2;
-        CGRect cropRect = CGRectMake(0, 0, displayWidth, displayHeight);
-
-        CGImageRef screenShot = CGWindowListCreateImage(cropRect, kCGWindowListOptionIncludingWindow, 69, kCGWindowImageDefault);
-        [self saveScreenShot: screenShot];        
-        CFRelease(screenShot);
-
-        AVCaptureScreenInput *screen_input = [[[AVCaptureScreenInput alloc] initWithDisplayID: screen_id] autorelease];
-        if ([session canAddInput: screen_input] == NO)
-        {
-            printf("Can't add the screen input \n");
-            return oppvs::ERR_VIDEO_CAPTURE_INPUT_DEVICE_FAILED;
-        }
-        
-        [session addInput: screen_input];
-        
-        [screen_input setCropRect: cropRect];
-
-        int is_error = [self setPixelFormat: oppvs::PF_UYVY422];
-
-        */
-        [session commitConfiguration];
-        [self showPreview];
-    
+           
         AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
         if (output == nil)
         {
@@ -198,14 +172,25 @@
         }
 
         [output setAlwaysDiscardsLateVideoFrames: YES];
+
+        pixelBufferOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                              @(CGRectGetWidth(rect)), (id)kCVPixelBufferWidthKey,
+                              @(CGRectGetHeight(rect)), (id)kCVPixelBufferHeightKey,
+                              [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA], (id)kCVPixelBufferPixelFormatTypeKey,
+                              nil];
+
+        [output setVideoSettings:pixelBufferOptions];
+
         [session addOutput: output];
-        self->videoDataOuput = output;
+        videoDataOuput = output;
 
         dispatch_queue_t queue = dispatch_queue_create("oppvs.videocapture.queue", DISPATCH_QUEUE_SERIAL);
         [videoDataOuput setSampleBufferDelegate:self queue:queue];
         dispatch_release(queue);
 
-        output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+        [session commitConfiguration];
+
+        //output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
         
         //Add file output (testing only)
         /*captureMovieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
@@ -222,7 +207,8 @@
     return oppvs::ERR_VIDEO_CAPTURE_NONE;
  }
 
- - (oppvs::error_video_capture_t) openScreenDevice {
+ - (oppvs::error_video_capture_t) openScreenDevice: (CGRect) rect : (int) pixelformat : (int) fps
+ {
     //Set flip
     pixel_buffer.flip = 0;
     // Create session
@@ -234,11 +220,6 @@
     
     [session beginConfiguration];
     CGDirectDisplayID screen_id = CGMainDisplayID();
-    /*CGRect mainMonitor = CGDisplayBounds(screen_id);
-    CGFloat displayHeight = CGRectGetHeight(mainMonitor)/2;
-    CGFloat displayWidth = CGRectGetWidth(mainMonitor)/2;
-    CGRect cropRect = CGRectMake(0, 0, displayWidth, displayHeight);*/
-
 
     AVCaptureScreenInput *screen_input = [[AVCaptureScreenInput alloc] initWithDisplayID: screen_id];
     if ([session canAddInput: screen_input] == NO)
@@ -248,19 +229,11 @@
     }
     screen_input.removesDuplicateFrames = 1;
     
+    //[screen_input setCropRect: rect];
+    [screen_input setMinFrameDuration: CMTimeMake(1, fps)];
     [session addInput: screen_input];
-    //[screen_input setCropRect: cropRect];
-    screenDeviceInput = screen_input;
-
-    //Setup session
-    if ([session canSetSessionPreset:AVCaptureSessionPreset1280x720]) {
-        [session setSessionPreset: AVCaptureSessionPreset1280x720];
-    }
-    else {
-        NSLog(@"Cannot set prest\n");
-    }
     
-    //[self showPreview];
+    screenDeviceInput = screen_input;
 
     AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
     if (output == nil)
@@ -276,9 +249,9 @@
 
     [output setAlwaysDiscardsLateVideoFrames: YES];
 
-    NSDictionary *pixelBufferOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-                              [NSNumber numberWithDouble:1280], (id)kCVPixelBufferWidthKey,
-                              [NSNumber numberWithDouble:720], (id)kCVPixelBufferHeightKey,
+    pixelBufferOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                              @(CGRectGetWidth(rect)), (id)kCVPixelBufferWidthKey,
+                              @(CGRectGetHeight(rect)), (id)kCVPixelBufferHeightKey,
                               [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA], (id)kCVPixelBufferPixelFormatTypeKey,
                               nil];
     [output setVideoSettings:pixelBufferOptions];
@@ -286,7 +259,7 @@
     [session addOutput: output];
     self->videoDataOuput = output;
 
-    dispatch_queue_t queue = dispatch_queue_create("oppvs.screencapture.queue", DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t queue = dispatch_queue_create("oppvs.videocapture.queue", DISPATCH_QUEUE_SERIAL);
     [videoDataOuput setSampleBufferDelegate:self queue:queue];
     dispatch_release(queue);
 
@@ -348,6 +321,7 @@
  }
 
  - (void) setFrameRate: (int) fps {
+    bool isValid = false;
     AVCaptureDeviceFormat *device_format;
     AVFrameRateRange *frame_rate;
     if (!videoDevice)
@@ -362,7 +336,34 @@
         {
             NSLog(@"Max frame rate: %f Min frame rate: %f\n",        
                 range.maxFrameRate, range.minFrameRate);
+            if ((range.minFrameRate <= fps) && (range.maxFrameRate >= fps))
+            {
+                isValid = true;
+                break;
+            }
+            if (range.maxFrameRate > frame_rate.maxFrameRate)
+            {
+                device_format = format;
+                frame_rate = range;
+            }
         }
+        if (isValid)
+            break;
+    }
+    
+    if ([videoDevice lockForConfiguration: NULL] == YES)
+    {
+        if (isValid)
+        {
+            videoDevice.activeVideoMinFrameDuration = CMTimeMake(1, fps);
+            videoDevice.activeVideoMaxFrameDuration = CMTimeMake(1, fps);
+        }
+        else if (frame_rate)
+        {
+            videoDevice.activeVideoMinFrameDuration = frame_rate.minFrameDuration;
+            videoDevice.activeVideoMaxFrameDuration = frame_rate.maxFrameDuration;
+        }
+        [videoDevice unlockForConfiguration];
     }
  }
 
@@ -514,7 +515,6 @@
     
     CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
 
-    
  }
 
 /* Informs the delegate when all pending data has been written to the output file. */
@@ -724,47 +724,48 @@
     return oppvs::ERR_VIDEO_CAPTURE_NONE;
 }
 
-- (void) setWindowId : (int) wid {
+- (void) setWindowId: (int) wid {
     windowId = wid;
 }
 
-- (void) setWindowBound : (CGRect) rect
+- (void) setWindowBound: (CGRect) rect
 {
     windowBound = rect;
 }
 
-- (void) setCallback : (oppvs::frame_callback) fc fromuser: (void*) u {
+- (void) setCallback: (oppvs::frame_callback) fc fromuser: (void*) u {
     callback_frame = fc;
     callback_user = u;
     pixel_buffer.user = u;
- }
+}
  
+- (void) updateConfiguration: (CGRect) rect : (int) pf : (int) fps {
+    if (session != nil)
+    {
+        [session beginConfiguration];
+        NSDictionary *pixelBufferOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                              @(CGRectGetWidth(rect)), (id)kCVPixelBufferWidthKey,
+                              @(CGRectGetHeight(rect)), (id)kCVPixelBufferHeightKey,
+                              [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA], (id)kCVPixelBufferPixelFormatTypeKey,
+                              nil];
+        [videoDataOuput setVideoSettings:pixelBufferOptions];
+        is_pixel_buffer_set = 0;
+        [session commitConfiguration];
+    }
+}
 
  void* oppvs_vc_av_alloc() {
     return (void*)[[MacVideoAVFoundationCapture alloc] init];
  }
 
  int oppvs_setup_capture_session(void* cap, oppvs::VideoActiveSource& source) {
-    /*for (std::vector<oppvs::VideoActiveSource>::const_iterator i = sources.begin(); i != sources.end(); ++i)
-    {
-        NSLog(@"Source: %d type: %d\n", i->video_source_id, i->video_source_type);
-        if (i->video_source_type == oppvs::VST_WEBCAM)
-            [(id)cap openCaptureDevice];
-        if (i->video_source_type == oppvs::VST_WINDOW)
-        {
-            if (i->video_source_id > 0)
-            {
-                CGRect rect = CGRectMake(i->rect.left, i->rect.bottom, i->rect.right - i->rect.left, i->rect.top - i->rect.bottom);
-                return [(id)cap captureWindow: i->video_source_id for: rect];
-            }
-            else
-                [(id)cap openScreenDevice];
-        }
-    }*/
+    CGRect rect = CGRectMake(source.rect.left, source.rect.bottom, 
+        source.rect.right - source.rect.left, source.rect.top - source.rect.bottom);
+    
     if (source.video_source_type == oppvs::VST_WEBCAM)
-        return [(id)cap openCaptureDevice];
+        return [(id)cap openCaptureDevice: rect : source.pixel_format : source.fps];
     if (source.video_source_type == oppvs::VST_WINDOW)
-        return [(id)cap openScreenDevice];
+        return [(id)cap openScreenDevice: rect : source.pixel_format : source.fps];
     return oppvs::ERR_VIDEO_CAPTURE_SESSION_INIT_FAILED;
  }
 
@@ -782,6 +783,12 @@ void oppvs_av_set_callback(void* cap, oppvs::frame_callback fc, void* user) {
 
 void oppvs_set_window_id(void* cap, int wid) {
     return [(id)cap setWindowId: wid];
+}
+
+void oppvs_update_configuration(void* cap, oppvs::VideoActiveSource& source) {
+    CGRect rect = CGRectMake(source.rect.left, source.rect.bottom, 
+        source.rect.right - source.rect.left, source.rect.top - source.rect.bottom);
+    return [(id)cap updateConfiguration: rect : source.pixel_format : source.fps];
 }
 
 

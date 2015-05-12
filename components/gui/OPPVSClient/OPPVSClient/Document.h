@@ -7,8 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "network.hpp"
-#import "stream.hpp"
+#import "streaming_engine.hpp"
 
 #include "ViewController.h"
 
@@ -18,7 +17,6 @@
 @interface Document : NSDocument
 
 - (void) initReceiver: (NSString*)server withPort: (NSInteger)port;
-- (void) runStreaming: (oppvs::SRTPSocket) cs;
 
 @end
 

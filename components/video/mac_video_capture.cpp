@@ -69,6 +69,15 @@ namespace oppvs {
 	int MacVideoEngine::getDeviceID(std::string& title) {
 		return oppvs_get_device_id(info, title);
 	}
+
+	void MacVideoEngine::updateConfiguration(const VideoActiveSource& source) {
+		for (std::vector<VideoCapture*>::const_iterator i = videoCaptures.begin(); i != videoCaptures.end(); ++i)
+	    {
+	        VideoCapture* vc = *i;
+	        if (vc->getSource() == source)
+	        	vc->updateConfiguration(source);
+	    }
+	}
 	
 
 	MacVideoCapture::MacVideoCapture(frame_callback cbf, void* user, const VideoActiveSource& source): 
@@ -97,5 +106,13 @@ namespace oppvs {
 	void MacVideoCapture::setup()
 	{
 		oppvs_setup_capture_session(m_cap, m_source);
+	}
+
+	void MacVideoCapture::updateConfiguration(const VideoActiveSource& source)
+	{
+		if (m_source != source)
+			return;
+		m_source = source;
+		oppvs_update_configuration(m_cap, m_source);
 	}
 }

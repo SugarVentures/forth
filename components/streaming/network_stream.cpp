@@ -8,7 +8,7 @@ namespace oppvs
 		m_owner = NULL;
 		m_error = 0;
 		m_timestamp = 0;
-		m_buffer = new RawData();
+		m_buffer = NULL;
 	}
 
 	int NetworkStream::setup(uint32_t port)
@@ -44,7 +44,8 @@ namespace oppvs
 
 	void NetworkStream::releaseSender()
 	{
-
+		m_socket.releaseSender();
+		m_socket.Close();
 	}
 
 	void NetworkStream::releaseReceiver()
@@ -62,6 +63,7 @@ namespace oppvs
 		*written = 0;
 		m_error = 0;
 		uint count = 0;
+
 		while (msgLength > 0)
 		{
 			int len = m_socket.SendTo(curPos, sendLength, m_timestamp);
@@ -76,7 +78,6 @@ namespace oppvs
 			msgLength -= sendLength;
 			count++;
 			sendLength = msgLength > OPPVS_NETWORK_PACKET_LENGTH ? OPPVS_NETWORK_PACKET_LENGTH : msgLength;
-			usleep(10);
 		}
 		return 0;
 	}
@@ -88,22 +89,33 @@ namespace oppvs
 		bool isNextFrame = false;
 		int msgLength = 0;
 		uint8_t* curPos = buffer;
-		while (!isNextFrame)
+		
+		int rcvLen = m_socket.RecvFrom(localbuffer, &len, &isNextFrame);
+		while (rcvLen > 0)
 		{
-			int rcvLen = m_socket.RecvFrom(localbuffer, &len, &isNextFrame);
-			if (rcvLen == -1)
+			if (rcvLen == sizeof(FrameBegin))
 			{
-				return -1;
+				printf("Receive control msg\n");
+				FrameBegin controlmsg;
+				memcpy(&controlmsg, localbuffer, sizeof(controlmsg));
+				m_buffer->width[0] = controlmsg.width;
+				m_buffer->height[0] = controlmsg.height;
+				printf("Width: %d %d \n", controlmsg.width, controlmsg.height);
 			}
-			printf("Curpos %u\n", msgLength);
-			memcpy(curPos, localbuffer, rcvLen);
-			msgLength += rcvLen;
-			curPos += rcvLen;
+			else if (rcvLen == sizeof(FrameEnd))
+			{
+				break;
+			}
+			else
+			{
+				memcpy(curPos, localbuffer, rcvLen);
+				msgLength += rcvLen;
+				curPos += rcvLen;
+			}
+			rcvLen = m_socket.RecvFrom(localbuffer, &len, &isNextFrame);
 		}
-		if (msgLength != length)
-			return -1;
 		printf("Read %u bytes\n", msgLength);
-		return 0;
+		return 0;		
 	}
 
 	void NetworkStream::registerCallback(void* owner, void* squeue, on_send_done_event event)
@@ -113,12 +125,11 @@ namespace oppvs
 		p_sendingQueue = (ConQueue<RawData*> *)squeue;
 	}
 
-	void NetworkStream::registerCallback(void* owner, uint8_t* data, uint32_t length, on_receive_event event)
+	void NetworkStream::registerCallback(void* owner, PixelBuffer* pf, on_receive_event event)
 	{
 		m_owner = owner;
 		m_receiveEvent = event;
-		m_buffer->data = data;
-		m_buffer->length = length;
+		m_buffer = pf;
 	}
 
 	void NetworkStream::sendStream()
@@ -127,16 +138,30 @@ namespace oppvs
 		{
 			uint32_t written = 0;
 			RawData *raw = p_sendingQueue->front();			
-			printf("send %u %x\n", raw->length, raw);
 			m_timestamp++;
-			if (write(raw->data, raw->length, &written) < 0)
+			FrameBegin controlmsg;
+			controlmsg.flag = 1;
+			controlmsg.width = raw->width;
+			controlmsg.height = raw->height;
+			if (write((uint8_t*)&controlmsg, sizeof(controlmsg), &written) < 0)
+			{
+				m_error = -1;
+			}
+			else if (write(raw->data, raw->length, &written) < 0)
 			{
 				printf("Send failed\n");
 				m_error = -1;
 			}
 			else
+			{
 				printf("Sent %u bytes\n", written);
-
+				FrameEnd controlendmsg;
+				controlendmsg.flag = 0;
+				if (write((uint8_t*)&controlendmsg, sizeof(controlendmsg), &written) < 0)
+				{
+					m_error = -1;
+				}
+			}
 			m_busy = true;
 			m_sendDoneEvent(m_owner, m_error);
 		}
@@ -156,12 +181,12 @@ namespace oppvs
 
 		while (1)
 		{
-			if (read(m_buffer->data, m_buffer->length, &readBytes) < 0)
+			if (read(m_buffer->plane[0], m_buffer->nbytes, &readBytes) < 0)
 			{
 				printf("Error while reading from network\n");
 				if (errno == EAGAIN || errno == EWOULDBLOCK)
 				{
-					if (retries++ >= MAX_RETRY_TIMES)
+					if (retries++ >= MAX_RETRY_TIMES - 1)
 					{
 						printf("Stop waiting\n");
 						break;

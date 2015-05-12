@@ -48,7 +48,6 @@
         result.push_back(vcd);
  		index++;
  	}
-    [devices release];
  	return index;
  }
 

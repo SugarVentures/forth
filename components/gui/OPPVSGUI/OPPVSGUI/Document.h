@@ -11,6 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #include "mac_video_capture.hpp"
 #include "stream.hpp"
+#include "streaming_engine.hpp"
 
 #include "ViewController.h"
 
@@ -21,6 +22,7 @@
 {
 @private
     oppvs::MacVideoEngine *videoEngine;
+    oppvs::PixelBuffer *sharedBuffer;
 }
 
 @property NSMutableArray *videoCaptureDevices;

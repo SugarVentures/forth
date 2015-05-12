@@ -1,21 +1,33 @@
 
 #include "../streaming/streaming_engine.hpp"
 
+int interrupt;
+
 void frameCallback(oppvs::PixelBuffer& pf)
 {
-	printf("Out data: %d %d\n", pf.width[0], pf.plane[0][20]);
+	printf("Out data: %d %d %d %d\n", pf.width[0], pf.height[0], pf.originx, pf.originy);
 }
+
+void signalhandler(int param)
+{
+ 	interrupt = 1;
+}
+
+
 
 int main(int argc, char* argv[])
 {
-	
+	interrupt = 0;
+	signal(SIGINT, signalhandler);
+
 	oppvs::PixelBuffer pf;
 	pf.width[0] = 1280;
 	pf.height[0] = 780;
-	pf.stride[0] = 10;
+	pf.stride[0] = 120;
 	pf.nbytes = pf.height[0] * pf.stride[0];
 	pf.plane[0] = new uint8_t[pf.nbytes];
 	memset(pf.plane[0], 1, pf.nbytes);
+
 
 	oppvs::PixelBuffer rcvpf;
 
@@ -32,11 +44,12 @@ int main(int argc, char* argv[])
 		oppvs::StreamingEngine *se = new oppvs::StreamingEngine(&pf);
 
 	    se->initPublishChannel();
-	    while (1)
+	    while (!interrupt)
 	    {	
 	    	se->pushData(pf);
-	    	usleep(30000);
+	    	usleep(300000);
 	    }
+	    delete se;
 	}
 	else
 	{
@@ -47,10 +60,14 @@ int main(int argc, char* argv[])
 		service.key = ssrc;
 		se->initSubscribeChannel("127.0.0.1", port, service);
 		printf("Stream info: %u %u %u\n", rcvpf.width[0], rcvpf.height[0], rcvpf.nbytes);
-		while (1)
+		while (!interrupt)
 		{
-			usleep(100);
+			usleep(5000);
+		
 		}
+		delete se;
 	}
+
 	return 0;
 }
+

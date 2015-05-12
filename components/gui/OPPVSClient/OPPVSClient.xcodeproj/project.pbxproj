@@ -15,8 +15,8 @@
 		D9250F421AC558DB00858FF5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9250F411AC558DB00858FF5 /* Images.xcassets */; };
 		D9250F451AC558DB00858FF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9250F431AC558DB00858FF5 /* Main.storyboard */; };
 		D9250F511AC558DB00858FF5 /* OPPVSClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */; };
-		D9250F5B1AC5592C00858FF5 /* liboppvs.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9250F5A1AC5592C00858FF5 /* liboppvs.so */; };
-		D9250F5D1AC55CB100858FF5 /* libnetworkengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9250F5C1AC55CB100858FF5 /* libnetworkengine.so */; };
+		D970FAD81B00B82D005AF09E /* libstreaming.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D970FAD71B00B82D005AF09E /* libstreaming.so */; };
+		D970FADA1B00BD40005AF09E /* libnetworkengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D970FAD91B00BD40005AF09E /* libnetworkengine.so */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,8 +46,8 @@
 		D9250F4A1AC558DB00858FF5 /* OPPVSClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OPPVSClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9250F4F1AC558DB00858FF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPPVSClientTests.m; sourceTree = "<group>"; };
-		D9250F5A1AC5592C00858FF5 /* liboppvs.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liboppvs.so; path = ../../../libs/liboppvs.so; sourceTree = "<group>"; };
-		D9250F5C1AC55CB100858FF5 /* libnetworkengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetworkengine.so; path = ../../../libs/libnetworkengine.so; sourceTree = "<group>"; };
+		D970FAD71B00B82D005AF09E /* libstreaming.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming.so; path = ../../../libs/libstreaming.so; sourceTree = "<group>"; };
+		D970FAD91B00BD40005AF09E /* libnetworkengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetworkengine.so; path = ../../../libs/libnetworkengine.so; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,8 +55,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9250F5D1AC55CB100858FF5 /* libnetworkengine.so in Frameworks */,
-				D9250F5B1AC5592C00858FF5 /* liboppvs.so in Frameworks */,
+				D970FADA1B00BD40005AF09E /* libnetworkengine.so in Frameworks */,
+				D970FAD81B00B82D005AF09E /* libstreaming.so in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,8 +73,8 @@
 		D9250F281AC558DB00858FF5 = {
 			isa = PBXGroup;
 			children = (
-				D9250F5C1AC55CB100858FF5 /* libnetworkengine.so */,
-				D9250F5A1AC5592C00858FF5 /* liboppvs.so */,
+				D970FAD91B00BD40005AF09E /* libnetworkengine.so */,
+				D970FAD71B00B82D005AF09E /* libstreaming.so */,
 				D9250F331AC558DB00858FF5 /* OPPVSClient */,
 				D9250F4D1AC558DB00858FF5 /* OPPVSClientTests */,
 				D9250F321AC558DB00858FF5 /* Products */,
@@ -359,12 +359,16 @@
 					../../../libs/libsrtp/crypto/include,
 					../../../libs/libsrtp/include,
 					../../interface,
+					../../thread,
+					../../streaming,
+					../../misc,
 				);
 				INFOPLIST_FILE = OPPVSClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../libs,
+					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -382,12 +386,16 @@
 					../../../libs/libsrtp/crypto/include,
 					../../../libs/libsrtp/include,
 					../../interface,
+					../../thread,
+					../../streaming,
+					../../misc,
 				);
 				INFOPLIST_FILE = OPPVSClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../libs,
+					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

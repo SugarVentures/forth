@@ -9,12 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import "Document.h"
 #import "VideoPreview.h"
-
+#import "DrawMouseBoxView.h"
 
 @class Document;
 @class VideoPreview;
 
-@interface ViewController : NSViewController<NSTableViewDataSource, NSTableViewDelegate>
+@interface ViewController : NSViewController<NSTableViewDataSource, NSTableViewDelegate, DrawMouseBoxViewDelegate>
 {
     NSArray *videoDevices;
     NSDictionary *windowInputs;
@@ -30,6 +30,7 @@
     
     IBOutlet NSTableView *tableView;
 }
+
 
 @property (retain) NSArray *videoDevices;
 @property (retain) NSDictionary *windowInputs;
@@ -49,7 +50,8 @@
 - (void) renderFrame: (oppvs::PixelBuffer*) pixelBuffer;
 - (IBAction)startStreaming:(id)sender;
 - (void) reset;
-
+- (IBAction)SetRegion:(id)sender;
+- (void) setStreamInfo: (NSString*) info;
 
 @end
 

@@ -17,10 +17,17 @@
 #include <signal.h> //Ctrl C catch
 #include <unistd.h>
 
+#include <time.h>
+#include <chrono>
+
 
 void fcallback(oppvs::PixelBuffer& pf);
+static int frames = 0;
+clock_t starttime = 0;
 
 oppvs::MacVideoEngine* ve;
+typedef std::chrono::high_resolution_clock Clock;
+oppvs::PixelBuffer sharedBuffer;
 
 void signalvideohandler(int param)
 {
@@ -29,6 +36,8 @@ void signalvideohandler(int param)
         ve->stopRecording();
         delete ve;
     }
+    
+    
     exit(1);
 }
 
@@ -39,12 +48,18 @@ int main(int argc, char* argv[])
     int user2 = 2;
     void* user;
 
+    sharedBuffer.width[0] = 1280;
+    sharedBuffer.height[0] = 780;
+    sharedBuffer.nbytes = 1280*780*4;
+    sharedBuffer.plane[0] = new uint8_t[sharedBuffer.nbytes];
+    sharedBuffer.format = oppvs::PF_BGRA32;
     oppvs::ControllerLinker controller;
     controller.render = &user1;
 
     signal(SIGINT, signalvideohandler);
 
-    oppvs::window_rect_t rect(0, 0, 500, 500);
+    oppvs::window_rect_t rect1(5, 100, 100, 5);
+    oppvs::window_rect_t rect2(0, 1000, 1000, 0);
 
 	ve = new oppvs::MacVideoEngine(fcallback, user);
 
@@ -53,6 +68,7 @@ int main(int argc, char* argv[])
 
     ve->getListCaptureDevices(devices);
     int device_index = 0;
+    oppvs::VideoActiveSource source;
     for (std::vector<oppvs::VideoCaptureDevice>::const_iterator i = devices.begin(); i != devices.end(); ++i)
     {
         /*std::cout << "Device: " << i->device_id << ' ';
@@ -60,7 +76,10 @@ int main(int argc, char* argv[])
         std::cout << "Cap: " << i->capabilities.front().width << ' ' << i->capabilities.front().height;
         std::cout << "Format: " << i->capabilities.front().fps;
         std::cout << '\n';*/
-        ve->addSource(oppvs::VST_WEBCAM, device_index, 1, rect, &controller);
+        ve->addSource(oppvs::VST_WEBCAM, device_index, 30, rect1, &controller);
+        source.video_source_id = device_index;
+        source.rect = rect1;
+        source.video_source_type = oppvs::VST_WEBCAM;
         device_index++;
     }
 
@@ -78,29 +97,46 @@ int main(int argc, char* argv[])
         ve->addSource(oppvs::VST_WINDOW, i->id, capability, rect);
     }*/
 
-    ve->addSource(oppvs::VST_WINDOW, 0, 1, rect, &user2);
+    ve->addSource(oppvs::VST_WINDOW, 0, 30, rect2, &user2);
     std::string str = "FaceTime";
     ve->getDeviceID(str);
     
-	//ve->setupCaptureSessions();
-    //ve->startRecording();
+	ve->setupCaptureSessions();
 
-    oppvs::StreamingEngine se;
-    se.initPublishChannel();
-    oppvs::VideoStream vs(400, 300);
-    vs.addSource();
+    auto t1 = Clock::now();
+    ve->startRecording();
+
+    int count = 0;
     while (1)
     {
+        if (count++ == 20000)
+        {
+            printf("Upate Configuration \n");
+            source.rect.top = 200;
+            source.rect.right = 200;
+            //ve->updateConfiguration(source);
+            auto t2 = Clock::now();
+            std::cout <<std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << '\n';
+            std::cout <<frames << '\n';
+            signalvideohandler(SIGINT);
+
+
+        }
         usleep(100);
     }
 }
 
 void fcallback(oppvs::PixelBuffer& buffer)
 {
-    printf("Process frame callback \n");
+    ++frames;
     
-    //printf("Frame callback: %lu bytes, stride: %lu width: %d height: %d\n", buffer.nbytes, buffer.stride[0],
-    //    buffer.width, buffer.height);
+    printf("Frame callback: %lu bytes, stride: %lu width: %d height: %d bpr: %d origin: %d %d\n", buffer.nbytes, buffer.stride[0],
+        buffer.width[0], buffer.height[0], buffer.stride[0]/buffer.width[0], buffer.originx, buffer.originy);
+    for (int i = 0; i < (uint32_t)buffer.height[0]; i++)
+    {
+        uint32_t offset = buffer.stride[0]*(buffer.originy + i) + buffer.originx*4;
+        memcpy(sharedBuffer.plane[0], buffer.plane[0] + offset, buffer.width[0]*4);
+    }
     //printf("%s %d", (const char*)buffer.plane[0], buffer.nbytes);
 }
 

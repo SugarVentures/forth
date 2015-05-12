@@ -76,8 +76,7 @@
 
 - (void)mouseDown:(NSEvent *)event
 {
-    NSPoint clickLocation;
-    clickLocation = [self convertPoint:[event locationInWindow] fromView:nil];
+    NSPoint clickLocation = [self convertPoint:[event locationInWindow] fromView:nil];
     NSView* view = nil;
     //[viewList exchangeObjectAtIndex:[viewList indexOfObject:view] withObjectAtIndex:[viewList count] - 1];
     //[self setSubviews:viewList];
@@ -85,12 +84,22 @@
         if (![subView isHidden] && [subView hitTest:clickLocation])
             view = subView;
     }
+    
     if (view != nil)
     {
-        dragging = YES;
-        currentDraggingView = view;
-        lastLocation = clickLocation;
-
+        /*NSRect nonborderRect = NSInsetRect([view bounds], 4, 4);
+        NSPoint localClickLocation = [self convertPoint:[event locationInWindow] fromView:view];
+        if (NSPointInRect(localClickLocation, nonborderRect))
+        {*/
+            dragging = YES;
+            currentDraggingView = view;
+            lastLocation = clickLocation;
+        /*}
+        else
+        {
+            NSLog(@"Resizing\n");
+            
+        }*/
     }
 }
 

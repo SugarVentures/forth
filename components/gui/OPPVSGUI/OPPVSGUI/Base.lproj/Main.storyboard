@@ -921,6 +921,16 @@
                                     <action selector="AddClick:" target="5gI-5U-AMq" id="tN0-Su-Z8x"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zc2-gn-MLl">
+                                <rect key="frame" x="1036" y="573" width="82" height="32"/>
+                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bU3-mU-hbx">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="SetRegion:" target="5gI-5U-AMq" id="Tzh-K4-ZQK"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>

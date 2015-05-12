@@ -9,6 +9,7 @@
 #import "Document.h"
 
 oppvs::Stream* oppvsStream;
+oppvs::StreamingEngine *streamingEngine;
 bool isStreaming;
 
 @interface Document ()
@@ -26,17 +27,19 @@ bool isStreaming;
 - (instancetype)init {
     self = [super init];
     oppvsStream = NULL;
+    sharedBuffer = new oppvs::PixelBuffer();
+    sharedBuffer->width[0] = 1280;
+    sharedBuffer->height[0] = 780;
+    sharedBuffer->stride[0] = sharedBuffer->width[0] * 4;
+    sharedBuffer->nbytes = sharedBuffer->height[0] * sharedBuffer->stride[0];
+
     return self;
 }
 
 - (void) startRecording
 {
-    CGDirectDisplayID displayID = CGMainDisplayID();
-    CGRect mainMonitor = CGDisplayBounds(displayID);
-    CGFloat displayHeight = CGRectGetHeight(mainMonitor);
-    CGFloat displayWidth = CGRectGetWidth(mainMonitor);
     
-    oppvs::window_rect_t rect(0, displayWidth, displayHeight, 0); //Currently not use yet
+    
     ViewController* view = (ViewController*)viewController;
     [view reset];
     
@@ -45,6 +48,8 @@ bool isStreaming;
         NSMutableDictionary *dict = (NSMutableDictionary*)obj;
         NSString* device = [dict valueForKey:@"CSName"];
         void* user = (__bridge void*)[dict valueForKey:@"User"];
+        NSRect frame = [[dict valueForKey:@"Rect"] rectValue];
+        oppvs::window_rect_t rect(frame.origin.x, frame.size.width, frame.size.height, frame.origin.y);
 
         //NSRange range = [[view selectedVideoDevice] rangeOfString:@"Screen Capturing" options:NSCaseInsensitiveSearch];
         NSRange range = [device rangeOfString:@"Screen Capturing" options:NSCaseInsensitiveSearch];
@@ -52,7 +57,7 @@ bool isStreaming;
         {
             if ([view selectedWindowInput])
             {
-                videoEngine->addSource(oppvs::VST_WINDOW, [[view selectedWindowInput] intValue], 1, rect, user);
+                videoEngine->addSource(oppvs::VST_WINDOW, [[view selectedWindowInput] intValue], 30, rect, user);
             }
             else
                 videoEngine->addSource(oppvs::VST_WINDOW, 0, 1, rect, user);
@@ -66,7 +71,7 @@ bool isStreaming;
                 NSLog(@"Device not found\n");
                 return;
             }
-            videoEngine->addSource(oppvs::VST_WEBCAM, index, 1, rect, user);
+            videoEngine->addSource(oppvs::VST_WEBCAM, index, 30, rect, user);
         }
     }
     
@@ -79,21 +84,19 @@ bool isStreaming;
 {
     videoEngine->stopRecording();
     videoEngine->removeAllSource();
-    
+
+
 }
 
 - (void) startStreaming
 {
-    int status;
-    oppvs::StreamSetting ss;
-    ss.port = (int)self.severPort;
-
-    oppvsStream = initStream();
-    oppvsStream->setting(ss);
-    status = oppvsStream->initServer();
-    isStreaming = true;
-    if (status < 0)
-        NSLog(@"Failed to create signaling server\n");
+    streamingEngine = new oppvs::StreamingEngine(sharedBuffer);
+    streamingEngine->initPublishChannel();
+    std::string info = streamingEngine->getStreamInfo();
+    ViewController* view = (ViewController*)viewController;
+    NSString *streaminfo = [NSString stringWithCString:info.c_str()
+                                               encoding:[NSString defaultCStringEncoding]];
+    [view setStreamInfo:streaminfo];
 }
 
 - (void) stopStreaming
@@ -106,17 +109,20 @@ void frameCallback(oppvs::PixelBuffer& pf)
     if (pf.nbytes == 0)
         return;
 
-    
-    if (isStreaming)
-        oppvsStream->pushData(pf);
+    if (streamingEngine)
+    {
+        if (streamingEngine->isRunning())
+        {
+            streamingEngine->pushData(pf);
+        }
+    }
     
     CapturePreview* view = (__bridge CapturePreview*)pf.user;
     [view setPixelBuffer:&pf];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [view setNeedsDisplay];
-    });
-    
+    });    
 
 }
 
@@ -130,6 +136,7 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     ve = new oppvs::MacVideoEngine(frameCallback, user);
     if (!ve)
         return NULL;
+
     ve->getListCaptureDevices(devices);
     if (devices.size() > 0)
     {
@@ -146,6 +153,7 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
             [document setVideoCaptureDevices: nsdevices];
         }
     }
+    
     
     ve->getListVideoSource(windows);
     if (windows.size() > 0)
@@ -181,12 +189,6 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
 }
 
 
-oppvs::Stream* initStream()
-{
-    oppvs::Stream *stream = new oppvs::Stream();
-    return stream;
-}
-
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
     [super windowControllerDidLoadNib:aController];
     // Add any code here that needs to be executed once the windowController has loaded the document's window.
@@ -221,7 +223,7 @@ oppvs::Stream* initStream()
 
 - (void)dealloc
 {
-    
+    delete sharedBuffer;
     
 }
 

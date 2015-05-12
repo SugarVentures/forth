@@ -23,6 +23,9 @@
 @end
 
 @implementation ViewController
+{
+    NSMutableArray *shadeWindows;
+}
 
 @synthesize videoDevices;
 @synthesize windowInputs;
@@ -43,7 +46,7 @@ NSString* kCSName = @"CSName";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [serverPort setStringValue:@"33432" ];
+    
     
     /*[hostPreviewLayer setWantsLayer:YES];
     previewView = [CapturePreview layer];
@@ -144,17 +147,28 @@ NSString* kCSName = @"CSName";
     VideoPreview *superview = (VideoPreview*)hostPreviewLayer;
     int i = [self.listCaptureSources count];
     NSRect frame;
+    NSValue *frameid;
     if (i == 0)
+    {
+        //frame = NSMakeRect(0, 0, 1280, 780);
         frame = [superview bounds];
+        frameid = [NSValue valueWithRect: NSMakeRect(0, 0, 1280, 780)];
+    }
     else
-        frame = NSMakeRect(200, 200, 300, 200);
+    {
+        frame = NSMakeRect(0, 0, 480, 300);
+        frameid = [NSValue valueWithRect: NSMakeRect(0, 0, 480, 300)];
+    }
     id user = [superview addWindow:frame];
-
+    
+    NSLog(@"%f %f %f %f\n", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+    
     
     @autoreleasepool {
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         [dict setObject:self.selectedVideoDevice forKey:kCSName];
         [dict setObject:user forKey:@"User"];
+        [dict setObject:frameid forKey:@"Rect"];
         [self.listCaptureSources addObject:dict];
     }
     [tableView reloadData];
@@ -181,6 +195,11 @@ NSString* kCSName = @"CSName";
     [view setReset: true];
 }
 
+- (void) setStreamInfo:(NSString *)info
+{
+    [serverPort setStringValue:info ];
+}
+
 - (IBAction)stopStreaming:(id)sender {
     [self setStreaming:false];
     [document stopStreaming];
@@ -188,8 +207,6 @@ NSString* kCSName = @"CSName";
 }
 
 - (IBAction)startStreaming:(id)sender {
-    NSLog(@"Port: %@\n", [serverPort stringValue]);
-    [document setSeverPort:[serverPort integerValue]];
     if (!self.recording)
     {
         [self setRecording:true];
@@ -222,7 +239,61 @@ NSString* kCSName = @"CSName";
     return result;
 }
 
+#pragma mark Setup Screen Capture
+
+#define kShadyWindowLevel   (NSDockWindowLevel + 1000)
+
+/* Draws a crop rect on the display. */
+- (void)drawMouseBoxView:(DrawMouseBoxView*)view didSelectRect:(NSRect)rect
+{
+    /* Map point into global coordinates. */
+    NSRect globalRect = rect;
+    NSRect windowRect = [[view window] frame];
+    globalRect = NSOffsetRect(globalRect, windowRect.origin.x, windowRect.origin.y);
+    globalRect.origin.y = CGDisplayPixelsHigh(CGMainDisplayID()) - globalRect.origin.y;
+    CGDirectDisplayID displayID = CGMainDisplayID();
+    uint32_t matchingDisplayCount = 0;
+    /* Get a list of online displays with bounds that include the specified point. */
+    CGError e = CGGetDisplaysWithPoint(NSPointToCGPoint(globalRect.origin), 1, &displayID, &matchingDisplayCount);
+    if ((e == kCGErrorSuccess) && (1 == matchingDisplayCount))
+    {
+        /* Add the display as a capture input. */
+        //[self addDisplayInputToCaptureSession:displayID cropRect:NSRectToCGRect(rect)];
+    }
+    
+    for (NSWindow* w in [NSApp windows])
+    {
+        if ([w level] == kShadyWindowLevel)
+        {
+            [w close];
+        }
+    }
+    [[NSCursor currentCursor] pop];
+    [shadeWindows removeAllObjects];
+}
 
 
-
+- (IBAction)SetRegion:(id)sender {
+    if(!shadeWindows) {
+        shadeWindows = [NSMutableArray array];
+    }
+    
+    for (NSScreen* screen in [NSScreen screens])
+    {
+        NSRect frame = [screen frame];
+        NSWindow * window = [[NSWindow alloc] initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
+        [window setBackgroundColor:[NSColor blackColor]];
+        [window setAlphaValue:.5];
+        [window setLevel:kShadyWindowLevel];
+        [window setReleasedWhenClosed:NO];
+        
+        DrawMouseBoxView* drawMouseBoxView = [[DrawMouseBoxView alloc] initWithFrame:frame];
+        drawMouseBoxView.delegate = self;
+        [window setContentView:drawMouseBoxView];
+        [window makeKeyAndOrderFront:self];
+        [shadeWindows addObject:window];
+    }
+    
+    [[NSCursor crosshairCursor] push];
+}
 @end

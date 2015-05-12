@@ -20,11 +20,15 @@ namespace oppvs
 
 	StreamingEngine::~StreamingEngine()
 	{
+		delete m_publisher;
+
 		delete m_broadcaster;
 		delete m_sendThread;
 
 		delete m_receiver;
 		delete m_receiveThread;
+
+		delete m_bitsstream;
 
 		m_broadcaster = NULL;
 		m_receiver = NULL;
@@ -33,21 +37,13 @@ namespace oppvs
 		m_receiveThread = NULL;
 	}
 
-	void* initUS(void* p)
-	{
-		
-		PublishChannel* publisher = (PublishChannel*)p;
-		publisher->waitingSubscribers();
-		return NULL;
-	}
-
 	void* runStreaming(void* p)
 	{
 		NetworkStream* stream = (NetworkStream*)p;
 		while (1)
 		{
 			stream->sendStream();
-			usleep(1000);
+			usleep(100);
 		}
 		return NULL;
 	}
@@ -126,10 +122,8 @@ namespace oppvs
 
 	int StreamingEngine::initDownloadStream()
 	{
-		if (m_receiveThread)
-			printf("strange error here\n");
 		m_receiver = new NetworkStream(RECEIVER_ROLE, m_subscribe->getServiceKey());
-		m_receiver->registerCallback((void*)this, pixelBuffer->plane[0], pixelBuffer->nbytes, onReceiveEvent);
+		m_receiver->registerCallback((void*)this, pixelBuffer, onReceiveEvent);
 		if (m_receiver->setup(m_subscribe->getLocalAddress().getPort()) < 0)
 		{
 			printf("Cannot setup network stream for downloading data\n");
@@ -150,6 +144,12 @@ namespace oppvs
 		if (m_subscribers.size() > 0)
 		{
 			RawData *raw = new RawData(pf.plane[0], pf.nbytes, m_subscribers.size());
+			raw->width = pf.width[0];
+			raw->height = pf.height[0];
+			while (m_sendingQueue.size() >= 10)
+			{
+				usleep(10000);
+			}
 			m_sendingQueue.push(raw);
 			printf("Push data %u bytes size: %lu\n", pf.nbytes, m_sendingQueue.size());
 		}
@@ -165,10 +165,9 @@ namespace oppvs
 		m_publisher = new PublishChannel((void*)this, pixelBuffer, onNewSubscriberEvent);
 		m_publisher->setServiceInfo(ST_VIDEO_STREAMING, generateSSRC());
 		m_publisher->start();
-		Thread *thread = new Thread(initUS, (void*)m_publisher);
-		thread->create();
 		printf("SSRC: %u\n", m_publisher->getServiceKey());
 		
+		initBitsStream();
 		return 0;
 	}
 
@@ -189,7 +188,7 @@ namespace oppvs
 		return random32(0);
 	}
 
-	bool StreamingEngine::getIsRunning()
+	bool StreamingEngine::isRunning()
 	{
 		return m_isRunning;
 	}
@@ -202,6 +201,18 @@ namespace oppvs
 	void StreamingEngine::registerCallback(frame_callback cb)
 	{
 		m_callback = cb;
+	}
+
+	void StreamingEngine::initBitsStream()
+	{
+		//m_bitsstream = new BitsStream();
+	}
+
+	std::string StreamingEngine::getStreamInfo() const
+	{
+		if (!m_publisher)
+			return std::string();
+		return m_publisher->getLocalAddress().toString();
 	}
 
 }

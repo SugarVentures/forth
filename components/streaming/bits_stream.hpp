@@ -5,8 +5,11 @@
 #ifndef OPPVS_BITS_STREAM_HPP
 #define OPPVS_BITS_STREAM_HPP
 
-#include "brg_types.h"
+#include "datatypes.hpp"
 #include <stddef.h>
+#include <stdio.h>
+#include "thread.hpp"
+#include <vector>
 
 namespace oppvs
 {
@@ -17,10 +20,18 @@ namespace oppvs
 			BitsStream();
 			virtual ~BitsStream();
 
-			
+			static void* init(void* object);
+			bool isOverloading();
+			void setOverloading(bool value);
+
+			void pushData(const PixelBuffer& pf);
+			void throttle();
+
 		private:
-			uint8_t* m_data;
-			uint32_t m_length;
+			const static int MAX_WAITING_QUEUE_SIZE = 20;
+			bool m_isOverloading;
+			Thread* m_thread;
+			std::vector<PixelBuffer> m_waitingQueue;
 	};
 }
 

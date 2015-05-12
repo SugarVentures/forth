@@ -7,6 +7,7 @@
 
 #include "datatypes.hpp"
 #include "network.hpp"
+#include "thread.hpp"
 
 namespace oppvs
 {

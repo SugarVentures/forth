@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		D92220361AC2BA310069116D /* libvideoengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D92220351AC2BA310069116D /* libvideoengine.so */; };
-		D92220381AC2BC240069116D /* liboppvs.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D92220371AC2BC240069116D /* liboppvs.so */; };
 		D9225EBF1AB6D91200B2C804 /* CapturePreview.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9225EBE1AB6D91200B2C804 /* CapturePreview.mm */; };
 		D924C6C91AB7DC2500586413 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6C81AB7DC2500586413 /* OpenGL.framework */; };
 		D924C6CB1AB805B100586413 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6CA1AB805B100586413 /* QuartzCore.framework */; };
 		D924C6CD1AB83E6600586413 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6CC1AB83E6600586413 /* CoreGraphics.framework */; };
 		D9250F271AC4F8B300858FF5 /* libnetworkengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9250F261AC4F8B300858FF5 /* libnetworkengine.so */; };
+		D9277A3B1AF0C00700669ABF /* DrawMouseBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9277A3A1AF0C00700669ABF /* DrawMouseBoxView.m */; };
+		D951C8E81B006FF900FEA751 /* libstreaming.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D951C8E71B006FF900FEA751 /* libstreaming.so */; };
 		D95FEEC91ADCFFA8005AC18F /* VideoPreview.mm in Sources */ = {isa = PBXBuildFile; fileRef = D95FEEC81ADCFFA8005AC18F /* VideoPreview.mm */; };
 		D97FC54C1AB2EA4D00E3988E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FC54B1AB2EA4D00E3988E /* AppDelegate.m */; };
 		D97FC54E1AB2EA4D00E3988E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FC54D1AB2EA4D00E3988E /* main.m */; };
@@ -48,13 +49,15 @@
 
 /* Begin PBXFileReference section */
 		D92220351AC2BA310069116D /* libvideoengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvideoengine.so; path = ../../../libs/libvideoengine.so; sourceTree = "<group>"; };
-		D92220371AC2BC240069116D /* liboppvs.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liboppvs.so; path = ../../../libs/liboppvs.so; sourceTree = "<group>"; };
 		D9225EBD1AB6D91200B2C804 /* CapturePreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CapturePreview.h; sourceTree = "<group>"; };
 		D9225EBE1AB6D91200B2C804 /* CapturePreview.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CapturePreview.mm; sourceTree = "<group>"; };
 		D924C6C81AB7DC2500586413 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		D924C6CA1AB805B100586413 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D924C6CC1AB83E6600586413 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D9250F261AC4F8B300858FF5 /* libnetworkengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetworkengine.so; path = ../../../libs/libnetworkengine.so; sourceTree = "<group>"; };
+		D9277A391AF0C00700669ABF /* DrawMouseBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawMouseBoxView.h; sourceTree = "<group>"; };
+		D9277A3A1AF0C00700669ABF /* DrawMouseBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawMouseBoxView.m; sourceTree = "<group>"; };
+		D951C8E71B006FF900FEA751 /* libstreaming.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming.so; path = ../../../libs/libstreaming.so; sourceTree = "<group>"; };
 		D95FEEC71ADCFFA8005AC18F /* VideoPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPreview.h; sourceTree = "<group>"; };
 		D95FEEC81ADCFFA8005AC18F /* VideoPreview.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VideoPreview.mm; sourceTree = "<group>"; };
 		D97FC5451AB2EA4D00E3988E /* OPPVSGUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPPVSGUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,8 +81,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D951C8E81B006FF900FEA751 /* libstreaming.so in Frameworks */,
 				D9250F271AC4F8B300858FF5 /* libnetworkengine.so in Frameworks */,
-				D92220381AC2BC240069116D /* liboppvs.so in Frameworks */,
 				D92220361AC2BA310069116D /* libvideoengine.so in Frameworks */,
 				D924C6CD1AB83E6600586413 /* CoreGraphics.framework in Frameworks */,
 				D924C6CB1AB805B100586413 /* QuartzCore.framework in Frameworks */,
@@ -97,15 +100,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D9277A3C1AF0C07B00669ABF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D951C8E71B006FF900FEA751 /* libstreaming.so */,
+				D924C6C81AB7DC2500586413 /* OpenGL.framework */,
+				D924C6CA1AB805B100586413 /* QuartzCore.framework */,
+				D924C6CC1AB83E6600586413 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D97FC53C1AB2EA4D00E3988E = {
 			isa = PBXGroup;
 			children = (
+				D9277A3C1AF0C07B00669ABF /* Frameworks */,
 				D9250F261AC4F8B300858FF5 /* libnetworkengine.so */,
-				D92220371AC2BC240069116D /* liboppvs.so */,
 				D92220351AC2BA310069116D /* libvideoengine.so */,
-				D924C6CC1AB83E6600586413 /* CoreGraphics.framework */,
-				D924C6CA1AB805B100586413 /* QuartzCore.framework */,
-				D924C6C81AB7DC2500586413 /* OpenGL.framework */,
 				D97FC5471AB2EA4D00E3988E /* OPPVSGUI */,
 				D97FC5611AB2EA4D00E3988E /* OPPVSGUITests */,
 				D97FC5461AB2EA4D00E3988E /* Products */,
@@ -124,6 +135,8 @@
 		D97FC5471AB2EA4D00E3988E /* OPPVSGUI */ = {
 			isa = PBXGroup;
 			children = (
+				D9277A3A1AF0C00700669ABF /* DrawMouseBoxView.m */,
+				D9277A391AF0C00700669ABF /* DrawMouseBoxView.h */,
 				D97FC54A1AB2EA4D00E3988E /* AppDelegate.h */,
 				D97FC54B1AB2EA4D00E3988E /* AppDelegate.m */,
 				D97FC54F1AB2EA4D00E3988E /* ViewController.h */,
@@ -273,6 +286,7 @@
 				D97FC5511AB2EA4D00E3988E /* ViewController.mm in Sources */,
 				D97FC54E1AB2EA4D00E3988E /* main.m in Sources */,
 				D97FC54C1AB2EA4D00E3988E /* AppDelegate.m in Sources */,
+				D9277A3B1AF0C00700669ABF /* DrawMouseBoxView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,12 +408,17 @@
 					../../video,
 					../../../libs/libsrtp/include,
 					../../../libs/libsrtp/crypto/include,
+					../../include,
+					../../streaming,
+					../../thread,
+					../../misc,
 				);
 				INFOPLIST_FILE = OPPVSGUI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../libs,
+					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -417,12 +436,17 @@
 					../../video,
 					../../../libs/libsrtp/include,
 					../../../libs/libsrtp/crypto/include,
+					../../include,
+					../../streaming,
+					../../thread,
+					../../misc,
 				);
 				INFOPLIST_FILE = OPPVSGUI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../libs,
+					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

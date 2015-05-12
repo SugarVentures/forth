@@ -7,6 +7,20 @@ namespace oppvs
 	{
 		m_event = event;
 		m_owner = owner;
+		m_thread = new Thread(PublishChannel::run, (void*)this);
+	}
+
+	PublishChannel::~PublishChannel()
+	{
+		m_interrupt = 1;
+		delete m_thread;
+	}
+
+	void* PublishChannel::run(void* object)
+	{
+		PublishChannel* publisher = (PublishChannel*)object;
+		publisher->waitingSubscribers();
+		return NULL;
 	}
 
 	int PublishChannel::start()
@@ -29,6 +43,7 @@ namespace oppvs
 		}
 		m_localAddress = m_server.getLocalAddress();
 		printf("Start listening at port: %d\n", m_localAddress.getPort());
+		m_thread->create();
 		return 0;
 	}
 
@@ -59,5 +74,6 @@ namespace oppvs
 			}
 			usleep(OPPVS_IDLE_TIME);
 		}
+		m_server.Close();
 	}
 }

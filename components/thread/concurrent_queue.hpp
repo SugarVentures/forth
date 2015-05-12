@@ -131,6 +131,12 @@ namespace oppvs
 		pthread_cond_t m_condition;
 		bool isWait;
 	};
+
+	template <typename T>
+	class ConVector
+	{
+		
+	};
 }
 
 #endif

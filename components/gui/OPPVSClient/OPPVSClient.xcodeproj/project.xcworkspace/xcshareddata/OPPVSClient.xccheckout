@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>0275203E-F979-410A-A1B4-31A0605985AB</string>
 	<key>IDESourceControlProjectName</key>
-	<string>OPPVSClient</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>2CEFFA833EC9651571E68101B0234285A713A4BC</key>
 		<string>https://github.com/SugarVentures/forth.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>components/gui/OPPVSClient/OPPVSClient.xcodeproj</string>
+	<string>components/gui/OPPVSClient/OPPVSClient.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2CEFFA833EC9651571E68101B0234285A713A4BC</key>

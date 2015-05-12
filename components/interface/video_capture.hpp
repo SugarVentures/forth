@@ -39,7 +39,7 @@ namespace oppvs {
 		uint8_t id;
 		uint16_t width;
 		uint16_t height;
-		uint16_t fps;	//Frame per Second
+		uint8_t fps;	//Frame per Second
 		std::string description;
 
 	};
@@ -63,7 +63,7 @@ namespace oppvs {
 
 	struct VideoActiveSource {	
 		uint16_t video_source_id;
-		uint8_t capability;
+		uint8_t fps;
 		uint8_t pixel_format;
 		video_source_type_t video_source_type;
 		window_rect_t rect;
@@ -71,6 +71,10 @@ namespace oppvs {
 
 		bool operator == (const VideoActiveSource& m) const {
 			return ((m.video_source_id == video_source_id) && (m.video_source_type == video_source_type));
+		}
+
+		bool operator != (const VideoActiveSource& m) const {
+			return ((m.video_source_id != video_source_id) || (m.video_source_type != video_source_type));
 		}
 
 	};
@@ -95,6 +99,9 @@ namespace oppvs {
 		virtual void setup() {}
 		virtual void start() {}
 		virtual void stop()	{}
+		virtual void updateConfiguration(const VideoActiveSource& source) {}
+
+		const VideoActiveSource& getSource() const { return m_source; }
 	protected:
 		frame_callback callback_frame;
 		void* callback_user;
@@ -124,12 +131,14 @@ namespace oppvs {
 
 		virtual void startRecording() {}
 		virtual void stopRecording() {}
+		virtual void updateConfiguration(const VideoActiveSource& source) {}
+
 		void* info;	//Get information of capture devices, screens
 		void* cap;	//Pointer to capture module
 		std::vector<VideoScreenSource> screen_sources;
 		std::vector<VideoCaptureDevice> capture_devices;
 
-		int addSource(video_source_type_t type, uint16_t sid, uint8_t capability, window_rect_t rect, void* user) {
+		int addSource(video_source_type_t type, uint16_t sid, uint8_t fps, window_rect_t rect, void* user) {
 			if (active_sources.size() >= MAX_ACTIVE_SOURCES)
 			{
 				return -1;
@@ -138,7 +147,7 @@ namespace oppvs {
 			VideoActiveSource src;
 			src.video_source_type = type;
 			src.video_source_id = sid;
-			src.capability = capability;
+			src.fps = fps;
 			src.rect = rect;
 			src.user = user;
 			active_sources.push_back(src);

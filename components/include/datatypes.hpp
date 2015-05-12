@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <errno.h>
+#include <unistd.h>
 
 #define OPPVS_IDLE_TIME	500
 #define OPPVS_DEFAULT_SERVER_LISTEN_PORT 33432
@@ -81,6 +82,8 @@ namespace oppvs {
     	size_t nbytes;
     	pixel_format_t format;
     	uint8_t flip;	//For different capture sources, the frame can be fliped when rendering
+    	uint16_t originx;
+    	uint16_t originy;
     	void* user;
 	};
 

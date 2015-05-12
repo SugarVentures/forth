@@ -11,6 +11,7 @@
 #include "publish_channel.hpp"
 #include "subscribe_channel.hpp"
 #include "network_stream.hpp"
+#include "bits_stream.hpp"
 
 #include <vector>
 
@@ -36,10 +37,12 @@ namespace oppvs
 		int initSubscribeChannel(const std::string& publisher, uint16_t port, const ServiceInfo& service);
 
 		void setStreamInfo(PixelBuffer& pf);
+		std::string getStreamInfo() const;
+
 		void pushData(PixelBuffer& pf);
 		void pullData();
 
-		bool getIsRunning();
+		bool isRunning();
 		void setIsRunning(bool value);
 		void registerCallback(frame_callback cb);
 		
@@ -63,6 +66,9 @@ namespace oppvs
 
 		ConQueue<RawData*> m_sendingQueue;	//Shared buffer of all upload streams
 		PixelBuffer* pixelBuffer;
+
+		BitsStream *m_bitsstream;
+		void initBitsStream();
 
 	};
 

@@ -12,14 +12,18 @@ namespace oppvs
 	{
 	public:
 		PublishChannel(void* owner, PixelBuffer* pf, on_new_subscriber_event event);
+		virtual ~PublishChannel();
 		int start();
 		void waitingSubscribers();
+
+		static void* run(void* object);
 	private:
 		ServerSocket m_server;
 		bool m_interrupt;
 		on_new_subscriber_event m_event;
 		void* m_owner;
 		PixelBuffer* m_pixelBuffer;
+		Thread* m_thread;
 	};
 }
 

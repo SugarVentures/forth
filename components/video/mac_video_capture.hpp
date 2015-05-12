@@ -16,6 +16,7 @@ namespace oppvs {
 			void setup();
 			void start();
 			void stop();
+			void updateConfiguration(const VideoActiveSource& source);
 	};
 
 	class MacVideoEngine : public VideoEngine {
@@ -35,5 +36,7 @@ namespace oppvs {
 		void stopRecording();
 
 		int getDeviceID(std::string& title);
+
+		void updateConfiguration(const VideoActiveSource& source);
 	};
 }
