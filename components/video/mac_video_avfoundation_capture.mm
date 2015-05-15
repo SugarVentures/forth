@@ -54,7 +54,6 @@
  - (void) setWindowId: (int) wid;
  - (void) setFrameRate: (int) fps;
  - (int) setPixelFormat: (int) pf;
- - (int) listDisplay;
  - (void) saveScreenShot: (CGImageRef) image_ref as: (NSString*) filename;
  - (void) updateConfiguration: (CGRect) rect : (int) pixelformat : (int) fps;
 @end
@@ -102,25 +101,7 @@
     CGImageDestinationFinalize(fileDest);
  }
 
- - (int) listDisplay {
-    CGDisplayErr err;
-    CGDisplayCount displayCount, i;
-    CGDirectDisplayID mainDisplay;
-    CGDisplayCount maxDisplays = 5;
-    CGDirectDisplayID onlineDisplay[maxDisplays];
-
-    mainDisplay = CGMainDisplayID();
-    err = CGGetOnlineDisplayList(maxDisplays, onlineDisplay, &displayCount);
-
-    /*for (i = 0; i < displayCount; i++)
-    {
-        CGDirectDisplayID did = onlineDisplay[i];
-        printf("%-16p %lux%lu %32s", did, CGDisplayPixelsWide(did), CGDisplayPixelsHigh(did),
-            (did == mainDisplay) ? "[main display]\n" : "\n");
-    }*/
-    return 0;
- }
-
+ 
  - (oppvs::error_video_capture_t) openCaptureDevice: (CGRect) rect : (int) pixelformat : (int) fps
  {
     //Set flip

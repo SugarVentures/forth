@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		D92220361AC2BA310069116D /* libvideoengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D92220351AC2BA310069116D /* libvideoengine.so */; };
-		D9225EBF1AB6D91200B2C804 /* CapturePreview.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9225EBE1AB6D91200B2C804 /* CapturePreview.mm */; };
 		D924C6C91AB7DC2500586413 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6C81AB7DC2500586413 /* OpenGL.framework */; };
 		D924C6CB1AB805B100586413 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6CA1AB805B100586413 /* QuartzCore.framework */; };
 		D924C6CD1AB83E6600586413 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6CC1AB83E6600586413 /* CoreGraphics.framework */; };
 		D9250F271AC4F8B300858FF5 /* libnetworkengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9250F261AC4F8B300858FF5 /* libnetworkengine.so */; };
 		D9277A3B1AF0C00700669ABF /* DrawMouseBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9277A3A1AF0C00700669ABF /* DrawMouseBoxView.m */; };
+		D93DD5FF1B04818100591808 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D93DD5FE1B04818100591808 /* IOKit.framework */; };
+		D93F81D71B0362BA0017413C /* DropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D93F81D61B0362BA0017413C /* DropDownMenu.m */; };
 		D951C8E81B006FF900FEA751 /* libstreaming.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D951C8E71B006FF900FEA751 /* libstreaming.so */; };
-		D95FEEC91ADCFFA8005AC18F /* VideoPreview.mm in Sources */ = {isa = PBXBuildFile; fileRef = D95FEEC81ADCFFA8005AC18F /* VideoPreview.mm */; };
 		D97FC54C1AB2EA4D00E3988E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FC54B1AB2EA4D00E3988E /* AppDelegate.m */; };
 		D97FC54E1AB2EA4D00E3988E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FC54D1AB2EA4D00E3988E /* main.m */; };
 		D97FC5511AB2EA4D00E3988E /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D97FC5501AB2EA4D00E3988E /* ViewController.mm */; };
@@ -23,6 +23,7 @@
 		D97FC5561AB2EA4D00E3988E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D97FC5551AB2EA4D00E3988E /* Images.xcassets */; };
 		D97FC5591AB2EA4D00E3988E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D97FC5571AB2EA4D00E3988E /* Main.storyboard */; };
 		D97FC5651AB2EA4D00E3988E /* OPPVSGUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FC5641AB2EA4D00E3988E /* OPPVSGUITests.m */; };
+		D9C89FE31B0310EE008A6E48 /* libOPPVSRendering.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9C89FE21B0310EE008A6E48 /* libOPPVSRendering.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,9 @@
 		D9250F261AC4F8B300858FF5 /* libnetworkengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetworkengine.so; path = ../../../libs/libnetworkengine.so; sourceTree = "<group>"; };
 		D9277A391AF0C00700669ABF /* DrawMouseBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawMouseBoxView.h; sourceTree = "<group>"; };
 		D9277A3A1AF0C00700669ABF /* DrawMouseBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawMouseBoxView.m; sourceTree = "<group>"; };
+		D93DD5FE1B04818100591808 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		D93F81D51B0362BA0017413C /* DropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownMenu.h; sourceTree = "<group>"; };
+		D93F81D61B0362BA0017413C /* DropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownMenu.m; sourceTree = "<group>"; };
 		D951C8E71B006FF900FEA751 /* libstreaming.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming.so; path = ../../../libs/libstreaming.so; sourceTree = "<group>"; };
 		D95FEEC71ADCFFA8005AC18F /* VideoPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPreview.h; sourceTree = "<group>"; };
 		D95FEEC81ADCFFA8005AC18F /* VideoPreview.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VideoPreview.mm; sourceTree = "<group>"; };
@@ -74,6 +78,7 @@
 		D97FC55E1AB2EA4D00E3988E /* OPPVSGUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OPPVSGUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97FC5631AB2EA4D00E3988E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D97FC5641AB2EA4D00E3988E /* OPPVSGUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPPVSGUITests.m; sourceTree = "<group>"; };
+		D9C89FE21B0310EE008A6E48 /* libOPPVSRendering.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libOPPVSRendering.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +86,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D93DD5FF1B04818100591808 /* IOKit.framework in Frameworks */,
+				D9C89FE31B0310EE008A6E48 /* libOPPVSRendering.dylib in Frameworks */,
 				D951C8E81B006FF900FEA751 /* libstreaming.so in Frameworks */,
 				D9250F271AC4F8B300858FF5 /* libnetworkengine.so in Frameworks */,
 				D92220361AC2BA310069116D /* libvideoengine.so in Frameworks */,
@@ -103,6 +110,8 @@
 		D9277A3C1AF0C07B00669ABF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D93DD5FE1B04818100591808 /* IOKit.framework */,
+				D9C89FE21B0310EE008A6E48 /* libOPPVSRendering.dylib */,
 				D951C8E71B006FF900FEA751 /* libstreaming.so */,
 				D924C6C81AB7DC2500586413 /* OpenGL.framework */,
 				D924C6CA1AB805B100586413 /* QuartzCore.framework */,
@@ -150,6 +159,8 @@
 				D97FC5551AB2EA4D00E3988E /* Images.xcassets */,
 				D97FC5571AB2EA4D00E3988E /* Main.storyboard */,
 				D97FC5481AB2EA4D00E3988E /* Supporting Files */,
+				D93F81D51B0362BA0017413C /* DropDownMenu.h */,
+				D93F81D61B0362BA0017413C /* DropDownMenu.m */,
 			);
 			path = OPPVSGUI;
 			sourceTree = "<group>";
@@ -280,9 +291,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D95FEEC91ADCFFA8005AC18F /* VideoPreview.mm in Sources */,
-				D9225EBF1AB6D91200B2C804 /* CapturePreview.mm in Sources */,
 				D97FC5541AB2EA4D00E3988E /* Document.mm in Sources */,
+				D93F81D71B0362BA0017413C /* DropDownMenu.m in Sources */,
 				D97FC5511AB2EA4D00E3988E /* ViewController.mm in Sources */,
 				D97FC54E1AB2EA4D00E3988E /* main.m in Sources */,
 				D97FC54C1AB2EA4D00E3988E /* AppDelegate.m in Sources */,
@@ -412,6 +422,7 @@
 					../../streaming,
 					../../thread,
 					../../misc,
+					../OPPVSRendering/OPPVSRendering,
 				);
 				INFOPLIST_FILE = OPPVSGUI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -419,6 +430,8 @@
 					"$(inherited)",
 					../../../libs,
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
+					"/Users/caominhtrang/Documents/ForthProject/forth-dev/components/gui/OPPVSRendering/build/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -440,6 +453,7 @@
 					../../streaming,
 					../../thread,
 					../../misc,
+					../OPPVSRendering/OPPVSRendering,
 				);
 				INFOPLIST_FILE = OPPVSGUI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -447,6 +461,8 @@
 					"$(inherited)",
 					../../../libs,
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
+					"/Users/caominhtrang/Documents/ForthProject/forth-dev/components/gui/OPPVSRendering/build/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

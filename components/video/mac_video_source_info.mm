@@ -18,6 +18,7 @@
 - (int) getAppNameByID : (std::string&) appname : (int) appid;
 - (int) getCapabilities : (std::vector<oppvs::VideoSourceCapability>&) capabilities forDevice: (AVCaptureDevice*) device;
 - (int) getDeviceIDByTitle : (std::string&)  title;
+- (int) getListDisplays: (std::vector<oppvs::Monitor>&) result;
 @end
 
 @implementation MacVideoSourceInfo {
@@ -141,6 +142,27 @@
     return -1;
  }
 
+ - (int) getListDisplays: (std::vector<oppvs::Monitor>&) result
+ {
+    CGDisplayErr err;
+    CGDisplayCount displayCount, i;
+    CGDirectDisplayID mainDisplay;
+    CGDisplayCount maxDisplays = 5;
+    CGDirectDisplayID onlineDisplay[maxDisplays];
+
+    mainDisplay = CGMainDisplayID();
+    err = CGGetOnlineDisplayList(maxDisplays, onlineDisplay, &displayCount);
+
+    for (i = 0; i < displayCount; i++)
+    {
+        CGDirectDisplayID did = onlineDisplay[i];
+        oppvs::Monitor m;
+        m.id = did;
+        result.push_back(m);
+    }
+    return 0;
+ }
+
 void* oppvs_vc_info_alloc() {
 	return (void*)[[MacVideoSourceInfo alloc] init];
 }
@@ -156,6 +178,11 @@ int oppvs_get_list_windows(void* cap, std::vector<oppvs::VideoScreenSource>& res
 int oppvs_get_device_id(void* cap, std::string& title) {
     return [(id)cap getDeviceIDByTitle: title];
     
+}
+
+int oppvs_get_list_monitors(void* cap, std::vector<oppvs::Monitor>& result)
+{
+    return [(id)cap getListDisplays: result];
 }
 
 @end

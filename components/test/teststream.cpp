@@ -5,7 +5,7 @@ int interrupt;
 
 void frameCallback(oppvs::PixelBuffer& pf)
 {
-	printf("Out data: %d %d %d %d\n", pf.width[0], pf.height[0], pf.originx, pf.originy);
+	printf("Out data: %d %d %d %d %d %d\n", pf.width[0], pf.height[0], pf.originx, pf.originy, pf.plane[0][100], pf.plane[0][5000]);
 }
 
 void signalhandler(int param)

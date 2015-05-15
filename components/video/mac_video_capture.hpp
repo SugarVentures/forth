@@ -29,7 +29,12 @@ namespace oppvs {
 
 		void getListVideoSource(std::vector<VideoScreenSource>& result);
 
+		void getListMonitors(std::vector<Monitor>& result);
+
 		void setupCaptureSessions();
+
+		void setupCaptureSession(VideoActiveSource& source);
+		void startCaptureSession(VideoActiveSource& source);
 
 		void startRecording();
 

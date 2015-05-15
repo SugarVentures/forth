@@ -8,6 +8,8 @@
 #include "network.hpp"
 #include "concurrent_queue.hpp"
 
+#include <map>
+
 namespace oppvs
 {
 
@@ -57,6 +59,14 @@ namespace oppvs
 		uint8_t flag;
 	};
 
+	struct FrameInfo
+	{
+		uint16_t width;
+		uint16_t height;
+		uint16_t originx;
+		uint16_t originy;
+	};
+
 
 	typedef void (*on_send_done_event)(void* owner, int error);
 	typedef void (*on_receive_event)(void* ownver, int error);
@@ -102,6 +112,8 @@ namespace oppvs
 		PixelBuffer* m_buffer;
 
 		void sendDone(int* error);
+
+		void addSource(FrameInfo& inf);
 	};
 }
 

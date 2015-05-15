@@ -7,9 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "CapturePreview.h"
-
-@class CapturePreview;
 
 @interface ViewController ()
 {
@@ -25,6 +22,8 @@
 @implementation ViewController
 {
     NSMutableArray *shadeWindows;
+    
+    id frameViewID; //Used in capturing custom region to point to the rendering view
 }
 
 @synthesize videoDevices;
@@ -57,10 +56,8 @@ NSString* kCSName = @"CSName";
     [tableView setDataSource:self];
     [tableView setDelegate: self];
     
-    
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    [self setListCaptureSources: array];
-    
+    //Set target for drop down menu
+    [addSourceButton setTarget:self];
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -81,6 +78,7 @@ NSString* kCSName = @"CSName";
         {
             [self setSelectedVideoDevice:videoDevices[0]];
         }
+        [addSourceButton setDataSource:[self listSources]];
     }
 }
 
@@ -99,16 +97,17 @@ NSString* kCSName = @"CSName";
     }
     videoDeviceIndex = [videoDevices indexOfObject:device];
     NSRange range = [device rangeOfString:@"Screen Capturing" options:NSCaseInsensitiveSearch];
-    CapturePreview *view = (CapturePreview*)previewView;
+    //CapturePreview *view = (CapturePreview*)previewView;
+    //FrameView *view = (FrameView*)previewView;
     if (range.location != NSNotFound)
     {
         [self setWindowInputs: document.windowCaptureInputs];
-        [view setReverse:false];
+        //[view setReverse:false];
     }
     else
     {
         [self setWindowInputs:nil];
-        [view setReverse:true];
+        //[view setReverse:true];
     }
     
  
@@ -124,6 +123,8 @@ NSString* kCSName = @"CSName";
 }
 
 
+#pragma mark Controlling Buttons
+
 - (IBAction)startRecording:(id)sender {
     if ([self.listCaptureSources count] == 0)
     {
@@ -138,13 +139,14 @@ NSString* kCSName = @"CSName";
 - (IBAction)stopRecording:(id)sender {
     [self setRecording:false];
     [document stopRecording];
-    CapturePreview *view = (CapturePreview*)previewView;
-    [view setReset:true];
+    //CapturePreview *view = (CapturePreview*)previewView;
+    //[view setReset:true];
 }
 
 
 - (IBAction)AddClick:(id)sender {
-    VideoPreview *superview = (VideoPreview*)hostPreviewLayer;
+    
+    FrameView *superview = (FrameView*)hostPreviewLayer;
     int i = [self.listCaptureSources count];
     NSRect frame;
     NSValue *frameid;
@@ -179,8 +181,9 @@ NSString* kCSName = @"CSName";
 {
     if (pf != NULL)
     {        
-        CapturePreview *view = (CapturePreview*)previewView;
-        [view setPixelBuffer:pf];
+        //CapturePreview *view = (CapturePreview*)previewView;
+        //OpenGLFrame *view = (OpenGLFrame*)previewView;
+        //[view setPixelBuffer:pf];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [previewView setNeedsDisplay];
@@ -191,8 +194,8 @@ NSString* kCSName = @"CSName";
 
 - (void) reset
 {
-    CapturePreview *view = (CapturePreview*)previewView;
-    [view setReset: true];
+    //CapturePreview *view = (CapturePreview*)previewView;
+    //[view setReset: true];
 }
 
 - (void) setStreamInfo:(NSString *)info
@@ -239,7 +242,7 @@ NSString* kCSName = @"CSName";
     return result;
 }
 
-#pragma mark Setup Screen Capture
+#pragma mark Setup Custom Region
 
 #define kShadyWindowLevel   (NSDockWindowLevel + 1000)
 
@@ -259,6 +262,7 @@ NSString* kCSName = @"CSName";
     {
         /* Add the display as a capture input. */
         //[self addDisplayInputToCaptureSession:displayID cropRect:NSRectToCGRect(rect)];
+        
     }
     
     for (NSWindow* w in [NSApp windows])
@@ -270,10 +274,12 @@ NSString* kCSName = @"CSName";
     }
     [[NSCursor currentCursor] pop];
     [shadeWindows removeAllObjects];
+    
+    [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_WINDOW inRect:rect withViewID:frameViewID];
 }
 
 
-- (IBAction)SetRegion:(id)sender {
+- (void)setRegion{
     if(!shadeWindows) {
         shadeWindows = [NSMutableArray array];
     }
@@ -296,4 +302,47 @@ NSString* kCSName = @"CSName";
     
     [[NSCursor crosshairCursor] push];
 }
+
+#pragma mark Manage Capturing Sources
+
+- (IBAction)addSource:(id)sender
+{
+    NSMenuItem* selectedItem = (NSMenuItem*)sender;
+    NSInteger index = selectedItem.tag;
+    NSDictionary *source = [[self listSources] objectAtIndex:index];
+    if ([[source objectForKey:@"type"] isEqualToString:@"Monitor"])
+    {
+        //CGRect frame = CGDisplayBounds(displayID);
+        int x = arc4random_uniform(50);
+        int y = arc4random_uniform(50);
+        CGRect frame = CGRectMake(x, y, 400, 400);
+        id user = [self addSubView:frame];
+        [document addSource:[[source objectForKey:@"id"] stringValue] hasType:oppvs::VST_WINDOW inRect:frame withViewID:user];
+    }
+    else if ([[source objectForKey:@"type"] isEqualToString:@"Device"])
+    {
+        int x = arc4random_uniform(50);
+        int y = arc4random_uniform(50);
+        CGRect frame = CGRectMake(x, y, 400, 400);
+        id user = [self addSubView:frame];
+        [document addSource: [source objectForKey:@"id"] hasType:oppvs::VST_WEBCAM inRect:frame withViewID:user];
+    }
+    else if ([[source objectForKey:@"type"] isEqualToString:@"Custom"])
+    {
+        int x = arc4random_uniform(50);
+        int y = arc4random_uniform(50);
+        CGRect frame = CGRectMake(x, y, 400, 400);
+        id user = [self addSubView:frame];
+        frameViewID = user;
+        [self setRegion];
+    }
+}
+
+- (id)addSubView: (NSRect)frame
+{
+    FrameView *superview = (FrameView*)hostPreviewLayer;
+    id user = [superview addWindow:frame];
+    return user;
+}
+
 @end

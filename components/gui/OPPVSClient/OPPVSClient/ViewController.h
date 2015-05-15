@@ -21,7 +21,7 @@
     CAOpenGLLayer *previewView;
     
     oppvs::PixelBuffer localbuf;
-    uint16_t nbytes;
+    uint32_t nbytes;
 }
 - (IBAction)Play:(id)sender;
 - (IBAction)rotate:(id)sender;

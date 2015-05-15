@@ -8,11 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Document.h"
-#import "VideoPreview.h"
 #import "DrawMouseBoxView.h"
+#import "FrameView.h"
+#import "DropDownMenu.h"
 
 @class Document;
-@class VideoPreview;
+
 
 @interface ViewController : NSViewController<NSTableViewDataSource, NSTableViewDelegate, DrawMouseBoxViewDelegate>
 {
@@ -29,8 +30,11 @@
     CAOpenGLLayer *previewView;
     
     IBOutlet NSTableView *tableView;
+    
+    IBOutlet DropDownMenu *addSourceButton;
 }
 
+@property (retain) NSMutableArray *listSources;
 
 @property (retain) NSArray *videoDevices;
 @property (retain) NSDictionary *windowInputs;
@@ -50,8 +54,9 @@
 - (void) renderFrame: (oppvs::PixelBuffer*) pixelBuffer;
 - (IBAction)startStreaming:(id)sender;
 - (void) reset;
-- (IBAction)SetRegion:(id)sender;
+- (void) setRegion;
 - (void) setStreamInfo: (NSString*) info;
+- (IBAction) addSource:(id)sender;
 
 @end
 

@@ -7,6 +7,7 @@
 //
 
 #import "Document.h"
+#import <IOKit/graphics/IOGraphicsLib.h>
 
 oppvs::Stream* oppvsStream;
 oppvs::StreamingEngine *streamingEngine;
@@ -43,7 +44,7 @@ bool isStreaming;
     ViewController* view = (ViewController*)viewController;
     [view reset];
     
-    for (id obj in [view listCaptureSources])
+    /*for (id obj in [view listCaptureSources])
     {
         NSMutableDictionary *dict = (NSMutableDictionary*)obj;
         NSString* device = [dict valueForKey:@"CSName"];
@@ -77,7 +78,7 @@ bool isStreaming;
     
     
     videoEngine->setupCaptureSessions();
-    videoEngine->startRecording();
+    videoEngine->startRecording();*/
 }
 
 - (void) stopRecording
@@ -117,13 +118,123 @@ void frameCallback(oppvs::PixelBuffer& pf)
         }
     }
     
-    CapturePreview* view = (__bridge CapturePreview*)pf.user;
-    [view setPixelBuffer:&pf];
+    OpenGLFrame* renderingView = (__bridge OpenGLFrame*)pf.user;
+    [renderingView setPixelBuffer:pf.plane[0]];
+    [renderingView setFrameWidth:pf.width[0]];
+    [renderingView setFrameHeight:pf.height[0]];
+    
+  
+    //CapturePreview* view = (__bridge CapturePreview*)pf.user;
+    //[view setPixelBuffer:&pf];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [view setNeedsDisplay];
-    });    
+        [renderingView setNeedsDisplay];
+    });
 
+}
+
+#pragma mark Utilities
+
+// Returns the io_service_t corresponding to a CG display ID, or 0 on failure.
+// The io_service_t should be released with IOObjectRelease when not needed.
+//
+static io_service_t IOServicePortFromCGDisplayID(CGDirectDisplayID displayID)
+{
+    io_iterator_t iter;
+    io_service_t serv, servicePort = 0;
+    
+    CFMutableDictionaryRef matching = IOServiceMatching("IODisplayConnect");
+    
+    // releases matching for us
+    kern_return_t err = IOServiceGetMatchingServices(kIOMasterPortDefault,
+                                                     matching,
+                                                     &iter);
+    if (err)
+        return 0;
+    
+    while ((serv = IOIteratorNext(iter)) != 0)
+    {
+        CFDictionaryRef info;
+        CFIndex vendorID, productID, serialNumber = 0;
+        CFNumberRef vendorIDRef, productIDRef, serialNumberRef;
+        Boolean success;
+        
+        info = IODisplayCreateInfoDictionary(serv,
+                                             kIODisplayOnlyPreferredName);
+        
+        vendorIDRef = (CFNumberRef)CFDictionaryGetValue(info, CFSTR(kDisplayVendorID));
+        productIDRef = (CFNumberRef)CFDictionaryGetValue(info, CFSTR(kDisplayProductID));
+        serialNumberRef = (CFNumberRef)CFDictionaryGetValue(info, CFSTR(kDisplaySerialNumber));
+        
+        
+        success = CFNumberGetValue(vendorIDRef, kCFNumberCFIndexType, &vendorID);
+        success &= CFNumberGetValue(productIDRef, kCFNumberCFIndexType, &productID);
+        
+        if (serialNumberRef)
+            success &= CFNumberGetValue(serialNumberRef, kCFNumberCFIndexType, &serialNumber);
+        
+        if (!success)
+        {
+            CFRelease(info);
+            continue;
+        }
+        
+        // If the vendor and product id along with the serial don't match
+        // then we are not looking at the correct monitor.
+        // NOTE: The serial number is important in cases where two monitors
+        //       are the exact same.
+        if (serialNumberRef)
+        {
+            if (CGDisplayVendorNumber(displayID) != vendorID  ||
+                CGDisplayModelNumber(displayID) != productID  ||
+                CGDisplaySerialNumber(displayID) != serialNumber)
+            {
+                CFRelease(info);
+                continue;
+            }
+        }
+        else
+        {
+            if (CGDisplayVendorNumber(displayID) != vendorID ||
+                CGDisplayModelNumber(displayID) != productID)
+            {
+                CFRelease(info);
+                continue;
+            }
+        }
+        // The VendorID, Product ID, and the Serial Number all Match Up!
+        // Therefore we have found the appropriate display io_service
+        servicePort = serv;
+        CFRelease(info);
+        break;
+    }
+    
+    IOObjectRelease(iter);
+    return servicePort;
+}
+
+NSString* screenNameForDisplay(CGDirectDisplayID displayID)
+{
+    NSString *screenName = nil;
+    CFStringRef value;
+    io_service_t serv = IOServicePortFromCGDisplayID(displayID);
+    if (serv == 0)
+    {
+        return @"Unknown";
+    }
+    
+    CFDictionaryRef deviceInfo = IODisplayCreateInfoDictionary(serv, kIODisplayOnlyPreferredName);
+    IOObjectRelease(serv);
+    
+    char* name = (char*)CFDictionaryGetValue(deviceInfo, CFSTR(kDisplayProductName));
+    if (!name || !CFDictionaryGetValueIfPresent(deviceInfo, CFSTR("en_US"), (const void**) &value))
+    {
+        return @"Built-In Display";
+    }
+    
+    [NSString stringWithCString:name encoding:[NSString defaultCStringEncoding]];
+    CFRelease(deviceInfo);
+    return screenName;
 }
 
 oppvs::MacVideoEngine* initVideoEngine(id document, id view)
@@ -131,29 +242,65 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     oppvs::MacVideoEngine *ve;
     std::vector<oppvs::VideoCaptureDevice> devices;
     std::vector<oppvs::VideoScreenSource> windows;
+    std::vector<oppvs::Monitor> monitors;
+    
     void* user = (__bridge void*)view;
     
     ve = new oppvs::MacVideoEngine(frameCallback, user);
     if (!ve)
         return NULL;
+    
+    NSMutableArray *listSources = [[NSMutableArray alloc] init];
+    NSMutableDictionary *dashItem = [[NSMutableDictionary alloc] init];
+    [dashItem setObject:@" " forKey:@"title"];
+    [dashItem setObject:@"Empty" forKey:@"id"];
+    [dashItem setObject:@"Dash" forKey:@"type"];
+    
+    ve->getListMonitors(monitors);
+    if (monitors.size() == 0)
+        return ve;
+    
+    for (std::vector<oppvs::Monitor>::const_iterator it = monitors.begin(); it != monitors.end(); ++it)
+    {
+        NSString *monitorName = screenNameForDisplay(it->id);
+        NSMutableDictionary *monitorItem = [[NSMutableDictionary alloc] init];
+        [monitorItem setObject:monitorName forKey:@"title"];
+        NSNumber *monitorID = [NSNumber numberWithUnsignedLong:it->id];
+        [monitorItem setObject:monitorID forKey:@"id"];
+        [monitorItem setObject:@"Monitor" forKey:@"type"];
+        [listSources addObject: monitorItem];
+    }
+    
+    //Add dash
+    [listSources addObject:dashItem];
+    
+    NSMutableDictionary *customItem = [[NSMutableDictionary alloc] init];
+    [customItem setObject:@"Custom region" forKey:@"title"];
+    [customItem setObject:@"Empty" forKey:@"id"];
+    [customItem setObject:@"Custom" forKey:@"type"];
+    [listSources addObject:customItem];
+    
+    //Add dash
+    [listSources addObject:dashItem];
 
     ve->getListCaptureDevices(devices);
     if (devices.size() > 0)
     {
-        @autoreleasepool {
-            NSMutableArray *nsdevices = [[NSMutableArray alloc] init];
-            [nsdevices addObject: @"Screen Capturing"];
-            for (std::vector<oppvs::VideoCaptureDevice>::const_iterator it = devices.begin(); it != devices.end(); ++it)
-            {
-                NSString *device_name = [NSString stringWithCString:it->device_name.c_str()
-                                                           encoding:[NSString defaultCStringEncoding]];
-                [nsdevices addObject:device_name];
-            }
-            
-            [document setVideoCaptureDevices: nsdevices];
+        for (std::vector<oppvs::VideoCaptureDevice>::const_iterator it = devices.begin(); it != devices.end(); ++it)
+        {
+            NSString *deviceName = [NSString stringWithCString:it->device_name.c_str()
+                                                       encoding:[NSString defaultCStringEncoding]];
+            NSString *deviceId = [NSString stringWithCString:it->device_id.c_str()
+                                                    encoding:[NSString defaultCStringEncoding]];
+            NSMutableDictionary *deviceItem = [[NSMutableDictionary alloc] init];
+            [deviceItem setObject:deviceName forKey:@"title"];
+            [deviceItem setObject:deviceId forKey:@"id"];
+            [deviceItem setObject:@"Device" forKey:@"type"];
+            [listSources addObject:deviceItem];
         }
     }
     
+    [view setListSources:listSources];
     
     ve->getListVideoSource(windows);
     if (windows.size() > 0)
@@ -181,13 +328,34 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
             
             [document setWindowCaptureInputs:nswindows];
         }
-        
     }
+    
+    monitors.clear();
     devices.clear();
     windows.clear();
     return ve;
 }
 
+- (void) addSource:(NSString *)sourceid hasType:(oppvs::VideoSourceType)type inRect:(CGRect)rect withViewID:(id)viewid
+{
+    std::string source = [sourceid UTF8String];
+    oppvs::window_rect_t crect;
+    crect.left = rect.origin.x;
+    crect.bottom = rect.origin.y;
+    crect.right = rect.origin.x + rect.size.width;
+    crect.top = rect.origin.y + rect.size.height;
+    
+    oppvs::VideoActiveSource *activeSource;
+    activeSource = videoEngine->addSource(type, source, 30, crect, (__bridge void*)viewid);
+    if (activeSource)
+    {
+        videoEngine->setupCaptureSession(*activeSource);
+        videoEngine->startCaptureSession(*activeSource);
+    }
+    else
+        NSLog(@"Failed to add capture source");
+
+}
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
     [super windowControllerDidLoadNib:aController];

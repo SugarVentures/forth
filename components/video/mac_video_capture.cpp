@@ -19,9 +19,6 @@ namespace oppvs {
 	MacVideoEngine::MacVideoEngine(frame_callback cbf, void* user) : VideoEngine(cbf, user){
 		printf("Init video engine \n");
 		info = oppvs_vc_info_alloc();
-		//cap = oppvs_vc_av_alloc();
-		//oppvs_av_set_callback(cap, cbf, user);
-
 	}
 
 	MacVideoEngine::~MacVideoEngine() {
@@ -29,24 +26,37 @@ namespace oppvs {
 	}
 
 	void MacVideoEngine::getListCaptureDevices(std::vector<VideoCaptureDevice>& result) {
-		int numDevices = oppvs_get_list_video_sources(info, result);
+		oppvs_get_list_video_sources(info, result);
 	}
 
 	void MacVideoEngine::getListVideoSource(std::vector<VideoScreenSource>& result) {
-		int numWindows = oppvs_get_list_windows(info, result);
+		oppvs_get_list_windows(info, result);
+	}
 
+	void MacVideoEngine::getListMonitors(std::vector<Monitor>& result)
+	{
+		oppvs_get_list_monitors(info, result);
 	}
 
 	void MacVideoEngine::setupCaptureSessions() {
-		//error_video_capture_t error;		
-		//error = oppvs_setup_capture_sessions(cap, active_sources);
 		for (std::vector<VideoActiveSource>::const_iterator i = active_sources.begin(); i != active_sources.end(); ++i)
 	    {
-	        printf("Source: %d type: %d\n", i->video_source_id, i->video_source_type);
 	        MacVideoCapture* videocap = new MacVideoCapture(callback_frame, i->user, *i);
 	        videocap->setup();
 	        videoCaptures.push_back(videocap);
 	    }
+	}
+
+	void MacVideoEngine::setupCaptureSession(VideoActiveSource& source)
+	{
+		MacVideoCapture* videocap = new MacVideoCapture(callback_frame, source.user, source);
+	    videocap->setup();
+	    source.capture = (VideoCapture*)videocap;
+	}
+
+	void MacVideoEngine::startCaptureSession(VideoActiveSource& source)
+	{
+		source.capture->start();
 	}
 
 	void MacVideoEngine::startRecording() {
@@ -115,4 +125,6 @@ namespace oppvs {
 		m_source = source;
 		oppvs_update_configuration(m_cap, m_source);
 	}
+
+	
 }

@@ -29,6 +29,7 @@
 @property NSMutableDictionary *windowCaptureInputs;
 @property NSInteger severPort;
 
+- (void) addSource: (NSString*) sourceid hasType: (oppvs::VideoSourceType) type inRect: (CGRect)rect withViewID: (id) viewid;
 - (void) startRecording;
 - (void) stopRecording;
 - (void) startStreaming;

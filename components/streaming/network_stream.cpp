@@ -88,8 +88,11 @@ namespace oppvs
 		int len = OPPVS_NETWORK_PACKET_LENGTH;
 		bool isNextFrame = false;
 		int msgLength = 0;
-		uint8_t* curPos = buffer;
+		uint8_t* curPos = NULL;
 		
+		uint16_t width = 0;
+		uint16_t height = 0;
+		uint8_t *data = NULL;
 		int rcvLen = m_socket.RecvFrom(localbuffer, &len, &isNextFrame);
 		while (rcvLen > 0)
 		{
@@ -98,9 +101,11 @@ namespace oppvs
 				printf("Receive control msg\n");
 				FrameBegin controlmsg;
 				memcpy(&controlmsg, localbuffer, sizeof(controlmsg));
-				m_buffer->width[0] = controlmsg.width;
-				m_buffer->height[0] = controlmsg.height;
-				printf("Width: %d %d \n", controlmsg.width, controlmsg.height);
+				width = controlmsg.width;
+				height = controlmsg.height;
+				data = new uint8_t[width*height*4];
+				curPos = data;
+				printf("Width: %d Height: %d \n", controlmsg.width, controlmsg.height);
 			}
 			else if (rcvLen == sizeof(FrameEnd))
 			{
@@ -108,13 +113,30 @@ namespace oppvs
 			}
 			else
 			{
-				memcpy(curPos, localbuffer, rcvLen);
-				msgLength += rcvLen;
-				curPos += rcvLen;
+				if (curPos)
+				{
+					memcpy(curPos, localbuffer, rcvLen);
+					msgLength += rcvLen;
+					curPos += rcvLen;
+				}
 			}
 			rcvLen = m_socket.RecvFrom(localbuffer, &len, &isNextFrame);
 		}
+		if (msgLength == 0)
+			return -1;
 		printf("Read %u bytes\n", msgLength);
+		uint16_t stride = width * 4;
+		for (int i = 0; i < height; i++)
+	    {
+	        uint32_t offset_buffer = m_buffer->width[0]*4*(0 + i) + 0*4;
+	        uint32_t offset_data = width*4*i;
+	        memcpy(buffer + offset_buffer, data + offset_data, stride);
+	    }
+	    if (data != NULL)
+	    {
+	    	delete [] data;
+	    	data = NULL;
+	    }
 		return 0;		
 	}
 
@@ -206,5 +228,10 @@ namespace oppvs
 	SocketAddress& NetworkStream::getLocalAddress()
 	{
 		return m_socket.getLocalAddress();
+	}
+
+	void NetworkStream::addSource(FrameInfo& inf)
+	{
+
 	}
 }

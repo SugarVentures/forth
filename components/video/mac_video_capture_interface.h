@@ -15,6 +15,7 @@ void* oppvs_vc_info_alloc();	//Allocate AV foundation VC object
 int oppvs_get_list_video_sources(void* cap, std::vector<oppvs::VideoCaptureDevice>& result);
 int oppvs_get_list_windows(void* cap, std::vector<oppvs::VideoScreenSource>& result);
 int oppvs_get_device_id(void* cap, std::string& title);
+int oppvs_get_list_monitors(void* cap, std::vector<oppvs::Monitor>& result);
 
 void* oppvs_vc_av_alloc();
 int oppvs_setup_capture_session(void* cap, oppvs::VideoActiveSource& source);

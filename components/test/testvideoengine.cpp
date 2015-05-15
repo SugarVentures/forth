@@ -71,21 +71,23 @@ int main(int argc, char* argv[])
     oppvs::VideoActiveSource source;
     for (std::vector<oppvs::VideoCaptureDevice>::const_iterator i = devices.begin(); i != devices.end(); ++i)
     {
-        /*std::cout << "Device: " << i->device_id << ' ';
+        std::cout << "Device: " << i->device_id << ' ';
         std::cout << "name: " << i->device_name << ' ';
         std::cout << "Cap: " << i->capabilities.front().width << ' ' << i->capabilities.front().height;
         std::cout << "Format: " << i->capabilities.front().fps;
-        std::cout << '\n';*/
-        ve->addSource(oppvs::VST_WEBCAM, device_index, 30, rect1, &controller);
-        source.video_source_id = device_index;
+        std::cout << '\n';
+        ve->addSource(oppvs::VST_WEBCAM, i->device_id, 30, rect1, &controller);
+        source.video_source_id = i->device_id;
         source.rect = rect1;
         source.video_source_type = oppvs::VST_WEBCAM;
         device_index++;
     }
 
-	ve->getListVideoSource(v);
     
-	/*std::cout << "Number of available windows: " << v.size() << "\n";
+    
+	/*ve->getListVideoSource(v);
+    
+	std::cout << "Number of available windows: " << v.size() << "\n";
 	for (std::vector<oppvs::VideoScreenSource>::const_iterator i = v.begin(); i != v.end(); ++i)
 	{
     	std::cout << "Window id: " << i->id << ' ';
@@ -94,12 +96,16 @@ int main(int argc, char* argv[])
     	std::cout << "App name: " << i->app_name << ' ';
     	std::cout << '\n';
         uint32_t capability = 1;
-        ve->addSource(oppvs::VST_WINDOW, i->id, capability, rect);
-    }*/
+        ve->addSource(oppvs::VST_WINDOW, std::to_string(i->id), 30, rect1, &controller);
+    }
 
-    ve->addSource(oppvs::VST_WINDOW, 0, 30, rect2, &user2);
-    std::string str = "FaceTime";
-    ve->getDeviceID(str);
+    ve->printListActiveSources();
+    ve->removeSource(oppvs::VST_WINDOW, std::to_string(60));
+    ve->printListActiveSources();
+    return 0;*/
+    //ve->addSource(oppvs::VST_WINDOW, 0, 30, rect2, &user2);
+    //std::string str = "FaceTime";
+    //ve->getDeviceID(str);
     
 	ve->setupCaptureSessions();
 
