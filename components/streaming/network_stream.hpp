@@ -37,7 +37,6 @@ namespace oppvs
 		}
 		~RawData()
 		{
-			printf("delete\n");
 			delete [] data;
 		}
 		uint32_t length;
@@ -45,13 +44,21 @@ namespace oppvs
 		int8_t count;
 		uint16_t width;
 		uint16_t height;
+		uint16_t sourceid;
 	};
 
+	//Size of the FrameBegin must be odd
 	struct FrameBegin
 	{
 		uint8_t flag;
 		uint16_t width;
 		uint16_t height;
+		uint16_t source;
+
+		inline int size()
+		{
+			return 7;
+		}
 	};
 
 	struct FrameEnd
@@ -65,6 +72,7 @@ namespace oppvs
 		uint16_t height;
 		uint16_t originx;
 		uint16_t originy;
+		uint16_t source;
 	};
 
 
@@ -83,7 +91,7 @@ namespace oppvs
 
 		virtual ~NetworkStream() {}
 		int write(const uint8_t* data, uint32_t length, uint32_t* written);
-		int read(uint8_t* buffer, uint32_t length, uint32_t* read);
+		int read(uint8_t* buffer, uint32_t length, uint32_t* read, FrameInfo& info);
 
 		void sendStream();
 		void waitStream();

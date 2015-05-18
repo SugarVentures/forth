@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 			usleep(5000);
 		
 		}
-		delete se;
+		//delete se;
 	}
 
 	return 0;

@@ -18,13 +18,11 @@
     IBOutlet NSTextField *serverPort;
     IBOutlet NSTextField *serverIP;
     IBOutlet NSView *hostPreviewLayer;
-    CAOpenGLLayer *previewView;
     
     oppvs::PixelBuffer localbuf;
     uint32_t nbytes;
 }
 - (IBAction)Play:(id)sender;
-- (IBAction)rotate:(id)sender;
 
 @property (retain) CAOpenGLLayer *previewView;
 

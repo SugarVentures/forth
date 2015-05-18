@@ -109,6 +109,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
 {
     if (pf.nbytes == 0)
         return;
+    
 
     if (streamingEngine)
     {

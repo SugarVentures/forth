@@ -23,7 +23,6 @@ oppvs::PixelBuffer pixelBuffer;
 
 @implementation Document
 
-oppvs::SRTPSocket clientSocket;
 
 - (instancetype)init {
     self = [super init];

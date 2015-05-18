@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D91D106C1AC8305600564686 /* RenderingLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D91D106B1AC8305600564686 /* RenderingLayer.mm */; };
 		D9250F381AC558DB00858FF5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F371AC558DB00858FF5 /* AppDelegate.m */; };
 		D9250F3A1AC558DB00858FF5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F391AC558DB00858FF5 /* main.m */; };
 		D9250F3D1AC558DB00858FF5 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9250F3C1AC558DB00858FF5 /* ViewController.mm */; };
@@ -15,6 +14,7 @@
 		D9250F421AC558DB00858FF5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9250F411AC558DB00858FF5 /* Images.xcassets */; };
 		D9250F451AC558DB00858FF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9250F431AC558DB00858FF5 /* Main.storyboard */; };
 		D9250F511AC558DB00858FF5 /* OPPVSClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */; };
+		D93A2C911B099FC800587EB4 /* libOPPVSRendering.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */; };
 		D970FAD81B00B82D005AF09E /* libstreaming.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D970FAD71B00B82D005AF09E /* libstreaming.so */; };
 		D970FADA1B00BD40005AF09E /* libnetworkengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D970FAD91B00BD40005AF09E /* libnetworkengine.so */; };
 /* End PBXBuildFile section */
@@ -30,8 +30,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D91D106A1AC8305600564686 /* RenderingLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderingLayer.h; sourceTree = "<group>"; };
-		D91D106B1AC8305600564686 /* RenderingLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RenderingLayer.mm; sourceTree = "<group>"; };
 		D9250F311AC558DB00858FF5 /* OPPVSClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPPVSClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9250F351AC558DB00858FF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9250F361AC558DB00858FF5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -46,6 +44,7 @@
 		D9250F4A1AC558DB00858FF5 /* OPPVSClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OPPVSClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9250F4F1AC558DB00858FF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPPVSClientTests.m; sourceTree = "<group>"; };
+		D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOPPVSRendering.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libOPPVSRendering.dylib"; sourceTree = "<group>"; };
 		D970FAD71B00B82D005AF09E /* libstreaming.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming.so; path = ../../../libs/libstreaming.so; sourceTree = "<group>"; };
 		D970FAD91B00BD40005AF09E /* libnetworkengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetworkengine.so; path = ../../../libs/libnetworkengine.so; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -55,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D93A2C911B099FC800587EB4 /* libOPPVSRendering.dylib in Frameworks */,
 				D970FADA1B00BD40005AF09E /* libnetworkengine.so in Frameworks */,
 				D970FAD81B00B82D005AF09E /* libstreaming.so in Frameworks */,
 			);
@@ -73,6 +73,7 @@
 		D9250F281AC558DB00858FF5 = {
 			isa = PBXGroup;
 			children = (
+				D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */,
 				D970FAD91B00BD40005AF09E /* libnetworkengine.so */,
 				D970FAD71B00B82D005AF09E /* libstreaming.so */,
 				D9250F331AC558DB00858FF5 /* OPPVSClient */,
@@ -101,8 +102,6 @@
 				D9250F3F1AC558DB00858FF5 /* Document.mm */,
 				D9250F411AC558DB00858FF5 /* Images.xcassets */,
 				D9250F431AC558DB00858FF5 /* Main.storyboard */,
-				D91D106A1AC8305600564686 /* RenderingLayer.h */,
-				D91D106B1AC8305600564686 /* RenderingLayer.mm */,
 				D9250F341AC558DB00858FF5 /* Supporting Files */,
 			);
 			path = OPPVSClient;
@@ -234,7 +233,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9250F401AC558DB00858FF5 /* Document.mm in Sources */,
-				D91D106C1AC8305600564686 /* RenderingLayer.mm in Sources */,
 				D9250F3D1AC558DB00858FF5 /* ViewController.mm in Sources */,
 				D9250F3A1AC558DB00858FF5 /* main.m in Sources */,
 				D9250F381AC558DB00858FF5 /* AppDelegate.m in Sources */,
@@ -362,6 +360,7 @@
 					../../thread,
 					../../streaming,
 					../../misc,
+					../OPPVSRendering/OPPVSRendering,
 				);
 				INFOPLIST_FILE = OPPVSClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -369,6 +368,7 @@
 					"$(inherited)",
 					../../../libs,
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -389,6 +389,7 @@
 					../../thread,
 					../../streaming,
 					../../misc,
+					../OPPVSRendering/OPPVSRendering,
 				);
 				INFOPLIST_FILE = OPPVSClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -396,6 +397,7 @@
 					"$(inherited)",
 					../../../libs,
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

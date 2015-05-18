@@ -56,6 +56,7 @@
  - (int) setPixelFormat: (int) pf;
  - (void) saveScreenShot: (CGImageRef) image_ref as: (NSString*) filename;
  - (void) updateConfiguration: (CGRect) rect : (int) pixelformat : (int) fps;
+ - (void) setSource: (uint8_t) sourceid;
 @end
 
 @implementation MacVideoAVFoundationCapture {
@@ -735,6 +736,11 @@
     }
 }
 
+- (void) setSource: (uint8_t) sourceid
+{
+    pixel_buffer.source = sourceid;
+}
+
  void* oppvs_vc_av_alloc() {
     return (void*)[[MacVideoAVFoundationCapture alloc] init];
  }
@@ -742,7 +748,8 @@
  int oppvs_setup_capture_session(void* cap, oppvs::VideoActiveSource& source) {
     CGRect rect = CGRectMake(source.rect.left, source.rect.bottom, 
         source.rect.right - source.rect.left, source.rect.top - source.rect.bottom);
-    
+    [(id)cap setSource: source.id];
+
     if (source.video_source_type == oppvs::VST_WEBCAM)
         return [(id)cap openCaptureDevice: rect : source.pixel_format : source.fps];
     if (source.video_source_type == oppvs::VST_WINDOW)

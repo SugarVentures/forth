@@ -69,6 +69,7 @@ namespace oppvs {
 		uint8_t pixel_format;
 		video_source_type_t video_source_type;
 		window_rect_t rect;
+		uint8_t id;
 		void* user;
 		VideoCapture* capture;
 
@@ -151,6 +152,8 @@ namespace oppvs {
 		std::vector<VideoScreenSource> screen_sources;
 		std::vector<VideoCaptureDevice> capture_devices;
 
+		uint8_t active_source_index = 0;
+
 		VideoActiveSource* addSource(video_source_type_t type, std::string sid, uint8_t fps, window_rect_t rect, void* user) {
 			if (active_sources.size() >= MAX_ACTIVE_SOURCES)
 			{
@@ -163,6 +166,7 @@ namespace oppvs {
 			src.fps = fps;
 			src.rect = rect;
 			src.user = user;
+			src.id = active_source_index++;
 			active_sources.push_back(src);
 			return &active_sources.back();
 		}
@@ -200,8 +204,6 @@ namespace oppvs {
 	private:
 		const static uint8_t MAX_ACTIVE_SOURCES = 5;
 		
-		
-		uint8_t numVideoSources;	//Number of selected capturing sources
 
 	protected:
 		std::vector<VideoActiveSource> active_sources;	//Sources used to record

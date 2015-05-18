@@ -7,33 +7,39 @@
 //
 
 #import "ViewController.h"
-#import "RenderingLayer.h"
+#import "FrameView.h"
 
+@interface ViewController ()
+{
+    NSMutableArray *listSources;
+}
 
+@end
 @implementation ViewController
 
 @synthesize previewView;
+
 
 - (id) init
 {
     
     self = [super init];
-    nbytes = 0;
+
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [hostPreviewLayer setWantsLayer:YES];
-    previewView = [RenderingLayer layer];
+    /*[hostPreviewLayer setWantsLayer:YES];
+    previewView = [OpenGLFrame layer];
     [previewView setAsynchronous:NO];
     [previewView setNeedsDisplay];
-    [hostPreviewLayer setLayer:previewView];
+    [hostPreviewLayer setLayer:previewView];*/
     
     [serverIP setStringValue:@"127.0.0.1"];
     [serverPort setStringValue:@"33432"];
-    
+    listSources = [[NSMutableArray alloc] init];
 }
 
 - (void)viewWillAppear
@@ -53,24 +59,38 @@
 {
     if (pf != NULL)
     {
-        if (pf->nbytes != nbytes)
-        {
-            localbuf.width[0] = pf->width[0];
-            localbuf.height[0] = pf->height[0];
-            localbuf.nbytes = pf->nbytes;
-            delete [] localbuf.plane[0];
-            localbuf.plane[0] = new uint8_t[pf->nbytes];
-            nbytes = localbuf.nbytes;
-        }
-        if (nbytes == 0)
-            return;
-        
-        memcpy(localbuf.plane[0], pf->plane[0], pf->nbytes);
-        RenderingLayer *view = (RenderingLayer*)previewView;
-        [view setPixelBuffer:&localbuf];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
-            [previewView setNeedsDisplay];
+            id subview;
+            NSMutableData *data;
+            @autoreleasepool {
+                NSArray *filtered = [listSources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"source = %d", pf->source]];
+                
+                if ((unsigned long)[filtered count] > 0)
+                {
+                    NSDictionary *item = [filtered objectAtIndex:0];
+                    subview = [item objectForKey:@"view"];
+                    data = [item objectForKey:@"data"];
+                }
+                else
+                {
+                    NSNumber *sourceid = [NSNumber numberWithUnsignedShort: pf->source];
+                    subview = [self addSubView:NSMakeRect(0, 0, pf->width[0]/2, pf->height[0]/2)];
+                    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+                    data = [NSMutableData dataWithCapacity: pf->width[0]*pf->height[0]*4];
+                    [dict setObject:subview forKey:@"view"];
+                    [dict setObject:sourceid forKey:@"source"];
+                    [dict setObject:data forKey:@"data"];
+                    [listSources addObject: dict];
+                }
+            }
+            
+            OpenGLFrame *view = (OpenGLFrame*)subview;
+            [view setFrameWidth:pf->width[0]];
+            [view setFrameHeight:pf->height[0]];
+            [data replaceBytesInRange:NSMakeRange(0, pf->width[0]*pf->height[0]*4) withBytes:pf->plane[0]];
+            [view setPixelBuffer:(GLubyte*)[data mutableBytes]];
+            
+            [view setNeedsDisplay];
         });
     }
     
@@ -83,9 +103,12 @@
     [document initReceiver:ip withPort:port];
 }
 
-- (IBAction)rotate:(id)sender {
-    RenderingLayer *view = (RenderingLayer*)previewView;
-    [view setReverse:!view.reverse];
-    
+- (id)addSubView: (NSRect)frame
+{
+    FrameView *superview = (FrameView*)hostPreviewLayer;
+    id user = [superview addWindow:frame];
+    return user;
 }
+
+
 @end

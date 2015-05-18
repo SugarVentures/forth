@@ -82,7 +82,7 @@ namespace oppvs
 		return 0;
 	}
 
-	int NetworkStream::read(uint8_t* buffer, uint32_t length, uint32_t* read)
+	int NetworkStream::read(uint8_t* buffer, uint32_t length, uint32_t* read, FrameInfo& info)
 	{
 		uint8_t localbuffer[OPPVS_NETWORK_PACKET_LENGTH];
 		int len = OPPVS_NETWORK_PACKET_LENGTH;
@@ -90,22 +90,21 @@ namespace oppvs
 		int msgLength = 0;
 		uint8_t* curPos = NULL;
 		
-		uint16_t width = 0;
-		uint16_t height = 0;
 		uint8_t *data = NULL;
+		FrameBegin controlmsg;
 		int rcvLen = m_socket.RecvFrom(localbuffer, &len, &isNextFrame);
 		while (rcvLen > 0)
 		{
-			if (rcvLen == sizeof(FrameBegin))
+			if (rcvLen == controlmsg.size())
 			{
-				printf("Receive control msg\n");
-				FrameBegin controlmsg;
-				memcpy(&controlmsg, localbuffer, sizeof(controlmsg));
-				width = controlmsg.width;
-				height = controlmsg.height;
-				data = new uint8_t[width*height*4];
+				printf("Receive control msg\n");				
+				memcpy(&controlmsg, localbuffer, controlmsg.size());
+				info.width = controlmsg.width;
+				info.height = controlmsg.height;
+				info.source = controlmsg.source;
+				data = new uint8_t[info.width * info.height * 4];
 				curPos = data;
-				printf("Width: %d Height: %d \n", controlmsg.width, controlmsg.height);
+				printf("Width: %d Height: %d Source %d\n", controlmsg.width, controlmsg.height, controlmsg.source);
 			}
 			else if (rcvLen == sizeof(FrameEnd))
 			{
@@ -125,11 +124,11 @@ namespace oppvs
 		if (msgLength == 0)
 			return -1;
 		printf("Read %u bytes\n", msgLength);
-		uint16_t stride = width * 4;
-		for (int i = 0; i < height; i++)
+		uint16_t stride = info.width * 4;
+		for (int i = 0; i < info.height; i++)
 	    {
 	        uint32_t offset_buffer = m_buffer->width[0]*4*(0 + i) + 0*4;
-	        uint32_t offset_data = width*4*i;
+	        uint32_t offset_data = info.width*4*i;
 	        memcpy(buffer + offset_buffer, data + offset_data, stride);
 	    }
 	    if (data != NULL)
@@ -165,7 +164,8 @@ namespace oppvs
 			controlmsg.flag = 1;
 			controlmsg.width = raw->width;
 			controlmsg.height = raw->height;
-			if (write((uint8_t*)&controlmsg, sizeof(controlmsg), &written) < 0)
+			controlmsg.source = raw->sourceid;
+			if (write((uint8_t*)&controlmsg, controlmsg.size(), &written) < 0)
 			{
 				m_error = -1;
 			}
@@ -201,9 +201,10 @@ namespace oppvs
 		printf("Waiting data\n");
 		int retries = 0;
 
+		FrameInfo info;
 		while (1)
 		{
-			if (read(m_buffer->plane[0], m_buffer->nbytes, &readBytes) < 0)
+			if (read(m_buffer->plane[0], m_buffer->nbytes, &readBytes, info) < 0)
 			{
 				printf("Error while reading from network\n");
 				if (errno == EAGAIN || errno == EWOULDBLOCK)
@@ -216,7 +217,12 @@ namespace oppvs
 				}
 			}
 			else
+			{
+				m_buffer->width[0] = info.width;
+				m_buffer->height[0] = info.height;
+				m_buffer->source = info.source;
 				m_receiveEvent(m_owner, 0);
+			}
 		}
 	}
 

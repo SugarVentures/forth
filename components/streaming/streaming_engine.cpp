@@ -146,6 +146,7 @@ namespace oppvs
 			RawData *raw = new RawData(pf.plane[0], pf.nbytes, m_subscribers.size());
 			raw->width = pf.width[0];
 			raw->height = pf.height[0];
+			raw->sourceid = pf.source;
 			while (m_sendingQueue.size() >= 10)
 			{
 				usleep(10000);
