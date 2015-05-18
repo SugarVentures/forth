@@ -8,6 +8,51 @@
 
 #import "OpenGLFrame.h"
 
+static inline const char * GetGLErrorString(GLenum error)
+{
+    const char *str;
+    switch( error )
+    {
+        case GL_NO_ERROR:
+            str = "GL_NO_ERROR";
+            break;
+        case GL_INVALID_ENUM:
+            str = "GL_INVALID_ENUM";
+            break;
+        case GL_INVALID_VALUE:
+            str = "GL_INVALID_VALUE";
+            break;
+        case GL_INVALID_OPERATION:
+            str = "GL_INVALID_OPERATION";
+            break;
+#if defined __gl_h_ || defined __gl3_h_
+        case GL_OUT_OF_MEMORY:
+            str = "GL_OUT_OF_MEMORY";
+            break;
+        case GL_INVALID_FRAMEBUFFER_OPERATION:
+            str = "GL_INVALID_FRAMEBUFFER_OPERATION";
+            break;
+#endif
+#if defined __gl_h_
+        case GL_STACK_OVERFLOW:
+            str = "GL_STACK_OVERFLOW";
+            break;
+        case GL_STACK_UNDERFLOW:
+            str = "GL_STACK_UNDERFLOW";
+            break;
+        case GL_TABLE_TOO_LARGE:
+            str = "GL_TABLE_TOO_LARGE";
+            break;
+#endif
+        default:
+            str = "(ERROR: Unknown Error Enum)";
+            break;
+    }
+    return str;
+}
+
+
+
 @interface OpenGLFrame()
 {
     
@@ -25,6 +70,9 @@
 @synthesize frameHeight;
 
 GLuint texName;
+GLuint fBO;
+GLuint dBO;
+float rotation_degree;
 
 - (id) init
 {
@@ -65,24 +113,8 @@ GLuint texName;
 -(void)drawInCGLContext:(CGLContextObj)glContext pixelFormat:(CGLPixelFormatObj)pixelFormat forLayerTime:(CFTimeInterval)timeInterval displayTime:(const CVTimeStamp *)timeStamp
 {
     
-    NSRect bounds = NSRectFromCGRect([self bounds]);
-    GLfloat 	minX, minY, maxX, maxY;
-    
-    minX = NSMinX(bounds);
-    minY = NSMinY(bounds);
-    maxX = NSMaxX(bounds);
-    maxY = NSMaxY(bounds);
-    
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho( minX, maxX, minY, maxY, -1.0, 1.0);
-    
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    
     if (pixelBuffer == NULL)
     {
         return;
@@ -94,6 +126,7 @@ GLuint texName;
             glDeleteTextures(1, &texName);
         texName = 0;
         [self setup];
+        self.initialized = false;
     }
     
     // This call is crucial, to ensure we are working with the correct context
@@ -125,7 +158,7 @@ GLuint texName;
     {
         [self drawForScreenInput];
     }
-    
+    //NSLog(@"%s \n", GetGLErrorString(glGetError()));
     glPopMatrix();
     
     // Call super to finalize the drawing. By default all it does is call glFlush().
@@ -134,9 +167,7 @@ GLuint texName;
 
 -(void)setup
 {
-    [self setFrame:CGRectMake(0, 0, frameWidth, frameHeight)];
-    glClear(GL_COLOR_BUFFER_BIT);
-    
+    //Generate texture
     glGenTextures(1, &texName);
     glBindTexture(GL_TEXTURE_2D, texName);
     
@@ -147,7 +178,6 @@ GLuint texName;
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     
-    
     glTexImage2D(GL_TEXTURE_2D,
                  0,
                  GL_RGBA,
@@ -156,8 +186,99 @@ GLuint texName;
                  0,
                  GL_BGRA,
                  GL_UNSIGNED_BYTE,
-                 pixelBuffer);
+                 NULL);
     
+    glViewport (0, 0, [self bounds].size.width, [self bounds].size.height);
+    glMatrixMode (GL_PROJECTION);                               // Select The Projection Matrix
+    glOrtho(0, frameWidth, 0, frameHeight, -1.0, 1.0);
+    glLoadIdentity ();                                          // Reset The Projection Matrix
+    glMatrixMode (GL_MODELVIEW);                                // Select The Modelview Matrix
+    glLoadIdentity ();
+    
+    
+    /*
+    //Create frame buffer
+    glGenFramebuffersEXT(1, &fBO);
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fBO);
+    glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, texName, 0);
+    //Create depth buffer
+    glGenRenderbuffersEXT(1, &dBO);
+    glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, dBO);
+    glRenderbufferStorage(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, frameWidth, frameHeight);
+    //Attach depth buffer to frame buffer
+    glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, dBO);
+    
+    GLenum status;
+    status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+    if (status != GL_FRAMEBUFFER_COMPLETE_EXT)
+    {
+         NSLog(@"failed to make complete framebuffer object %x", status);
+    }
+    
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);*/
+
+}
+
+- (void) renderFrame
+{
+    glClearColor(0, 0, 0, 0);
+    //glClear(GL_COLOR_BUFFER_BIT);
+
+    glLoadIdentity(); // Load the Identity Matrix to reset our drawing locations
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, texName);
+    
+    glPushMatrix();
+    
+    if ([self isReverse])
+    {
+        [self drawForWebCamInput];
+    }
+    else
+    {
+        [self drawForScreenInput];
+    }
+
+    
+    glPopMatrix();
+    NSLog(@"%s \n", GetGLErrorString(glGetError()));
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+}
+
+- (void) updateFrame
+{
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fBO); // Bind our frame buffer for rendering
+    glPushAttrib(GL_VIEWPORT_BIT | GL_ENABLE_BIT); // Push our glEnable and glViewport states
+    glViewport(0, 0, frameWidth, frameHeight); // Set the size of the frame buffer view port
+    
+    glClearColor (0.0f, 0.0f, 0.0f, 0.0f); // Set the clear colour
+    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the depth and colour buffers
+    
+    
+    glLoadIdentity();  // Reset the modelview matrix
+    
+  
+    
+    //glDrawPixels(frameWidth, frameHeight, GL_RGBA, GL_UNSIGNED_BYTE, pixelBuffer);
+  
+    glPushMatrix();
+    if ([self isReverse])
+     {
+     [self drawForWebCamInput];
+     }
+     else
+     {
+     [self drawForScreenInput];
+     }
+    glPopMatrix();
+    NSLog(@"%s \n", GetGLErrorString(glGetError()));
+    glPopAttrib(); // Restore our glEnable and glViewport states*/
+    
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0); // Unbind our texture
+
+    
+
 }
 
 - (void) windowResizeHandler: (int) windowWidth andHeight: (int) windowHeight
@@ -231,7 +352,12 @@ GLuint texName;
     if (texName)
         glDeleteTextures(1, &texName);
     texName = 0;
-    
+    if (dBO)
+        glDeleteRenderbuffersEXT(1, &dBO);
+    //Bind 0, which means render to back buffer, as a result, fb is unbound
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+    if (fBO)
+        glDeleteFramebuffersEXT(1, &fBO);
 }
 
 

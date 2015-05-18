@@ -65,7 +65,8 @@
 {
     NSView* view = [[NSView alloc] initWithFrame:frameRect];
     [view setWantsLayer:true];
-    CAOpenGLLayer *renderView = [OpenGLFrame layer];
+    
+    OpenGLFrame *renderView = [[OpenGLFrame alloc] init];
     [renderView setAsynchronous:NO];
     [renderView setNeedsDisplay];
     [view setLayer:renderView];
@@ -91,7 +92,6 @@
          NSPoint localClickLocation = [self convertPoint:[event locationInWindow] fromView:view];
          if (NSPointInRect(localClickLocation, nonborderRect))
          {*/
-        NSLog(@"%f", [view frame].size.width);
         dragging = YES;
         currentDraggingView = view;
         lastLocation = clickLocation;

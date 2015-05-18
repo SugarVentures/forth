@@ -185,6 +185,7 @@ NSString* kCSName = @"CSName";
         //OpenGLFrame *view = (OpenGLFrame*)previewView;
         //[view setPixelBuffer:pf];
         
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [previewView setNeedsDisplay];
         });

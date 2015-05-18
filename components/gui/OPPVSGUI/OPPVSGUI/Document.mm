@@ -340,10 +340,14 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
 {
     std::string source = [sourceid UTF8String];
     oppvs::window_rect_t crect;
-    crect.left = rect.origin.x;
+    /*crect.left = rect.origin.x;
     crect.bottom = rect.origin.y;
     crect.right = rect.origin.x + rect.size.width;
-    crect.top = rect.origin.y + rect.size.height;
+    crect.top = rect.origin.y + rect.size.height;*/
+    crect.left = 0;
+    crect.bottom = 0;
+    crect.right = 600;
+    crect.top = 600;
     
     oppvs::VideoActiveSource *activeSource;
     activeSource = videoEngine->addSource(type, source, 30, crect, (__bridge void*)viewid);
