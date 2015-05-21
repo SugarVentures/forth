@@ -27,7 +27,6 @@
     IBOutlet NSTextField *serverPort;
     
     IBOutlet NSView *hostPreviewLayer;
-    CAOpenGLLayer *previewView;
     
     IBOutlet NSTableView *tableView;
     
@@ -41,8 +40,6 @@
 
 @property (assign) NSString *selectedVideoDevice;
 @property (assign) NSString *selectedWindowInput;
-
-@property (retain) CAOpenGLLayer *previewView;
 
 @property (retain) NSMutableArray *listCaptureSources;
 

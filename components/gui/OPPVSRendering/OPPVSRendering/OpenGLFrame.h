@@ -13,6 +13,8 @@
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
 
+static GLuint textures[5];
+
 @interface OpenGLFrame : CAOpenGLLayer
 {
 @private
@@ -23,6 +25,7 @@
 @property GLubyte *pixelBuffer;
 @property GLsizei frameWidth;
 @property GLsizei frameHeight;
+@property GLuint indexTexture;
 
 @property (assign,getter=isReverse) BOOL reverse;
 @property (assign,getter=isInitialized) BOOL initialized;

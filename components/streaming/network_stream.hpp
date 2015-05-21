@@ -91,7 +91,7 @@ namespace oppvs
 
 		virtual ~NetworkStream() {}
 		int write(const uint8_t* data, uint32_t length, uint32_t* written);
-		int read(uint8_t* buffer, uint32_t length, uint32_t* read, FrameInfo& info);
+		int read(uint8_t* &buffer, uint32_t length, uint32_t* read, FrameInfo& info);
 
 		void sendStream();
 		void waitStream();

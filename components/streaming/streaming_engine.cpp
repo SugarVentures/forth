@@ -178,8 +178,8 @@ namespace oppvs
 		if (m_subscribe->registerInterest(pixelBuffer) < 0)
 			return -1;
 		printf("SSRC: %u\n", m_subscribe->getServiceKey());
-		pixelBuffer->plane[0] = new uint8_t[pixelBuffer->nbytes];
-		memset(pixelBuffer->plane[0], 0, pixelBuffer->nbytes);
+		//pixelBuffer->plane[0] = new uint8_t[pixelBuffer->nbytes];
+		//memset(pixelBuffer->plane[0], 0, pixelBuffer->nbytes);
 		if (initDownloadStream() < 0)
 			return -1;
 		return 0;

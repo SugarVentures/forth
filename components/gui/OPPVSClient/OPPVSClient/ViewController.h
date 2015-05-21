@@ -19,8 +19,6 @@
     IBOutlet NSTextField *serverIP;
     IBOutlet NSView *hostPreviewLayer;
     
-    oppvs::PixelBuffer localbuf;
-    uint32_t nbytes;
 }
 - (IBAction)Play:(id)sender;
 

@@ -672,65 +672,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="1164" height="758"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3lo-gX-zQY">
-                                <rect key="frame" x="877" y="703" width="113" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Capture Devices" id="x6v-XO-B0K">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nPk-SV-mSk">
-                                <rect key="frame" x="1028" y="699" width="100" height="26"/>
-                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="8R4-4o-RxJ" id="1r8-lV-mPg">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="rq4-c6-u9M">
-                                        <items>
-                                            <menuItem state="on" id="8R4-4o-RxJ"/>
-                                            <menuItem title="Item 2" id="aCD-Ha-F7e"/>
-                                            <menuItem title="Item 3" id="Om9-52-8N2"/>
-                                        </items>
-                                    </menu>
-                                </popUpButtonCell>
-                                <connections>
-                                    <binding destination="5gI-5U-AMq" name="enabled" keyPath="recording" id="VNv-xA-eWk">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
-                                    <binding destination="5gI-5U-AMq" name="selectedObject" keyPath="selectedVideoDevice" previousBinding="OTP-tK-Hzl" id="zVg-ZT-oQu"/>
-                                    <binding destination="5gI-5U-AMq" name="content" keyPath="videoDevices" id="OTP-tK-Hzl"/>
-                                </connections>
-                            </popUpButton>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vRf-Ah-ToG">
-                                <rect key="frame" x="1028" y="662" width="100" height="26"/>
-                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="5Lz-xd-cab">
-                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="SOC-VQ-mlP">
-                                        <items>
-                                            <menuItem title="Item 1" id="CyF-jJ-DWa"/>
-                                            <menuItem title="Item 2" id="YvO-me-hi0"/>
-                                            <menuItem title="Item 3" id="yeh-Zs-4Q1"/>
-                                        </items>
-                                    </menu>
-                                </popUpButtonCell>
-                                <connections>
-                                    <binding destination="2uF-5X-3hh" name="content" keyPath="arrangedObjects" id="XxF-fo-3H0"/>
-                                    <binding destination="2uF-5X-3hh" name="contentObjects" keyPath="arrangedObjects.key" previousBinding="XxF-fo-3H0" id="s2W-1j-jv4"/>
-                                    <binding destination="2uF-5X-3hh" name="contentValues" keyPath="arrangedObjects.value" previousBinding="s2W-1j-jv4" id="WlV-ub-Fy7"/>
-                                    <binding destination="5gI-5U-AMq" name="selectedObject" keyPath="selectedWindowInput" previousBinding="WlV-ub-Fy7" id="1Gl-cD-LVz"/>
-                                </connections>
-                            </popUpButton>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vo2-3w-JBl">
-                                <rect key="frame" x="877" y="669" width="128" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Capture Windows" id="PIJ-n7-wLg">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x97-0A-OjK">
                                 <rect key="frame" x="261" y="662" width="137" height="32"/>
                                 <buttonCell key="cell" type="push" title="Start Recording" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3WN-V1-uce">
@@ -780,14 +721,6 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rHM-NE-Cx8">
-                                <rect key="frame" x="127" y="669" width="96" height="22"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="9Lm-58-gBh">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zc1-15-tff">
                                 <rect key="frame" x="18" y="709" width="97" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Server Port" id="5Su-1c-aCJ">
@@ -796,17 +729,6 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f7N-jD-48N">
-                                <rect key="frame" x="18" y="674" width="97" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Streaming Port" id="Jfe-Jw-NGs">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DPL-0r-M1M" customClass="FrameView">
-                                <rect key="frame" x="20" y="72" width="739" height="575"/>
-                            </customView>
                             <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MOZ-4B-hV1">
                                 <rect key="frame" x="888" y="425" width="224" height="135"/>
                                 <clipView key="contentView" misplaced="YES" id="Jpr-k8-aRV">
@@ -898,6 +820,9 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DPL-0r-M1M" customClass="FrameView">
+                                <rect key="frame" x="20" y="22" width="800" height="600"/>
+                            </customView>
                         </subviews>
                     </view>
                     <connections>

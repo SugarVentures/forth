@@ -82,7 +82,7 @@ namespace oppvs
 		return 0;
 	}
 
-	int NetworkStream::read(uint8_t* buffer, uint32_t length, uint32_t* read, FrameInfo& info)
+	int NetworkStream::read(uint8_t* &buffer, uint32_t length, uint32_t* read, FrameInfo& info)
 	{
 		uint8_t localbuffer[OPPVS_NETWORK_PACKET_LENGTH];
 		int len = OPPVS_NETWORK_PACKET_LENGTH;
@@ -91,8 +91,13 @@ namespace oppvs
 		uint8_t* curPos = NULL;
 		
 		uint8_t *data = NULL;
+		info.width = 0;
+		info.height = 0;
 		FrameBegin controlmsg;
 		int rcvLen = m_socket.RecvFrom(localbuffer, &len, &isNextFrame);
+		if (rcvLen <= 0)
+			return -1;
+
 		while (rcvLen > 0)
 		{
 			if (rcvLen == controlmsg.size())
@@ -106,7 +111,7 @@ namespace oppvs
 				curPos = data;
 				printf("Width: %d Height: %d Source %d\n", controlmsg.width, controlmsg.height, controlmsg.source);
 			}
-			else if (rcvLen == sizeof(FrameEnd))
+			else if (rcvLen == sizeof(FrameEnd) || msgLength == info.width*info.height*4)
 			{
 				break;
 			}
@@ -121,21 +126,29 @@ namespace oppvs
 			}
 			rcvLen = m_socket.RecvFrom(localbuffer, &len, &isNextFrame);
 		}
-		if (msgLength == 0)
+
+		if (info.width == 0 || info.height == 0)
 			return -1;
+
+		if (msgLength != info.width * info.height * 4)
+		{
+			delete [] data;
+			return -1;
+		}
 		printf("Read %u bytes\n", msgLength);
-		uint16_t stride = info.width * 4;
+		if (buffer)
+		{
+			delete [] buffer;
+		}
+		buffer = data;
+		/*uint16_t stride = info.width * 4;
 		for (int i = 0; i < info.height; i++)
 	    {
 	        uint32_t offset_buffer = m_buffer->width[0]*4*(0 + i) + 0*4;
 	        uint32_t offset_data = info.width*4*i;
 	        memcpy(buffer + offset_buffer, data + offset_data, stride);
 	    }
-	    if (data != NULL)
-	    {
-	    	delete [] data;
-	    	data = NULL;
-	    }
+	    delete [] data;*/
 		return 0;		
 	}
 

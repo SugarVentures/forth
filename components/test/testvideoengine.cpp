@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 
     signal(SIGINT, signalvideohandler);
 
-    oppvs::window_rect_t rect1(5, 100, 100, 5);
+    oppvs::window_rect_t rect1(0, 1280, 780, 0);
     oppvs::window_rect_t rect2(0, 1000, 1000, 0);
 
 	ve = new oppvs::MacVideoEngine(fcallback, user);
@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
 
     ve->getListCaptureDevices(devices);
     int device_index = 0;
-    oppvs::VideoActiveSource source;
+    oppvs::VideoActiveSource *source;
     for (std::vector<oppvs::VideoCaptureDevice>::const_iterator i = devices.begin(); i != devices.end(); ++i)
     {
         std::cout << "Device: " << i->device_id << ' ';
@@ -76,14 +76,18 @@ int main(int argc, char* argv[])
         std::cout << "Cap: " << i->capabilities.front().width << ' ' << i->capabilities.front().height;
         std::cout << "Format: " << i->capabilities.front().fps;
         std::cout << '\n';
-        ve->addSource(oppvs::VST_WEBCAM, i->device_id, 30, rect1, &controller);
-        source.video_source_id = i->device_id;
-        source.rect = rect1;
-        source.video_source_type = oppvs::VST_WEBCAM;
+        //source = ve->addSource(oppvs::VST_WEBCAM, i->device_id, 30, rect1, &controller);
+        
         device_index++;
     }
 
-    
+    std::vector<oppvs::Monitor> monitors;
+    ve->getListMonitors(monitors);
+     for (std::vector<oppvs::Monitor>::const_iterator it = monitors.begin(); it != monitors.end(); ++it)
+    {
+
+        source = ve->addSource(oppvs::VST_WINDOW, std::to_string(it->id), 30, rect1, &controller);
+    }
     
 	/*ve->getListVideoSource(v);
     
@@ -107,15 +111,16 @@ int main(int argc, char* argv[])
     //std::string str = "FaceTime";
     //ve->getDeviceID(str);
     
-	ve->setupCaptureSessions();
-
+	//ve->setupCaptureSessions();
+    ve->setupCaptureSession(*source);
+    ve->startCaptureSession(*source);
     auto t1 = Clock::now();
-    ve->startRecording();
+    //ve->startRecording();
 
     int count = 0;
     while (1)
     {
-        if (count++ == 20000)
+        /*if (count++ == 20000)
         {
             printf("Upate Configuration \n");
             source.rect.top = 200;
@@ -127,7 +132,7 @@ int main(int argc, char* argv[])
             signalvideohandler(SIGINT);
 
 
-        }
+        }*/
         usleep(100);
     }
 }
@@ -138,11 +143,11 @@ void fcallback(oppvs::PixelBuffer& buffer)
     
     printf("Frame callback: %lu bytes, stride: %lu width: %d height: %d bpr: %d origin: %d %d\n", buffer.nbytes, buffer.stride[0],
         buffer.width[0], buffer.height[0], buffer.stride[0]/buffer.width[0], buffer.originx, buffer.originy);
-    for (int i = 0; i < (uint32_t)buffer.height[0]; i++)
+    /*for (int i = 0; i < (uint32_t)buffer.height[0]; i++)
     {
         uint32_t offset = buffer.stride[0]*(buffer.originy + i) + buffer.originx*4;
         memcpy(sharedBuffer.plane[0], buffer.plane[0] + offset, buffer.width[0]*4);
-    }
+    }*/
     //printf("%s %d", (const char*)buffer.plane[0], buffer.nbytes);
 }
 

@@ -22,8 +22,7 @@
 @implementation ViewController
 {
     NSMutableArray *shadeWindows;
-    
-    id frameViewID; //Used in capturing custom region to point to the rendering view
+    CGFloat scaleFactor;
 }
 
 @synthesize videoDevices;
@@ -32,7 +31,6 @@
 @synthesize videoDeviceIndex;
 @synthesize windowInputKey;
 
-@synthesize previewView;
 
 NSString* kCSName = @"CSName";
 
@@ -46,18 +44,18 @@ NSString* kCSName = @"CSName";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    /*[hostPreviewLayer setWantsLayer:YES];
-    previewView = [CapturePreview layer];
-    [previewView setAsynchronous:NO];
-    [previewView setNeedsDisplay];
-    [hostPreviewLayer setLayer:previewView];*/
+    NSRect bounds = [hostPreviewLayer bounds];
+    scaleFactor = oppvs::DEFAULT_VIDEO_FRAME_HEIGHT / bounds.size.height;
     
     [tableView setDataSource:self];
     [tableView setDelegate: self];
     
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [self setListCaptureSources:array];
+    
     //Set target for drop down menu
     [addSourceButton setTarget:self];
+    
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -97,8 +95,6 @@ NSString* kCSName = @"CSName";
     }
     videoDeviceIndex = [videoDevices indexOfObject:device];
     NSRange range = [device rangeOfString:@"Screen Capturing" options:NSCaseInsensitiveSearch];
-    //CapturePreview *view = (CapturePreview*)previewView;
-    //FrameView *view = (FrameView*)previewView;
     if (range.location != NSNotFound)
     {
         [self setWindowInputs: document.windowCaptureInputs];
@@ -179,24 +175,11 @@ NSString* kCSName = @"CSName";
 
 - (void) renderFrame: (oppvs::PixelBuffer*) pf
 {
-    if (pf != NULL)
-    {        
-        //CapturePreview *view = (CapturePreview*)previewView;
-        //OpenGLFrame *view = (OpenGLFrame*)previewView;
-        //[view setPixelBuffer:pf];
-        
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [previewView setNeedsDisplay];
-        });
-    }
-   
 }
 
 - (void) reset
 {
-    //CapturePreview *view = (CapturePreview*)previewView;
-    //[view setReset: true];
+    
 }
 
 - (void) setStreamInfo:(NSString *)info
@@ -251,6 +234,7 @@ NSString* kCSName = @"CSName";
 - (void)drawMouseBoxView:(DrawMouseBoxView*)view didSelectRect:(NSRect)rect
 {
     /* Map point into global coordinates. */
+    bool hasRegion = false;
     NSRect globalRect = rect;
     NSRect windowRect = [[view window] frame];
     globalRect = NSOffsetRect(globalRect, windowRect.origin.x, windowRect.origin.y);
@@ -263,7 +247,8 @@ NSString* kCSName = @"CSName";
     {
         /* Add the display as a capture input. */
         //[self addDisplayInputToCaptureSession:displayID cropRect:NSRectToCGRect(rect)];
-        
+        if (rect.size.width > 0 && rect.size.height > 0)
+            hasRegion = true;
     }
     
     for (NSWindow* w in [NSApp windows])
@@ -276,7 +261,13 @@ NSString* kCSName = @"CSName";
     [[NSCursor currentCursor] pop];
     [shadeWindows removeAllObjects];
     
-    [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_WINDOW inRect:rect withViewID:frameViewID];
+    if (hasRegion)
+    {
+        CGRect inrect = CGRectMake(0, 0, lroundf(rect.size.width*scaleFactor), lroundf(rect.size.height*scaleFactor));
+        CGRect outrect = CGRectMake(0, 0, lroundf(rect.size.width), lroundf(rect.size.height));
+        id user = [self addSubView:outrect];
+        [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_WINDOW inRect:inrect toRect:outrect withViewID:user];
+    }
 }
 
 
@@ -311,32 +302,51 @@ NSString* kCSName = @"CSName";
     NSMenuItem* selectedItem = (NSMenuItem*)sender;
     NSInteger index = selectedItem.tag;
     NSDictionary *source = [[self listSources] objectAtIndex:index];
+    int x, y;
+    id user;
+    CGRect sourceFrame;
+    CGRect renderFrame;
+    if ((unsigned long)[[self listCaptureSources] count] == 0)
+    {
+        x = 0;
+        y = 0;
+        sourceFrame = CGRectMake(0, 0, oppvs::DEFAULT_VIDEO_FRAME_WIDTH, oppvs::DEFAULT_VIDEO_FRAME_HEIGHT);
+        renderFrame = CGRectMake(x, y, [hostPreviewLayer bounds].size.width, [hostPreviewLayer bounds].size.height);
+    }
+    else
+    {
+        x = arc4random_uniform(50);
+        y = arc4random_uniform(50);
+        renderFrame = CGRectMake(x, y, 400/scaleFactor + x, 300/scaleFactor + y);
+        sourceFrame = CGRectMake(0, 0, 400, 300);
+    }
+    
     if ([[source objectForKey:@"type"] isEqualToString:@"Monitor"])
     {
-        //CGRect frame = CGDisplayBounds(displayID);
-        int x = arc4random_uniform(50);
-        int y = arc4random_uniform(50);
-        CGRect frame = CGRectMake(x, y, 400, 400);
-        id user = [self addSubView:frame];
-        [document addSource:[[source objectForKey:@"id"] stringValue] hasType:oppvs::VST_WINDOW inRect:frame withViewID:user];
+        user = [self addSubView:renderFrame];
+        [document addSource:[[source objectForKey:@"id"] stringValue] hasType:oppvs::VST_WINDOW inRect:sourceFrame toRect:renderFrame withViewID:user];
+        @autoreleasepool {
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            [dict setObject:@"Test" forKey:@"id"];
+            [[self listCaptureSources] addObject:dict];
+        }
     }
     else if ([[source objectForKey:@"type"] isEqualToString:@"Device"])
     {
-        int x = arc4random_uniform(50);
-        int y = arc4random_uniform(50);
-        CGRect frame = CGRectMake(x, y, 400, 400);
-        id user = [self addSubView:frame];
-        [document addSource: [source objectForKey:@"id"] hasType:oppvs::VST_WEBCAM inRect:frame withViewID:user];
+        user = [self addSubView:renderFrame];
+        
+        [document addSource: [source objectForKey:@"id"] hasType:oppvs::VST_WEBCAM inRect:sourceFrame toRect:renderFrame withViewID:user];
+        @autoreleasepool {
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            [dict setObject:@"Test" forKey:@"id"];
+            [[self listCaptureSources] addObject:dict];
+        }
     }
     else if ([[source objectForKey:@"type"] isEqualToString:@"Custom"])
     {
-        int x = arc4random_uniform(50);
-        int y = arc4random_uniform(50);
-        CGRect frame = CGRectMake(x, y, 400, 400);
-        id user = [self addSubView:frame];
-        frameViewID = user;
         [self setRegion];
     }
+    
 }
 
 - (id)addSubView: (NSRect)frame

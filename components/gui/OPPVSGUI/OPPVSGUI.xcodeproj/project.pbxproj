@@ -50,8 +50,6 @@
 
 /* Begin PBXFileReference section */
 		D92220351AC2BA310069116D /* libvideoengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvideoengine.so; path = ../../../libs/libvideoengine.so; sourceTree = "<group>"; };
-		D9225EBD1AB6D91200B2C804 /* CapturePreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CapturePreview.h; sourceTree = "<group>"; };
-		D9225EBE1AB6D91200B2C804 /* CapturePreview.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CapturePreview.mm; sourceTree = "<group>"; };
 		D924C6C81AB7DC2500586413 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		D924C6CA1AB805B100586413 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D924C6CC1AB83E6600586413 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -62,8 +60,6 @@
 		D93F81D51B0362BA0017413C /* DropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownMenu.h; sourceTree = "<group>"; };
 		D93F81D61B0362BA0017413C /* DropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownMenu.m; sourceTree = "<group>"; };
 		D951C8E71B006FF900FEA751 /* libstreaming.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming.so; path = ../../../libs/libstreaming.so; sourceTree = "<group>"; };
-		D95FEEC71ADCFFA8005AC18F /* VideoPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPreview.h; sourceTree = "<group>"; };
-		D95FEEC81ADCFFA8005AC18F /* VideoPreview.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VideoPreview.mm; sourceTree = "<group>"; };
 		D97FC5451AB2EA4D00E3988E /* OPPVSGUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPPVSGUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97FC5491AB2EA4D00E3988E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D97FC54A1AB2EA4D00E3988E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -150,10 +146,6 @@
 				D97FC54B1AB2EA4D00E3988E /* AppDelegate.m */,
 				D97FC54F1AB2EA4D00E3988E /* ViewController.h */,
 				D97FC5501AB2EA4D00E3988E /* ViewController.mm */,
-				D95FEEC71ADCFFA8005AC18F /* VideoPreview.h */,
-				D95FEEC81ADCFFA8005AC18F /* VideoPreview.mm */,
-				D9225EBD1AB6D91200B2C804 /* CapturePreview.h */,
-				D9225EBE1AB6D91200B2C804 /* CapturePreview.mm */,
 				D97FC5521AB2EA4D00E3988E /* Document.h */,
 				D97FC5531AB2EA4D00E3988E /* Document.mm */,
 				D97FC5551AB2EA4D00E3988E /* Images.xcassets */,

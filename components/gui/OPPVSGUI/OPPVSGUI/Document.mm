@@ -13,6 +13,16 @@ oppvs::Stream* oppvsStream;
 oppvs::StreamingEngine *streamingEngine;
 bool isStreaming;
 
+static oppvs::window_rect_t createFromCGRect(CGRect rect)
+{
+    oppvs::window_rect_t out;
+    out.left = rect.origin.x;
+    out.bottom = rect.origin.y;
+    out.right = rect.origin.x + rect.size.width;
+    out.top = rect.origin.y + rect.size.height;
+    return out;
+}
+
 @interface Document ()
 {
 @private
@@ -29,8 +39,8 @@ bool isStreaming;
     self = [super init];
     oppvsStream = NULL;
     sharedBuffer = new oppvs::PixelBuffer();
-    sharedBuffer->width[0] = 1280;
-    sharedBuffer->height[0] = 780;
+    sharedBuffer->width[0] = oppvs::DEFAULT_VIDEO_FRAME_WIDTH;
+    sharedBuffer->height[0] = oppvs::DEFAULT_VIDEO_FRAME_HEIGHT;
     sharedBuffer->stride[0] = sharedBuffer->width[0] * 4;
     sharedBuffer->nbytes = sharedBuffer->height[0] * sharedBuffer->stride[0];
 
@@ -123,10 +133,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     [renderingView setPixelBuffer:pf.plane[0]];
     [renderingView setFrameWidth:pf.width[0]];
     [renderingView setFrameHeight:pf.height[0]];
-    
-  
-    //CapturePreview* view = (__bridge CapturePreview*)pf.user;
-    //[view setPixelBuffer:&pf];
+    [renderingView setIndexTexture:pf.source];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [renderingView setNeedsDisplay];
@@ -337,21 +344,13 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     return ve;
 }
 
-- (void) addSource:(NSString *)sourceid hasType:(oppvs::VideoSourceType)type inRect:(CGRect)rect withViewID:(id)viewid
+- (void) addSource:(NSString *)sourceid hasType:(oppvs::VideoSourceType)type inRect:(CGRect)inrect toRect:(CGRect)outrect withViewID:(id)viewid
 {
     std::string source = [sourceid UTF8String];
-    oppvs::window_rect_t crect;
-    /*crect.left = rect.origin.x;
-    crect.bottom = rect.origin.y;
-    crect.right = rect.origin.x + rect.size.width;
-    crect.top = rect.origin.y + rect.size.height;*/
-    crect.left = 0;
-    crect.bottom = 0;
-    crect.right = 600;
-    crect.top = 600;
+    oppvs::window_rect_t crect = createFromCGRect(inrect);
     
     oppvs::VideoActiveSource *activeSource;
-    activeSource = videoEngine->addSource(type, source, 30, crect, (__bridge void*)viewid);
+    activeSource = videoEngine->addSource(type, source, 24, crect, (__bridge void*)viewid);
     if (activeSource)
     {
         videoEngine->setupCaptureSession(*activeSource);

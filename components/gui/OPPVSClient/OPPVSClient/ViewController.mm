@@ -59,8 +59,46 @@
 {
     if (pf != NULL)
     {
+        
+        __block id subview = nil;
+        NSMutableData *data;
+        
+        NSArray *filtered = [listSources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"source = %d", pf->source]];
+        
+        if ((unsigned long)[filtered count] > 0)
+        {
+            NSDictionary *item = [filtered objectAtIndex:0];
+            subview = [item objectForKey:@"view"];
+            data = [item objectForKey:@"data"];
+            [data replaceBytesInRange:NSMakeRange(0, pf->width[0]*pf->height[0]*4) withBytes:pf->plane[0]];
+        }
+        else
+        {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                subview = [self addSubView:NSMakeRect(0, 0, pf->width[0], pf->height[0])];
+            });
+            NSNumber *sourceid = [NSNumber numberWithUnsignedShort: pf->source];
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            data = [NSMutableData dataWithCapacity: pf->width[0]*pf->height[0]*4];
+            [data replaceBytesInRange:NSMakeRange(0, pf->width[0]*pf->height[0]*4) withBytes:pf->plane[0]];
+            [dict setObject:subview forKey:@"view"];
+            [dict setObject:sourceid forKey:@"source"];
+            [dict setObject:data forKey:@"data"];
+            [listSources addObject: dict];
+        }
+        
+        OpenGLFrame *view = (OpenGLFrame*)subview;
+        [view setFrameWidth:pf->width[0]];
+        [view setFrameHeight:pf->height[0]];
+        [view setPixelBuffer:(GLubyte*)[data mutableBytes]];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            id subview;
+            [view setNeedsDisplay];
+        });
+
+
+        /*dispatch_async(dispatch_get_main_queue(), ^{
+            
             NSMutableData *data;
             @autoreleasepool {
                 NSArray *filtered = [listSources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"source = %d", pf->source]];
@@ -91,7 +129,7 @@
             [view setPixelBuffer:(GLubyte*)[data mutableBytes]];
             
             [view setNeedsDisplay];
-        });
+        });*/
     }
     
 }

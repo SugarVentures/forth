@@ -51,8 +51,6 @@ static inline const char * GetGLErrorString(GLenum error)
     return str;
 }
 
-
-
 @interface OpenGLFrame()
 {
     
@@ -88,7 +86,6 @@ float rotation_degree;
         frameHeight = 0;
         [self setInitialized:TRUE];
         [self setBorderWidth:1];
-        
     }
     return self;
 }
@@ -125,14 +122,23 @@ float rotation_degree;
         if (texName)
             glDeleteTextures(1, &texName);
         texName = 0;
-        [self setup];
+        //[self setup];
+        
         self.initialized = false;
     }
-    
+    [self generatePBO];
     // This call is crucial, to ensure we are working with the correct context
     CGLSetCurrentContext(glContext);
-    glBindTexture(GL_TEXTURE_2D, texName);
-    glTexSubImage2D(GL_TEXTURE_2D,
+    //glBindTexture(GL_TEXTURE_2D, texName);
+    /*int w, h;
+    int miplevel = 0;
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, &w);
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &h);
+    NSLog(@"%s %d %d %d %d\n", GetGLErrorString(glGetError()), texName, w, h, pixelBuffer[100]);
+    
+    glPixelStorei(GL_UNPACK_ROW_LENGTH, frameWidth);*/
+
+    /*glTexSubImage2D(GL_TEXTURE_2D,
                     0,
                     0,
                     0,
@@ -141,14 +147,48 @@ float rotation_degree;
                     GL_BGRA,
                     GL_UNSIGNED_BYTE,
                     pixelBuffer);
-    //NSLog(@"%s \n", GetGLErrorString(glGetError()));
+    
     
     glBindTexture(GL_TEXTURE_2D, texName);
     
     glLoadIdentity();
-    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);*/
+    glBindTexture(GL_TEXTURE_RECTANGLE_ARB, texName);
+    glTexSubImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, 0, 0, frameWidth, frameHeight, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, pixelBuffer);
     
-    glPushMatrix();
+    glColor4f(1.0, 1.0, 1.0, 1.0);
+    
+    GLfloat textureCoords[] = {
+        0, frameHeight,
+        frameWidth, frameHeight,
+        frameWidth, 0,
+        0, 0};
+    
+    GLfloat vertices[] = {
+        -1.0, -1.0,
+        1.0, -1.0,
+        1.0, 1.0,
+        -1.0, 1.0
+    };
+    
+    glShadeModel(GL_SMOOTH);
+    
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glTexCoordPointer(2, GL_FLOAT, 0, textureCoords);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    //NSLog(@"%s \n", GetGLErrorString(glGetError()));
+    glDisable(GL_TEXTURE_COORD_ARRAY);
+    glDisable(GL_VERTEX_ARRAY);
+    
+    
+    glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
+    glDisable(GL_TEXTURE_RECTANGLE_ARB);
+    glShadeModel(GL_FLAT);
+    
+    /*glPushMatrix();
     
     if ([self isReverse])
     {
@@ -158,8 +198,8 @@ float rotation_degree;
     {
         [self drawForScreenInput];
     }
-    //NSLog(@"%s \n", GetGLErrorString(glGetError()));
-    glPopMatrix();
+    // NSLog(@"%s \n", GetGLErrorString(glGetError()));
+    glPopMatrix();*/
     
     // Call super to finalize the drawing. By default all it does is call glFlush().
     [super drawInCGLContext:glContext pixelFormat:pixelFormat forLayerTime:timeInterval displayTime:timeStamp];
@@ -168,13 +208,17 @@ float rotation_degree;
 -(void)setup
 {
     //Generate texture
+    glBindTexture(GL_TEXTURE_2D, 0);
     glGenTextures(1, &texName);
+    //glGenTextures(5, textures);
+    //texName = textures[[self indexTexture]];
     glBindTexture(GL_TEXTURE_2D, texName);
+
     
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     
@@ -188,15 +232,48 @@ float rotation_degree;
                  GL_UNSIGNED_BYTE,
                  NULL);
     
-    glViewport (0, 0, [self bounds].size.width, [self bounds].size.height);
+    NSRect bounds = [self bounds];
+    glViewport (0, 0, bounds.size.width, bounds.size.height);
+    
+    
     glMatrixMode (GL_PROJECTION);                               // Select The Projection Matrix
-    glOrtho(0, frameWidth, 0, frameHeight, -1.0, 1.0);
+    
+    glOrtho(0, 0, frameWidth, frameHeight, -1.0, 1.0);
+    
     glLoadIdentity ();                                          // Reset The Projection Matrix
     glMatrixMode (GL_MODELVIEW);                                // Select The Modelview Matrix
     glLoadIdentity ();
     
+}
+
+- (void) generatePBO
+{
+    glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
+    if (texName == 0)
+        glGenTextures(1, &texName);
+    glEnable(GL_TEXTURE_RECTANGLE_ARB);
+    glBindTexture(GL_TEXTURE_RECTANGLE_ARB, texName);
     
-    /*
+    glTexImage2D(GL_TEXTURE_RECTANGLE_ARB,
+                 0,
+                 GL_RGBA,
+                 frameWidth,
+                 frameHeight,
+                 0,
+                 GL_BGRA,
+                 GL_UNSIGNED_INT_8_8_8_8_REV,
+                 NULL);
+
+    
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+}
+
+- (void) generateFBO
+{
     //Create frame buffer
     glGenFramebuffersEXT(1, &fBO);
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fBO);
@@ -212,11 +289,10 @@ float rotation_degree;
     status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
     if (status != GL_FRAMEBUFFER_COMPLETE_EXT)
     {
-         NSLog(@"failed to make complete framebuffer object %x", status);
+        NSLog(@"failed to make complete framebuffer object %x", status);
     }
     
-    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);*/
-
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 }
 
 - (void) renderFrame
@@ -272,7 +348,7 @@ float rotation_degree;
      [self drawForScreenInput];
      }
     glPopMatrix();
-    NSLog(@"%s \n", GetGLErrorString(glGetError()));
+    //NSLog(@"%s \n", GetGLErrorString(glGetError()));
     glPopAttrib(); // Restore our glEnable and glViewport states*/
     
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0); // Unbind our texture
@@ -349,6 +425,7 @@ float rotation_degree;
 
 - (void)dealloc
 {
+    NSLog(@"Delete texture");
     if (texName)
         glDeleteTextures(1, &texName);
     texName = 0;

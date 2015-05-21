@@ -5,7 +5,7 @@ int interrupt;
 
 void frameCallback(oppvs::PixelBuffer& pf)
 {
-	printf("Out data: %d %d %d %d %d %d\n", pf.width[0], pf.height[0], pf.originx, pf.originy, pf.plane[0][100], pf.plane[0][5000]);
+	printf("Out data: %d %d %d %d %d %d\n", pf.width[0], pf.height[0], pf.originx, pf.originy, pf.plane[0][100], pf.plane[0][200]);
 }
 
 void signalhandler(int param)
@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 	oppvs::PixelBuffer pf;
 	pf.width[0] = 1280;
 	pf.height[0] = 780;
-	pf.stride[0] = 120;
+	pf.stride[0] = pf.width[0]*4;
 	pf.nbytes = pf.height[0] * pf.stride[0];
 	pf.plane[0] = new uint8_t[pf.nbytes];
 	memset(pf.plane[0], 1, pf.nbytes);

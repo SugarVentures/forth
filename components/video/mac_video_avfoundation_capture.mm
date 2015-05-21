@@ -124,7 +124,7 @@
         [session beginConfiguration];
 
         videoDevice = device;
-        [self setFrameRate: fps];
+        //[self setFrameRate: fps];
 
         AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice: videoDevice error:&nserror];
         if (input == nil)
