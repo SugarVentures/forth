@@ -9,14 +9,12 @@
 #import "Document.h"
 #include <errno.h>
 
-oppvs::StreamingEngine *streamEngine;
-oppvs::PixelBuffer pixelBuffer;
 
 @interface Document ()
 {
 @private
     NSViewController* viewController;
-
+    oppvs::StreamingEngine *streamEngine;
 }
 @end
 
@@ -34,15 +32,16 @@ oppvs::PixelBuffer pixelBuffer;
 
 void frameCallback(oppvs::PixelBuffer& pf)
 {
-    ViewController *view = (__bridge ViewController*)pixelBuffer.user;
+    ViewController *view = (__bridge ViewController*)pf.user;
     [view renderFrame:&pf];
 }
 
 
 - (void)initReceiver: (NSString*)server withPort: (NSInteger)port
 {
-    streamEngine = new oppvs::StreamingEngine(&pixelBuffer);
-    pixelBuffer.user = (__bridge void*)viewController;
+    oppvs::PixelBuffer *pixelBuffer = new oppvs::PixelBuffer();
+    streamEngine = new oppvs::StreamingEngine(pixelBuffer);
+    pixelBuffer->user = (__bridge void*)viewController;
     streamEngine->registerCallback(frameCallback);
     oppvs::ServiceInfo service;
     service.type = oppvs::ST_VIDEO_STREAMING;
@@ -64,7 +63,6 @@ void frameCallback(oppvs::PixelBuffer& pf)
     // Override to return the Storyboard file name of the document.
     [self addWindowController:[[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Document Window Controller"]];
     viewController = self.windowForSheet.contentViewController;
-    //[self initReceiver];
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError {

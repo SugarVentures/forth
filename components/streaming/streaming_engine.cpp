@@ -80,17 +80,20 @@ namespace oppvs
 	{
 		pthread_mutex_lock(&m_mutex);
 		RawData* raw = m_sendingQueue.front();
-		printf("Count: %d\n", raw->count);
-		raw->count--;
-		if (raw->count <= 0)
+		if (raw != NULL)
 		{
-			m_sendingQueue.pop();
-			delete raw;
-			std::vector<NetworkStream*>::const_iterator it;
-			for (it = m_subscribers.begin(); it != m_subscribers.end(); ++it)
+			printf("Count: %d\n", raw->count);
+			raw->count--;
+			if (raw->count <= 0)
 			{
-				NetworkStream* stream = (NetworkStream*)*it;
-				stream->unlock();
+				m_sendingQueue.pop();
+				delete raw;
+				std::vector<NetworkStream*>::const_iterator it;
+				for (it = m_subscribers.begin(); it != m_subscribers.end(); ++it)
+				{
+					NetworkStream* stream = (NetworkStream*)*it;
+					stream->unlock();
+				}
 			}
 		}
 		pthread_mutex_unlock(&m_mutex);
