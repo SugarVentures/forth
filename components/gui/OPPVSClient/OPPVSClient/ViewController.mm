@@ -75,7 +75,7 @@
         else
         {
             dispatch_sync(dispatch_get_main_queue(), ^{
-                subview = [self addSubView:NSMakeRect(0, 0, pf->width[0], pf->height[0])];
+                subview = [self addSubView:NSMakeRect(0, 0, pf->width[0]/2, pf->height[0]/2)];
             });
             NSNumber *sourceid = [NSNumber numberWithUnsignedShort: pf->source];
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
