@@ -9,6 +9,8 @@
 #import "OpenGLFrame.h"
 #import "glUtil.h"
 
+static GLuint texID[5];
+
 @interface OpenGLFrame()
 {
     
@@ -34,6 +36,7 @@ GLuint ebo;
 GLuint fBO;
 GLuint dBO;
 
+GLuint pbo[2];  //0: read 1: write
 static GLint default_frame_buffer = 0;
 
 - (id) init
@@ -83,12 +86,13 @@ static GLint default_frame_buffer = 0;
     
     if ([self isInitialized] == true)
     {
-        [self setup];
+        //[self setup];
+        glGenBuffers(2, pbo);
         self.initialized = false;
+        [self generatePBO];
     };
 
-    
-    glUseProgram(progName);
+    /*glUseProgram(progName);
     // This call is crucial, to ensure we are working with the correct context
     CGLSetCurrentContext(glContext);
     
@@ -98,6 +102,7 @@ static GLint default_frame_buffer = 0;
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texName);
+    glPixelStorei(GL_UNPACK_ROW_LENGTH, frameWidth);
     glTexSubImage2D(GL_TEXTURE_2D,
                     0,
                     0,
@@ -121,18 +126,17 @@ static GLint default_frame_buffer = 0;
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArrayAPPLE(0);
     
-    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);*/
     
-    //glBindTexture(GL_TEXTURE_2D, texName);
-    /*int w, h;
-    int miplevel = 0;
-    glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, &w);
-    glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &h);
-    NSLog(@"%s %d %d %d %d\n", GetGLErrorString(glGetError()), texName, w, h, pixelBuffer[100]);
     
-    glPixelStorei(GL_UNPACK_ROW_LENGTH, frameWidth);*/
-
-    /*glTexSubImage2D(GL_TEXTURE_2D,
+    
+    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, pbo[0]);
+    glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, frameWidth*frameHeight*4, pixelBuffer, GL_STATIC_DRAW_ARB);
+    
+    glEnable(GL_TEXTURE_RECTANGLE_ARB);
+    glBindTexture(GL_TEXTURE_RECTANGLE_ARB, texID[[self indexTexture]]);
+    
+    glTexSubImage2D(GL_TEXTURE_RECTANGLE_ARB,
                     0,
                     0,
                     0,
@@ -140,26 +144,41 @@ static GLint default_frame_buffer = 0;
                     frameHeight,
                     GL_BGRA,
                     GL_UNSIGNED_BYTE,
-                    pixelBuffer);
+                    0);
+    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
+    
+    glColor4f(1.0, 1.0, 1.0, 1.0);
+    
+    GLfloat textureCoords[] = {
+        0, frameHeight,
+        frameWidth, frameHeight,
+        frameWidth, 0,
+        0, 0};
+    
+    GLfloat vertices[] = {
+        -1.0, -1.0,
+        1.0, -1.0,
+        1.0, 1.0,
+        -1.0, 1.0
+    };
+    
+    glShadeModel(GL_SMOOTH);
+    
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glTexCoordPointer(2, GL_FLOAT, 0, textureCoords);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    
+    glDisable(GL_TEXTURE_COORD_ARRAY);
+    glDisable(GL_VERTEX_ARRAY);
     
     
-    glBindTexture(GL_TEXTURE_2D, texName);
+    glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
+    glDisable(GL_TEXTURE_RECTANGLE_ARB);
+    glShadeModel(GL_FLAT);
     
-    glLoadIdentity();
-    glEnable(GL_TEXTURE_2D);*/
-    
-    /*glPushMatrix();
-    
-    if ([self isReverse])
-    {
-        [self drawForWebCamInput];
-    }
-    else
-    {
-        [self drawForScreenInput];
-    }
-    // NSLog(@"%s \n", GetGLErrorString(glGetError()));
-    glPopMatrix();*/
     
     // Call super to finalize the drawing. By default all it does is call glFlush().
     [super drawInCGLContext:glContext pixelFormat:pixelFormat forLayerTime:timeInterval displayTime:timeStamp];
@@ -187,7 +206,8 @@ static GLint default_frame_buffer = 0;
 -(void)loadTexture
 {
     //Generate texture
-    glGenTextures(1, &texName);
+    if (texName == 0)
+        glGenTextures(1, &texName);
     glBindTexture(GL_TEXTURE_2D, texName);
     
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -200,8 +220,8 @@ static GLint default_frame_buffer = 0;
     glTexImage2D(GL_TEXTURE_2D,
                  0,
                  GL_RGBA,
-                 frameWidth,
-                 frameHeight,
+                 3000,
+                 2000,
                  0,
                  GL_BGRA,
                  GL_UNSIGNED_BYTE,
@@ -266,11 +286,16 @@ static GLint default_frame_buffer = 0;
 
 }
 
+
 - (void) generatePBO
 {
     glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
-    if (texName == 0)
-        glGenTextures(1, &texName);
+    if (texID[0] == 0)
+    {
+        glGenTextures(5, texID);
+    }
+    
+    texName = texID[[self indexTexture]];
     glEnable(GL_TEXTURE_RECTANGLE_ARB);
     glBindTexture(GL_TEXTURE_RECTANGLE_ARB, texName);
     

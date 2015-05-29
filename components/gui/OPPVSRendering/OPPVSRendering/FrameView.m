@@ -8,6 +8,8 @@
 
 #import "FrameView.h"
 
+static int noView = 0;
+
 @implementation FrameView
 
 @synthesize backingScaleFactor;
@@ -75,6 +77,8 @@
     [view setLayer:renderView];
     [self addSubview:view];
     
+    [renderView setIndexTexture:noView];
+    noView++;
     return (id)renderView;
 }
 
