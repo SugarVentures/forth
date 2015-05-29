@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9390B251B16C11E00DF3EAE /* glUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = D9390B241B16C11E00DF3EAE /* glUtil.h */; };
+		D9390B281B16C34800DF3EAE /* matrixUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D9390B261B16C34800DF3EAE /* matrixUtil.c */; };
+		D9390B291B16C34800DF3EAE /* matrixUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = D9390B271B16C34800DF3EAE /* matrixUtil.h */; };
+		D9390B2C1B16C35200DF3EAE /* vectorUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D9390B2A1B16C35200DF3EAE /* vectorUtil.c */; };
+		D9390B2D1B16C35200DF3EAE /* vectorUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = D9390B2B1B16C35200DF3EAE /* vectorUtil.h */; };
 		D93A98FC1B02FC9600173CF2 /* libOPPVSRendering.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D93A98F01B02FC9600173CF2 /* libOPPVSRendering.dylib */; };
 		D9C89FD31B030087008A6E48 /* OpenGLFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = D9C89FD21B030087008A6E48 /* OpenGLFrame.m */; };
 		D9C89FD51B03009A008A6E48 /* OpenGLFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = D9C89FD41B03009A008A6E48 /* OpenGLFrame.h */; };
@@ -25,6 +30,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D9390B241B16C11E00DF3EAE /* glUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glUtil.h; sourceTree = "<group>"; };
+		D9390B261B16C34800DF3EAE /* matrixUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = matrixUtil.c; sourceTree = "<group>"; };
+		D9390B271B16C34800DF3EAE /* matrixUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrixUtil.h; sourceTree = "<group>"; };
+		D9390B2A1B16C35200DF3EAE /* vectorUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vectorUtil.c; sourceTree = "<group>"; };
+		D9390B2B1B16C35200DF3EAE /* vectorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vectorUtil.h; sourceTree = "<group>"; };
 		D93A98F01B02FC9600173CF2 /* libOPPVSRendering.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libOPPVSRendering.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		D93A98FB1B02FC9600173CF2 /* OPPVSRenderingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OPPVSRenderingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D93A99011B02FC9600173CF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -75,6 +85,11 @@
 			isa = PBXGroup;
 			children = (
 				D9C89FD41B03009A008A6E48 /* OpenGLFrame.h */,
+				D9390B2A1B16C35200DF3EAE /* vectorUtil.c */,
+				D9390B2B1B16C35200DF3EAE /* vectorUtil.h */,
+				D9390B261B16C34800DF3EAE /* matrixUtil.c */,
+				D9390B271B16C34800DF3EAE /* matrixUtil.h */,
+				D9390B241B16C11E00DF3EAE /* glUtil.h */,
 				D9C89FD21B030087008A6E48 /* OpenGLFrame.m */,
 				D9C89FD61B030A8F008A6E48 /* FrameView.h */,
 				D9C89FD71B030A8F008A6E48 /* FrameView.m */,
@@ -105,6 +120,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9390B2D1B16C35200DF3EAE /* vectorUtil.h in Headers */,
+				D9390B251B16C11E00DF3EAE /* glUtil.h in Headers */,
+				D9390B291B16C34800DF3EAE /* matrixUtil.h in Headers */,
 				D9C89FD51B03009A008A6E48 /* OpenGLFrame.h in Headers */,
 				D9C89FD81B030A8F008A6E48 /* FrameView.h in Headers */,
 			);
@@ -199,6 +217,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9C89FD91B030A8F008A6E48 /* FrameView.m in Sources */,
+				D9390B281B16C34800DF3EAE /* matrixUtil.c in Sources */,
+				D9390B2C1B16C35200DF3EAE /* vectorUtil.c in Sources */,
 				D9C89FD31B030087008A6E48 /* OpenGLFrame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -31,6 +31,7 @@
     IBOutlet NSTableView *tableView;
     
     IBOutlet DropDownMenu *addSourceButton;
+
 }
 
 @property (retain) NSMutableArray *listSources;

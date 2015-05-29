@@ -34,6 +34,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
 {
     ViewController *view = (__bridge ViewController*)pf.user;
     [view renderFrame:&pf];
+
 }
 
 

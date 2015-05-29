@@ -22,6 +22,8 @@
     NSView* currentDraggingView;
 }
 
+@property CGFloat backingScaleFactor;
+
 - (id)initWithFrame:(NSRect)frameRect;
 - (void)drawRect:(NSRect)dirtyRect;
 

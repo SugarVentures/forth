@@ -56,6 +56,7 @@ NSString* kCSName = @"CSName";
     //Set target for drop down menu
     [addSourceButton setTarget:self];
     
+    
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -77,6 +78,9 @@ NSString* kCSName = @"CSName";
             [self setSelectedVideoDevice:videoDevices[0]];
         }
         [addSourceButton setDataSource:[self listSources]];
+        
+        FrameView *superview = (FrameView*)hostPreviewLayer;
+        [superview setBackingScaleFactor:document.windowForSheet.backingScaleFactor];
     }
 }
 

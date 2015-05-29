@@ -138,6 +138,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     dispatch_async(dispatch_get_main_queue(), ^{
         [renderingView setNeedsDisplay];
     });
+    
 
 }
 
@@ -341,6 +342,7 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     monitors.clear();
     devices.clear();
     windows.clear();
+    
     return ve;
 }
 
@@ -376,6 +378,7 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     [self addWindowController:[[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Document Window Controller"]];
     viewController = self.windowForSheet.contentViewController;
     videoEngine = initVideoEngine(self, viewController);
+
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError {

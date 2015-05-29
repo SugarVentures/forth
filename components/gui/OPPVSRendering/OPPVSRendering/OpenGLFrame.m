@@ -7,49 +7,7 @@
 //
 
 #import "OpenGLFrame.h"
-
-static inline const char * GetGLErrorString(GLenum error)
-{
-    const char *str;
-    switch( error )
-    {
-        case GL_NO_ERROR:
-            str = "GL_NO_ERROR";
-            break;
-        case GL_INVALID_ENUM:
-            str = "GL_INVALID_ENUM";
-            break;
-        case GL_INVALID_VALUE:
-            str = "GL_INVALID_VALUE";
-            break;
-        case GL_INVALID_OPERATION:
-            str = "GL_INVALID_OPERATION";
-            break;
-#if defined __gl_h_ || defined __gl3_h_
-        case GL_OUT_OF_MEMORY:
-            str = "GL_OUT_OF_MEMORY";
-            break;
-        case GL_INVALID_FRAMEBUFFER_OPERATION:
-            str = "GL_INVALID_FRAMEBUFFER_OPERATION";
-            break;
-#endif
-#if defined __gl_h_
-        case GL_STACK_OVERFLOW:
-            str = "GL_STACK_OVERFLOW";
-            break;
-        case GL_STACK_UNDERFLOW:
-            str = "GL_STACK_UNDERFLOW";
-            break;
-        case GL_TABLE_TOO_LARGE:
-            str = "GL_TABLE_TOO_LARGE";
-            break;
-#endif
-        default:
-            str = "(ERROR: Unknown Error Enum)";
-            break;
-    }
-    return str;
-}
+#import "glUtil.h"
 
 @interface OpenGLFrame()
 {
@@ -68,9 +26,15 @@ static inline const char * GetGLErrorString(GLenum error)
 @synthesize frameHeight;
 
 GLuint texName;
+GLuint progName;
+
+GLuint vao;
+GLuint ebo;
+
 GLuint fBO;
 GLuint dBO;
-float rotation_degree;
+
+static GLint default_frame_buffer = 0;
 
 - (id) init
 {
@@ -81,6 +45,7 @@ float rotation_degree;
         self.needsDisplayOnBoundsChange = TRUE; //Resized when the view is resized
         
         texName = 0;
+        progName = 0;
         pixelBuffer = nil;
         frameWidth = 0;
         frameHeight = 0;
@@ -109,9 +74,8 @@ float rotation_degree;
 
 -(void)drawInCGLContext:(CGLContextObj)glContext pixelFormat:(CGLPixelFormatObj)pixelFormat forLayerTime:(CFTimeInterval)timeInterval displayTime:(const CVTimeStamp *)timeStamp
 {
-    
-    glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //glGetIntegerv(GL_FRAMEBUFFER_BINDING, &default_frame_buffer);
+
     if (pixelBuffer == NULL)
     {
         return;
@@ -119,16 +83,46 @@ float rotation_degree;
     
     if ([self isInitialized] == true)
     {
-        if (texName)
-            glDeleteTextures(1, &texName);
-        texName = 0;
-        //[self setup];
-        
+        [self setup];
         self.initialized = false;
-    }
-    [self generatePBO];
+    };
+
+    
+    glUseProgram(progName);
     // This call is crucial, to ensure we are working with the correct context
     CGLSetCurrentContext(glContext);
+    
+    glClearColor(1.0, 1.0, 1.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texName);
+    glTexSubImage2D(GL_TEXTURE_2D,
+                    0,
+                    0,
+                    0,
+                    frameWidth,
+                    frameHeight,
+                    GL_BGRA,
+                    GL_UNSIGNED_BYTE,
+                    pixelBuffer);
+    
+    
+    GLuint uniform_texture = glGetUniformLocation(progName, "tex");
+    glUniform1i(uniform_texture, 0);
+    
+    glBindVertexArrayAPPLE(vao);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
+    //NSLog(@"%s", GetGLErrorString(glGetError()));
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArrayAPPLE(0);
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
+    
     //glBindTexture(GL_TEXTURE_2D, texName);
     /*int w, h;
     int miplevel = 0;
@@ -153,40 +147,6 @@ float rotation_degree;
     
     glLoadIdentity();
     glEnable(GL_TEXTURE_2D);*/
-    glBindTexture(GL_TEXTURE_RECTANGLE_ARB, texName);
-    glTexSubImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, 0, 0, frameWidth, frameHeight, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, pixelBuffer);
-    
-    glColor4f(1.0, 1.0, 1.0, 1.0);
-    
-    GLfloat textureCoords[] = {
-        0, frameHeight,
-        frameWidth, frameHeight,
-        frameWidth, 0,
-        0, 0};
-    
-    GLfloat vertices[] = {
-        -1.0, -1.0,
-        1.0, -1.0,
-        1.0, 1.0,
-        -1.0, 1.0
-    };
-    
-    glShadeModel(GL_SMOOTH);
-    
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glTexCoordPointer(2, GL_FLOAT, 0, textureCoords);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(2, GL_FLOAT, 0, vertices);
-    
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    //NSLog(@"%s \n", GetGLErrorString(glGetError()));
-    glDisable(GL_TEXTURE_COORD_ARRAY);
-    glDisable(GL_VERTEX_ARRAY);
-    
-    
-    glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
-    glDisable(GL_TEXTURE_RECTANGLE_ARB);
-    glShadeModel(GL_FLAT);
     
     /*glPushMatrix();
     
@@ -205,15 +165,30 @@ float rotation_degree;
     [super drawInCGLContext:glContext pixelFormat:pixelFormat forLayerTime:timeInterval displayTime:timeStamp];
 }
 
--(void)setup
+#pragma mark OpenGL loading
+
+- (void)setup
+{
+    glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    
+    [self loadTexture];
+    //[self generateFBO:frameWidth andHeight:frameHeight andTexture:texName];
+    
+    progName = [self buildProgram:frameVertexShader andFragment:frameFragmentShader];
+    glUseProgram(progName);
+    [self loadVBO:progName];
+    glUseProgram(0);
+}
+
+-(void)loadTexture
 {
     //Generate texture
-    glBindTexture(GL_TEXTURE_2D, 0);
     glGenTextures(1, &texName);
-    //glGenTextures(5, textures);
-    //texName = textures[[self indexTexture]];
     glBindTexture(GL_TEXTURE_2D, texName);
-
     
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     
@@ -231,19 +206,64 @@ float rotation_degree;
                  GL_BGRA,
                  GL_UNSIGNED_BYTE,
                  NULL);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+-(void) loadVBO: (GLuint)proid
+{
+    static const GLfloat vertices[] =
+    {
+         1.0f,  1.0f, 0.0f,
+        -1.0f,  1.0f, 0.0f,
+        -1.0f, -1.0f, 0.0f,
+         1.0f, -1.0f, 0.0f
+    };
     
-    NSRect bounds = [self bounds];
-    glViewport (0, 0, bounds.size.width, bounds.size.height);
+    /*static const GLfloat texcoords[] = {
+        1.0, 1.0,
+        0.0, 1.0,
+        0.0, 0.0,
+        1.0, 0.0
+    };*/
     
+    GLfloat texcoords[] = {
+         1.0, 0.0,
+         0.0, 0.0,
+         0.0, 1.0,
+         1.0, 1.0
+    };
     
-    glMatrixMode (GL_PROJECTION);                               // Select The Projection Matrix
+    static const GLbyte indices[] = {
+        0, 1, 2,
+        0, 2, 3
+    };
     
-    glOrtho(0, 0, frameWidth, frameHeight, -1.0, 1.0);
+    //Setup the element array buffer
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
-    glLoadIdentity ();                                          // Reset The Projection Matrix
-    glMatrixMode (GL_MODELVIEW);                                // Select The Modelview Matrix
-    glLoadIdentity ();
+    GLuint buf;
+    glGenBuffers(1, &buf);
+    glBindBuffer(GL_ARRAY_BUFFER, buf);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices) + sizeof(texcoords), NULL, GL_STATIC_DRAW);
     
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(vertices), sizeof(texcoords), texcoords);
+    
+    glGenVertexArraysAPPLE(1, &vao);
+    glBindVertexArrayAPPLE(vao);
+    
+    GLuint coord3d_pos = glGetAttribLocation(proid, "coord3d");
+    glEnableVertexAttribArray(coord3d_pos);
+    glVertexAttribPointer(coord3d_pos, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), 0);
+    
+    GLuint texcoord_pos = glGetAttribLocation(proid, "texcoord");
+    glEnableVertexAttribArray(texcoord_pos);
+    glVertexAttribPointer(texcoord_pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(GLfloat), (GLvoid*)(sizeof(vertices)));
+    
+    glBindVertexArrayAPPLE(0);
+
 }
 
 - (void) generatePBO
@@ -272,17 +292,21 @@ float rotation_degree;
 
 }
 
-- (void) generateFBO
+- (void) generateFBO: (GLuint)width andHeight: (GLuint)height andTexture: (GLuint)tex
 {
+
     //Create frame buffer
     glGenFramebuffersEXT(1, &fBO);
-    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fBO);
-    glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, texName, 0);
-    //Create depth buffer
     glGenRenderbuffersEXT(1, &dBO);
+
+    glBindTexture(GL_TEXTURE_2D, tex);
+    
     glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, dBO);
-    glRenderbufferStorage(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, frameWidth, frameHeight);
-    //Attach depth buffer to frame buffer
+    glRenderbufferStorage(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, width, height);
+    
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fBO);
+
+    glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, tex, 0);
     glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, dBO);
     
     GLenum status;
@@ -292,92 +316,11 @@ float rotation_degree;
         NSLog(@"failed to make complete framebuffer object %x", status);
     }
     
-    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-}
-
-- (void) renderFrame
-{
-    glClearColor(0, 0, 0, 0);
-    //glClear(GL_COLOR_BUFFER_BIT);
-
-    glLoadIdentity(); // Load the Identity Matrix to reset our drawing locations
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, texName);
-    
-    glPushMatrix();
-    
-    if ([self isReverse])
-    {
-        [self drawForWebCamInput];
-    }
-    else
-    {
-        [self drawForScreenInput];
-    }
-
-    
-    glPopMatrix();
-    NSLog(@"%s \n", GetGLErrorString(glGetError()));
     glBindTexture(GL_TEXTURE_2D, 0);
-
+    glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, 0);
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, default_frame_buffer);
 }
 
-- (void) updateFrame
-{
-    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fBO); // Bind our frame buffer for rendering
-    glPushAttrib(GL_VIEWPORT_BIT | GL_ENABLE_BIT); // Push our glEnable and glViewport states
-    glViewport(0, 0, frameWidth, frameHeight); // Set the size of the frame buffer view port
-    
-    glClearColor (0.0f, 0.0f, 0.0f, 0.0f); // Set the clear colour
-    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the depth and colour buffers
-    
-    
-    glLoadIdentity();  // Reset the modelview matrix
-    
-  
-    
-    //glDrawPixels(frameWidth, frameHeight, GL_RGBA, GL_UNSIGNED_BYTE, pixelBuffer);
-  
-    glPushMatrix();
-    if ([self isReverse])
-     {
-     [self drawForWebCamInput];
-     }
-     else
-     {
-     [self drawForScreenInput];
-     }
-    glPopMatrix();
-    //NSLog(@"%s \n", GetGLErrorString(glGetError()));
-    glPopAttrib(); // Restore our glEnable and glViewport states*/
-    
-    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0); // Unbind our texture
-
-    
-
-}
-
-- (void) windowResizeHandler: (int) windowWidth andHeight: (int) windowHeight
-{
-    const float aspectRatio = ((float)windowWidth) / windowHeight;
-    float xSpan = 1;
-    float ySpan = 1;
-    
-    if (aspectRatio > 1){
-        // Width > Height, so scale xSpan accordinly.
-        xSpan *= aspectRatio;
-    }
-    else{
-        // Height >= Width, so scale ySpan accordingly.
-        ySpan = xSpan / aspectRatio;
-    }
-    
-    glOrtho(-1*xSpan, xSpan, -1*ySpan, ySpan, -1, 1);
-    
-    // Use the entire window for rendering.
-    glViewport(0, 0, windowWidth, windowHeight);
-    
-}
 
 - (void) drawForScreenInput
 {
@@ -437,5 +380,118 @@ float rotation_degree;
         glDeleteFramebuffersEXT(1, &fBO);
 }
 
+- (GLuint) buildProgram: (const char*)vShader andFragment: (const char*)fShader
+{
+    GLuint progName;
+    GLint logLength, status;
+    
+    // String to pass to glShaderSource
+    GLchar* sourceString = NULL;
+    
+    float glLanguageVersion;
+    sscanf((char *)glGetString(GL_SHADING_LANGUAGE_VERSION), "%f", &glLanguageVersion);
+    GLuint version = 100 * glLanguageVersion;
+    const GLsizei versionStringSize = sizeof("#version 123\n");
+    
+    // Create a program object
+    progName = glCreateProgram();
+    
+    sourceString = malloc(strlen(vShader) + versionStringSize);
+    sprintf(sourceString, "#version %d\n%s", version, vShader);
+    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, (const GLchar**)&(sourceString), NULL);
+    glCompileShader(vertexShader);
+    
+    glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &logLength);
+    
+    if (logLength > 0)
+    {
+        GLchar *log = (GLchar*) malloc(logLength);
+        glGetShaderInfoLog(vertexShader, logLength, &logLength, log);
+        NSLog(@"Vtx Shader compile log:%s\n", log);
+        free(log);
+    }
+    
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
+    if (status == 0)
+    {
+        NSLog(@"Failed to compile vtx shader:\n%s\n", sourceString);
+        free(sourceString);
+        return 0;
+    }
+    
+    free(sourceString);
+    sourceString = NULL;
+    
+    glAttachShader(progName, vertexShader);
+    glDeleteShader(vertexShader);
+    
+    sourceString = malloc(strlen(fShader) + versionStringSize);
+    sprintf(sourceString, "#version %d\n%s", version, fShader);
+    GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragShader, 1, (const GLchar**)&(sourceString), NULL);
+    glCompileShader(fragShader);
+    
+    glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &logLength);
+    
+    if (logLength > 0)
+    {
+        GLchar *log = (GLchar*) malloc(logLength);
+        glGetShaderInfoLog(fragShader, logLength, &logLength, log);
+        NSLog(@"Fragment Shader compile log: %s\n", log);
+        free(log);
+    }
+    
+    glGetShaderiv(fragShader, GL_COMPILE_STATUS, &status);
+    if (status == 0)
+    {
+        NSLog(@"Failed to compile fragment shader: \n%s\n", sourceString);
+        free(sourceString);
+        return 0;
+    }
+    
+    free(sourceString);
+    sourceString = NULL;
+    
+    glAttachShader(progName, fragShader);
+    glDeleteShader(fragShader);
+    
+    glLinkProgram(progName);
+    glGetProgramiv(progName, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0)
+    {
+        GLchar *log = (GLchar*)malloc(logLength);
+        glGetProgramInfoLog(progName, logLength, &logLength, log);
+        NSLog(@"Program link log:\n%s\n", log);
+        free(log);
+    }
+    
+    glGetProgramiv(progName, GL_LINK_STATUS, &status);
+    if (status == 0)
+    {
+        NSLog(@"Failed to link program");
+        return 0;
+    }
+    
+    glValidateProgram(progName);
+    glGetProgramiv(progName, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0)
+    {
+        GLchar *log = (GLchar*)malloc(logLength);
+        glGetProgramInfoLog(progName, logLength, &logLength, log);
+        NSLog(@"Program validate log:\n%s\n", log);
+        free(log);
+    }
+    
+    glGetProgramiv(progName, GL_VALIDATE_STATUS, &status);
+    if (status == 0)
+    {
+        NSLog(@"Failed to validate program");
+        return 0;
+    }
+    
+    return progName;
+
+}
 
 @end

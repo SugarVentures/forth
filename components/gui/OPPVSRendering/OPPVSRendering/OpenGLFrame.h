@@ -13,6 +13,7 @@
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
 
+
 static GLuint textures[5];
 
 @interface OpenGLFrame : CAOpenGLLayer
@@ -30,7 +31,6 @@ static GLuint textures[5];
 @property (assign,getter=isReverse) BOOL reverse;
 @property (assign,getter=isInitialized) BOOL initialized;
 
-- (void) setup;
 
 @end
 

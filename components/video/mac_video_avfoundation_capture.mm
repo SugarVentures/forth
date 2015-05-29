@@ -232,8 +232,8 @@
     [output setAlwaysDiscardsLateVideoFrames: YES];
 
     pixelBufferOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-                              @(CGRectGetWidth(rect)), (id)kCVPixelBufferWidthKey,
-                              @(CGRectGetHeight(rect)), (id)kCVPixelBufferHeightKey,
+                              //@(CGRectGetWidth(rect)), (id)kCVPixelBufferWidthKey,
+                              //@(CGRectGetHeight(rect)), (id)kCVPixelBufferHeightKey,
                               [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA], (id)kCVPixelBufferPixelFormatTypeKey,
                               nil];
     [output setVideoSettings:pixelBufferOptions];

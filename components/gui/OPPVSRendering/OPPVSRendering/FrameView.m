@@ -10,6 +10,8 @@
 
 @implementation FrameView
 
+@synthesize backingScaleFactor;
+
 - (id)init
 {
     self = [super init];
@@ -69,6 +71,7 @@
     OpenGLFrame *renderView = [[OpenGLFrame alloc] init];
     [renderView setAsynchronous:NO];
     [renderView setNeedsDisplay];
+    renderView.contentsScale = [self backingScaleFactor];
     [view setLayer:renderView];
     [self addSubview:view];
     
