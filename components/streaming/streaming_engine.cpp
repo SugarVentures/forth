@@ -28,7 +28,6 @@ namespace oppvs
 		delete m_receiver;
 		delete m_receiveThread;
 
-		delete m_bitsstream;
 
 		m_broadcaster = NULL;
 		m_receiver = NULL;

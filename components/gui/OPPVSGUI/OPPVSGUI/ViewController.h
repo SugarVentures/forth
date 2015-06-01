@@ -31,8 +31,9 @@
     IBOutlet NSTableView *tableView;
     
     IBOutlet DropDownMenu *addSourceButton;
-
+   
 }
+@property (strong) IBOutlet NSMenu *statusMenu;
 
 @property (retain) NSMutableArray *listSources;
 
@@ -51,10 +52,14 @@
 - (IBAction)AddClick:(id)sender;
 - (void) renderFrame: (oppvs::PixelBuffer*) pixelBuffer;
 - (IBAction)startStreaming:(id)sender;
+- (IBAction)stopStreaming:(id)sender;
 - (void) reset;
 - (void) setRegion;
 - (void) setStreamInfo: (NSString*) info;
 - (IBAction) addSource:(id)sender;
+- (IBAction)showPreview:(id)sender;
+
+- (void)cleanup;
 
 @end
 

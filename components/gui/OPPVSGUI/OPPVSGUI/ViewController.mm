@@ -23,6 +23,8 @@
 {
     NSMutableArray *shadeWindows;
     CGFloat scaleFactor;
+    NSStatusItem *statusItem;
+    NSStatusBarButton *statusButton;
 }
 
 @synthesize videoDevices;
@@ -194,17 +196,15 @@ NSString* kCSName = @"CSName";
 - (IBAction)stopStreaming:(id)sender {
     [self setStreaming:false];
     [document stopStreaming];
-    
+    [self.view.window makeKeyAndOrderFront:nil];
 }
 
 - (IBAction)startStreaming:(id)sender {
-    if (!self.recording)
-    {
-        [self setRecording:true];
-        [document startRecording];        
-    }
     [self setStreaming:true];
     [document startStreaming];
+    [self hideWindow: sender];
+    [self activateStatusMenu];
+
 }
 
 - (void)dealloc
@@ -359,5 +359,41 @@ NSString* kCSName = @"CSName";
     id user = [superview addWindow:frame];
     return user;
 }
+
+#pragma mark Status Bar
+
+- (void)activateStatusMenu
+{
+    NSStatusBar *bar = [NSStatusBar systemStatusBar];
+    
+    statusItem = [bar statusItemWithLength:NSVariableStatusItemLength];
+    statusButton = statusItem.button;
+
+    [statusButton setTitle:@"OPPVS"];
+    [statusButton setAction:@selector(popStatusMenu:)];
+    [statusButton setTarget:self];
+    
+    [statusButton setMenu:[self statusMenu]];
+    
+}
+
+- (void)popStatusMenu: (id)sender
+{
+    NSPoint loc = NSMakePoint([statusButton frame].origin.x, [statusButton frame].origin.y +
+                              [statusButton frame].size.height + 5);
+
+    [[self statusMenu] popUpMenuPositioningItem:nil atLocation:loc inView:statusButton];
+}
+
+- (void)hideWindow: (id)sender
+{
+    [self.view.window orderOut:nil];
+}
+
+- (IBAction)showPreview:(id)sender
+{
+    [self.view.window makeKeyAndOrderFront:nil];
+}
+
 
 @end

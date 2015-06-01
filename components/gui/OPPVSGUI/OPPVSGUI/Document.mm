@@ -44,12 +44,15 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
     sharedBuffer->stride[0] = sharedBuffer->width[0] * 4;
     sharedBuffer->nbytes = sharedBuffer->height[0] * sharedBuffer->stride[0];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(cleanup)
+                                                 name:NSApplicationWillTerminateNotification
+                                               object:nil];
     return self;
 }
 
 - (void) startRecording
 {
-    
     
     ViewController* view = (ViewController*)viewController;
     [view reset];
@@ -104,6 +107,7 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
     streamingEngine = new oppvs::StreamingEngine(sharedBuffer);
     streamingEngine->initPublishChannel();
     std::string info = streamingEngine->getStreamInfo();
+    
     ViewController* view = (ViewController*)viewController;
     NSString *streaminfo = [NSString stringWithCString:info.c_str()
                                                encoding:[NSString defaultCStringEncoding]];
@@ -112,7 +116,8 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 
 - (void) stopStreaming
 {    
-    delete oppvsStream;
+    delete streamingEngine;
+    streamingEngine = NULL;
 }
 
 void frameCallback(oppvs::PixelBuffer& pf)
@@ -396,10 +401,17 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     return YES;
 }
 
-- (void)dealloc
+- (void)cleanup
 {
+    NSLog(@"Cleanup");
+    
+    
     delete sharedBuffer;
+    delete videoEngine;
+    delete streamingEngine;
     
 }
+
+
 
 @end
