@@ -9,8 +9,6 @@
 #import "Document.h"
 #import <IOKit/graphics/IOGraphicsLib.h>
 
-oppvs::Stream* oppvsStream;
-oppvs::StreamingEngine *streamingEngine;
 bool isStreaming;
 
 static oppvs::window_rect_t createFromCGRect(CGRect rect)
@@ -27,6 +25,7 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 {
 @private
     NSViewController* viewController;
+    oppvs::StreamingEngine *streamingEngine;
 }
 @end
 
@@ -37,7 +36,6 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 
 - (instancetype)init {
     self = [super init];
-    oppvsStream = NULL;
     sharedBuffer = new oppvs::PixelBuffer();
     sharedBuffer->width[0] = oppvs::DEFAULT_VIDEO_FRAME_WIDTH;
     sharedBuffer->height[0] = oppvs::DEFAULT_VIDEO_FRAME_HEIGHT;
@@ -124,17 +122,17 @@ void frameCallback(oppvs::PixelBuffer& pf)
 {
     if (pf.nbytes == 0)
         return;
-    
-
-    if (streamingEngine)
+    oppvs::ControllerLinker* controller = (oppvs::ControllerLinker*)pf.user;
+    oppvs::StreamingEngine* streamer = (oppvs::StreamingEngine*)controller->streamer;
+    if (streamer)
     {
-        if (streamingEngine->isRunning())
+        if (streamer->isRunning())
         {
-            streamingEngine->pushData(pf);
+            streamer->pushData(pf);
         }
     }
     
-    OpenGLFrame* renderingView = (__bridge OpenGLFrame*)pf.user;
+    OpenGLFrame* renderingView = (__bridge OpenGLFrame*)controller->render;
     [renderingView setPixelBuffer:pf.plane[0]];
     [renderingView setFrameWidth:pf.width[0]];
     [renderingView setFrameHeight:pf.height[0]];
@@ -357,7 +355,10 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     oppvs::window_rect_t crect = createFromCGRect(inrect);
     
     oppvs::VideoActiveSource *activeSource;
-    activeSource = videoEngine->addSource(type, source, 24, crect, (__bridge void*)viewid);
+    oppvs::ControllerLinker *controller = new oppvs::ControllerLinker();
+    controller->streamer = streamingEngine;
+    controller->render = (__bridge void*)viewid;
+    activeSource = videoEngine->addSource(type, source, 24, crect, (void*)controller);
     if (activeSource)
     {
         videoEngine->setupCaptureSession(*activeSource);
