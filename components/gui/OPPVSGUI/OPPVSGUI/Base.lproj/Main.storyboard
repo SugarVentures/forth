@@ -696,7 +696,6 @@
                                 <connections>
                                     <action selector="stopStreaming:" target="5gI-5U-AMq" id="r8J-Rp-mMv"/>
                                     <binding destination="5gI-5U-AMq" name="enabled" keyPath="streaming" id="o9X-r4-Lt2"/>
-                                    <binding destination="5gI-5U-AMq" name="target" keyPath="self" id="EkW-qB-S6s"/>
                                 </connections>
                             </button>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ARj-h2-YJG">

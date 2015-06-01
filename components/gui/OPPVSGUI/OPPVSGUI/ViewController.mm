@@ -196,7 +196,9 @@ NSString* kCSName = @"CSName";
 - (IBAction)stopStreaming:(id)sender {
     [self setStreaming:false];
     [document stopStreaming];
+    
     [self.view.window makeKeyAndOrderFront:nil];
+    statusItem = nil;
 }
 
 - (IBAction)startStreaming:(id)sender {
@@ -393,7 +395,9 @@ NSString* kCSName = @"CSName";
 - (IBAction)showPreview:(id)sender
 {
     [self.view.window makeKeyAndOrderFront:nil];
+    statusItem = nil;
 }
+
 
 
 @end
