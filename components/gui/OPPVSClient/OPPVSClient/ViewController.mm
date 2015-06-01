@@ -46,6 +46,8 @@
 {
     
     document = [self.view.window.windowController document];
+    FrameView *superview = (FrameView*)hostPreviewLayer;
+    [superview setBackingScaleFactor:document.windowForSheet.backingScaleFactor];
 }
 
 
@@ -75,7 +77,7 @@
         else
         {
             dispatch_sync(dispatch_get_main_queue(), ^{
-                subview = [self addSubView:NSMakeRect(0, 0, pf->width[0]/2, pf->height[0]/2)];
+                subview = [self addSubView:NSMakeRect(0, 0, [hostPreviewLayer bounds].size.width, [hostPreviewLayer bounds].size.height)];
             });
             NSNumber *sourceid = [NSNumber numberWithUnsignedShort: pf->source];
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
@@ -97,39 +99,6 @@
         });
 
 
-        /*dispatch_async(dispatch_get_main_queue(), ^{
-            
-            NSMutableData *data;
-            @autoreleasepool {
-                NSArray *filtered = [listSources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"source = %d", pf->source]];
-                
-                if ((unsigned long)[filtered count] > 0)
-                {
-                    NSDictionary *item = [filtered objectAtIndex:0];
-                    subview = [item objectForKey:@"view"];
-                    data = [item objectForKey:@"data"];
-                }
-                else
-                {
-                    NSNumber *sourceid = [NSNumber numberWithUnsignedShort: pf->source];
-                    subview = [self addSubView:NSMakeRect(0, 0, pf->width[0]/2, pf->height[0]/2)];
-                    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-                    data = [NSMutableData dataWithCapacity: pf->width[0]*pf->height[0]*4];
-                    [dict setObject:subview forKey:@"view"];
-                    [dict setObject:sourceid forKey:@"source"];
-                    [dict setObject:data forKey:@"data"];
-                    [listSources addObject: dict];
-                }
-            }
-            
-            OpenGLFrame *view = (OpenGLFrame*)subview;
-            [view setFrameWidth:pf->width[0]];
-            [view setFrameHeight:pf->height[0]];
-            [data replaceBytesInRange:NSMakeRange(0, pf->width[0]*pf->height[0]*4) withBytes:pf->plane[0]];
-            [view setPixelBuffer:(GLubyte*)[data mutableBytes]];
-            
-            [view setNeedsDisplay];
-        });*/
     }
     
 }
