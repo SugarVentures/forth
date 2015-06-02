@@ -25,6 +25,8 @@
     CGFloat scaleFactor;
     NSStatusItem *statusItem;
     NSStatusBarButton *statusButton;
+    
+    bool isBackground;
 }
 
 @synthesize videoDevices;
@@ -40,6 +42,7 @@ NSString* kCSName = @"CSName";
 {
     
     self = [super init];
+    isBackground = false;
     return self;
 }
 
@@ -254,7 +257,6 @@ NSString* kCSName = @"CSName";
     if ((e == kCGErrorSuccess) && (1 == matchingDisplayCount))
     {
         /* Add the display as a capture input. */
-        //[self addDisplayInputToCaptureSession:displayID cropRect:NSRectToCGRect(rect)];
         if (rect.size.width > 0 && rect.size.height > 0)
             hasRegion = true;
     }
@@ -271,10 +273,19 @@ NSString* kCSName = @"CSName";
     
     if (hasRegion)
     {
-        CGRect inrect = CGRectMake(0, 0, lroundf(rect.size.width*scaleFactor), lroundf(rect.size.height*scaleFactor));
-        CGRect outrect = CGRectMake(0, 0, lroundf(rect.size.width), lroundf(rect.size.height));
-        id user = [self addSubView:outrect];
-        [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_WINDOW inRect:inrect toRect:outrect withViewID:user];
+        CGRect inrect;
+        if (isBackground)
+            inrect = CGRectMake(0, 0, [hostPreviewLayer bounds].size.width, [hostPreviewLayer bounds].size.height);
+        else
+            inrect = CGRectMake(0, 0, 400, 300);
+        unsigned int width = rect.size.height;
+        if (width % 20)
+        {
+            width = (width/20 + 1) * 20;
+        }
+        CGRect outrect = CGRectMake(rect.origin.x, rect.origin.y, width, lroundf(rect.size.height));
+        id user = [self addSubView:inrect];
+        [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_CUSTOM inRect:inrect toRect:outrect withViewID:user];
     }
 }
 
@@ -318,11 +329,13 @@ NSString* kCSName = @"CSName";
     {
         x = 0;
         y = 0;
+        isBackground = true;
         sourceFrame = CGRectMake(0, 0, oppvs::DEFAULT_VIDEO_FRAME_WIDTH, oppvs::DEFAULT_VIDEO_FRAME_HEIGHT);
         renderFrame = CGRectMake(x, y, [hostPreviewLayer bounds].size.width, [hostPreviewLayer bounds].size.height);
     }
     else
     {
+        isBackground = false;
         x = arc4random_uniform(50);
         y = arc4random_uniform(50);
         renderFrame = CGRectMake(x, y, 400/scaleFactor + x, 300/scaleFactor + y);

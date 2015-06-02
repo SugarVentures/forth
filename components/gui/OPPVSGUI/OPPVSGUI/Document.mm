@@ -353,7 +353,11 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
 - (void) addSource:(NSString *)sourceid hasType:(oppvs::VideoSourceType)type inRect:(CGRect)inrect toRect:(CGRect)outrect withViewID:(id)viewid
 {
     std::string source = [sourceid UTF8String];
-    oppvs::window_rect_t crect = createFromCGRect(inrect);
+    oppvs::window_rect_t crect = createFromCGRect(outrect);
+    /*crect.bottom = 0;
+    crect.left = 0;
+    crect.right = 440;
+    crect.top = 181;*/
     
     oppvs::VideoActiveSource *activeSource;
     oppvs::ControllerLinker *controller = new oppvs::ControllerLinker();

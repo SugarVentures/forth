@@ -28,7 +28,6 @@ namespace oppvs
 		delete m_publisher;
 		delete m_subscribe;
 
-
 	}
 
 	void* runStreaming(void* p)

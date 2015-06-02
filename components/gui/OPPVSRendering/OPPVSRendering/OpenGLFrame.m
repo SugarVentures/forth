@@ -127,9 +127,7 @@ static GLint default_frame_buffer = 0;
     glBindVertexArrayAPPLE(0);
     
     glBindTexture(GL_TEXTURE_2D, 0);*/
-    
-    
-    
+        
     glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, pbo[0]);
     glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, frameWidth*frameHeight*4, pixelBuffer, GL_STATIC_DRAW_ARB);
     
@@ -220,8 +218,8 @@ static GLint default_frame_buffer = 0;
     glTexImage2D(GL_TEXTURE_2D,
                  0,
                  GL_RGBA,
-                 3000,
-                 2000,
+                 frameWidth,
+                 frameHeight,
                  0,
                  GL_BGRA,
                  GL_UNSIGNED_BYTE,
@@ -298,6 +296,12 @@ static GLint default_frame_buffer = 0;
     texName = texID[[self indexTexture]];
     glEnable(GL_TEXTURE_RECTANGLE_ARB);
     glBindTexture(GL_TEXTURE_RECTANGLE_ARB, texName);
+
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    
     
     glTexImage2D(GL_TEXTURE_RECTANGLE_ARB,
                  0,
@@ -308,12 +312,7 @@ static GLint default_frame_buffer = 0;
                  GL_BGRA,
                  GL_UNSIGNED_INT_8_8_8_8_REV,
                  NULL);
-
     
-    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
 }
 

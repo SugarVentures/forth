@@ -27,6 +27,7 @@ namespace oppvs {
 	typedef enum VideoSourceType {
 		VST_WINDOW,
 		VST_WEBCAM,
+		VST_CUSTOM,
 		VST_OTHER
 	} video_source_type_t;
 

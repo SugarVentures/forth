@@ -12,6 +12,29 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <ApplicationServices/ApplicationServices.h> //For saving screenshots
 
+int countSetBits(unsigned int n)
+{
+    unsigned int count = 0;
+    while (n)
+    {
+        n &= (n - 1);
+        count++;
+    }
+    return count;
+}
+
+unsigned int getNearestPowerOfTwo(unsigned int x)
+{
+    x--;
+    x |= x >> 1;  // handle  2 bit numbers
+    x |= x >> 2;  // handle  4 bit numbers
+    x |= x >> 4;  // handle  8 bit numbers
+    x |= x >> 8;  // handle 16 bit numbers
+    x |= x >> 16; // handle 32 bit numbers
+    x++;
+
+    return x;
+}
 
 @interface MacVideoAVFoundationCapture : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, 
     AVCaptureFileOutputDelegate,AVCaptureFileOutputRecordingDelegate> {
@@ -43,7 +66,7 @@
  - (id) init;
  - (void) dealloc;
  - (oppvs::error_video_capture_t) openCaptureDevice: (CGRect) rect : (int) pixelformat : (int) fps;
- - (oppvs::error_video_capture_t) openScreenDevice: (CGRect) rect : (int) pixelformat : (int) fps;
+ - (oppvs::error_video_capture_t) openScreenDevice: (CGRect) rect : (bool)isDrop : (int) pixelformat : (int) fps;
  - (oppvs::error_video_capture_t) captureWindow: (int) wid for: (CGRect) rect;
  - (void) closeDevice;
  - (void) startRecording;
@@ -189,7 +212,7 @@
     return oppvs::ERR_VIDEO_CAPTURE_NONE;
  }
 
- - (oppvs::error_video_capture_t) openScreenDevice: (CGRect) rect : (int) pixelformat : (int) fps
+ - (oppvs::error_video_capture_t) openScreenDevice: (CGRect) rect : (bool) isDrop : (int) pixelformat : (int) fps
  {
     //Set flip
     pixel_buffer.flip = 0;
@@ -211,7 +234,11 @@
     }
     screen_input.removesDuplicateFrames = 1;
     
-    //[screen_input setCropRect: rect];
+    if (isDrop)
+    {        
+        [screen_input setCropRect: rect];
+    }
+
     [screen_input setMinFrameDuration: CMTimeMake(1, fps)];
     [session addInput: screen_input];
     
@@ -750,11 +777,17 @@
         source.rect.right - source.rect.left, source.rect.top - source.rect.bottom);
     [(id)cap setSource: source.id];
 
-    if (source.video_source_type == oppvs::VST_WEBCAM)
-        return [(id)cap openCaptureDevice: rect : source.pixel_format : source.fps];
-    if (source.video_source_type == oppvs::VST_WINDOW)
-        return [(id)cap openScreenDevice: rect : source.pixel_format : source.fps];
-    return oppvs::ERR_VIDEO_CAPTURE_SESSION_INIT_FAILED;
+    switch (source.video_source_type)
+    {
+        case oppvs::VST_WEBCAM:
+            return [(id)cap openCaptureDevice: rect : source.pixel_format : source.fps];
+        case oppvs::VST_WINDOW:
+            return [(id)cap openScreenDevice: rect : false: source.pixel_format : source.fps];
+        case oppvs::VST_CUSTOM:
+            return [(id)cap openScreenDevice: rect : true: source.pixel_format : source.fps];
+        default:
+            return oppvs::ERR_VIDEO_CAPTURE_SESSION_INIT_FAILED;
+    }
  }
 
  void oppvs_start_video_recording(void* cap) {
