@@ -48,6 +48,8 @@
 @property (assign,getter=isRecording) BOOL recording;
 @property (assign,getter=isStreaming) BOOL streaming;
 
+@property BOOL hidden;
+
 
 - (IBAction)AddClick:(id)sender;
 - (void) renderFrame: (oppvs::PixelBuffer*) pixelBuffer;

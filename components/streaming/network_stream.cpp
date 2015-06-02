@@ -149,7 +149,7 @@ namespace oppvs
 	        memcpy(buffer + offset_buffer, data + offset_data, stride);
 	    }
 	    delete [] data;*/
-		return 0;		
+		return 0;
 	}
 
 	void NetworkStream::registerCallback(void* owner, void* squeue, on_send_done_event event)

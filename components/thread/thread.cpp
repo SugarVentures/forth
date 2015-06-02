@@ -20,6 +20,11 @@ namespace oppvs
 		m_params = params;
 	}
 
+	Thread::~Thread()
+	{
+		pthread_cancel(m_threadId);
+	}
+
 	int Thread::create()
 	{
 		int error = pthread_create(&m_threadId, NULL, m_routine, m_params);

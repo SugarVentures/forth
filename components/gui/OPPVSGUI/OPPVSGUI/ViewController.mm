@@ -204,9 +204,11 @@ NSString* kCSName = @"CSName";
 - (IBAction)startStreaming:(id)sender {
     [self setStreaming:true];
     [document startStreaming];
-    [self hideWindow: sender];
-    [self activateStatusMenu];
-
+    if (self.hidden)
+    {
+        [self hideWindow: sender];
+        [self activateStatusMenu];
+    }
 }
 
 - (void)dealloc
@@ -398,6 +400,10 @@ NSString* kCSName = @"CSName";
     statusItem = nil;
 }
 
+- (void) cleanup
+{
+    
+}
 
 
 @end

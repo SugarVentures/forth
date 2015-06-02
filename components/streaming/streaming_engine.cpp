@@ -10,6 +10,8 @@ namespace oppvs
 		m_sendThread = NULL;
 		m_receiveThread = NULL;
 		m_thread = NULL;
+
+		m_subscribe = NULL;
 		
 		SRTPSocket::initSRTPLib();
 		if (pthread_mutex_init(&m_mutex, NULL) != 0)
@@ -20,20 +22,13 @@ namespace oppvs
 
 	StreamingEngine::~StreamingEngine()
 	{
-		delete m_publisher;
-
-		delete m_broadcaster;
 		delete m_sendThread;
-
-		delete m_receiver;
 		delete m_receiveThread;
 
+		delete m_publisher;
+		delete m_subscribe;
 
-		m_broadcaster = NULL;
-		m_receiver = NULL;
 
-		m_sendThread = NULL;
-		m_receiveThread = NULL;
 	}
 
 	void* runStreaming(void* p)

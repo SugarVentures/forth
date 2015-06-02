@@ -28,4 +28,9 @@
     return NO;
 }
 
+- (void)windowWillClose:(NSNotification *)notification
+{
+    NSLog(@"Window will close");
+}
+
 @end

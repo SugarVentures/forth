@@ -669,11 +669,11 @@
             <objects>
                 <viewController storyboardIdentifier="Document View Controller" id="5gI-5U-AMq" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" id="ERx-hH-rdd">
-                        <rect key="frame" x="0.0" y="0.0" width="840" height="700"/>
+                        <rect key="frame" x="0.0" y="0.0" width="835" height="700"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I7x-OO-bNG">
-                                <rect key="frame" x="261" y="640" width="137" height="32"/>
+                                <rect key="frame" x="244" y="640" width="137" height="32"/>
                                 <buttonCell key="cell" type="push" title="Start Streaming" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vxD-cA-RmW">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -688,7 +688,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ted-Kf-bAX">
-                                <rect key="frame" x="413" y="639" width="137" height="32"/>
+                                <rect key="frame" x="380" y="639" width="137" height="32"/>
                                 <buttonCell key="cell" type="push" title="Stop Streaming" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="n0A-lM-cVY">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -718,11 +718,21 @@
                                 <rect key="frame" x="20" y="20" width="800" height="600"/>
                             </customView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xjR-Zx-79K" customClass="DropDownMenu">
-                                <rect key="frame" x="648" y="641" width="66" height="32"/>
+                                <rect key="frame" x="755" y="640" width="66" height="32"/>
                                 <buttonCell key="cell" type="push" title="Add" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iLY-OW-wlc">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="snd-RH-iev">
+                                <rect key="frame" x="522" y="648" width="168" height="18"/>
+                                <buttonCell key="cell" type="check" title="Hide when streaming" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ai2-Hr-OrW">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="5gI-5U-AMq" name="value" keyPath="hidden" id="Wng-8H-MkU"/>
+                                </connections>
                             </button>
                         </subviews>
                     </view>
@@ -757,7 +767,7 @@
                     </connections>
                 </dictionaryController>
             </objects>
-            <point key="canvasLocation" x="-31" y="986"/>
+            <point key="canvasLocation" x="-33.5" y="986"/>
         </scene>
     </scenes>
 </document>

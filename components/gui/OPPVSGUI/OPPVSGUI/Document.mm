@@ -10,6 +10,7 @@
 #import <IOKit/graphics/IOGraphicsLib.h>
 
 bool isStreaming;
+oppvs::StreamingEngine *streamingEngine;
 
 static oppvs::window_rect_t createFromCGRect(CGRect rect)
 {
@@ -25,7 +26,7 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 {
 @private
     NSViewController* viewController;
-    oppvs::StreamingEngine *streamingEngine;
+
 }
 @end
 
@@ -123,7 +124,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     if (pf.nbytes == 0)
         return;
     oppvs::ControllerLinker* controller = (oppvs::ControllerLinker*)pf.user;
-    oppvs::StreamingEngine* streamer = (oppvs::StreamingEngine*)controller->streamer;
+    oppvs::StreamingEngine* streamer = streamingEngine;
     if (streamer)
     {
         if (streamer->isRunning())
@@ -409,7 +410,7 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     
     delete sharedBuffer;
     delete videoEngine;
-    delete streamingEngine;
+    //delete streamingEngine;
     
 }
 
