@@ -38,7 +38,6 @@
     [hostPreviewLayer setLayer:previewView];*/
     
     [serverIP setStringValue:@"127.0.0.1"];
-    [serverPort setStringValue:@"33432"];
     listSources = [[NSMutableArray alloc] init];
 }
 
@@ -61,7 +60,7 @@
 {
     if (pf != NULL)
     {
-        
+        NSInteger index = pf->order;
         __block id subview = nil;
         NSMutableData *data;
         
@@ -77,8 +76,11 @@
         else
         {
             dispatch_sync(dispatch_get_main_queue(), ^{
-                subview = [self addSubView:NSMakeRect(0, 0, [hostPreviewLayer bounds].size.width, [hostPreviewLayer bounds].size.height)];
+                subview = [self addSubView:NSMakeRect(0, 0, [hostPreviewLayer bounds].size.width, [hostPreviewLayer bounds].size.height) atIndex:index];
             });
+            if (subview == nil)
+                return;
+            
             NSNumber *sourceid = [NSNumber numberWithUnsignedShort: pf->source];
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
             data = [NSMutableData dataWithCapacity: pf->width[0]*pf->height[0]*4];
@@ -110,10 +112,10 @@
     [document initReceiver:ip withPort:port];
 }
 
-- (id)addSubView: (NSRect)frame
+- (id)addSubView: (NSRect)frame atIndex: (NSInteger)index
 {
     FrameView *superview = (FrameView*)hostPreviewLayer;
-    id user = [superview addWindow:frame];
+    id user = [superview addWindow:frame atIndex:index];
     return user;
 }
 

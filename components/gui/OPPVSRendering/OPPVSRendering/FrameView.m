@@ -41,7 +41,6 @@ static int noView = 0;
 - (void)resetToDefault: sender
 {
     [self setLocation:NSMakePoint(0.0, 0.0)];
-    viewList = [[NSMutableArray alloc] init];
     
 }
 
@@ -76,7 +75,55 @@ static int noView = 0;
     renderView.contentsScale = [self backingScaleFactor];
     [view setLayer:renderView];
     [self addSubview:view];
+    [renderView setOrder:[[self subviews] indexOfObject:view]];
+
     
+    [renderView setIndexTexture:noView];
+    noView++;
+    return (id)renderView;
+}
+
+- (id)addWindow:(NSRect)frameRect atIndex:(NSInteger)index
+{
+    if (index != self.subviews.count)
+        return nil;
+    
+    NSRect frame;
+    if ((int)index > 0)
+        frame = NSMakeRect(0, 0, frameRect.size.width/2, frameRect.size.height/2);
+    else
+        frame = frameRect;
+    NSView* view = [[NSView alloc] initWithFrame:frame];
+    [view setWantsLayer:true];
+    
+    OpenGLFrame *renderView = [[OpenGLFrame alloc] init];
+    [renderView setAsynchronous:NO];
+    [renderView setNeedsDisplay];
+    renderView.contentsScale = [self backingScaleFactor];
+    [view setLayer:renderView];
+    
+    if (self.subviews.count == (int)index || self.subviews.count == 0)
+    {
+        [self addSubview:view];
+    }
+    /*else
+    {
+        NSMutableArray* viewList = [[NSMutableArray alloc] init];
+        int count = 0;
+        for (int i = 0; i < (int)index; i++)
+        {
+            [viewList insertObject:self.subviews[i] atIndex:count];
+            count++;
+        }
+        [viewList insertObject:view atIndex:count];
+        count++;
+        for (int i = (int)index; i < self.subviews.count; i++)
+        {
+            [viewList insertObject:self.subviews[i] atIndex:count];
+            count++;
+        }
+        [self setSubviews:viewList];
+    }*/
     [renderView setIndexTexture:noView];
     noView++;
     return (id)renderView;

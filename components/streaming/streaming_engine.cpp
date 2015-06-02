@@ -143,12 +143,13 @@ namespace oppvs
 			raw->width = pf.width[0];
 			raw->height = pf.height[0];
 			raw->sourceid = pf.source;
+			raw->order = pf.order;
 			while (m_sendingQueue.size() >= 10)
 			{
 				usleep(10000);
 			}
 			m_sendingQueue.push(raw);
-			printf("Push data %u bytes size: %lu\n", pf.nbytes, m_sendingQueue.size());
+			printf("Push data %u bytes size: %lu Order: %d\n", pf.nbytes, m_sendingQueue.size(), pf.order);
 		}
 	}
 

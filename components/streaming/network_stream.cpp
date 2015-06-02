@@ -107,9 +107,10 @@ namespace oppvs
 				info.width = controlmsg.width;
 				info.height = controlmsg.height;
 				info.source = controlmsg.source;
+				info.order = controlmsg.order;
 				data = new uint8_t[info.width * info.height * 4];
 				curPos = data;
-				printf("Width: %d Height: %d Source %d\n", controlmsg.width, controlmsg.height, controlmsg.source);
+				printf("Width: %d Height: %d Source %d Order: %d\n", controlmsg.width, controlmsg.height, controlmsg.source, controlmsg.order);
 			}
 			else if (rcvLen == sizeof(FrameEnd) || msgLength == info.width*info.height*4)
 			{
@@ -171,15 +172,18 @@ namespace oppvs
 		if (!p_sendingQueue->empty() && !m_busy)
 		{
 			uint32_t written = 0;
-			RawData *raw = p_sendingQueue->front();			
+			RawData *raw = p_sendingQueue->front();
+
 			m_timestamp++;
 			FrameBegin controlmsg;
 			controlmsg.flag = 1;
 			controlmsg.width = raw->width;
 			controlmsg.height = raw->height;
 			controlmsg.source = raw->sourceid;
+			controlmsg.order = raw->order;
 			if (write((uint8_t*)&controlmsg, controlmsg.size(), &written) < 0)
 			{
+				printf("Falid to send control message\n");
 				m_error = -1;
 			}
 			else if (write(raw->data, raw->length, &written) < 0)
@@ -198,6 +202,7 @@ namespace oppvs
 				}
 			}
 			m_busy = true;
+			
 			m_sendDoneEvent(m_owner, m_error);
 		}
 		
@@ -234,6 +239,7 @@ namespace oppvs
 				m_buffer->width[0] = info.width;
 				m_buffer->height[0] = info.height;
 				m_buffer->source = info.source;
+				m_buffer->order = info.order;
 				m_receiveEvent(m_owner, 0);
 			}
 		}

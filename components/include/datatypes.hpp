@@ -84,7 +84,8 @@ namespace oppvs {
     	uint8_t flip;	//For different capture sources, the frame can be fliped when rendering
     	uint16_t originx;
     	uint16_t originy;
-    	uint16_t source;
+    	uint8_t source;
+    	uint8_t order;
     	void* user;
 	};
 

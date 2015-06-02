@@ -30,6 +30,7 @@
 @property (assign,getter=isReverse) BOOL reverse;
 @property (assign,getter=isInitialized) BOOL initialized;
 
+@property NSInteger order;
 
 @end
 

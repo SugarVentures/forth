@@ -44,20 +44,23 @@ namespace oppvs
 		int8_t count;
 		uint16_t width;
 		uint16_t height;
-		uint16_t sourceid;
+		uint8_t sourceid;
+		uint8_t order;
 	};
 
 	//Size of the FrameBegin must be odd
 	struct FrameBegin
 	{
 		uint8_t flag;
+		uint8_t source;
+		uint8_t order;
 		uint16_t width;
 		uint16_t height;
-		uint16_t source;
+		
 
 		inline int size()
 		{
-			return 7;
+			return sizeof(FrameBegin);
 		}
 	};
 
@@ -72,7 +75,8 @@ namespace oppvs
 		uint16_t height;
 		uint16_t originx;
 		uint16_t originy;
-		uint16_t source;
+		uint8_t source;
+		uint8_t order;
 	};
 
 

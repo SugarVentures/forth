@@ -18,7 +18,7 @@
     NSPoint lastLocation;
 
     
-    NSMutableArray *viewList;
+
     NSView* currentDraggingView;
 }
 
@@ -31,6 +31,7 @@
 - (NSPoint)location;
 
 - (id)addWindow:(NSRect)frameRect;
+- (id)addWindow:(NSRect)frameRect atIndex: (NSInteger)index;
 
 -(void)mouseDown:(NSEvent *)event;
 -(void)mouseDragged:(NSEvent *)event;

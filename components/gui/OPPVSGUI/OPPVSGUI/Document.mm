@@ -124,6 +124,14 @@ void frameCallback(oppvs::PixelBuffer& pf)
     if (pf.nbytes == 0)
         return;
     oppvs::ControllerLinker* controller = (oppvs::ControllerLinker*)pf.user;
+    
+    OpenGLFrame* renderingView = (__bridge OpenGLFrame*)controller->render;
+    [renderingView setPixelBuffer:pf.plane[0]];
+    [renderingView setFrameWidth:pf.width[0]];
+    [renderingView setFrameHeight:pf.height[0]];
+    [renderingView setIndexTexture:pf.source];
+
+    pf.order = (uint8_t)renderingView.order;
     oppvs::StreamingEngine* streamer = streamingEngine;
     if (streamer)
     {
@@ -132,12 +140,6 @@ void frameCallback(oppvs::PixelBuffer& pf)
             streamer->pushData(pf);
         }
     }
-    
-    OpenGLFrame* renderingView = (__bridge OpenGLFrame*)controller->render;
-    [renderingView setPixelBuffer:pf.plane[0]];
-    [renderingView setFrameWidth:pf.width[0]];
-    [renderingView setFrameHeight:pf.height[0]];
-    [renderingView setIndexTexture:pf.source];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [renderingView setNeedsDisplay];
@@ -354,16 +356,12 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
 {
     std::string source = [sourceid UTF8String];
     oppvs::window_rect_t crect = createFromCGRect(outrect);
-    /*crect.bottom = 0;
-    crect.left = 0;
-    crect.right = 440;
-    crect.top = 181;*/
     
     oppvs::VideoActiveSource *activeSource;
     oppvs::ControllerLinker *controller = new oppvs::ControllerLinker();
     controller->streamer = streamingEngine;
     controller->render = (__bridge void*)viewid;
-    activeSource = videoEngine->addSource(type, source, 24, crect, (void*)controller);
+    activeSource = videoEngine->addSource(type, source, 30, crect, (void*)controller);
     if (activeSource)
     {
         videoEngine->setupCaptureSession(*activeSource);
