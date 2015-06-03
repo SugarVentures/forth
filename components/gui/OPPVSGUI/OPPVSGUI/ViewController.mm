@@ -278,14 +278,20 @@ NSString* kCSName = @"CSName";
             inrect = CGRectMake(0, 0, [hostPreviewLayer bounds].size.width, [hostPreviewLayer bounds].size.height);
         else
             inrect = CGRectMake(0, 0, 400, 300);
-        unsigned int width = rect.size.height;
+        unsigned int width = rect.size.width;
         if (width % 20)
         {
             width = (width/20 + 1) * 20;
         }
-        CGRect outrect = CGRectMake(rect.origin.x, rect.origin.y, width, lroundf(rect.size.height));
+        
+        CGRect outrect = CGRectMake(rect.origin.x, rect.origin.y, width, ceil(rect.size.height));
         id user = [self addSubView:inrect];
         [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_CUSTOM inRect:outrect withViewID:user];
+        @autoreleasepool {
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            [dict setObject:@"Test" forKey:@"id"];
+            [[self listCaptureSources] addObject:dict];
+        }
     }
 }
 
