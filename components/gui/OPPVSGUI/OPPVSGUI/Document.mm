@@ -244,10 +244,12 @@ NSString* screenNameForDisplay(CGDirectDisplayID displayID)
     char* name = (char*)CFDictionaryGetValue(deviceInfo, CFSTR(kDisplayProductName));
     if (!name || !CFDictionaryGetValueIfPresent(deviceInfo, CFSTR("en_US"), (const void**) &value))
     {
+        CFRelease(deviceInfo);
         return @"Built-In Display";
     }
     
     [NSString stringWithCString:name encoding:[NSString defaultCStringEncoding]];
+    
     CFRelease(deviceInfo);
     return screenName;
 }
