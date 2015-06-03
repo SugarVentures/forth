@@ -112,7 +112,7 @@ namespace oppvs
 				curPos = data;
 				printf("Width: %d Height: %d Source %d Order: %d\n", controlmsg.width, controlmsg.height, controlmsg.source, controlmsg.order);
 			}
-			else if (rcvLen == sizeof(FrameEnd) || msgLength == info.width*info.height*4)
+			else if (rcvLen == sizeof(FrameEnd) || msgLength >= info.width*info.height*4)
 			{
 				break;
 			}
@@ -169,11 +169,11 @@ namespace oppvs
 
 	void NetworkStream::sendStream()
 	{
+		printf("Send stream\n");
 		if (!p_sendingQueue->empty() && !m_busy)
 		{
 			uint32_t written = 0;
 			RawData *raw = p_sendingQueue->front();
-
 			m_timestamp++;
 			FrameBegin controlmsg;
 			controlmsg.flag = 1;
@@ -183,7 +183,7 @@ namespace oppvs
 			controlmsg.order = raw->order;
 			if (write((uint8_t*)&controlmsg, controlmsg.size(), &written) < 0)
 			{
-				printf("Falid to send control message\n");
+				printf("Failed to send control message\n");
 				m_error = -1;
 			}
 			else if (write(raw->data, raw->length, &written) < 0)

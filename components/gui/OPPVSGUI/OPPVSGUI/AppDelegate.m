@@ -25,7 +25,7 @@
  
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
-    return NO;
+    return YES;
 }
 
 - (void)windowWillClose:(NSNotification *)notification

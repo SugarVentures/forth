@@ -57,7 +57,7 @@ namespace oppvs
 
 	void onSendDoneEvent(void* owner, int error)
 	{
-		printf("Error: %d\n", error);
+		printf("SendDone Event Error: %d\n", error);
 		StreamingEngine* engine = (StreamingEngine*)owner;
 		engine->updateQueue();
 	}
@@ -71,25 +71,20 @@ namespace oppvs
 
 	void StreamingEngine::updateQueue()
 	{
-		pthread_mutex_lock(&m_mutex);
 		RawData* raw = m_sendingQueue.front();
-		if (raw != NULL)
+		printf("Count: %d\n", raw->count);
+		raw->count--;
+		if (raw->count <= 0)
 		{
-			printf("Count: %d\n", raw->count);
-			raw->count--;
-			if (raw->count <= 0)
+			m_sendingQueue.pop();
+			delete raw;
+			std::vector<NetworkStream*>::const_iterator it;
+			for (it = m_subscribers.begin(); it != m_subscribers.end(); ++it)
 			{
-				m_sendingQueue.pop();
-				delete raw;
-				std::vector<NetworkStream*>::const_iterator it;
-				for (it = m_subscribers.begin(); it != m_subscribers.end(); ++it)
-				{
-					NetworkStream* stream = (NetworkStream*)*it;
-					stream->unlock();
-				}
+				NetworkStream* stream = (NetworkStream*)*it;
+				stream->unlock();
 			}
 		}
-		pthread_mutex_unlock(&m_mutex);
 	}
 
 
@@ -139,17 +134,21 @@ namespace oppvs
 	{
 		if (m_subscribers.size() > 0)
 		{
-			RawData *raw = new RawData(pf.plane[0], pf.nbytes, m_subscribers.size());
-			raw->width = pf.width[0];
-			raw->height = pf.height[0];
-			raw->sourceid = pf.source;
-			raw->order = pf.order;
-			while (m_sendingQueue.size() >= 10)
+			if (m_sendingQueue.size() < 10)
+			{
+				RawData *raw = new RawData(pf.plane[0], pf.nbytes, m_subscribers.size());
+				raw->width = pf.width[0];
+				raw->height = pf.height[0];
+				raw->sourceid = pf.source;
+				raw->order = pf.order;
+			/*while (m_sendingQueue.size() >= 10)
 			{
 				usleep(10000);
+			}*/
+				m_sendingQueue.push(raw);
+
+				printf("Push data %u bytes size: %lu Order: %d\n", pf.nbytes, m_sendingQueue.size(), pf.order);
 			}
-			m_sendingQueue.push(raw);
-			printf("Push data %u bytes size: %lu Order: %d\n", pf.nbytes, m_sendingQueue.size(), pf.order);
 		}
 	}
 

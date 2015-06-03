@@ -37,6 +37,7 @@ namespace oppvs
 		}
 		~RawData()
 		{
+			printf("Delete \n");
 			delete [] data;
 		}
 		uint32_t length;

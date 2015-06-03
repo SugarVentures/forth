@@ -64,6 +64,12 @@ namespace oppvs
 			return m_queue.front();
 		}
 
+		void lockfront()
+		{
+			LockGuard lock(m_mutex);
+			isWait = true;
+		}
+
 		void lockpop()
 		{
 			LockGuard lock(m_mutex);
@@ -82,8 +88,8 @@ namespace oppvs
 		{
 			LockGuard lock(m_mutex);
 			m_queue.push(data);
-			lock.unlock();
-			pthread_cond_signal(&m_condition);
+			//lock.unlock();
+			//pthread_cond_signal(&m_condition);
 		}
 
 		bool empty()
