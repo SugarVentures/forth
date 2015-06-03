@@ -285,7 +285,7 @@ NSString* kCSName = @"CSName";
         }
         CGRect outrect = CGRectMake(rect.origin.x, rect.origin.y, width, lroundf(rect.size.height));
         id user = [self addSubView:inrect];
-        [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_CUSTOM inRect:inrect toRect:outrect withViewID:user];
+        [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_CUSTOM inRect:outrect withViewID:user];
     }
 }
 
@@ -345,7 +345,7 @@ NSString* kCSName = @"CSName";
     if ([[source objectForKey:@"type"] isEqualToString:@"Monitor"])
     {
         user = [self addSubView:renderFrame];
-        [document addSource:[[source objectForKey:@"id"] stringValue] hasType:oppvs::VST_WINDOW inRect:sourceFrame toRect:renderFrame withViewID:user];
+        [document addSource:[[source objectForKey:@"id"] stringValue] hasType:oppvs::VST_WINDOW inRect:sourceFrame withViewID:user];
         @autoreleasepool {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
             [dict setObject:@"Test" forKey:@"id"];
@@ -356,7 +356,7 @@ NSString* kCSName = @"CSName";
     {
         user = [self addSubView:renderFrame];
         
-        [document addSource: [source objectForKey:@"id"] hasType:oppvs::VST_WEBCAM inRect:sourceFrame toRect:renderFrame withViewID:user];
+        [document addSource: [source objectForKey:@"id"] hasType:oppvs::VST_WEBCAM inRect:sourceFrame withViewID:user];
         @autoreleasepool {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
             [dict setObject:@"Test" forKey:@"id"];
