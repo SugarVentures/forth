@@ -39,19 +39,19 @@ namespace oppvs {
 	}
 
 	void MacVideoEngine::setupCaptureSessions() {
-		for (std::vector<VideoActiveSource>::const_iterator i = active_sources.begin(); i != active_sources.end(); ++i)
+		for (std::vector<VideoActiveSource>::iterator i = active_sources.begin(); i != active_sources.end(); ++i)
 	    {
-	        MacVideoCapture* videocap = new MacVideoCapture(callback_frame, i->user, *i);
+	        MacVideoCapture* videocap = new MacVideoCapture(callback_frame, i->user, &(*i));
 	        videocap->setup();
 	        videoCaptures.push_back(videocap);
 	    }
 	}
 
-	void MacVideoEngine::setupCaptureSession(VideoActiveSource& source)
+	void MacVideoEngine::setupCaptureSession(VideoActiveSource* source)
 	{
-		MacVideoCapture* videocap = new MacVideoCapture(callback_frame, source.user, source);
+		MacVideoCapture* videocap = new MacVideoCapture(callback_frame, source->user, source);
 	    videocap->setup();
-	    source.capture = (VideoCapture*)videocap;
+	    source->capture = (VideoCapture*)videocap;
 	}
 
 	void MacVideoEngine::startCaptureSession(VideoActiveSource& source)
@@ -84,13 +84,13 @@ namespace oppvs {
 		for (std::vector<VideoCapture*>::const_iterator i = videoCaptures.begin(); i != videoCaptures.end(); ++i)
 	    {
 	        VideoCapture* vc = *i;
-	        if (vc->getSource() == source)
+	        if (*vc->getSource() == source)
 	        	vc->updateConfiguration(source);
 	    }
 	}
 	
 
-	MacVideoCapture::MacVideoCapture(frame_callback cbf, void* user, const VideoActiveSource& source): 
+	MacVideoCapture::MacVideoCapture(frame_callback cbf, void* user, VideoActiveSource* source): 
 		VideoCapture(cbf, user, source)
 	{
 		printf("Init video capture\n");
@@ -120,10 +120,10 @@ namespace oppvs {
 
 	void MacVideoCapture::updateConfiguration(const VideoActiveSource& source)
 	{
-		if (m_source != source)
+		if (*m_source != source)
 			return;
-		m_source = source;
-		oppvs_update_configuration(m_cap, m_source);
+		*m_source = source;
+		//oppvs_update_configuration(m_cap, *m_source);
 	}
 
 	

@@ -41,7 +41,8 @@ void frameCallback(oppvs::PixelBuffer& pf)
 - (void)initReceiver: (NSString*)server withPort: (NSInteger)port
 {
     oppvs::PixelBuffer *pixelBuffer = new oppvs::PixelBuffer();
-    streamEngine = new oppvs::StreamingEngine(pixelBuffer);
+    streamEngine = new oppvs::StreamingEngine();
+    streamEngine->setup(pixelBuffer);
     pixelBuffer->user = (__bridge void*)viewController;
     streamEngine->registerCallback(frameCallback);
     oppvs::ServiceInfo service;

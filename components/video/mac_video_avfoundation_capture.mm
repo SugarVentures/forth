@@ -12,29 +12,6 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <ApplicationServices/ApplicationServices.h> //For saving screenshots
 
-int countSetBits(unsigned int n)
-{
-    unsigned int count = 0;
-    while (n)
-    {
-        n &= (n - 1);
-        count++;
-    }
-    return count;
-}
-
-unsigned int getNearestPowerOfTwo(unsigned int x)
-{
-    x--;
-    x |= x >> 1;  // handle  2 bit numbers
-    x |= x >> 2;  // handle  4 bit numbers
-    x |= x >> 4;  // handle  8 bit numbers
-    x |= x >> 8;  // handle 16 bit numbers
-    x |= x >> 16; // handle 32 bit numbers
-    x++;
-
-    return x;
-}
 
 @interface MacVideoAVFoundationCapture : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, 
     AVCaptureFileOutputDelegate,AVCaptureFileOutputRecordingDelegate> {
@@ -60,6 +37,7 @@ unsigned int getNearestPowerOfTwo(unsigned int x)
     CGDisplayStreamRef captureStream;
 
     NSDictionary *pixelBufferOptions;
+    oppvs::VideoActiveSource *sourceInfo;
 }
 
 
@@ -79,7 +57,7 @@ unsigned int getNearestPowerOfTwo(unsigned int x)
  - (int) setPixelFormat: (int) pf;
  - (void) saveScreenShot: (CGImageRef) image_ref as: (NSString*) filename;
  - (void) updateConfiguration: (CGRect) rect : (int) pixelformat : (int) fps;
- - (void) setSource: (uint8_t) sourceid;
+ - (void) setSource: (oppvs::VideoActiveSource*) source;
 @end
 
 @implementation MacVideoAVFoundationCapture {
@@ -147,7 +125,7 @@ unsigned int getNearestPowerOfTwo(unsigned int x)
         [session beginConfiguration];
 
         videoDevice = device;
-        //[self setFrameRate: fps];
+        [self setFrameRate: fps];
 
         AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice: videoDevice error:&nserror];
         if (input == nil)
@@ -466,7 +444,7 @@ unsigned int getNearestPowerOfTwo(unsigned int x)
 
     /* Fill the pixel_buffer member with some info that won't change per frame. */
     if (0 == is_pixel_buffer_set) {
-        //printf("CVPixelBufferIsPlanar :%d \n", CVPixelBufferIsPlanar(imageBuffer));
+        
         if (true == CVPixelBufferIsPlanar(imageBuffer)) {
             size_t plane_count = CVPixelBufferGetPlaneCount(imageBuffer);
             if (plane_count > 3) {
@@ -493,6 +471,11 @@ unsigned int getNearestPowerOfTwo(unsigned int x)
             pixel_buffer.height[0] = CVPixelBufferGetHeight(imageBuffer);
             pixel_buffer.stride[0] = CVPixelBufferGetBytesPerRow(imageBuffer);
             pixel_buffer.nbytes = pixel_buffer.stride[0] * pixel_buffer.height[0];
+
+
+            sourceInfo->rect.right = sourceInfo->rect.left + pixel_buffer.width[0];
+            sourceInfo->rect.top = sourceInfo->rect.bottom + pixel_buffer.height[0];
+            printf("Update rect: %d \n", sourceInfo->rect.right);
         }
         is_pixel_buffer_set = 1;
     }
@@ -763,9 +746,10 @@ unsigned int getNearestPowerOfTwo(unsigned int x)
     }
 }
 
-- (void) setSource: (uint8_t) sourceid
+- (void) setSource: (oppvs::VideoActiveSource*) source;
 {
-    pixel_buffer.source = sourceid;
+    sourceInfo = source;
+    pixel_buffer.source = source->id;
 }
 
  void* oppvs_vc_av_alloc() {
@@ -775,7 +759,7 @@ unsigned int getNearestPowerOfTwo(unsigned int x)
  int oppvs_setup_capture_session(void* cap, oppvs::VideoActiveSource& source) {
     CGRect rect = CGRectMake(source.rect.left, source.rect.bottom, 
         source.rect.right - source.rect.left, source.rect.top - source.rect.bottom);
-    [(id)cap setSource: source.id];
+    [(id)cap setSource: &source];
 
     switch (source.video_source_type)
     {

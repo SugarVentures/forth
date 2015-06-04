@@ -16,21 +16,41 @@ namespace oppvs
 		ST_VIDEO_STREAMING
 	};
 
+
+
+	struct ChannelMessage
+	{
+		uint16_t videoWidth;
+		uint16_t videoHeight;
+		sockaddr destination;
+		uint8_t noSource;
+	};
+
+	struct VideoSourceInfo
+	{
+		uint8_t source;
+		uint8_t order;
+		uint16_t width;
+		uint16_t height;
+		uint16_t stride;
+		uint16_t originx;
+		uint16_t originy;
+	};
+
+	struct VideoStreamInfo
+	{
+		uint16_t videoWidth;
+		uint16_t videoHeight;
+		uint8_t noSources;
+		VideoSourceInfo *sources;
+	};
+
 	struct ServiceInfo
 	{
 		uint8_t type;
 		uint32_t key;	//In case of video streaming, key = ssrc
+		VideoStreamInfo videoStreamInfo;
 	};
-
-	struct ChannelMessage
-	{
-		uint16_t width;
-		uint16_t height;
-		uint16_t stride;
-		uint8_t flip;
-		sockaddr destination;
-	};
-
 
 	class Channel
 	{

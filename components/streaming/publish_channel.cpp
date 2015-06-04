@@ -52,10 +52,9 @@ namespace oppvs
 		SocketAddress remoteAddr;
 		SocketAddress peerAddr;
 		ChannelMessage msg;
-		msg.width = m_pixelBuffer->width[0];
-		msg.height = m_pixelBuffer->height[0];
-		msg.stride = m_pixelBuffer->stride[0];
-		msg.flip = 1;
+		msg.videoWidth = m_pixelBuffer->width[0];
+		msg.videoHeight = m_pixelBuffer->height[0];
+
 		printf("Waiting subscribers\n");
 		while (!m_interrupt)
 		{

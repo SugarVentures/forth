@@ -10,7 +10,7 @@ namespace oppvs {
 
 	class MacVideoCapture : public VideoCapture {
 		public:
-			MacVideoCapture(frame_callback fc, void* user, const VideoActiveSource& source);
+			MacVideoCapture(frame_callback fc, void* user, VideoActiveSource* source);
 			~MacVideoCapture();
 
 			void setup();
@@ -33,7 +33,7 @@ namespace oppvs {
 
 		void setupCaptureSessions();
 
-		void setupCaptureSession(VideoActiveSource& source);
+		void setupCaptureSession(VideoActiveSource* source);
 		void startCaptureSession(VideoActiveSource& source);
 
 		void startRecording();

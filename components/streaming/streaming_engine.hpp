@@ -26,7 +26,8 @@ namespace oppvs
 	class StreamingEngine
 	{
 	public:
-		StreamingEngine(PixelBuffer* pf);
+		StreamingEngine();
+		void setup(PixelBuffer* pf);
 		~StreamingEngine();
 
 		void setSSRC(uint32_t value) { m_ssrc = value; }
@@ -47,6 +48,7 @@ namespace oppvs
 		void registerCallback(frame_callback cb);
 		
 		void updateQueue();
+
 	private:
 		uint32_t m_ssrc;
 		PublishChannel* m_publisher;

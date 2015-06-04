@@ -70,6 +70,7 @@ namespace oppvs {
 		uint8_t pixel_format;
 		video_source_type_t video_source_type;
 		window_rect_t rect;
+		window_rect_t renderRect;
 		uint8_t id;
 		void* user;
 		VideoCapture* capture;
@@ -97,7 +98,7 @@ namespace oppvs {
 	class VideoCapture {
 	public:
 		VideoCapture() {}
-		VideoCapture(frame_callback cbf, void* user, const VideoActiveSource& source) : 
+		VideoCapture(frame_callback cbf, void* user, VideoActiveSource* source) : 
 			callback_frame(cbf), callback_user(user), m_source(source) {}
 
 		virtual ~VideoCapture() {}
@@ -106,12 +107,12 @@ namespace oppvs {
 		virtual void stop()	{}
 		virtual void updateConfiguration(const VideoActiveSource& source) {}
 
-		const VideoActiveSource& getSource() const { return m_source; }
+		const VideoActiveSource* getSource() const { return m_source; }
 	protected:
 		frame_callback callback_frame;
 		void* callback_user;
 		void* m_cap;
-		VideoActiveSource m_source;
+		VideoActiveSource* m_source;
 	};
 
 	struct Monitor
@@ -141,7 +142,7 @@ namespace oppvs {
 		//device_id = 0 => capture main full screen
 		virtual void setupCaptureSessions() {}
 
-		virtual void setupCaptureSession(VideoActiveSource& source) {}
+		virtual void setupCaptureSession(VideoActiveSource* source) {}
 		virtual void startCaptureSession(VideoActiveSource& source) {}
 
 		virtual void startRecording() {}
@@ -155,7 +156,7 @@ namespace oppvs {
 
 		uint8_t active_source_index = 0;
 
-		VideoActiveSource* addSource(video_source_type_t type, std::string sid, uint8_t fps, window_rect_t rect, void* user) {
+		VideoActiveSource* addSource(video_source_type_t type, std::string sid, uint8_t fps, window_rect_t rect, window_rect_t renderRect, void* user) {
 			if (active_sources.size() >= MAX_ACTIVE_SOURCES)
 			{
 				return NULL;
@@ -166,6 +167,7 @@ namespace oppvs {
 			src.video_source_id = sid;
 			src.fps = fps;
 			src.rect = rect;
+			src.renderRect = renderRect;
 			src.user = user;
 			src.id = active_source_index++;
 			active_sources.push_back(src);
@@ -180,7 +182,6 @@ namespace oppvs {
 			active_sources.erase(it);
 			return 0;
 		}
-
 
 		void removeAllSource()
 		{

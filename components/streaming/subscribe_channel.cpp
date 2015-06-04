@@ -37,11 +37,9 @@ namespace oppvs
 		else
 		{
 			m_remoteAddress = SocketAddress(msg.destination);
-			printf("Stream info: %d %d %s\n", msg.width, msg.height, m_remoteAddress.toString().c_str());
-			pf->width[0] = msg.width;
-			pf->height[0] = msg.height;
-			pf->stride[0] = msg.stride;
-			pf->nbytes = msg.height * msg.stride;
+			pf->width[0] = msg.videoWidth;
+			pf->height[0] = msg.videoHeight;
+			pf->nbytes = 0;
 		}
 		m_client.Close();
 		return 0;

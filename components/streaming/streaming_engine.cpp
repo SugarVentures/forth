@@ -2,8 +2,21 @@
 
 namespace oppvs
 {
-	StreamingEngine::StreamingEngine(PixelBuffer* pf): m_ssrc(0), m_isRunning(false), pixelBuffer(pf)
+	StreamingEngine::StreamingEngine()
 	{
+		m_sendThread = NULL;
+		m_receiveThread = NULL;
+
+		m_publisher = NULL;
+		m_subscribe = NULL;
+	}
+
+	void StreamingEngine::setup(PixelBuffer* pf)
+	{
+		m_ssrc = 0;
+		m_isRunning = false;
+		pixelBuffer = pf;
+		
 		m_broadcaster = NULL;
 		m_receiver = NULL;
 
@@ -161,11 +174,12 @@ namespace oppvs
 	int StreamingEngine::initPublishChannel()
 	{
 		m_publisher = new PublishChannel((void*)this, pixelBuffer, onNewSubscriberEvent);
+
 		m_publisher->setServiceInfo(ST_VIDEO_STREAMING, generateSSRC());
 		m_publisher->start();
 		printf("SSRC: %u\n", m_publisher->getServiceKey());
 		
-		initBitsStream();
+		
 		return 0;
 	}
 
@@ -175,8 +189,6 @@ namespace oppvs
 		if (m_subscribe->registerInterest(pixelBuffer) < 0)
 			return -1;
 		printf("SSRC: %u\n", m_subscribe->getServiceKey());
-		//pixelBuffer->plane[0] = new uint8_t[pixelBuffer->nbytes];
-		//memset(pixelBuffer->plane[0], 0, pixelBuffer->nbytes);
 		if (initDownloadStream() < 0)
 			return -1;
 		return 0;

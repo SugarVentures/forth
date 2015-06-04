@@ -10,7 +10,7 @@
 #import <IOKit/graphics/IOGraphicsLib.h>
 
 bool isStreaming;
-oppvs::StreamingEngine *streamingEngine;
+
 
 static oppvs::window_rect_t createFromCGRect(CGRect rect)
 {
@@ -26,7 +26,7 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 {
 @private
     NSViewController* viewController;
-
+    oppvs::StreamingEngine streamingEngine;
 }
 @end
 
@@ -103,9 +103,17 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 
 - (void) startStreaming
 {
-    streamingEngine = new oppvs::StreamingEngine(sharedBuffer);
-    streamingEngine->initPublishChannel();
-    std::string info = streamingEngine->getStreamInfo();
+    const std::vector<oppvs::VideoActiveSource> &listSource = videoEngine->getVideoActiveSources();
+    std::vector<oppvs::VideoActiveSource>::const_iterator it;
+    for (it = listSource.begin(); it != listSource.end(); ++it)
+    {
+        printf("Source id %s Type %d %d\n", it->video_source_id.c_str(), it->video_source_type, it->rect.right);
+    }
+    
+    streamingEngine.setup(sharedBuffer);
+
+    streamingEngine.initPublishChannel();
+    std::string info = streamingEngine.getStreamInfo();
     
     ViewController* view = (ViewController*)viewController;
     NSString *streaminfo = [NSString stringWithCString:info.c_str()
@@ -114,9 +122,8 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 }
 
 - (void) stopStreaming
-{    
-    delete streamingEngine;
-    streamingEngine = NULL;
+{
+    
 }
 
 void frameCallback(oppvs::PixelBuffer& pf)
@@ -133,7 +140,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     [renderingView setIndexTexture:pf.source];
 
     pf.order = (uint8_t)renderingView.order;
-    oppvs::StreamingEngine* streamer = streamingEngine;
+    oppvs::StreamingEngine* streamer = (oppvs::StreamingEngine*)controller->streamer;
     if (streamer)
     {
         if (streamer->isRunning())
@@ -355,19 +362,20 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     return ve;
 }
 
-- (void) addSource:(NSString *)sourceid hasType:(oppvs::VideoSourceType)type inRect:(CGRect)inrect withViewID:(id)viewid
+- (void) addSource:(NSString *)sourceid hasType:(oppvs::VideoSourceType)type sourceRect:(CGRect)srect renderRect:(CGRect)rrect withViewID:(id)viewid
 {
     std::string source = [sourceid UTF8String];
-    oppvs::window_rect_t crect = createFromCGRect(inrect);
+    oppvs::window_rect_t sourceRect = createFromCGRect(srect);
+    oppvs::window_rect_t renderRect = createFromCGRect(rrect);
     
     oppvs::VideoActiveSource *activeSource;
     oppvs::ControllerLinker *controller = new oppvs::ControllerLinker();
-    controller->streamer = streamingEngine;
+    controller->streamer = &streamingEngine;
     controller->render = (__bridge void*)viewid;
-    activeSource = videoEngine->addSource(type, source, 30, crect, (void*)controller);
+    activeSource = videoEngine->addSource(type, source, 30, sourceRect, renderRect, (void*)controller);
     if (activeSource)
     {
-        videoEngine->setupCaptureSession(*activeSource);
+        videoEngine->setupCaptureSession(activeSource);
         videoEngine->startCaptureSession(*activeSource);
     }
     else

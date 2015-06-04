@@ -273,13 +273,13 @@ NSString* kCSName = @"CSName";
     
     if (hasRegion)
     {
-        CGRect inrect;
+        CGRect renderFrame;
         unsigned int width = rect.size.width;
 
         if (isBackground)
-            inrect = CGRectMake(0, 0, [hostPreviewLayer bounds].size.width, [hostPreviewLayer bounds].size.height);
+            renderFrame = CGRectMake(0, 0, [hostPreviewLayer bounds].size.width, [hostPreviewLayer bounds].size.height);
         else
-            inrect = CGRectMake(0, 0, 400, 300);
+            renderFrame = CGRectMake(0, 0, 400, 300);
 
         if (width + rect.origin.x > CGDisplayPixelsWide(displayID))
             width = (unsigned int)CGDisplayPixelsWide(displayID) - rect.origin.x;
@@ -289,10 +289,10 @@ NSString* kCSName = @"CSName";
             width = (width/20) * 20;
         }
         
-        CGRect outrect = CGRectMake(rect.origin.x, rect.origin.y, width, ceil(rect.size.height));
+        CGRect sourceFrame = CGRectMake(rect.origin.x, rect.origin.y, width, ceil(rect.size.height));
         //CGRect outrect = CGRectMake(rect.origin.x, rect.origin.y, 600, 588);
-        id user = [self addSubView:inrect];
-        [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_CUSTOM inRect:outrect withViewID:user];
+        id user = [self addSubView:renderFrame];
+        [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_CUSTOM sourceRect:sourceFrame renderRect:renderFrame withViewID:user];
         @autoreleasepool {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
             [dict setObject:@"Test" forKey:@"id"];
@@ -357,7 +357,7 @@ NSString* kCSName = @"CSName";
     if ([[source objectForKey:@"type"] isEqualToString:@"Monitor"])
     {
         user = [self addSubView:renderFrame];
-        [document addSource:[[source objectForKey:@"id"] stringValue] hasType:oppvs::VST_WINDOW inRect:sourceFrame withViewID:user];
+        [document addSource:[[source objectForKey:@"id"] stringValue] hasType:oppvs::VST_WINDOW sourceRect:sourceFrame renderRect:renderFrame withViewID:user];
         @autoreleasepool {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
             [dict setObject:@"Test" forKey:@"id"];
@@ -368,7 +368,7 @@ NSString* kCSName = @"CSName";
     {
         user = [self addSubView:renderFrame];
         
-        [document addSource: [source objectForKey:@"id"] hasType:oppvs::VST_WEBCAM inRect:sourceFrame withViewID:user];
+        [document addSource: [source objectForKey:@"id"] hasType:oppvs::VST_WEBCAM sourceRect:sourceFrame renderRect:renderFrame withViewID:user];
         @autoreleasepool {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
             [dict setObject:@"Test" forKey:@"id"];
