@@ -17,8 +17,6 @@
 @interface OpenGLFrame : CAOpenGLLayer
 {
 @private
-    GLsizei frameWidth;
-    GLsizei frameHeight;
     
 }
 
@@ -26,6 +24,7 @@
 @property GLsizei frameWidth;
 @property GLsizei frameHeight;
 @property GLuint indexTexture;
+@property GLsizei stride;
 
 @property (assign,getter=isReverse) BOOL reverse;
 @property (assign,getter=isInitialized) BOOL initialized;

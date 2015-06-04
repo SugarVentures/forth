@@ -752,7 +752,7 @@ unsigned int getNearestPowerOfTwo(unsigned int x)
     if (session != nil)
     {
         [session beginConfiguration];
-        NSDictionary *pixelBufferOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+        pixelBufferOptions = [NSDictionary dictionaryWithObjectsAndKeys:
                               @(CGRectGetWidth(rect)), (id)kCVPixelBufferWidthKey,
                               @(CGRectGetHeight(rect)), (id)kCVPixelBufferHeightKey,
                               [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA], (id)kCVPixelBufferPixelFormatTypeKey,

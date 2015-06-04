@@ -274,17 +274,23 @@ NSString* kCSName = @"CSName";
     if (hasRegion)
     {
         CGRect inrect;
+        unsigned int width = rect.size.width;
+
         if (isBackground)
             inrect = CGRectMake(0, 0, [hostPreviewLayer bounds].size.width, [hostPreviewLayer bounds].size.height);
         else
             inrect = CGRectMake(0, 0, 400, 300);
-        unsigned int width = rect.size.width;
+
+        if (width + rect.origin.x > CGDisplayPixelsWide(displayID))
+            width = (unsigned int)CGDisplayPixelsWide(displayID) - rect.origin.x;
+        
         if (width % 20)
         {
-            width = (width/20 + 1) * 20;
+            width = (width/20) * 20;
         }
         
         CGRect outrect = CGRectMake(rect.origin.x, rect.origin.y, width, ceil(rect.size.height));
+        //CGRect outrect = CGRectMake(rect.origin.x, rect.origin.y, 600, 588);
         id user = [self addSubView:inrect];
         [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_CUSTOM inRect:outrect withViewID:user];
         @autoreleasepool {

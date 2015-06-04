@@ -129,6 +129,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     [renderingView setPixelBuffer:pf.plane[0]];
     [renderingView setFrameWidth:pf.width[0]];
     [renderingView setFrameHeight:pf.height[0]];
+    [renderingView setStride:pf.stride[0]];
     [renderingView setIndexTexture:pf.source];
 
     pf.order = (uint8_t)renderingView.order;

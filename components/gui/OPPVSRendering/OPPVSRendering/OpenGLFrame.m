@@ -26,6 +26,7 @@ static GLuint texID[5];
 @synthesize pixelBuffer;
 @synthesize frameWidth;
 @synthesize frameHeight;
+@synthesize stride;
 
 GLuint texName;
 GLuint progName;
@@ -52,8 +53,10 @@ static GLint default_frame_buffer = 0;
         pixelBuffer = nil;
         frameWidth = 0;
         frameHeight = 0;
+        stride = 0;
         [self setInitialized:TRUE];
         [self setBorderWidth:1];
+        
     }
     return self;
 }
@@ -129,11 +132,11 @@ static GLint default_frame_buffer = 0;
     glBindTexture(GL_TEXTURE_2D, 0);*/
         
     glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, pbo[0]);
-    glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, frameWidth*frameHeight*4, pixelBuffer, GL_STATIC_DRAW_ARB);
+    glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, stride*frameHeight, pixelBuffer, GL_STATIC_DRAW_ARB);
     
     glEnable(GL_TEXTURE_RECTANGLE_ARB);
     glBindTexture(GL_TEXTURE_RECTANGLE_ARB, texID[[self indexTexture]]);
-    
+
     glTexSubImage2D(GL_TEXTURE_RECTANGLE_ARB,
                     0,
                     0,
