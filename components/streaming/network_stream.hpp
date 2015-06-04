@@ -45,6 +45,7 @@ namespace oppvs
 		int8_t count;
 		uint16_t width;
 		uint16_t height;
+		uint16_t stride;
 		uint8_t sourceid;
 		uint8_t order;
 	};
@@ -57,7 +58,7 @@ namespace oppvs
 		uint8_t order;
 		uint16_t width;
 		uint16_t height;
-		
+		uint16_t stride;
 
 		inline int size()
 		{
@@ -74,6 +75,7 @@ namespace oppvs
 	{
 		uint16_t width;
 		uint16_t height;
+		uint16_t stride;
 		uint16_t originx;
 		uint16_t originy;
 		uint8_t source;

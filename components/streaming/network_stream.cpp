@@ -108,7 +108,8 @@ namespace oppvs
 				info.height = controlmsg.height;
 				info.source = controlmsg.source;
 				info.order = controlmsg.order;
-				data = new uint8_t[info.width * info.height * 4];
+				info.stride = controlmsg.stride;
+				data = new uint8_t[info.stride * info.height];
 				curPos = data;
 				printf("Width: %d Height: %d Source %d Order: %d\n", controlmsg.width, controlmsg.height, controlmsg.source, controlmsg.order);
 			}
@@ -181,6 +182,7 @@ namespace oppvs
 			controlmsg.height = raw->height;
 			controlmsg.source = raw->sourceid;
 			controlmsg.order = raw->order;
+			controlmsg.stride = raw->stride;
 			if (write((uint8_t*)&controlmsg, controlmsg.size(), &written) < 0)
 			{
 				printf("Failed to send control message\n");
@@ -240,6 +242,7 @@ namespace oppvs
 				m_buffer->height[0] = info.height;
 				m_buffer->source = info.source;
 				m_buffer->order = info.order;
+				m_buffer->stride[0] = info.stride;
 				m_receiveEvent(m_owner, 0);
 			}
 		}

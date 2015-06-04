@@ -141,6 +141,7 @@ namespace oppvs
 				raw->height = pf.height[0];
 				raw->sourceid = pf.source;
 				raw->order = pf.order;
+				raw->stride = pf.stride[0];
 			/*while (m_sendingQueue.size() >= 10)
 			{
 				usleep(10000);

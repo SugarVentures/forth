@@ -94,6 +94,7 @@
         OpenGLFrame *view = (OpenGLFrame*)subview;
         [view setFrameWidth:pf->width[0]];
         [view setFrameHeight:pf->height[0]];
+        [view setStride:pf->stride[0]];
         [view setPixelBuffer:(GLubyte*)[data mutableBytes]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
