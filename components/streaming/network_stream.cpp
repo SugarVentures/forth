@@ -170,7 +170,6 @@ namespace oppvs
 
 	void NetworkStream::sendStream()
 	{
-		printf("Send stream\n");
 		if (!p_sendingQueue->empty() && !m_busy)
 		{
 			uint32_t written = 0;

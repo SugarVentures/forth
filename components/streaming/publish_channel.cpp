@@ -51,9 +51,6 @@ namespace oppvs
 	{
 		SocketAddress remoteAddr;
 		SocketAddress peerAddr;
-		ChannelMessage msg;
-		msg.videoWidth = m_pixelBuffer->width[0];
-		msg.videoHeight = m_pixelBuffer->height[0];
 
 		printf("Waiting subscribers\n");
 		while (!m_interrupt)
@@ -62,13 +59,15 @@ namespace oppvs
 			if (sockfd >= 0)
 			{
 				m_event(m_owner, remoteAddr, peerAddr);
-				peerAddr.toSocketAddr((struct sockaddr_in*)&msg.destination);
-				if (m_server.Send(sockfd, (void*)&msg, sizeof(msg)) < 0)
+				sockaddr destination;
+				peerAddr.toSocketAddr((struct sockaddr_in*)&destination);
+				uint8_t *msg = createMessage(&destination);
+				if (m_server.Send(sockfd, (void*)msg, getMessageSize()) < 0)
 				{
 					m_server.Close(sockfd);
 					continue;
 				}
-				
+				releaseMessage();
 				m_server.Close(sockfd);
 			}
 			usleep(OPPVS_IDLE_TIME);

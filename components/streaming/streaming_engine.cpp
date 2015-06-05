@@ -9,6 +9,7 @@ namespace oppvs
 
 		m_publisher = NULL;
 		m_subscribe = NULL;
+
 	}
 
 	void StreamingEngine::setup(PixelBuffer* pf)
@@ -16,7 +17,7 @@ namespace oppvs
 		m_ssrc = 0;
 		m_isRunning = false;
 		pixelBuffer = pf;
-		
+
 		m_broadcaster = NULL;
 		m_receiver = NULL;
 
@@ -41,6 +42,10 @@ namespace oppvs
 		delete m_publisher;
 		delete m_subscribe;
 
+		if (m_serviceInfo.videoStreamInfo.noSources > 0)
+		{			
+			delete [] m_serviceInfo.videoStreamInfo.sources;			
+		}
 	}
 
 	void* runStreaming(void* p)
@@ -176,6 +181,8 @@ namespace oppvs
 		m_publisher = new PublishChannel((void*)this, pixelBuffer, onNewSubscriberEvent);
 
 		m_publisher->setServiceInfo(ST_VIDEO_STREAMING, generateSSRC());
+		m_publisher->setServiceInfo(&m_serviceInfo);
+		printServiceInfo();
 		m_publisher->start();
 		printf("SSRC: %u\n", m_publisher->getServiceKey());
 		
@@ -186,8 +193,15 @@ namespace oppvs
 	int StreamingEngine::initSubscribeChannel(const std::string& publisher, uint16_t port, const ServiceInfo& service)
 	{
 		m_subscribe = new SubscribeChannel(publisher, port, service);
-		if (m_subscribe->registerInterest(pixelBuffer) < 0)
+		int len;
+		uint8_t info[OPPVS_NETWORK_PACKET_LENGTH];
+		if (m_subscribe->registerInterest((uint8_t*)&info, OPPVS_NETWORK_PACKET_LENGTH, &len) < 0)
 			return -1;
+
+		int curPos = sizeof(sockaddr); //Skip the destination address
+		len -= curPos;
+		setStreamInfo(info + curPos, len);
+		printServiceInfo();
 		printf("SSRC: %u\n", m_subscribe->getServiceKey());
 		if (initDownloadStream() < 0)
 			return -1;
@@ -226,4 +240,78 @@ namespace oppvs
 		return m_publisher->getLocalAddress().toString();
 	}
 
+	void StreamingEngine::setStreamInfo(const std::vector<VideoActiveSource>& sources)
+	{
+		m_serviceInfo.type = ST_VIDEO_STREAMING;
+		m_serviceInfo.key = m_ssrc;
+		VideoStreamInfo* vsi = &m_serviceInfo.videoStreamInfo;
+		vsi->videoWidth = DEFAULT_VIDEO_FRAME_WIDTH;
+		vsi->videoHeight = DEFAULT_VIDEO_FRAME_HEIGHT;
+		if (sources.size() == 0)
+			return;
+		vsi->noSources = sources.size();
+		vsi->sources = new VideoSourceInfo[vsi->noSources];		
+
+		std::vector<VideoActiveSource>::const_iterator it;
+		int i = 0;
+		for (it = sources.begin(); it != sources.end(); ++it)
+		{
+			vsi->sources[i].source = it->id;
+			vsi->sources[i].order = it->order;
+			vsi->sources[i].width = it->rect.right - it->rect.left;
+			vsi->sources[i].height = it->rect.top - it->rect.bottom;
+			vsi->sources[i].stride = it->stride;
+			i++;
+		}
+	}
+
+	void StreamingEngine::setStreamInfo(uint8_t *info, int len)
+	{
+		int curPos = 0;
+		m_serviceInfo.type = ST_VIDEO_STREAMING;
+		m_serviceInfo.key = m_ssrc;
+		VideoStreamInfo* vsi = &m_serviceInfo.videoStreamInfo;
+		if (len < sizeof(uint16_t))
+			return;
+		memcpy(&vsi->videoWidth, info + curPos, sizeof(uint16_t));
+		curPos += sizeof(uint16_t);
+		if (len < curPos + sizeof(uint16_t))
+			return;
+		memcpy(&vsi->videoHeight, info + curPos, sizeof(uint16_t));
+		curPos += sizeof(uint16_t);
+		if (len < curPos + sizeof(uint8_t))
+			return;
+		memcpy(&vsi->noSources, info + curPos, sizeof(uint8_t));
+		curPos += sizeof(uint8_t);
+		VideoSourceInfo vsinfo;
+		if (len - curPos != vsi->noSources * vsinfo.size())
+			return;
+		vsi->sources = new VideoSourceInfo[vsi->noSources];
+		for (int i = 0; i < vsi->noSources; i++)
+		{
+			memcpy(&vsi->sources[i].source, info + curPos, sizeof(uint8_t));
+			curPos += sizeof(uint8_t);
+			memcpy(&vsi->sources[i].order, info + curPos, sizeof(uint8_t));
+			curPos += sizeof(uint8_t);
+			memcpy(&vsi->sources[i].width, info + curPos, sizeof(uint16_t));
+			curPos += sizeof(uint16_t);
+			memcpy(&vsi->sources[i].height, info + curPos, sizeof(uint16_t));
+			curPos += sizeof(uint16_t);
+			memcpy(&vsi->sources[i].stride, info + curPos, sizeof(uint16_t));
+			curPos += sizeof(uint16_t);
+		}
+	}
+
+	void StreamingEngine::printServiceInfo()
+	{
+		printf("Stream Info: Width %d Height %d \n", m_serviceInfo.videoStreamInfo.videoWidth, m_serviceInfo.videoStreamInfo.videoHeight);
+		printf("Stream Info: Number of capture sources: %d\n", m_serviceInfo.videoStreamInfo.noSources);
+		for (int i = 0; i < m_serviceInfo.videoStreamInfo.noSources; i++)
+		{
+			printf("Source: %d Width: %d Height: %d Stride: %d\n", m_serviceInfo.videoStreamInfo.sources[i].source, 
+				m_serviceInfo.videoStreamInfo.sources[i].width, m_serviceInfo.videoStreamInfo.sources[i].height,
+				m_serviceInfo.videoStreamInfo.sources[i].stride);
+		}
+
+	}
 }

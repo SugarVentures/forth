@@ -13,6 +13,8 @@
 #include "network_stream.hpp"
 #include "bits_stream.hpp"
 
+#include "video_capture.hpp"
+
 #include <vector>
 
 extern "C"
@@ -38,6 +40,8 @@ namespace oppvs
 		int initSubscribeChannel(const std::string& publisher, uint16_t port, const ServiceInfo& service);
 
 		void setStreamInfo(PixelBuffer& pf);
+		void setStreamInfo(const std::vector<VideoActiveSource>& sources);
+		void setStreamInfo(uint8_t *info, int len);
 		std::string getStreamInfo() const;
 
 		void pushData(PixelBuffer& pf);
@@ -72,6 +76,8 @@ namespace oppvs
 		BitsStream *m_bitsstream;
 		void initBitsStream();
 
+		ServiceInfo m_serviceInfo;	//Store information of stream: video capture sources info
+		void printServiceInfo();
 	};
 
 }

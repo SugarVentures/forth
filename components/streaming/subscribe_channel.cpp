@@ -10,7 +10,7 @@ namespace oppvs
 		setServiceInfo(info);
 	}
 
-	int SubscribeChannel::registerInterest(PixelBuffer* pf)
+	int SubscribeChannel::registerInterest(uint8_t* info, int len, int* rcvLen)
 	{
 		int sid = m_client.Create(AF_INET, SOCK_STREAM, 0);
 		if (sid < 0)
@@ -29,17 +29,19 @@ namespace oppvs
 			return -1;
 		}
 		m_localAddress = m_client.getLocalAddress();
-		ChannelMessage msg;
-		if (m_client.Receive((void*)&msg, sizeof(msg)) < 0)
+		*rcvLen = m_client.Receive((void*)info, len);
+		if (*rcvLen < sizeof(sockaddr))
 		{
 			printf("Cannot receive the info from publisher\n");
+			m_client.Close();
+			return -1;
 		}
 		else
 		{
-			m_remoteAddress = SocketAddress(msg.destination);
-			pf->width[0] = msg.videoWidth;
-			pf->height[0] = msg.videoHeight;
-			pf->nbytes = 0;
+			sockaddr destination;
+			memcpy(&destination, info, sizeof(destination));
+			m_remoteAddress = SocketAddress(destination);
+			printf("destination address: %s\n", m_remoteAddress.toString().c_str());
 		}
 		m_client.Close();
 		return 0;

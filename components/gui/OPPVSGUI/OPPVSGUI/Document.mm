@@ -102,16 +102,9 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 }
 
 - (void) startStreaming
-{
-    const std::vector<oppvs::VideoActiveSource> &listSource = videoEngine->getVideoActiveSources();
-    std::vector<oppvs::VideoActiveSource>::const_iterator it;
-    for (it = listSource.begin(); it != listSource.end(); ++it)
-    {
-        printf("Source id %s Type %d %d\n", it->video_source_id.c_str(), it->video_source_type, it->rect.right);
-    }
-    
+{    
     streamingEngine.setup(sharedBuffer);
-
+    streamingEngine.setStreamInfo(videoEngine->getVideoActiveSources());
     streamingEngine.initPublishChannel();
     std::string info = streamingEngine.getStreamInfo();
     

@@ -72,6 +72,8 @@ namespace oppvs {
 		window_rect_t rect;
 		window_rect_t renderRect;
 		uint8_t id;
+		uint8_t order;
+		uint16_t stride;
 		void* user;
 		VideoCapture* capture;
 

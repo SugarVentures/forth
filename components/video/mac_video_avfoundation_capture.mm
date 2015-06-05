@@ -475,7 +475,8 @@
 
             sourceInfo->rect.right = sourceInfo->rect.left + pixel_buffer.width[0];
             sourceInfo->rect.top = sourceInfo->rect.bottom + pixel_buffer.height[0];
-            printf("Update rect: %d \n", sourceInfo->rect.right);
+            printf("Stride: %d\n", pixel_buffer.stride[0]);
+            sourceInfo->stride = pixel_buffer.stride[0];
         }
         is_pixel_buffer_set = 1;
     }
@@ -756,19 +757,19 @@
     return (void*)[[MacVideoAVFoundationCapture alloc] init];
  }
 
- int oppvs_setup_capture_session(void* cap, oppvs::VideoActiveSource& source) {
-    CGRect rect = CGRectMake(source.rect.left, source.rect.bottom, 
-        source.rect.right - source.rect.left, source.rect.top - source.rect.bottom);
-    [(id)cap setSource: &source];
+ int oppvs_setup_capture_session(void* cap, oppvs::VideoActiveSource* source) {
+    CGRect rect = CGRectMake(source->rect.left, source->rect.bottom, 
+        source->rect.right - source->rect.left, source->rect.top - source->rect.bottom);
+    [(id)cap setSource: source];
 
-    switch (source.video_source_type)
+    switch (source->video_source_type)
     {
         case oppvs::VST_WEBCAM:
-            return [(id)cap openCaptureDevice: rect : source.pixel_format : source.fps];
+            return [(id)cap openCaptureDevice: rect : source->pixel_format : source->fps];
         case oppvs::VST_WINDOW:
-            return [(id)cap openScreenDevice: rect : false: source.pixel_format : source.fps];
+            return [(id)cap openScreenDevice: rect : false: source->pixel_format : source->fps];
         case oppvs::VST_CUSTOM:
-            return [(id)cap openScreenDevice: rect : true: source.pixel_format : source.fps];
+            return [(id)cap openScreenDevice: rect : true: source->pixel_format : source->fps];
         default:
             return oppvs::ERR_VIDEO_CAPTURE_SESSION_INIT_FAILED;
     }

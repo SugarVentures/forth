@@ -35,6 +35,15 @@ namespace oppvs
 		uint16_t stride;
 		uint16_t originx;
 		uint16_t originy;
+
+		inline int size()
+		{
+			return sizeof(uint8_t)
+			+ sizeof(uint8_t)
+			+ sizeof(uint16_t)
+			+ sizeof(uint16_t)
+			+ sizeof(uint16_t);
+		}
 	};
 
 	struct VideoStreamInfo
@@ -56,18 +65,25 @@ namespace oppvs
 	{
 	public:
 		Channel();
-		virtual ~Channel() {}
+		virtual ~Channel();
 
 		virtual int init() { return 0; }
 		const ServiceInfo& getServiceInfo() const;
 		void setServiceInfo(uint8_t type, uint32_t key);
 		void setServiceInfo(const ServiceInfo& s);
+		void setServiceInfo(ServiceInfo *s);
 		uint32_t getServiceKey() const;
 		const SocketAddress& getLocalAddress() const;
 
+		uint16_t getMessageSize();
+		uint8_t* createMessage(sockaddr* destination);
+		void parseMessage(uint8_t* msg, int len, sockaddr* destination);
+		void releaseMessage();
 	protected:
 		SocketAddress m_localAddress;
-		ServiceInfo m_service;	
+		ServiceInfo m_service;
+		ServiceInfo *p_service;
+		uint8_t *m_message;
 	};
 }
 
