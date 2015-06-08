@@ -89,7 +89,7 @@ namespace oppvs
 
 	void StreamingEngine::updateQueue()
 	{
-		RawData* raw = m_sendingQueue.front();
+		/*RawData* raw = m_sendingQueue.front();
 		printf("Count: %d\n", raw->count);
 		raw->count--;
 		if (raw->count <= 0)
@@ -102,14 +102,15 @@ namespace oppvs
 				NetworkStream* stream = (NetworkStream*)*it;
 				stream->unlock();
 			}
-		}
+		}*/
 	}
 
 
 	int StreamingEngine::initUploadStream(SocketAddress& localaddr, const SocketAddress& remoteaddr)
 	{
 		NetworkStream *stream = new NetworkStream(SENDER_ROLE, m_publisher->getServiceKey());
-		stream->registerCallback((void*)this, &m_sendingQueue, onSendDoneEvent);
+		//stream->registerCallback((void*)this, &m_sendingQueue, onSendDoneEvent);
+		stream->registerCallback((void*)this, &m_messageHandler, onSendDoneEvent);
 		if (stream->setup(0) < 0)
 		{
 			printf("Cannot setup network stream for uploading data for %s\n", remoteaddr.toString().c_str());
@@ -121,6 +122,8 @@ namespace oppvs
 		printf("Setup upload stream at %s\n", localaddr.toString().c_str());
 		stream->setSender(remoteaddr);
 		m_subscribers.push_back(stream);
+
+		m_messageHandler.setNumClients(m_subscribers.size());
 		
 		setIsRunning(true);
 		m_sendThread = new Thread(runStreaming, (void*)stream);
@@ -152,7 +155,7 @@ namespace oppvs
 	{
 		if (m_subscribers.size() > 0)
 		{
-			if (m_sendingQueue.size() < 10)
+			/*if (m_sendingQueue.size() < 10)
 			{
 				RawData *raw = new RawData(pf.plane[0], pf.nbytes, m_subscribers.size());
 				raw->width = pf.width[0];
@@ -160,14 +163,12 @@ namespace oppvs
 				raw->sourceid = pf.source;
 				raw->order = pf.order;
 				raw->stride = pf.stride[0];
-			/*while (m_sendingQueue.size() >= 10)
-			{
-				usleep(10000);
-			}*/
+			
 				m_sendingQueue.push(raw);
 
 				printf("Push data %u bytes size: %lu Order: %d\n", pf.nbytes, m_sendingQueue.size(), pf.order);
-			}
+			}*/
+			m_messageHandler.addMessage(pf);
 		}
 	}
 

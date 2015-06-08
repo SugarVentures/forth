@@ -41,7 +41,6 @@ namespace oppvs
 			sockaddr destination;
 			memcpy(&destination, info, sizeof(destination));
 			m_remoteAddress = SocketAddress(destination);
-			printf("destination address: %s\n", m_remoteAddress.toString().c_str());
 		}
 		m_client.Close();
 		return 0;

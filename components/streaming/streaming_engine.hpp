@@ -12,6 +12,7 @@
 #include "subscribe_channel.hpp"
 #include "network_stream.hpp"
 #include "bits_stream.hpp"
+#include "message_handling.hpp"
 
 #include "video_capture.hpp"
 
@@ -23,7 +24,7 @@ extern "C"
 }
 
 namespace oppvs
-{
+{	
 	
 	class StreamingEngine
 	{
@@ -78,6 +79,8 @@ namespace oppvs
 
 		ServiceInfo m_serviceInfo;	//Store information of stream: video capture sources info
 		void printServiceInfo();
+
+		MessageHandling m_messageHandler;		
 	};
 
 }

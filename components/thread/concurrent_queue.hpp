@@ -92,10 +92,26 @@ namespace oppvs
 			//pthread_cond_signal(&m_condition);
 		}
 
+		T& push_and_back(const T& data)
+		{
+			LockGuard lock(m_mutex);
+			m_queue.push(data);
+			return m_queue.back();
+		}
+
 		bool empty()
 		{
 			LockGuard lock(m_mutex);
 			return m_queue.empty();
+		}
+
+		bool try_front(T& front_value)
+		{
+			LockGuard lock(m_mutex);
+			if (m_queue.empty())
+				return false;
+			front_value = m_queue.front();
+			return true;
 		}
 
 		bool try_pop(T& popped_value)

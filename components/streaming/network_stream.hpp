@@ -7,8 +7,8 @@
 
 #include "network.hpp"
 #include "concurrent_queue.hpp"
+#include "message_handling.hpp"
 
-#include <map>
 
 namespace oppvs
 {
@@ -124,6 +124,8 @@ namespace oppvs
 		on_receive_event m_receiveEvent;
 
 		ConQueue<RawData*> *p_sendingQueue;
+		MessageHandling *m_messageHandler;
+
 		PixelBuffer* m_buffer;
 
 		void sendDone(int* error);

@@ -5,7 +5,6 @@
 #include "../video/mac_video_capture.hpp"
 #include "../error/error.hpp"
 #include "../streaming/video_stream.hpp"
-#include "../interface/stream.hpp"
 #include "../streaming/streaming_engine.hpp"
 
 #include <stdio.h>
@@ -86,7 +85,7 @@ int main(int argc, char* argv[])
      for (std::vector<oppvs::Monitor>::const_iterator it = monitors.begin(); it != monitors.end(); ++it)
     {
 
-        source = ve->addSource(oppvs::VST_WINDOW, std::to_string(it->id), 30, rect1, &controller);
+        //source = ve->addSource(oppvs::VST_WINDOW, std::to_string(it->id), 30, rect1, &controller);
     }
     
 	/*ve->getListVideoSource(v);
@@ -112,8 +111,8 @@ int main(int argc, char* argv[])
     //ve->getDeviceID(str);
     
 	//ve->setupCaptureSessions();
-    ve->setupCaptureSession(*source);
-    ve->startCaptureSession(*source);
+    //ve->setupCaptureSession(*source);
+    //ve->startCaptureSession(*source);
     auto t1 = Clock::now();
     //ve->startRecording();
 

@@ -158,7 +158,8 @@ namespace oppvs
 	{
 		m_owner = owner;
 		m_sendDoneEvent = event;
-		p_sendingQueue = (ConQueue<RawData*> *)squeue;
+		//p_sendingQueue = (ConQueue<RawData*> *)squeue;
+		m_messageHandler = (MessageHandling*)squeue;
 	}
 
 	void NetworkStream::registerCallback(void* owner, PixelBuffer* pf, on_receive_event event)
@@ -170,10 +171,26 @@ namespace oppvs
 
 	void NetworkStream::sendStream()
 	{
-		if (!p_sendingQueue->empty() && !m_busy)
+		if (!m_messageHandler->isEmptyPool() && !m_busy)
 		{
-			uint32_t written = 0;
-			RawData *raw = p_sendingQueue->front();
+			uint8_t* data = NULL;
+			uint16_t length = 0;
+			
+			m_messageHandler->getNextMessage(&data, &length);
+			if (length == 0)
+			{
+				m_error = -1;
+				return;
+			}
+			m_timestamp++;
+			printf("Length to send: %u\n", length);
+			if (m_socket.SendTo(data, length, m_timestamp) < 0)
+			{
+				printf("Failed to send message\n");
+				m_error = -1;
+			}
+
+			/*RawData *raw = p_sendingQueue->front();
 			m_timestamp++;
 			FrameBegin controlmsg;
 			controlmsg.flag = 1;
@@ -201,10 +218,10 @@ namespace oppvs
 				{
 					m_error = -1;
 				}
-			}
-			m_busy = true;
-			
-			m_sendDoneEvent(m_owner, m_error);
+			}*/
+			m_busy = !m_messageHandler->releaseMessage();
+			printf("Busy: %d\n", m_busy);
+			//m_sendDoneEvent(m_owner, m_error);
 		}
 		
 	}

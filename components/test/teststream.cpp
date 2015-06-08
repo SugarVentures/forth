@@ -33,16 +33,15 @@ int main(int argc, char* argv[])
 
 	int port = 0;
 	uint32_t ssrc = 0;
-	if (argc > 2)
+	if (argc > 1)
 	{
 		port = atoi(argv[1]);
-		ssrc = atol(argv[2]);
 
 	}
 	if (port == 0)
 	{
-		oppvs::StreamingEngine *se = new oppvs::StreamingEngine(&pf);
-
+		oppvs::StreamingEngine *se = new oppvs::StreamingEngine();
+		se->setup(&pf);
 	    se->initPublishChannel();
 	    while (!interrupt)
 	    {	
@@ -53,7 +52,8 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
-		oppvs::StreamingEngine *se = new oppvs::StreamingEngine(&rcvpf);
+		oppvs::StreamingEngine *se = new oppvs::StreamingEngine();
+		se->setup(&rcvpf);
 		se->registerCallback(frameCallback);
 		oppvs::ServiceInfo service;
 		service.type = oppvs::ST_VIDEO_STREAMING;
