@@ -5,17 +5,21 @@ namespace oppvs
 {
 	Message::Message(): m_length(0)
 	{
-
 	}
 
 	Message::~Message()
 	{
-
+		m_length = 0;
 	}
 
 	void Message::setFlag(uint8_t flag)
 	{
 		m_data[0] = flag;
+	}
+
+	uint8_t Message::getFlag()
+	{
+		return m_data[0];
 	}
 
 	void Message::setSource(uint8_t sid)
@@ -51,30 +55,26 @@ namespace oppvs
 
 	}
 
-	Message* MessageHandling::getNewMessage()
-	{
-		if (m_numFramesInPool >= MAX_FRAMES_IN_POOL)
-			return NULL;
-		Message* msg = new Message();
-		return m_messagePool.push_and_back(msg);
-	}
 
 	bool MessageHandling::isEmptyPool()
 	{
-		return (m_numFramesInPool == 0);
+		return (m_messagePool.size() == 0);
 	}
 
 	void MessageHandling::addMessage(PixelBuffer& pf)
 	{
+		if (m_numFramesInPool >= MAX_FRAMES_IN_POOL)
+			return;
+
+
 		int msgLength = pf.nbytes;
 		int sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - 2) ? (OPPVS_NETWORK_PACKET_LENGTH - 2) : msgLength;
 		const uint8_t* curPos = pf.plane[0];
 		int count = 0;
 		while (msgLength > 0)
 		{
-			Message *message = getNewMessage();
-			if (message == NULL)
-				return;
+
+			std::shared_ptr<Message> message(new Message);
 			message->setSource(pf.source);
 			message->setData(curPos, sendLength);
 
@@ -94,25 +94,27 @@ namespace oppvs
 				message->setFlag(FLAG_MIDDLE_FRAME);
 			}
 
-
+			m_messagePool.push(message);
 			count++;
 			sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - 2) ? (OPPVS_NETWORK_PACKET_LENGTH - 2) : msgLength;
 		}
-
 		m_numFramesInPool++;
 	}
 
 	void MessageHandling::getNextMessage(uint8_t** pdata, uint16_t* length)
 	{
-		Message* message = m_messagePool.front();
-		
-		*pdata = message->getData();
-		if (message == NULL)
-			printf("Null message\n");
-		*length = 1;
-		//*length = message->getLength();
-		m_sentClients++;
-		
+		if (m_messagePool.size() == 0)
+		{
+			return;
+		}
+		std::shared_ptr<std::shared_ptr<Message>> ptrmsg = m_messagePool.try_front();
+		if (ptrmsg.get() != NULL)
+		{
+			std::shared_ptr<Message> message = *ptrmsg;
+			*pdata = message->getData();
+			*length = message->getLength();
+			m_sentClients++;
+		}
 	}
 
 	void MessageHandling::setNumClients(uint8_t clients)
@@ -124,8 +126,15 @@ namespace oppvs
 	{
 		if (m_sentClients == m_numClients)
 		{
-			m_messagePool.pop();
+			std::shared_ptr<std::shared_ptr<Message>> ptrmsg = m_messagePool.try_pop();
+			if (ptrmsg.get() == NULL)
+				return true;
+
 			m_sentClients = 0;
+			std::shared_ptr<Message> message = *ptrmsg;
+			if (message->getFlag() == FLAG_END_FRAME)
+				m_numFramesInPool--;
+
 			return true;
 		}
 		else

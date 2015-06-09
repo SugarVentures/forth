@@ -1135,7 +1135,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "222"
             endingLineNumber = "222"
-            landmarkName = "NetworkStream::waitStream()"
+            landmarkName = "NetworkStream::sendStream()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1274,7 +1274,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "150"
-            endingLineNumber = "150">
+            endingLineNumber = "150"
+            landmarkName = "StreamingEngine::initDownloadStream()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1450,6 +1452,22 @@
             startingLineNumber = "65"
             endingLineNumber = "65"
             landmarkName = "PublishChannel::waitingSubscribers()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../streaming/message_handling.cpp"
+            timestampString = "455509421.357483"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "MessageHandling::getNextMessage(uint8_t** pdata, uint16_t* length)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

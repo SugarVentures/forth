@@ -88,8 +88,8 @@ namespace oppvs
 		{
 			LockGuard lock(m_mutex);
 			m_queue.push(data);
-			//lock.unlock();
-			//pthread_cond_signal(&m_condition);
+			lock.unlock();
+			pthread_cond_signal(&m_condition);
 		}
 
 		T& push_and_back(const T& data)
@@ -147,6 +147,12 @@ namespace oppvs
 			pthread_cond_init(&m_condition, NULL);
 		}
 
+		~ConQueue()
+		{
+			pthread_mutex_destroy(&m_mutex);
+			pthread_cond_destroy(&m_condition);
+		}
+
 	private:
 		std::queue<T> m_queue;
 		pthread_mutex_t m_mutex;
@@ -154,11 +160,6 @@ namespace oppvs
 		bool isWait;
 	};
 
-	template <typename T>
-	class ConVector
-	{
-		
-	};
 }
 
 #endif

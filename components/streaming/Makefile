@@ -6,7 +6,7 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../erro
 		 -I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include  \
 		 -I$(rootDir)/../thread -I$(rootDir)/../misc
 
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -std=c++11
 
 LDFLAGS = -L$(rootDir)/../../libs
 LIBS = -lsrtp -lnetworkengine -lthreadengine -lmisc

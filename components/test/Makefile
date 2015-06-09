@@ -4,7 +4,7 @@ RM = rm -f
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../thread -I$(rootDir)/../misc \
 		-I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include  
-CFLAGS	= -Wall -g
+CFLAGS	= -Wall -g -std=c++11
 
 VIDEOLDFLAGS = -L$(rootDir)/../../libs
 VIDEOLIBS = -lvideoengine -lstreaming

@@ -3,6 +3,7 @@
 
 #include "datatypes.hpp"
 #include "concurrent_queue.hpp"
+#include "tsqueue.hpp"
 
 namespace oppvs
 {
@@ -10,7 +11,7 @@ namespace oppvs
 	const static uint8_t FLAG_START_FRAME = 1;
 	const static uint8_t FLAG_MIDDLE_FRAME = 2;
 	const static uint8_t FLAG_END_FRAME = 3;
-	const static uint16_t MAX_FRAMES_IN_POOL = 10;
+	const static uint16_t MAX_FRAMES_IN_POOL = 1;
 
 	class Message
 	{
@@ -18,6 +19,7 @@ namespace oppvs
 		Message();
 		virtual ~Message();
 		void setFlag(uint8_t);
+		uint8_t getFlag();
 		void setSource(uint8_t);
 		void setData(const uint8_t *data, uint16_t length);
 		uint16_t getLength();
@@ -40,9 +42,9 @@ namespace oppvs
 		bool releaseMessage();
 		bool isEmptyPool();
 	private:
-		ConQueue<Message*> m_messagePool;
+		//ConQueue<Message> m_messagePool;
+		tsqueue<std::shared_ptr<Message>> m_messagePool;
 		uint16_t m_numFramesInPool;
-		Message* getNewMessage();
 		uint8_t m_numClients;
 		uint8_t m_sentClients;
 	};

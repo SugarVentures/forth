@@ -21,8 +21,8 @@ int main(int argc, char* argv[])
 	signal(SIGINT, signalhandler);
 
 	oppvs::PixelBuffer pf;
-	pf.width[0] = 1280;
-	pf.height[0] = 780;
+	pf.width[0] = 400;
+	pf.height[0] = 300;
 	pf.stride[0] = pf.width[0]*4;
 	pf.nbytes = pf.height[0] * pf.stride[0];
 	pf.plane[0] = new uint8_t[pf.nbytes];

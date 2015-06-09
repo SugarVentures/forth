@@ -180,16 +180,17 @@ namespace oppvs
 			if (length == 0)
 			{
 				m_error = -1;
+				printf("Error in length of message\n");
+				m_messageHandler->releaseMessage();
 				return;
 			}
 			m_timestamp++;
-			printf("Length to send: %u\n", length);
 			if (m_socket.SendTo(data, length, m_timestamp) < 0)
 			{
 				printf("Failed to send message\n");
 				m_error = -1;
 			}
-
+			
 			/*RawData *raw = p_sendingQueue->front();
 			m_timestamp++;
 			FrameBegin controlmsg;
@@ -220,7 +221,6 @@ namespace oppvs
 				}
 			}*/
 			m_busy = !m_messageHandler->releaseMessage();
-			printf("Busy: %d\n", m_busy);
 			//m_sendDoneEvent(m_owner, m_error);
 		}
 		
