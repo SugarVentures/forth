@@ -147,12 +147,10 @@ namespace oppvs
 
 	bool MessageHandling::releaseMessage()
 	{
-		if (m_sentClients == m_numClients)
+		if (m_sentClients >= m_numClients)
 		{
 			std::shared_ptr<std::shared_ptr<Message>> ptrmsg = m_messagePool.try_pop();
-			if (ptrmsg.get() == NULL)
-				return true;
-
+			
 			m_sentClients = 0;
 			std::shared_ptr<Message> message = *ptrmsg;
 			if (message->getFlag() == FLAG_END_FRAME)

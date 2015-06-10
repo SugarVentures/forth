@@ -177,13 +177,7 @@ namespace oppvs
 			uint16_t length = 0;
 			
 			m_messageHandler->getNextMessage(&data, &length);
-			if (length == 0)
-			{
-				m_error = -1;
-				printf("Error in length of message\n");
-				m_messageHandler->releaseMessage();
-				return;
-			}
+
 			m_timestamp++;
 			if (m_socket.SendTo(data, length, m_timestamp) < 0)
 			{
@@ -192,7 +186,10 @@ namespace oppvs
 			}
 
 			m_busy = !m_messageHandler->releaseMessage();
-			//m_sendDoneEvent(m_owner, m_error);
+			if (!m_busy)
+				m_error = 1;
+
+			m_sendDoneEvent(m_owner, m_error);
 		}
 		
 	}

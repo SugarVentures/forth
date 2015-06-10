@@ -79,34 +79,28 @@ namespace oppvs
 
 	void onSendDoneEvent(void* owner, int error)
 	{
-		printf("SendDone Event Error: %d\n", error);
+		//printf("SendDone Event Error: %d\n", error);
 		StreamingEngine* engine = (StreamingEngine*)owner;
-		engine->updateQueue();
+		//Unlock streams
+		if (error == 1)
+			engine->updateQueue();
 	}
 
 	void onReceiveEvent(void* owner, uint8_t source, int error)
 	{
-		printf("Receive pkt\n");
+		//printf("Receive pkt\n");
 		StreamingEngine* engine = (StreamingEngine*)owner;
 		engine->pullData(source);
 	}
 
 	void StreamingEngine::updateQueue()
 	{
-		/*RawData* raw = m_sendingQueue.front();
-		printf("Count: %d\n", raw->count);
-		raw->count--;
-		if (raw->count <= 0)
+		std::vector<NetworkStream*>::const_iterator it;
+		for (it = m_subscribers.begin(); it != m_subscribers.end(); ++it)
 		{
-			m_sendingQueue.pop();
-			delete raw;
-			std::vector<NetworkStream*>::const_iterator it;
-			for (it = m_subscribers.begin(); it != m_subscribers.end(); ++it)
-			{
-				NetworkStream* stream = (NetworkStream*)*it;
-				stream->unlock();
-			}
-		}*/
+			NetworkStream* stream = (NetworkStream*)*it;
+			stream->unlock();
+		}
 	}
 
 
@@ -160,19 +154,6 @@ namespace oppvs
 	{
 		if (m_subscribers.size() > 0)
 		{
-			/*if (m_sendingQueue.size() < 10)
-			{
-				RawData *raw = new RawData(pf.plane[0], pf.nbytes, m_subscribers.size());
-				raw->width = pf.width[0];
-				raw->height = pf.height[0];
-				raw->sourceid = pf.source;
-				raw->order = pf.order;
-				raw->stride = pf.stride[0];
-			
-				m_sendingQueue.push(raw);
-
-				printf("Push data %u bytes size: %lu Order: %d\n", pf.nbytes, m_sendingQueue.size(), pf.order);
-			}*/
 			m_messageHandler.addMessage(pf);
 		}
 	}

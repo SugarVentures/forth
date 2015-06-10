@@ -105,5 +105,6 @@ namespace oppvs
 	void Channel::releaseMessage()
 	{
 		delete [] m_message;
+		m_message = NULL;
 	}
 }
