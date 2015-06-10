@@ -16,6 +16,7 @@
 #define OPPVS_IDLE_TIME	500
 #define OPPVS_DEFAULT_SERVER_LISTEN_PORT 33432
 #define OPPVS_NETWORK_PACKET_LENGTH 1024
+#define OPPVS_MAX_CAPTURE_SOURCES 5
 
 namespace oppvs {
 	typedef enum PixelFormat {
@@ -68,7 +69,7 @@ namespace oppvs {
 	    	offset[0] = 0;
 	    	offset[1] = 0;
 	    	offset[2] = 0;
-	    	
+	    	order = 0;
 		}
 		
 		//int setup(uint16_t width, uint16_t height, pixel_format_t format);
@@ -93,6 +94,43 @@ namespace oppvs {
 
 	const int DEFAULT_VIDEO_FRAME_WIDTH = 1280;
 	const int DEFAULT_VIDEO_FRAME_HEIGHT = 	780;
+
+	struct VideoSourceInfo
+	{
+		uint8_t source;
+		uint8_t order;
+		uint16_t width;
+		uint16_t height;
+		uint16_t stride;
+		uint16_t originx;
+		uint16_t originy;
+
+		inline int size()
+		{
+			return sizeof(uint8_t)
+			+ sizeof(uint8_t)
+			+ sizeof(uint16_t)
+			+ sizeof(uint16_t)
+			+ sizeof(uint16_t);
+		}
+	};
+
+	struct VideoStreamInfo
+	{
+		uint16_t videoWidth;
+		uint16_t videoHeight;
+		uint8_t noSources;
+		VideoSourceInfo *sources;
+	};
+
+	struct ServiceInfo
+	{
+		uint8_t type;
+		uint32_t key;	//In case of video streaming, key = ssrc
+		VideoStreamInfo videoStreamInfo;
+	};
+
 }
+
 
 #endif

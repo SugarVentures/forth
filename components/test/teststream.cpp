@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
 		service.type = oppvs::ST_VIDEO_STREAMING;
 		service.key = ssrc;
 		se->initSubscribeChannel("127.0.0.1", port, service);
-		printf("Stream info: %u %u %u\n", rcvpf.width[0], rcvpf.height[0], rcvpf.nbytes);
+		
 		while (!interrupt)
 		{
 			usleep(5000);

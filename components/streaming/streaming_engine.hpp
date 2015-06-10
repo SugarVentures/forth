@@ -13,6 +13,7 @@
 #include "network_stream.hpp"
 #include "bits_stream.hpp"
 #include "message_handling.hpp"
+#include "cache_buffer.hpp"
 
 #include "video_capture.hpp"
 
@@ -46,7 +47,7 @@ namespace oppvs
 		std::string getStreamInfo() const;
 
 		void pushData(PixelBuffer& pf);
-		void pullData();
+		void pullData(uint8_t source);
 
 		bool isRunning();
 		void setIsRunning(bool value);
@@ -80,7 +81,10 @@ namespace oppvs
 		ServiceInfo m_serviceInfo;	//Store information of stream: video capture sources info
 		void printServiceInfo();
 
-		MessageHandling m_messageHandler;		
+		MessageHandling m_messageHandler;
+		MessageParsing m_messageParser;
+
+		CacheBuffer *m_cacheBuffer;
 	};
 
 }

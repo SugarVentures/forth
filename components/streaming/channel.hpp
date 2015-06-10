@@ -26,41 +26,7 @@ namespace oppvs
 		uint8_t noSource;
 	};
 
-	struct VideoSourceInfo
-	{
-		uint8_t source;
-		uint8_t order;
-		uint16_t width;
-		uint16_t height;
-		uint16_t stride;
-		uint16_t originx;
-		uint16_t originy;
-
-		inline int size()
-		{
-			return sizeof(uint8_t)
-			+ sizeof(uint8_t)
-			+ sizeof(uint16_t)
-			+ sizeof(uint16_t)
-			+ sizeof(uint16_t);
-		}
-	};
-
-	struct VideoStreamInfo
-	{
-		uint16_t videoWidth;
-		uint16_t videoHeight;
-		uint8_t noSources;
-		VideoSourceInfo *sources;
-	};
-
-	struct ServiceInfo
-	{
-		uint8_t type;
-		uint32_t key;	//In case of video streaming, key = ssrc
-		VideoStreamInfo videoStreamInfo;
-	};
-
+	
 	class Channel
 	{
 	public:

@@ -84,7 +84,7 @@ namespace oppvs
 
 
 	typedef void (*on_send_done_event)(void* owner, int error);
-	typedef void (*on_receive_event)(void* ownver, int error);
+	typedef void (*on_receive_event)(void* ownver, uint8_t source, int error);
 
 	class NetworkStream
 	{
@@ -103,8 +103,8 @@ namespace oppvs
 		void sendStream();
 		void waitStream();
 
-		void registerCallback(void* owner, void* squeue, on_send_done_event event);
-		void registerCallback(void* owner, PixelBuffer* pf, on_receive_event event);
+		void registerCallback(void* owner, MessageHandling* message_handler, on_send_done_event event);
+		void registerCallback(void* owner, MessageParsing* message_parsing, on_receive_event event);
 		SocketAddress& getLocalAddress();
 
 		void unlock();
@@ -125,6 +125,7 @@ namespace oppvs
 
 		ConQueue<RawData*> *p_sendingQueue;
 		MessageHandling *m_messageHandler;
+		MessageParsing *m_messageParser;
 
 		PixelBuffer* m_buffer;
 

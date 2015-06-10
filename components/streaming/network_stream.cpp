@@ -154,19 +154,19 @@ namespace oppvs
 		return 0;
 	}
 
-	void NetworkStream::registerCallback(void* owner, void* squeue, on_send_done_event event)
+	void NetworkStream::registerCallback(void* owner, MessageHandling* message_handler, on_send_done_event event)
 	{
 		m_owner = owner;
 		m_sendDoneEvent = event;
 		//p_sendingQueue = (ConQueue<RawData*> *)squeue;
-		m_messageHandler = (MessageHandling*)squeue;
+		m_messageHandler = message_handler;
 	}
 
-	void NetworkStream::registerCallback(void* owner, PixelBuffer* pf, on_receive_event event)
+	void NetworkStream::registerCallback(void* owner, MessageParsing* message_parser, on_receive_event event)
 	{
 		m_owner = owner;
 		m_receiveEvent = event;
-		m_buffer = pf;
+		m_messageParser = message_parser;
 	}
 
 	void NetworkStream::sendStream()
@@ -190,36 +190,7 @@ namespace oppvs
 				printf("Failed to send message\n");
 				m_error = -1;
 			}
-			
-			/*RawData *raw = p_sendingQueue->front();
-			m_timestamp++;
-			FrameBegin controlmsg;
-			controlmsg.flag = 1;
-			controlmsg.width = raw->width;
-			controlmsg.height = raw->height;
-			controlmsg.source = raw->sourceid;
-			controlmsg.order = raw->order;
-			controlmsg.stride = raw->stride;
-			if (write((uint8_t*)&controlmsg, controlmsg.size(), &written) < 0)
-			{
-				printf("Failed to send control message\n");
-				m_error = -1;
-			}
-			else if (write(raw->data, raw->length, &written) < 0)
-			{
-				printf("Send failed\n");
-				m_error = -1;
-			}
-			else
-			{
-				printf("Sent %u bytes\n", written);
-				FrameEnd controlendmsg;
-				controlendmsg.flag = 0;
-				if (write((uint8_t*)&controlendmsg, sizeof(controlendmsg), &written) < 0)
-				{
-					m_error = -1;
-				}
-			}*/
+
 			m_busy = !m_messageHandler->releaseMessage();
 			//m_sendDoneEvent(m_owner, m_error);
 		}
@@ -238,9 +209,13 @@ namespace oppvs
 		int retries = 0;
 
 		FrameInfo info;
+		Message message;
+		int len = OPPVS_NETWORK_PACKET_LENGTH;
+		bool isNextFrame;
 		while (1)
 		{
-			if (read(m_buffer->plane[0], m_buffer->nbytes, &readBytes, info) < 0)
+			int rcvLen = m_socket.RecvFrom(message.getData(), &len, &isNextFrame);
+			if (rcvLen < 0)
 			{
 				printf("Error while reading from network\n");
 				if (errno == EAGAIN || errno == EWOULDBLOCK)
@@ -254,13 +229,23 @@ namespace oppvs
 			}
 			else
 			{
-				m_buffer->width[0] = info.width;
-				m_buffer->height[0] = info.height;
-				m_buffer->source = info.source;
-				m_buffer->order = info.order;
-				m_buffer->stride[0] = info.stride;
-				m_receiveEvent(m_owner, 0);
+				message.setLength(rcvLen);
+				m_messageParser->updateMessage(message);
+				switch (message.getFlag())
+				{
+					case FLAG_START_FRAME:						
+						break;
+					case FLAG_MIDDLE_FRAME:
+						//printf("Midlle segement\n");
+						break;
+					case FLAG_END_FRAME:
+						//printf("End frame\n");
+						m_receiveEvent(m_owner, message.getSource(), 0);
+						break;
+				}
+				
 			}
+			
 		}
 	}
 

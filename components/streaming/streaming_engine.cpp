@@ -10,6 +10,7 @@ namespace oppvs
 		m_publisher = NULL;
 		m_subscribe = NULL;
 
+		m_cacheBuffer = NULL;
 	}
 
 	void StreamingEngine::setup(PixelBuffer* pf)
@@ -46,6 +47,9 @@ namespace oppvs
 		{			
 			delete [] m_serviceInfo.videoStreamInfo.sources;			
 		}
+
+		if (m_cacheBuffer)
+			delete m_cacheBuffer;
 	}
 
 	void* runStreaming(void* p)
@@ -80,11 +84,11 @@ namespace oppvs
 		engine->updateQueue();
 	}
 
-	void onReceiveEvent(void* owner, int error)
+	void onReceiveEvent(void* owner, uint8_t source, int error)
 	{
 		printf("Receive pkt\n");
 		StreamingEngine* engine = (StreamingEngine*)owner;
-		engine->pullData();
+		engine->pullData(source);
 	}
 
 	void StreamingEngine::updateQueue()
@@ -135,7 +139,8 @@ namespace oppvs
 	int StreamingEngine::initDownloadStream()
 	{
 		m_receiver = new NetworkStream(RECEIVER_ROLE, m_subscribe->getServiceKey());
-		m_receiver->registerCallback((void*)this, pixelBuffer, onReceiveEvent);
+		m_messageParser.setCacheBuffer(m_cacheBuffer);
+		m_receiver->registerCallback((void*)this, &m_messageParser, onReceiveEvent);
 		if (m_receiver->setup(m_subscribe->getLocalAddress().getPort()) < 0)
 		{
 			printf("Cannot setup network stream for downloading data\n");
@@ -172,9 +177,14 @@ namespace oppvs
 		}
 	}
 
-	void StreamingEngine::pullData()
+	void StreamingEngine::pullData(uint8_t source)
 	{
-		m_callback(*pixelBuffer);
+		PixelBuffer* pf = m_cacheBuffer->getBuffer(source);
+		if (pf)
+		{
+			pf->user = pixelBuffer->user;
+			m_callback(*pf);
+		}
 	}
 
 	int StreamingEngine::initPublishChannel()
@@ -202,6 +212,9 @@ namespace oppvs
 		int curPos = sizeof(sockaddr); //Skip the destination address
 		len -= curPos;
 		setStreamInfo(info + curPos, len);
+		//Setup cache
+		m_cacheBuffer = new CacheBuffer(m_serviceInfo.videoStreamInfo);
+
 		printServiceInfo();
 		printf("SSRC: %u\n", m_subscribe->getServiceKey());
 		if (initDownloadStream() < 0)
@@ -288,6 +301,8 @@ namespace oppvs
 		if (len - curPos != vsi->noSources * vsinfo.size())
 			return;
 		vsi->sources = new VideoSourceInfo[vsi->noSources];
+
+
 		for (int i = 0; i < vsi->noSources; i++)
 		{
 			memcpy(&vsi->sources[i].source, info + curPos, sizeof(uint8_t));

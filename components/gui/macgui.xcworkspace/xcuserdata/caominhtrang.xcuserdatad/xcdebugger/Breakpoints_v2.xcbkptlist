@@ -351,7 +351,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "165"
             endingLineNumber = "165"
-            landmarkName = "NetworkStream::registerCallback(void* owner, PixelBuffer* pf, on_receive_event event)"
+            landmarkName = "NetworkStream::registerCallback(void* owner, MessageParsing* message_parser, on_receive_event event)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1135,7 +1135,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "222"
             endingLineNumber = "222"
-            landmarkName = "NetworkStream::sendStream()"
+            landmarkName = "NetworkStream::waitStream()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1467,7 +1467,23 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "108"
             endingLineNumber = "108"
-            landmarkName = "MessageHandling::getNextMessage(uint8_t** pdata, uint16_t* length)"
+            landmarkName = "MessageHandling::addMessage(PixelBuffer&amp; pf)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSClient/OPPVSClient/ViewController.mm"
+            timestampString = "455604390.027598"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "-renderFrame:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

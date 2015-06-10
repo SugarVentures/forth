@@ -27,12 +27,29 @@ namespace oppvs
 		m_data[1] = sid;
 	}
 
+	uint8_t Message::getSource()
+	{
+		return m_data[1];
+	}
+
+	void Message::setSegID(uint16_t seg)
+	{
+		memcpy(m_data + 2, &seg, 2);
+	}
+
+	uint16_t Message::getSegID()
+	{
+		uint16_t seg = 0;
+		memcpy(&seg, m_data + 2, 2);
+		return seg;
+	}
+
 	void Message::setData(const uint8_t* data, uint16_t length)
 	{
-		if (length > OPPVS_NETWORK_PACKET_LENGTH - 2)
-			length = OPPVS_NETWORK_PACKET_LENGTH - 2;
-		memcpy(m_data + 2, data, length);
-		m_length = length + 2;
+		if (length > OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE)
+			length = OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE;
+		memcpy(m_data + MESSAGE_HEADER_SIZE, data, length);
+		m_length = length + MESSAGE_HEADER_SIZE;
 	}
 
 	uint8_t* Message::getData()
@@ -43,6 +60,11 @@ namespace oppvs
 	uint16_t Message::getLength()
 	{
 		return m_length;
+	}
+
+	void Message::setLength(uint16_t len)
+	{
+		m_length = len;
 	}
 
 	MessageHandling::MessageHandling() : m_numFramesInPool(0), m_sentClients(0)
@@ -68,15 +90,16 @@ namespace oppvs
 
 
 		int msgLength = pf.nbytes;
-		int sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - 2) ? (OPPVS_NETWORK_PACKET_LENGTH - 2) : msgLength;
+		int sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) : msgLength;
 		const uint8_t* curPos = pf.plane[0];
-		int count = 0;
+		uint16_t count = 0;
 		while (msgLength > 0)
 		{
 
 			std::shared_ptr<Message> message(new Message);
 			message->setSource(pf.source);
 			message->setData(curPos, sendLength);
+			message->setSegID(count);
 
 			curPos += sendLength;
 			msgLength -= sendLength;
@@ -96,7 +119,7 @@ namespace oppvs
 
 			m_messagePool.push(message);
 			count++;
-			sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - 2) ? (OPPVS_NETWORK_PACKET_LENGTH - 2) : msgLength;
+			sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) : msgLength;
 		}
 		m_numFramesInPool++;
 	}
@@ -140,6 +163,35 @@ namespace oppvs
 		else
 		{			
 			return false;
+		}
+	}
+
+	MessageParsing::MessageParsing()
+	{
+		m_cacheBuffer = NULL;
+	}
+
+	MessageParsing::~MessageParsing()
+	{
+
+	}
+
+	void MessageParsing::setCacheBuffer(CacheBuffer *cb)
+	{
+		m_cacheBuffer = cb;
+	}
+
+	void MessageParsing::updateMessage(Message& message)
+	{
+		if (!m_cacheBuffer)
+			return;
+		uint32_t loc = 0;
+		//printf("Seg: %d len: %d source: %d\n", message.getSegID(), message.getLength(), message.getSource());
+		loc = message.getSegID() * (message.getLength() - MESSAGE_HEADER_SIZE);
+		uint8_t* dest = m_cacheBuffer->getBufferAddress(message.getSource(), loc);
+		if (dest)
+		{
+			memcpy(dest, message.getData() + MESSAGE_HEADER_SIZE, message.getLength() - MESSAGE_HEADER_SIZE);
 		}
 	}
 }
