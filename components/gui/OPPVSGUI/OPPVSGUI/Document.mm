@@ -355,7 +355,7 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     return ve;
 }
 
-- (void) addSource:(NSString *)sourceid hasType:(oppvs::VideoSourceType)type sourceRect:(CGRect)srect renderRect:(CGRect)rrect withViewID:(id)viewid
+- (void) addSource:(NSString *)sourceid hasType:(oppvs::VideoSourceType)type sourceRect:(CGRect)srect renderRect:(CGRect)rrect withViewID:(id)viewid atIndex:(NSInteger) index
 {
     std::string source = [sourceid UTF8String];
     oppvs::window_rect_t sourceRect = createFromCGRect(srect);
@@ -365,7 +365,7 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     oppvs::ControllerLinker *controller = new oppvs::ControllerLinker();
     controller->streamer = &streamingEngine;
     controller->render = (__bridge void*)viewid;
-    activeSource = videoEngine->addSource(type, source, 30, sourceRect, renderRect, (void*)controller);
+    activeSource = videoEngine->addSource(type, source, 30, sourceRect, renderRect, (void*)controller, (int)index);
     if (activeSource)
     {
         videoEngine->setupCaptureSession(activeSource);

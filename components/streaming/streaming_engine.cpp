@@ -324,9 +324,9 @@ namespace oppvs
 		printf("Stream Info: Number of capture sources: %d\n", m_serviceInfo.videoStreamInfo.noSources);
 		for (int i = 0; i < m_serviceInfo.videoStreamInfo.noSources; i++)
 		{
-			printf("Source: %d Width: %d Height: %d Stride: %d\n", m_serviceInfo.videoStreamInfo.sources[i].source, 
+			printf("Source: %d Width: %d Height: %d Stride: %d Order: %d\n", m_serviceInfo.videoStreamInfo.sources[i].source, 
 				m_serviceInfo.videoStreamInfo.sources[i].width, m_serviceInfo.videoStreamInfo.sources[i].height,
-				m_serviceInfo.videoStreamInfo.sources[i].stride);
+				m_serviceInfo.videoStreamInfo.sources[i].stride, m_serviceInfo.videoStreamInfo.sources[i].order);
 		}
 
 	}

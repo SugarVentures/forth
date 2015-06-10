@@ -62,7 +62,6 @@
     {
         NSInteger index = pf->order;
         __block id subview = nil;
-        NSMutableData *data;
         
         NSArray *filtered = [listSources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"source = %d", pf->source]];
         
@@ -70,8 +69,6 @@
         {
             NSDictionary *item = [filtered objectAtIndex:0];
             subview = [item objectForKey:@"view"];
-            data = [item objectForKey:@"data"];
-            [data replaceBytesInRange:NSMakeRange(0, pf->width[0]*pf->height[0]*4) withBytes:pf->plane[0]];
         }
         else
         {
@@ -83,11 +80,8 @@
             
             NSNumber *sourceid = [NSNumber numberWithUnsignedShort: pf->source];
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-            data = [NSMutableData dataWithCapacity: pf->width[0]*pf->height[0]*4];
-            [data replaceBytesInRange:NSMakeRange(0, pf->width[0]*pf->height[0]*4) withBytes:pf->plane[0]];
             [dict setObject:subview forKey:@"view"];
             [dict setObject:sourceid forKey:@"source"];
-            [dict setObject:data forKey:@"data"];
             [listSources addObject: dict];
         }
         
@@ -95,7 +89,7 @@
         [view setFrameWidth:pf->width[0]];
         [view setFrameHeight:pf->height[0]];
         [view setStride:pf->stride[0]];
-        [view setPixelBuffer:(GLubyte*)[data mutableBytes]];
+        [view setPixelBuffer:pf->plane[0]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [view setNeedsDisplay];

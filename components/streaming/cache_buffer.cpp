@@ -12,6 +12,7 @@ namespace oppvs
 				pixelBuffer[i].width[0] = info.sources[i].width;
 				pixelBuffer[i].height[0] = info.sources[i].height;
 				pixelBuffer[i].stride[0] = info.sources[i].stride;
+				pixelBuffer[i].order = info.sources[i].order;
 				pixelBuffer[i].nbytes = info.sources[i].height * info.sources[i].stride;
 				pixelBuffer[i].plane[0] = new uint8_t[pixelBuffer[i].nbytes];
 				pixelBuffer[i].source = info.sources[i].source;

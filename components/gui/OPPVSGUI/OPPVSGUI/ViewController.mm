@@ -291,8 +291,8 @@ NSString* kCSName = @"CSName";
         
         CGRect sourceFrame = CGRectMake(rect.origin.x, rect.origin.y, width, ceil(rect.size.height));
         //CGRect outrect = CGRectMake(rect.origin.x, rect.origin.y, 600, 588);
-        id user = [self addSubView:renderFrame];
-        [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_CUSTOM sourceRect:sourceFrame renderRect:renderFrame withViewID:user];
+        OpenGLFrame *user = [self addSubView:renderFrame];
+        [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_CUSTOM sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex: user.order];
         @autoreleasepool {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
             [dict setObject:@"Test" forKey:@"id"];
@@ -334,7 +334,7 @@ NSString* kCSName = @"CSName";
     NSInteger index = selectedItem.tag;
     NSDictionary *source = [[self listSources] objectAtIndex:index];
     int x, y;
-    id user;
+    OpenGLFrame* user;
     CGRect sourceFrame;
     CGRect renderFrame;
     if ((unsigned long)[[self listCaptureSources] count] == 0)
@@ -357,7 +357,7 @@ NSString* kCSName = @"CSName";
     if ([[source objectForKey:@"type"] isEqualToString:@"Monitor"])
     {
         user = [self addSubView:renderFrame];
-        [document addSource:[[source objectForKey:@"id"] stringValue] hasType:oppvs::VST_WINDOW sourceRect:sourceFrame renderRect:renderFrame withViewID:user];
+        [document addSource:[[source objectForKey:@"id"] stringValue] hasType:oppvs::VST_WINDOW sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex:user.order];
         @autoreleasepool {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
             [dict setObject:@"Test" forKey:@"id"];
@@ -368,7 +368,7 @@ NSString* kCSName = @"CSName";
     {
         user = [self addSubView:renderFrame];
         
-        [document addSource: [source objectForKey:@"id"] hasType:oppvs::VST_WEBCAM sourceRect:sourceFrame renderRect:renderFrame withViewID:user];
+        [document addSource: [source objectForKey:@"id"] hasType:oppvs::VST_WEBCAM sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex:user.order];
         @autoreleasepool {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
             [dict setObject:@"Test" forKey:@"id"];

@@ -158,7 +158,8 @@ namespace oppvs {
 
 		uint8_t active_source_index = 0;
 
-		VideoActiveSource* addSource(video_source_type_t type, std::string sid, uint8_t fps, window_rect_t rect, window_rect_t renderRect, void* user) {
+		VideoActiveSource* addSource(video_source_type_t type, std::string sid, uint8_t fps, window_rect_t rect, 
+			window_rect_t renderRect, void* user, int index) {
 			if (active_sources.size() >= MAX_ACTIVE_SOURCES)
 			{
 				return NULL;
@@ -171,6 +172,7 @@ namespace oppvs {
 			src.rect = rect;
 			src.renderRect = renderRect;
 			src.user = user;
+			src.order = index;
 			src.id = active_source_index++;
 			active_sources.push_back(src);
 			return &active_sources.back();
