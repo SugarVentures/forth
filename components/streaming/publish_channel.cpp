@@ -2,8 +2,7 @@
 
 namespace oppvs
 {
-	PublishChannel::PublishChannel(void* owner, PixelBuffer* pf, on_new_subscriber_event event) : m_interrupt(false),
-	m_pixelBuffer(pf)
+	PublishChannel::PublishChannel(void* owner, on_new_subscriber_event event) : m_interrupt(false)
 	{
 		m_event = event;
 		m_owner = owner;

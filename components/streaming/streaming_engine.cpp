@@ -11,13 +11,13 @@ namespace oppvs
 		m_subscribe = NULL;
 
 		m_cacheBuffer = NULL;
+		m_messageParser = MessageParsing();
 	}
 
-	void StreamingEngine::setup(PixelBuffer* pf)
+	void StreamingEngine::setup()
 	{
 		m_ssrc = 0;
 		m_isRunning = false;
-		pixelBuffer = pf;
 
 		m_broadcaster = NULL;
 		m_receiver = NULL;
@@ -34,6 +34,7 @@ namespace oppvs
 			printf("Cannot init mutex\n");
 		}
 	}
+
 
 	StreamingEngine::~StreamingEngine()
 	{
@@ -58,7 +59,7 @@ namespace oppvs
 		while (1)
 		{
 			stream->sendStream();
-			usleep(100);
+			usleep(50);
 		}
 		return NULL;
 	}
@@ -163,14 +164,14 @@ namespace oppvs
 		PixelBuffer* pf = m_cacheBuffer->getBuffer(source);
 		if (pf)
 		{
-			pf->user = pixelBuffer->user;
+			//pf->user = pixelBuffer->user;
 			m_callback(*pf);
 		}
 	}
 
 	int StreamingEngine::initPublishChannel()
 	{
-		m_publisher = new PublishChannel((void*)this, pixelBuffer, onNewSubscriberEvent);
+		m_publisher = new PublishChannel((void*)this, onNewSubscriberEvent);
 
 		m_publisher->setServiceInfo(ST_VIDEO_STREAMING, generateSSRC());
 		m_publisher->setServiceInfo(&m_serviceInfo);

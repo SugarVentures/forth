@@ -67,9 +67,19 @@ namespace oppvs
 		m_length = len;
 	}
 
+	void Message::setTimestamp(uint32_t ts)
+	{
+		m_timestamp = ts;
+	}
+
+	uint32_t Message::getTimestamp()
+	{
+		return m_timestamp;
+	}
+
 	MessageHandling::MessageHandling() : m_numFramesInPool(0), m_sentClients(0)
 	{
-
+		m_timestamp = 0;
 	}
 
 	MessageHandling::~MessageHandling()
@@ -100,6 +110,7 @@ namespace oppvs
 			message->setSource(pf.source);
 			message->setData(curPos, sendLength);
 			message->setSegID(count);
+			message->setTimestamp(m_timestamp);
 
 			curPos += sendLength;
 			msgLength -= sendLength;
@@ -121,10 +132,13 @@ namespace oppvs
 			count++;
 			sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) : msgLength;
 		}
+
+		//printf("Count: %d\n", count);
+		m_timestamp++;
 		m_numFramesInPool++;
 	}
 
-	void MessageHandling::getNextMessage(uint8_t** pdata, uint16_t* length)
+	void MessageHandling::getNextMessage(uint8_t** pdata, uint16_t* length, uint32_t* ts)
 	{
 		if (m_messagePool.size() == 0)
 		{
@@ -136,6 +150,7 @@ namespace oppvs
 			std::shared_ptr<Message> message = *ptrmsg;
 			*pdata = message->getData();
 			*length = message->getLength();
+			*ts = message->getTimestamp();
 			m_sentClients++;
 		}
 	}
@@ -167,6 +182,7 @@ namespace oppvs
 	MessageParsing::MessageParsing()
 	{
 		m_cacheBuffer = NULL;
+		oldseq = -1;
 	}
 
 	MessageParsing::~MessageParsing()
@@ -184,12 +200,38 @@ namespace oppvs
 		if (!m_cacheBuffer)
 			return;
 		uint32_t loc = 0;
-		//printf("Seg: %d len: %d source: %d\n", message.getSegID(), message.getLength(), message.getSource());
+
+		switch (message.getFlag())
+		{
+			case FLAG_START_FRAME:
+				m_currentTimestamp = message.getTimestamp();
+				oldseq = message.getSegID();
+				break;
+			case FLAG_MIDDLE_FRAME:
+				if (m_currentTimestamp != message.getTimestamp())
+					printf("Error\n");
+				break;
+		}
+
+		/*if (oldseq != message.getSegID() - 1)
+		{
+			printf("Old seq: %d Seg: %d len: %d source: %d\n", oldseq, message.getSegID(), message.getLength(), message.getSource());	
+		}
+		if (message.getFlag() == FLAG_END_FRAME)
+		{
+			oldseq = -1;
+		}
+		else
+			oldseq = message.getSegID();*/
 		loc = message.getSegID() * (message.getLength() - MESSAGE_HEADER_SIZE);
+		//printf("Seg: %u location: %lu\n", message.getSegID(), loc);
 		uint8_t* dest = m_cacheBuffer->getBufferAddress(message.getSource(), loc);
 		if (dest)
 		{
 			memcpy(dest, message.getData() + MESSAGE_HEADER_SIZE, message.getLength() - MESSAGE_HEADER_SIZE);
 		}
+		else
+			printf("No destination\n");
+
 	}
 }

@@ -49,7 +49,7 @@ namespace oppvs
 
 		int SendTo(const void* msg, int len, uint32_t ts);
 		int RecvFrom(void* msg, int *len);
-		int RecvFrom(void* msg, int *len, bool *isNext);
+		int RecvFrom(void* msg, int *len, uint32_t* ts);
 
 		int Accept(SocketAddress& remote);
 		int Connect(const SocketAddress& remote);

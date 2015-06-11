@@ -1,11 +1,18 @@
 
+#include <iostream>
+#include <time.h>
+#include <chrono>
 #include "../streaming/streaming_engine.hpp"
 
 int interrupt;
+ std::chrono::time_point<std::chrono::system_clock> start, end;
 
 void frameCallback(oppvs::PixelBuffer& pf)
 {
-	printf("Out data: %d %d %d %d %d %d\n", pf.width[0], pf.height[0], pf.originx, pf.originy, pf.plane[0][100], pf.plane[0][200]);
+	end = std::chrono::system_clock::now();
+	//std::cout <<std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << '\n';
+	start = std::chrono::system_clock::now();
+	//printf("Out data: %d %d %d %d %d %d\n", pf.width[0], pf.height[0], pf.originx, pf.originy, pf.plane[0][100], pf.plane[0][200]);
 }
 
 void signalhandler(int param)
@@ -38,6 +45,8 @@ int main(int argc, char* argv[])
 		port = atoi(argv[1]);
 
 	}
+
+	start = std::chrono::system_clock::now();
 	if (port == 0)
 	{
 		oppvs::StreamingEngine *se = new oppvs::StreamingEngine();

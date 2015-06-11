@@ -103,7 +103,7 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 
 - (void) startStreaming
 {    
-    streamingEngine.setup(sharedBuffer);
+    streamingEngine.setup();
     streamingEngine.setStreamInfo(videoEngine->getVideoActiveSources());
     streamingEngine.initPublishChannel();
     std::string info = streamingEngine.getStreamInfo();

@@ -31,7 +31,7 @@ namespace oppvs
 	{
 	public:
 		StreamingEngine();
-		void setup(PixelBuffer* pf);
+		void setup();
 		~StreamingEngine();
 
 		void setSSRC(uint32_t value) { m_ssrc = value; }
@@ -73,7 +73,6 @@ namespace oppvs
 		frame_callback m_callback;
 
 		ConQueue<RawData*> m_sendingQueue;	//Shared buffer of all upload streams
-		PixelBuffer* pixelBuffer;
 
 		BitsStream *m_bitsstream;
 		void initBitsStream();

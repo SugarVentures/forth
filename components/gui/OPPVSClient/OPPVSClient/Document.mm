@@ -9,6 +9,7 @@
 #import "Document.h"
 #include <errno.h>
 
+ViewController* render;
 
 @interface Document ()
 {
@@ -32,18 +33,17 @@
 
 void frameCallback(oppvs::PixelBuffer& pf)
 {
-    ViewController *view = (__bridge ViewController*)pf.user;
-    [view renderFrame:&pf];
-
+    //ViewController *view = (__bridge ViewController*)pf.user;
+    //[view renderFrame:&pf];
+    [render renderFrame:&pf];
 }
 
 
 - (void)initReceiver: (NSString*)server withPort: (NSInteger)port
 {
-    oppvs::PixelBuffer *pixelBuffer = new oppvs::PixelBuffer();
+    render = (ViewController*)viewController;
     streamEngine = new oppvs::StreamingEngine();
-    streamEngine->setup(pixelBuffer);
-    pixelBuffer->user = (__bridge void*)viewController;
+    streamEngine->setup();
     streamEngine->registerCallback(frameCallback);
     oppvs::ServiceInfo service;
     service.type = oppvs::ST_VIDEO_STREAMING;

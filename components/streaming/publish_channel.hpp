@@ -11,7 +11,7 @@ namespace oppvs
 	class PublishChannel : public Channel
 	{
 	public:
-		PublishChannel(void* owner, PixelBuffer* pf, on_new_subscriber_event event);
+		PublishChannel(void* owner, on_new_subscriber_event event);
 		virtual ~PublishChannel();
 		int start();
 		void waitingSubscribers();
@@ -22,7 +22,6 @@ namespace oppvs
 		bool m_interrupt;
 		on_new_subscriber_event m_event;
 		void* m_owner;
-		PixelBuffer* m_pixelBuffer;
 		Thread* m_thread;
 	};
 }

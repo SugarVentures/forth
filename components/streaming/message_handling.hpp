@@ -27,12 +27,15 @@ namespace oppvs
 		void setSegID(uint16_t seg);
 		uint16_t getSegID();
 		void setData(const uint8_t *data, uint16_t length);
+
 		uint16_t getLength();
 		void setLength(uint16_t);
 		uint8_t* getData();
-
+		void setTimestamp(uint32_t);
+		uint32_t getTimestamp();
 	private:
 		uint16_t m_length;
+		uint32_t m_timestamp;
 		uint8_t m_data[OPPVS_NETWORK_PACKET_LENGTH];
 	};
 
@@ -44,7 +47,7 @@ namespace oppvs
 
 		void setNumClients(uint8_t clients);
 		void addMessage(PixelBuffer& pf);
-		void getNextMessage(uint8_t** pdata, uint16_t* length);
+		void getNextMessage(uint8_t** pdata, uint16_t* length, uint32_t* ts);
 		bool releaseMessage();
 		bool isEmptyPool();
 	private:
@@ -52,6 +55,7 @@ namespace oppvs
 		uint16_t m_numFramesInPool;
 		uint8_t m_numClients;
 		uint8_t m_sentClients;
+		uint32_t m_timestamp;
 	};
 
 	class MessageParsing
@@ -64,6 +68,10 @@ namespace oppvs
 		void setCacheBuffer(CacheBuffer *cb);
 	private:
 		CacheBuffer *m_cacheBuffer;
+		//Test
+		int oldseq;
+		int count;
+		uint32_t m_currentTimestamp;
 	};
 
 };

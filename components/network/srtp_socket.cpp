@@ -147,11 +147,11 @@ namespace oppvs
 		return rtp_recvfrom(m_receiver, msg, len);
 	}
 
-	int SRTPSocket::RecvFrom(void* msg, int *len, bool *isNext)
+	int SRTPSocket::RecvFrom(void* msg, int *len, uint32_t *timestamp)
 	{
 		int recvLen = rtp_recvfrom(m_receiver, msg, len);
-		uint32_t ts = ntohl(m_receiver->message.header.ts);
-		uint16_t seq = ntohs(m_receiver->message.header.seq);
+		*timestamp = ntohl(m_receiver->message.header.ts);
+		//uint16_t seq = ntohs(m_receiver->message.header.seq);
 		//printf("Timestamp: %u %u recv: %d\n", ts, m_timestamp, recvLen);
 		
 		//printHashCode(msg, recvLen);
@@ -159,7 +159,7 @@ namespace oppvs
 		if (recvLen < 0)
 			return recvLen;
 
-		if (m_timestamp == ts && seq - m_seq != 1)
+		/*if (m_timestamp == ts && seq - m_seq != 1)
 		{
 			printf("Error in seq: %d %d. Lost piece of frame\n", seq, m_seq);
 			m_seq = seq;
@@ -177,7 +177,7 @@ namespace oppvs
 		else
 		{
 			*isNext = false;
-		}
+		}*/
 		//printf("Timestamp: %u old: %u next: %d seq: %u\n", ts, m_timestamp, *isNext, ntohs(m_receiver->message.header.seq));
 		return recvLen;
 	}
