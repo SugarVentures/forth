@@ -132,7 +132,8 @@ static GLint default_frame_buffer = 0;
     glBindTexture(GL_TEXTURE_2D, 0);*/
         
     glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, pbo[0]);
-    glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, stride*frameHeight, pixelBuffer, GL_STATIC_DRAW_ARB);
+    if (pixelBuffer)
+        glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, stride*frameHeight, pixelBuffer, GL_STATIC_DRAW_ARB);
     
     glEnable(GL_TEXTURE_RECTANGLE_ARB);
     glBindTexture(GL_TEXTURE_RECTANGLE_ARB, texID[[self indexTexture]]);

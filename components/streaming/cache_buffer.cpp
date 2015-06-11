@@ -62,6 +62,8 @@ namespace oppvs
 			{
 				if (pixelBuffer[i].nbytes < loc)
 					return NULL;
+				if (pixelBuffer[i].plane[0] == NULL)
+					return NULL;
 				return pixelBuffer[i].plane[0] + loc;
 			}
 		}

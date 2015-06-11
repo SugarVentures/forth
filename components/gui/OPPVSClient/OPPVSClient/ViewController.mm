@@ -96,6 +96,7 @@
         });
         
         delete [] pf->plane[0];
+        pf->plane[0] = NULL;
     }
     
 }

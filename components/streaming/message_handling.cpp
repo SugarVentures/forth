@@ -210,12 +210,12 @@ namespace oppvs
 				oldseq = message.getSegID();
 				break;
 			case FLAG_MIDDLE_FRAME:
-				if (m_currentTimestamp != message.getTimestamp())
+				/*if (m_currentTimestamp != message.getTimestamp())
 					printf("Error\n");
 				else
 					if (oldseq != message.getSegID() - 1)
 						printf("Lost segment\n");
-					oldseq = message.getSegID();
+					oldseq = message.getSegID();*/
 				break;
 		}
 
