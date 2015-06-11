@@ -159,25 +159,6 @@ namespace oppvs
 		if (recvLen < 0)
 			return recvLen;
 
-		/*if (m_timestamp == ts && seq - m_seq != 1)
-		{
-			printf("Error in seq: %d %d. Lost piece of frame\n", seq, m_seq);
-			m_seq = seq;
-			return -1;
-		}
-		m_seq = seq;
-		//First time received
-		if (m_timestamp == 0)
-			m_timestamp = ts;
-		if (m_timestamp != ts)
-		{
-			*isNext = true;
-			m_timestamp = ts;
-		}
-		else
-		{
-			*isNext = false;
-		}*/
 		//printf("Timestamp: %u old: %u next: %d seq: %u\n", ts, m_timestamp, *isNext, ntohs(m_receiver->message.header.seq));
 		return recvLen;
 	}

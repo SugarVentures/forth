@@ -138,7 +138,7 @@ namespace oppvs
 						break;
 					case FLAG_END_FRAME:
 						//printf("End frame\n");						
-						m_receiveEvent(m_owner, message.getSource(), 0);
+						//m_receiveEvent(m_owner, message.getSource(), 0);
 
 						break;
 				}

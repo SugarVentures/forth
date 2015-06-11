@@ -204,25 +204,21 @@ namespace oppvs
 		switch (message.getFlag())
 		{
 			case FLAG_START_FRAME:
+				m_cacheBuffer->delocateBuffer(message.getSource());
+				m_cacheBuffer->allocateBuffer(message.getSource());
 				m_currentTimestamp = message.getTimestamp();
 				oldseq = message.getSegID();
 				break;
 			case FLAG_MIDDLE_FRAME:
 				if (m_currentTimestamp != message.getTimestamp())
 					printf("Error\n");
+				else
+					if (oldseq != message.getSegID() - 1)
+						printf("Lost segment\n");
+					oldseq = message.getSegID();
 				break;
 		}
 
-		/*if (oldseq != message.getSegID() - 1)
-		{
-			printf("Old seq: %d Seg: %d len: %d source: %d\n", oldseq, message.getSegID(), message.getLength(), message.getSource());	
-		}
-		if (message.getFlag() == FLAG_END_FRAME)
-		{
-			oldseq = -1;
-		}
-		else
-			oldseq = message.getSegID();*/
 		loc = message.getSegID() * (message.getLength() - MESSAGE_HEADER_SIZE);
 		//printf("Seg: %u location: %lu\n", message.getSegID(), loc);
 		uint8_t* dest = m_cacheBuffer->getBufferAddress(message.getSource(), loc);
@@ -230,8 +226,8 @@ namespace oppvs
 		{
 			memcpy(dest, message.getData() + MESSAGE_HEADER_SIZE, message.getLength() - MESSAGE_HEADER_SIZE);
 		}
-		else
-			printf("No destination\n");
 
+		if (message.getFlag() == FLAG_END_FRAME)
+			m_cacheBuffer->push(message.getSource());
 	}
 }

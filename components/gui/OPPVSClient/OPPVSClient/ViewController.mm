@@ -91,11 +91,11 @@
         [view setStride:pf->stride[0]];
         [view setPixelBuffer:pf->plane[0]];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             [view setNeedsDisplay];
         });
-
-
+        
+        delete [] pf->plane[0];
     }
     
 }

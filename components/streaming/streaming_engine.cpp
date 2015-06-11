@@ -24,7 +24,7 @@ namespace oppvs
 
 		m_sendThread = NULL;
 		m_receiveThread = NULL;
-		m_thread = NULL;
+		m_renderThread = NULL;
 
 		m_subscribe = NULL;
 		
@@ -40,6 +40,7 @@ namespace oppvs
 	{
 		delete m_sendThread;
 		delete m_receiveThread;
+		delete m_renderThread;
 
 		delete m_publisher;
 		delete m_subscribe;
@@ -70,6 +71,16 @@ namespace oppvs
 		stream->waitStream();
 		stream->releaseReceiver();
 		return NULL;
+	}
+
+	void* rendering(void* p)
+	{
+		StreamingEngine* engine = (StreamingEngine*)p;
+		while (1)
+		{
+			engine->pullData();
+			usleep(50);
+		}
 	}
 
 	void onNewSubscriberEvent(void* owner, const SocketAddress& remoteaddr, SocketAddress& localaddr)
@@ -148,6 +159,8 @@ namespace oppvs
 		m_receiveThread = new Thread(waitStreaming, (void*)m_receiver);
 		m_receiveThread->create();
 
+		m_renderThread = new Thread(rendering, (void*)this);
+		m_renderThread->create();
 		return 0;
 	}
 
@@ -311,5 +324,14 @@ namespace oppvs
 				m_serviceInfo.videoStreamInfo.sources[i].stride, m_serviceInfo.videoStreamInfo.sources[i].order);
 		}
 
+	}
+
+	void StreamingEngine::pullData()
+	{
+		std::shared_ptr<PixelBuffer> pf = m_cacheBuffer->pop();
+		if (pf.get() != NULL)
+		{
+			m_callback(*pf);
+		}
 	}
 }

@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
 	if (port == 0)
 	{
 		oppvs::StreamingEngine *se = new oppvs::StreamingEngine();
-		se->setup(&pf);
+		se->setup();
 	    se->initPublishChannel();
 	    while (!interrupt)
 	    {	
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 	else
 	{
 		oppvs::StreamingEngine *se = new oppvs::StreamingEngine();
-		se->setup(&rcvpf);
+		se->setup();
 		se->registerCallback(frameCallback);
 		oppvs::ServiceInfo service;
 		service.type = oppvs::ST_VIDEO_STREAMING;

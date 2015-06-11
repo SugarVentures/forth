@@ -48,6 +48,7 @@ namespace oppvs
 
 		void pushData(PixelBuffer& pf);
 		void pullData(uint8_t source);
+		void pullData();
 
 		bool isRunning();
 		void setIsRunning(bool value);
@@ -69,7 +70,7 @@ namespace oppvs
 		pthread_mutex_t m_mutex;
 		Thread* m_sendThread;
 		Thread* m_receiveThread;
-		Thread* m_thread;
+		Thread* m_renderThread;
 		frame_callback m_callback;
 
 		ConQueue<RawData*> m_sendingQueue;	//Shared buffer of all upload streams

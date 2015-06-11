@@ -70,7 +70,7 @@ namespace oppvs
 		{
 			releaseMessage();
 		}
-		printf("%d\n", p_service->videoStreamInfo.videoWidth);
+
 		int curPos = 0;
 		m_message = new uint8_t[getMessageSize()];
 		memcpy(m_message + curPos, destination, sizeof(sockaddr));
