@@ -13,6 +13,7 @@
 #import <ApplicationServices/ApplicationServices.h> //For saving screenshots
 
 
+
 @interface MacVideoAVFoundationCapture : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, 
     AVCaptureFileOutputDelegate,AVCaptureFileOutputRecordingDelegate> {
 @private
@@ -504,6 +505,8 @@
     }
 
     pixel_buffer.format = oppvs::PF_BGRA32;
+
+    
     callback_frame(pixel_buffer);
     
     CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);

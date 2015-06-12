@@ -4,7 +4,7 @@ CC = gcc
 RM = rm -f
 CP = cp
 
-INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error
+INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error 
 CFLAGS = -Wall -g
 FRAMEWORKS = -framework Foundation -framework AVFoundation -framework CoreGraphics -framework CoreFoundation -framework CoreVideo \
  -framework CoreMedia -framework ApplicationServices -framework QuartzCore \

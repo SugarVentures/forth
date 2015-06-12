@@ -19,6 +19,8 @@
 #include <time.h>
 #include <chrono>
 
+#include "../../libs/libyuv/include/libyuv.h"
+
 
 void fcallback(oppvs::PixelBuffer& pf);
 static int frames = 0;
@@ -75,7 +77,7 @@ int main(int argc, char* argv[])
         std::cout << "Cap: " << i->capabilities.front().width << ' ' << i->capabilities.front().height;
         std::cout << "Format: " << i->capabilities.front().fps;
         std::cout << '\n';
-        //source = ve->addSource(oppvs::VST_WEBCAM, i->device_id, 30, rect1, &controller);
+        source = ve->addSource(oppvs::VST_WEBCAM, i->device_id, 30, rect1, rect2, &controller, 0);
         
         device_index++;
     }
@@ -111,8 +113,8 @@ int main(int argc, char* argv[])
     //ve->getDeviceID(str);
     
 	//ve->setupCaptureSessions();
-    //ve->setupCaptureSession(*source);
-    //ve->startCaptureSession(*source);
+    ve->setupCaptureSession(source);
+    ve->startCaptureSession(*source);
     auto t1 = Clock::now();
     //ve->startRecording();
 
@@ -142,6 +144,25 @@ void fcallback(oppvs::PixelBuffer& buffer)
     
     printf("Frame callback: %lu bytes, stride: %lu width: %d height: %d bpr: %d origin: %d %d\n", buffer.nbytes, buffer.stride[0],
         buffer.width[0], buffer.height[0], buffer.stride[0]/buffer.width[0], buffer.originx, buffer.originy);
+
+    const uint32_t size_i420 = buffer.width[0] * buffer.height[0] * 3 / 2;
+    const uint32_t y_length = buffer.width[0] * buffer.height[0];
+    const uint32_t uv_stride = buffer.width[0] / 2;
+    const uint32_t uv_length = uv_stride * (buffer.height[0] / 2);
+
+    uint8_t* const dst_y = new uint8[size_i420];
+    uint8_t* const dst_u = dst_y + y_length;
+    uint8_t* const dst_v = dst_u + uv_length;
+
+    printf("I420 frame: %u %u %u %u\n", size_i420, y_length, uv_stride, uv_length);
+
+    int result = libyuv::BGRAToI420(buffer.plane[0], buffer.stride[0],
+            dst_y, buffer.width[0],
+            dst_u, uv_stride,
+            dst_v, uv_stride,
+            buffer.width[0], -buffer.height[0]);
+
+    delete [] dst_y;
     /*for (int i = 0; i < (uint32_t)buffer.height[0]; i++)
     {
         uint32_t offset = buffer.stride[0]*(buffer.originy + i) + buffer.originx*4;
