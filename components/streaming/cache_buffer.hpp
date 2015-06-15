@@ -3,6 +3,7 @@
 
 #include "datatypes.hpp"
 #include "tsqueue.hpp"
+#include "video_encoding.hpp"
 
 namespace oppvs
 {

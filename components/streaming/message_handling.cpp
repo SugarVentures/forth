@@ -98,10 +98,16 @@ namespace oppvs
 		if (m_numFramesInPool >= MAX_FRAMES_IN_POOL)
 			return;
 
+		//Encoding
+		uint8_t* data = NULL;
+		uint32_t encodingLength = 0;
+		int result = m_encoder.convertBGRAToI420(pf, &data, &encodingLength);
 
-		int msgLength = pf.nbytes;
+		//int msgLength = pf.nbytes;
+		int msgLength = encodingLength;
 		int sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) : msgLength;
-		const uint8_t* curPos = pf.plane[0];
+		//const uint8_t* curPos = pf.plane[0];
+		const uint8_t* curPos = data;
 		uint16_t count = 0;
 		while (msgLength > 0)
 		{
@@ -136,6 +142,9 @@ namespace oppvs
 		//printf("Count: %d\n", count);
 		m_timestamp++;
 		m_numFramesInPool++;
+
+		//Release memory
+		delete [] data;
 	}
 
 	void MessageHandling::getNextMessage(uint8_t** pdata, uint16_t* length, uint32_t* ts)

@@ -4,12 +4,14 @@ RM = rm -f
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error  \
 		 -I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include  \
-		 -I$(rootDir)/../thread -I$(rootDir)/../misc
+		 -I$(rootDir)/../thread -I$(rootDir)/../misc \
+		 -I$(rootDir)/../../libs/libyuv/include -I$(rootDir)/../encoding
+
 
 CFLAGS = -Wall -g -std=c++11
 
 LDFLAGS = -L$(rootDir)/../../libs
-LIBS = -lsrtp -lnetworkengine -lthreadengine -lmisc
+LIBS = -lsrtp -lnetworkengine -lthreadengine -lmisc -lencodingengine
 
 OBJLIBS = libstreaming.so
 

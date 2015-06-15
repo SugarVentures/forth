@@ -60,7 +60,7 @@ namespace oppvs
 		while (1)
 		{
 			stream->sendStream();
-			usleep(50);
+			usleep(10);
 		}
 		return NULL;
 	}
@@ -79,7 +79,7 @@ namespace oppvs
 		while (1)
 		{
 			engine->pullData();
-			usleep(50);
+			usleep(10);
 		}
 	}
 
@@ -331,7 +331,13 @@ namespace oppvs
 		std::shared_ptr<PixelBuffer> pf = m_cacheBuffer->pop();
 		if (pf.get() != NULL)
 		{
-			m_callback(*pf);
+			VideoFrameEncoding decoder;
+			PixelBuffer pixelBuffer = *pf;
+			uint8_t* data = pixelBuffer.plane[0];
+			uint32_t len = 0;
+			decoder.convertI420ToBGRA(data, &len, pixelBuffer);
+			delete [] data;
+			m_callback(pixelBuffer);
 		}
 	}
 }

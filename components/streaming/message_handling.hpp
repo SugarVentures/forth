@@ -6,6 +6,8 @@
 #include "tsqueue.hpp"
 #include "cache_buffer.hpp"
 
+#include "video_encoding.hpp"
+
 namespace oppvs
 {
 
@@ -56,6 +58,8 @@ namespace oppvs
 		uint8_t m_numClients;
 		uint8_t m_sentClients;
 		uint32_t m_timestamp;
+
+		VideoFrameEncoding m_encoder;
 	};
 
 	class MessageParsing

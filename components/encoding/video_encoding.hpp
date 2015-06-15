@@ -12,7 +12,7 @@ namespace oppvs
 		VideoFrameEncoding() {}
 		virtual ~VideoFrameEncoding() {}
 
-		int convertBGRAToI420(PixelBuffer& pf, uint8_t* data, uint32_t* length);
+		int convertBGRAToI420(PixelBuffer& pf, uint8_t** data, uint32_t* length);
 		int convertI420ToBGRA(uint8_t* data, uint32_t* length, PixelBuffer& pf);
 	private:
 

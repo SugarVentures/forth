@@ -4,14 +4,14 @@ RM = rm -f
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../thread -I$(rootDir)/../misc \
 		-I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include  \
-		-I$(rootDir)/../../libs/libyuv/include
+		-I$(rootDir)/../../libs/libyuv/include -I$(rootDir)/../encoding
 CFLAGS	= -Wall -g -std=c++11
 
 VIDEOLDFLAGS = -L$(rootDir)/../../libs
 VIDEOLIBS = -lvideoengine -lstreaming -lyuv
 
 NETWORKLDFLAGS = -L$(rootDir)/../../libs
-NETWORKLIBS = -lnetworkengine -lstreaming
+NETWORKLIBS = -lnetworkengine -lstreaming -lyuv -lencodingengine
 
 ENCODINGFLAGS = -L$(rootDir)/../../libs
 ENCODINGLIBS = -lyuv
@@ -57,6 +57,7 @@ proclib:
 	cp $(rootDir)/../*.so $(rootDir)
 	cp $(rootDir)/../../libs/libsrtp/*.a $(rootDir)
 	cp $(rootDir)/../../libs/*.a $(rootDir)
+	cp $(rootDir)/../encoding/*.so $(rootDir)
 clean:
 	$(RM) *.o
 

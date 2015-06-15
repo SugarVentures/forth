@@ -37,6 +37,7 @@ namespace oppvs
 			if (pixelBuffer[i].source == source)
 			{	
 				pixelBuffer[i].plane[0] = new uint8_t[pixelBuffer[i].nbytes];
+				//pixelBuffer[i].plane[0] = new uint8_t[pixelBuffer[i].width[0] * pixelBuffer[i].height[0] * 3 / 2];
 				return true;
 			}
 		}
@@ -112,7 +113,9 @@ namespace oppvs
 		{
 			std::shared_ptr<std::shared_ptr<PixelBuffer>> ptr = m_framePool.try_pop();
 			if (ptr.get() != NULL)
+			{
 				return *ptr;
+			}
 		}
 
 		return std::shared_ptr<PixelBuffer>();

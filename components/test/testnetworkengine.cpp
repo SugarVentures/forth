@@ -232,17 +232,17 @@ int main(int argc, char* argv[])
 		unsigned char outmsg[MAX_DATA_LENGTH];
 		unsigned char buffer[OPPVS_NETWORK_PACKET_LENGTH];
 		int len = OPPVS_NETWORK_PACKET_LENGTH;
-		bool isNextFrame = false;
+		uint32_t outlen = 0;
 		uint32_t curPos = 0;
 		clientSocket.setReceiveTimeOut(2);
 		while (!interrupt)
 		{
 			memset(buffer, 0, sizeof(buffer));
-			int recvLen = clientSocket.RecvFrom(buffer, &len, &isNextFrame);
+			int recvLen = clientSocket.RecvFrom(buffer, &len, &outlen);
 			if (recvLen > -1)
 			{
 				//printf("is Next frame: %d curPos %d\n", isNextFrame, curPos);
-				if (isNextFrame)
+				if (outlen > 0)
 				{
 					
 					printf("Data: %s \n", buffer);
