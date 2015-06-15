@@ -3,11 +3,13 @@ CXX = g++
 RM = rm -f
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error  \
-		-I$(rootDir)/../../libs/libyuv/include
+		-I$(rootDir)/../../libs/libyuv/include \
+		-I$(rootDir)/../../libs/libvpx
+
 CFLAGS = -Wall -g
 
 LDFLAGS = -L$(rootDir)/../../libs
-LIBS = -lyuv
+LIBS = -lyuv -lvpx
 
 OBJLIBS = libencodingengine.so
 

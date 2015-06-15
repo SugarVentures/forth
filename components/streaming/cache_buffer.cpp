@@ -111,6 +111,12 @@ namespace oppvs
 		}
 		if (!isWaiting)
 		{
+			if (m_framePool.size() < 5)
+			{
+				isWaiting = true;
+				return std::shared_ptr<PixelBuffer>();
+			}
+			
 			std::shared_ptr<std::shared_ptr<PixelBuffer>> ptr = m_framePool.try_pop();
 			if (ptr.get() != NULL)
 			{

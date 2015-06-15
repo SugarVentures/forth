@@ -27,7 +27,7 @@ namespace oppvs
 		return result;
 	}
 
-	int VideoFrameEncoding::convertI420ToBGRA(uint8_t* data, uint32_t* length, PixelBuffer& pf)
+	int VideoFrameEncoding::convertI420ToBGRA(uint8_t* data, PixelBuffer& pf)
 	{
 		const uint32_t y_length = pf.width[0] * pf.height[0];
 		const uint32_t uv_stride = pf.width[0] / 2;
@@ -49,4 +49,5 @@ namespace oppvs
 
 		return result;
 	}
+
 }

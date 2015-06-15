@@ -79,7 +79,7 @@ namespace oppvs
 		while (1)
 		{
 			engine->pullData();
-			usleep(10);
+			usleep(50);
 		}
 	}
 
@@ -334,8 +334,7 @@ namespace oppvs
 			VideoFrameEncoding decoder;
 			PixelBuffer pixelBuffer = *pf;
 			uint8_t* data = pixelBuffer.plane[0];
-			uint32_t len = 0;
-			decoder.convertI420ToBGRA(data, &len, pixelBuffer);
+			decoder.convertI420ToBGRA(data, pixelBuffer);
 			delete [] data;
 			m_callback(pixelBuffer);
 		}
