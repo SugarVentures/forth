@@ -12,7 +12,8 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <ApplicationServices/ApplicationServices.h> //For saving screenshots
 
-
+#include "video_encoding.hpp"
+#include "video_encoding_vp.hpp"
 
 @interface MacVideoAVFoundationCapture : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, 
     AVCaptureFileOutputDelegate,AVCaptureFileOutputRecordingDelegate> {
@@ -506,7 +507,25 @@
 
     pixel_buffer.format = oppvs::PF_BGRA32;
 
-    
+    //For testing encoding
+    /*uint8_t* data;
+    uint32_t length;
+    data = pixel_buffer.plane[0];
+    oppvs::VideoFrameEncoding colorEncoder;
+    colorEncoder.convertBGRAToI420(pixel_buffer, &data, &length);
+
+    printf("New length after color conversion: %u\n", length);
+
+    oppvs::VPVideoEncoding encoder;
+    encoder.init(pixel_buffer.width[0], pixel_buffer.height[0]);
+
+    uint8_t* eframe;
+    encoder.encode(data, length, &eframe);
+
+    encoder.release();
+
+    //colorEncoder.convertI420ToBGRA(data, pixel_buffer);
+    delete [] data;*/
     callback_frame(pixel_buffer);
     
     CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);

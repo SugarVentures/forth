@@ -4,14 +4,17 @@ CC = gcc
 RM = rm -f
 CP = cp
 
-INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error 
+INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error \
+		 -I$(rootDir)/../encoding -I$(rootDir)/../../libs/libyuv/include \
+		 -I$(rootDir)/../../libs/libvpx
+
 CFLAGS = -Wall -g
 FRAMEWORKS = -framework Foundation -framework AVFoundation -framework CoreGraphics -framework CoreFoundation -framework CoreVideo \
  -framework CoreMedia -framework ApplicationServices -framework QuartzCore \
  -framework IOSurface
 
-LDFLAGS = 
-LIBS = 
+LDFLAGS = -L$(rootDir)/../../libs
+LIBS = -lencodingengine -lyuv -lvpx
 
 OBJLIBS = libvideoengine.so
 

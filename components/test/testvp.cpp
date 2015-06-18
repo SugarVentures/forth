@@ -3,7 +3,10 @@
 #include <iostream>
 #include "vpx/vpx_encoder.h"
 #include "vpx/vp8cx.h"
+#include "vpx/vpx_codec.h"
 
+#include "datatypes.hpp"
+#include "libyuv.h"
 
 int main(int argc, char* argv[])
 {
@@ -14,8 +17,8 @@ int main(int argc, char* argv[])
 	vpx_codec_iface_t *(*const codec_interface)() = &vpx_codec_vp9_cx;
 
 	vpx_image_t raw;
-	int frame_width = 1280;
-	int frame_height = 780;
+	int frame_width = 180;
+	int frame_height = 180;
 
 	if (!vpx_img_alloc(&raw, VPX_IMG_FMT_I420, frame_width,
                                              frame_height, 1)) {
@@ -42,21 +45,67 @@ int main(int argc, char* argv[])
  		std::cout << "Init encoder Successfully\n";
  	}
  	//Encode
+  uint8_t rgb24pp[frame_width][frame_height][4];
+  for (int rowCt = 0; rowCt < frame_width; ++rowCt)
+    for (int colCt = 0; colCt < frame_height; ++colCt)
+    {
+      rgb24pp[rowCt][colCt][0] = 0x80;  // red, I think
+      rgb24pp[rowCt][colCt][1] = 0xC0;  // green (?)
+      rgb24pp[rowCt][colCt][2] = 0xFF;  // blue, I hope
+      rgb24pp[rowCt][colCt][3] = 1;
+    }
+
+  const uint32_t size_i420 = frame_width * frame_height * 3 / 2;
+  const uint32_t y_length = frame_width * frame_height;
+  const uint32_t uv_stride = frame_width / 2;
+  const uint32_t uv_length = uv_stride * (frame_height / 2);
+  
+  uint8_t* const dst_y = new uint8_t[size_i420];
+  uint8_t* const dst_u = dst_y + y_length;
+  uint8_t* const dst_v = dst_u + uv_length;
+
+  printf("I420 frame: %u %u %u %u\n", size_i420, y_length, uv_stride, uv_length);
+
+  /*int result = libyuv::ARGBToI420((const uint8_t*)rgb24pp, frame_width*4,
+          dst_y, frame_width,
+          dst_u, uv_stride,
+          dst_v, uv_stride,
+          frame_width, frame_height);*/
+  
+
+  raw.w = raw.d_w = frame_width;
+  raw.h = raw.d_h = frame_height;
+
+  raw.x_chroma_shift = raw.y_chroma_shift = 0;
+  raw.planes[0] = dst_y;
+  raw.planes[1] = dst_u;
+  raw.planes[2] = dst_v;
+  raw.planes[3] = NULL;
+
+  raw.stride[0] = frame_width;
+  raw.stride[1] = uv_stride;
+  raw.stride[2] = uv_stride;
+  raw.stride[3] = 0;
+  raw.bps = 24;
+
  	int frame_index = 1;
- 	int flags;
+ 	int flags = 0;
  	vpx_codec_iter_t iter = NULL;
   	const vpx_codec_cx_pkt_t *pkt = NULL;
-  	const vpx_codec_err_t codec_res = vpx_codec_encode(&codec, &raw, frame_index, 1,
-                                               flags, VPX_DL_GOOD_QUALITY);
   
+  vpx_codec_err_t testres = validate_img(&codec, &raw);
+  	/*const vpx_codec_err_t codec_res = vpx_codec_encode(&codec, &raw, frame_index, 1,
+                                               flags, 0);
+  
+
   	if (codec_res != VPX_CODEC_OK)
     	std::cout << "Failed to encode frame\n";
-
+    std::cout <<  vpx_codec_err_to_string(codec_res) << "\n";
     int got_pkts = 0;
     while ((pkt = vpx_codec_get_cx_data(&codec, &iter)) != NULL) {
     	got_pkts = 1;
     	std::cout << "Has packet\n";
-    }
+    }*/
 
  	//Release
  	vpx_img_free(&raw);
@@ -64,6 +113,6 @@ int main(int argc, char* argv[])
  	if (vpx_codec_destroy(&codec))
     	std::cout << "Failed to destroy codec.";
 
-
+    
 	return 0;
 }

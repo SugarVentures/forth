@@ -12,6 +12,11 @@ namespace oppvs {
 		ERR_VIDEO_CAPTURE_INPUT_DEVICE_FAILED,
 		ERR_VIDEO_CAPTURE_OUTPUT_DEVICE_FAILED
 	} error_video_capture_t;
+
+	enum ERRS_ENCODING {
+		ERRS_ENCODING_OK,
+		ERRS_ENCODING_INIT_FAILED
+	};
 }
 
 #endif
