@@ -1,0 +1,61 @@
+#include "video_decoding_vp.hpp"
+#include <stdio.h>
+#include <string.h>
+
+namespace oppvs
+{
+	int VPVideoDecoding::init(int width, int height)
+	{
+		vpx_codec_iface_t *(*const codec_interface)() = &vpx_codec_vp8_dx;
+
+ 		if (vpx_codec_dec_init(&m_codec, codec_interface(), NULL, 0))
+ 			printf("Init failed\n");
+	 	
+		return ERRS_DECODING_OK;
+	}
+
+	int VPVideoDecoding::decode(PixelBuffer& pf, uint32_t length, uint8_t* frame)
+	{
+		vpx_codec_iter_t iter = NULL;
+		vpx_image_t *img = NULL;
+		int frame_cnt = 0;
+		if (vpx_codec_decode(&m_codec, frame, (unsigned int)length, NULL, 0))
+    		printf("Failed to decode frame.\n");
+
+	    while ((img = vpx_codec_get_frame(&m_codec, &iter)) != NULL) {
+	    	int corrupted = 0;
+	    	vpx_codec_control(&m_codec, VP8D_GET_FRAME_CORRUPTED, &corrupted);
+			if (corrupted) {
+				printf("corrupted\n");
+			}
+
+			printf("%d %d %d %d\n", img->w, img->d_w, img->stride[1], img->stride[2]);
+	      updateImage(pf, img);
+	      ++frame_cnt;
+	    }
+	    return ERRS_DECODING_OK;
+	}
+
+	int VPVideoDecoding::updateImage(PixelBuffer& pf, vpx_image_t* img)
+	{
+		uint16_t frame_width = pf.width[0];
+
+		const uint32_t uv_stride = frame_width / 2;
+
+		int result = libyuv::I420ToARGB(img->planes[0], pf.width[0],
+	               img->planes[1], uv_stride,
+	               img->planes[2], uv_stride,
+	               pf.plane[0], pf.stride[0],
+	               pf.width[0], pf.height[0]);
+		return 0;
+	}
+
+	int VPVideoDecoding::release()
+	{
+ 	
+ 		if (vpx_codec_destroy(&m_codec))
+    		printf("Failed to destroy codec.\n");
+
+		return 0;
+	}
+}

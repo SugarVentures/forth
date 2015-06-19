@@ -17,6 +17,11 @@ namespace oppvs {
 		ERRS_ENCODING_OK,
 		ERRS_ENCODING_INIT_FAILED
 	};
+
+	enum ERRS_DECODING {
+		ERRS_DECODING_OK,
+		ERRS_DECODING_INIT_FAILED
+	};
 }
 
 #endif
