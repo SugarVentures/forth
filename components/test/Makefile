@@ -5,7 +5,7 @@ RM = rm -f
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../thread -I$(rootDir)/../misc \
 		-I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include  \
 		-I$(rootDir)/../../libs/libyuv/include -I$(rootDir)/../encoding \
-		-I$(rootDir)/../../libs/libvpx
+		-I$(rootDir)/../../libs/libvpx -I$(rootDir)/../error
 
 CFLAGS	= -Wall -g -std=c++11
 
@@ -15,7 +15,7 @@ VIDEOLIBS = -lvideoengine -lstreaming -lyuv
 NETWORKLDFLAGS = -L$(rootDir)/../../libs
 NETWORKLIBS = -lnetworkengine -lstreaming -lyuv -lencodingengine
 
-ENCODINGFLAGS = -L$(rootDir)/../../libs
+ENCODINGFLAGS = -L$(rootDir)/../../libs -L/Users/caominhtrang/Downloads/libvpx
 ENCODINGLIBS = -lyuv -lvpx
 
 SRCS = testvideoengine.cpp
@@ -60,6 +60,7 @@ proclib:
 	cp $(rootDir)/../../libs/libsrtp/*.a $(rootDir)
 	cp $(rootDir)/../../libs/*.a $(rootDir)
 	cp $(rootDir)/../encoding/*.so $(rootDir)
+	cp /Users/caominhtrang/Downloads/libvpx/libvpx.a $(rootDir)
 clean:
 	$(RM) *.o
 

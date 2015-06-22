@@ -5,6 +5,7 @@ namespace oppvs
 {
 	Message::Message(): m_length(0)
 	{
+
 	}
 
 	Message::~Message()
@@ -84,7 +85,6 @@ namespace oppvs
 
 	MessageHandling::~MessageHandling()
 	{
-
 	}
 
 
@@ -101,9 +101,10 @@ namespace oppvs
 		//Encoding
 		uint8_t* data = NULL;
 		uint32_t encodingLength = 0;
-		int result = m_encoder.convertBGRAToI420(pf, &data, &encodingLength);
+		if (m_encoder->encode(pf, &encodingLength, &data) < 0)
+			return;
 
-		//int msgLength = pf.nbytes;
+		printf("Length: %u\n", encodingLength);
 		int msgLength = encodingLength;
 		int sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) : msgLength;
 		//const uint8_t* curPos = pf.plane[0];
@@ -123,7 +124,10 @@ namespace oppvs
 
 			if (count == 0)
 			{
-				message->setFlag(FLAG_START_FRAME);
+				if (msgLength > 0)
+					message->setFlag(FLAG_START_FRAME);
+				else
+					message->setFlag(FLAG_ONE_FRAME);
 			}
 			else if (msgLength <= 0)
 			{
@@ -143,8 +147,6 @@ namespace oppvs
 		m_timestamp++;
 		m_numFramesInPool++;
 
-		//Release memory
-		delete [] data;
 	}
 
 	void MessageHandling::getNextMessage(uint8_t** pdata, uint16_t* length, uint32_t* ts)
@@ -177,7 +179,7 @@ namespace oppvs
 			
 			m_sentClients = 0;
 			std::shared_ptr<Message> message = *ptrmsg;
-			if (message->getFlag() == FLAG_END_FRAME)
+			if (message->getFlag() == FLAG_END_FRAME || message->getFlag() == FLAG_ONE_FRAME)
 				m_numFramesInPool--;
 
 			return true;
@@ -188,10 +190,16 @@ namespace oppvs
 		}
 	}
 
+	void MessageHandling::setEncoder(VPVideoEncoding* encoder)
+	{	
+		m_encoder = encoder;
+	}
+
 	MessageParsing::MessageParsing()
 	{
 		m_cacheBuffer = NULL;
 		oldseq = -1;
+		m_totalLength = -1;
 	}
 
 	MessageParsing::~MessageParsing()
@@ -217,8 +225,14 @@ namespace oppvs
 				m_cacheBuffer->allocateBuffer(message.getSource());
 				m_currentTimestamp = message.getTimestamp();
 				oldseq = message.getSegID();
+				m_totalLength = 0;
 				break;
 			case FLAG_MIDDLE_FRAME:
+				if (m_totalLength == -1)
+				{
+					//Lost first segement;
+					return;
+				}
 				/*if (m_currentTimestamp != message.getTimestamp())
 					printf("Error\n");
 				else
@@ -234,9 +248,18 @@ namespace oppvs
 		if (dest)
 		{
 			memcpy(dest, message.getData() + MESSAGE_HEADER_SIZE, message.getLength() - MESSAGE_HEADER_SIZE);
+			m_totalLength += message.getLength() - MESSAGE_HEADER_SIZE;
 		}
 
-		if (message.getFlag() == FLAG_END_FRAME)
-			m_cacheBuffer->push(message.getSource());
+		if (message.getFlag() == FLAG_ONE_FRAME)
+		{
+			m_cacheBuffer->push(message.getSource(), message.getLength() - MESSAGE_HEADER_SIZE);
+			m_totalLength = -1;
+		}
+		else if (message.getFlag() == FLAG_END_FRAME)
+		{
+			m_cacheBuffer->push(message.getSource(), m_totalLength);
+			m_totalLength = -1;
+		}
 	}
 }

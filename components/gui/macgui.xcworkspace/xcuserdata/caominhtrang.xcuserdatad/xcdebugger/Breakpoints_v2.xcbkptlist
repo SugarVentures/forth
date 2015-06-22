@@ -747,7 +747,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "81"
             endingLineNumber = "81"
-            landmarkName = "rendering(void* p)"
+            landmarkName = "waitStreaming(void* p)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1082,9 +1082,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "StreamingEngine::~StreamingEngine()"
-            landmarkType = "5">
+            endingLineNumber = "39">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1205,7 +1203,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "84"
             endingLineNumber = "84"
-            landmarkName = "rendering(void* p)"
+            landmarkName = "waitStreaming(void* p)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1221,7 +1219,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"
             endingLineNumber = "89"
-            landmarkName = "onNewSubscriberEvent(void* owner, const SocketAddress&amp; remoteaddr, SocketAddress&amp; localaddr)"
+            landmarkName = "rendering(void* p)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1237,7 +1235,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "82"
             endingLineNumber = "82"
-            landmarkName = "rendering(void* p)"
+            landmarkName = "waitStreaming(void* p)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1253,7 +1251,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "150"
             endingLineNumber = "150"
-            landmarkName = "StreamingEngine::initDownloadStream()"
+            landmarkName = "StreamingEngine::initUploadStream(SocketAddress&amp; localaddr, const SocketAddress&amp; remoteaddr)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1333,7 +1331,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "204"
             endingLineNumber = "204"
-            landmarkName = "StreamingEngine::initSubscribeChannel(const std::string&amp; publisher, uint16_t port, const ServiceInfo&amp; service)"
+            landmarkName = "StreamingEngine::initPublishChannel()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1349,7 +1347,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "201"
             endingLineNumber = "201"
-            landmarkName = "StreamingEngine::initSubscribeChannel(const std::string&amp; publisher, uint16_t port, const ServiceInfo&amp; service)"
+            landmarkName = "StreamingEngine::initPublishChannel()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1364,7 +1362,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "184"
-            endingLineNumber = "184">
+            endingLineNumber = "184"
+            landmarkName = "StreamingEngine::pushData(PixelBuffer&amp; pf)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1394,7 +1394,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "198"
-            endingLineNumber = "198">
+            endingLineNumber = "198"
+            landmarkName = "StreamingEngine::initPublishChannel()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1409,7 +1411,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "186"
             endingLineNumber = "186"
-            landmarkName = "StreamingEngine::initPublishChannel()"
+            landmarkName = "StreamingEngine::pullData(uint8_t source)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1569,7 +1571,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "331"
             endingLineNumber = "331"
-            landmarkName = "StreamingEngine::pullData()"
+            landmarkName = "StreamingEngine::printServiceInfo()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1624,7 +1626,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../streaming/streaming_engine.cpp"
@@ -1632,9 +1634,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "StreamingEngine::pullData(uint8_t source)"
-            landmarkType = "5">
+            endingLineNumber = "177">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1672,7 +1672,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../encoding/video_encoding_vp.cpp"
@@ -1681,7 +1681,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "44"
             endingLineNumber = "44"
-            landmarkName = "VPVideoEncoding::encode(uint8_t* frame, uint32_t length, uint8_t** encoded_frame)"
+            landmarkName = "VPVideoEncoding::init(VideoStreamInfo&amp; info)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1698,6 +1698,198 @@
             startingLineNumber = "515"
             endingLineNumber = "515"
             landmarkName = "-captureOutput:didOutputSampleBuffer:fromConnection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../encoding/video_decoding_vp.cpp"
+            timestampString = "456399538.931258"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "VPVideoDecoding::decode(PixelBuffer&amp; pf, uint32_t length, uint8_t* frame)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../video/mac_video_avfoundation_capture.mm"
+            timestampString = "456399938.733174"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "517"
+            endingLineNumber = "517"
+            landmarkName = "-captureOutput:didOutputSampleBuffer:fromConnection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../video/mac_video_avfoundation_capture.mm"
+            timestampString = "456401312.935125"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "521"
+            endingLineNumber = "521"
+            landmarkName = "-captureOutput:didOutputSampleBuffer:fromConnection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../encoding/video_encoding_vp.cpp"
+            timestampString = "456657956.783888"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "VPVideoEncoding::encode(PixelBuffer&amp; pf, uint32_t* length, uint8_t** encoded_frame)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../encoding/video_encoding_vp.cpp"
+            timestampString = "456658065.976648"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "VPVideoEncoding::encode(PixelBuffer&amp; pf, uint32_t* length, uint8_t** encoded_frame)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../streaming/message_handling.cpp"
+            timestampString = "456658918.370822"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "MessageHandling::addMessage(PixelBuffer&amp; pf)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../streaming/message_handling.cpp"
+            timestampString = "456659054.956677"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "MessageHandling::releaseMessage()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../streaming/message_handling.cpp"
+            timestampString = "456659096.80081"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
+            landmarkName = "MessageHandling::releaseMessage()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../streaming/streaming_engine.cpp"
+            timestampString = "456661330.702413"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
+            landmarkName = "StreamingEngine::pullData()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../streaming/streaming_engine.cpp"
+            timestampString = "456661797.944327"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
+            landmarkName = "StreamingEngine::pullData()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../streaming/streaming_engine.cpp"
+            timestampString = "456664134.434725"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
+            landmarkName = "StreamingEngine::pullData()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../streaming/streaming_engine.cpp"
+            timestampString = "456664159.216372"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
+            landmarkName = "StreamingEngine::pullData()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

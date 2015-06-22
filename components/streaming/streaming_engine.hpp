@@ -16,6 +16,7 @@
 #include "cache_buffer.hpp"
 
 #include "video_capture.hpp"
+#include "video_decoding_vp.hpp"
 
 #include <vector>
 
@@ -85,6 +86,8 @@ namespace oppvs
 		MessageParsing m_messageParser;
 
 		CacheBuffer *m_cacheBuffer;
+		VPVideoEncoding m_encoder;
+		VPVideoDecoding m_decoder;
 	};
 
 }

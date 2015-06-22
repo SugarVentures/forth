@@ -13,7 +13,7 @@ namespace oppvs
 	class VPVideoDecoding
 	{
 	public:
-		int init(int width, int height);
+		int init();
 		int decode(PixelBuffer& pf, uint32_t length, uint8_t* frame);	//Frame in YUV12 or I420 format
 
 		int release();

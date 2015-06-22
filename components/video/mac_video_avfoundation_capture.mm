@@ -12,8 +12,8 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <ApplicationServices/ApplicationServices.h> //For saving screenshots
 
-#include "video_encoding.hpp"
 #include "video_encoding_vp.hpp"
+#include "video_decoding_vp.hpp"
 
 @interface MacVideoAVFoundationCapture : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, 
     AVCaptureFileOutputDelegate,AVCaptureFileOutputRecordingDelegate> {
@@ -477,7 +477,7 @@
 
             sourceInfo->rect.right = sourceInfo->rect.left + pixel_buffer.width[0];
             sourceInfo->rect.top = sourceInfo->rect.bottom + pixel_buffer.height[0];
-            printf("Stride: %d\n", pixel_buffer.stride[0]);
+            //printf("Stride: %d\n", pixel_buffer.stride[0]);
             sourceInfo->stride = pixel_buffer.stride[0];
         }
         is_pixel_buffer_set = 1;
@@ -508,25 +508,25 @@
     pixel_buffer.format = oppvs::PF_BGRA32;
 
     //For testing encoding
-    /*uint8_t* data;
-    uint32_t length;
-    data = pixel_buffer.plane[0];
-    oppvs::VideoFrameEncoding colorEncoder;
-    colorEncoder.convertBGRAToI420(pixel_buffer, &data, &length);
-
-    printf("New length after color conversion: %u\n", length);
-
-    oppvs::VPVideoEncoding encoder;
+    
+    /*oppvs::VPVideoEncoding encoder;
     encoder.init(pixel_buffer.width[0], pixel_buffer.height[0]);
 
-    uint8_t* eframe;
-    encoder.encode(data, length, &eframe);
+    uint8_t* eframe = NULL;
+    uint32_t length = 0;
+    encoder.encode(pixel_buffer, &length, &eframe);
+
+    
+
+    oppvs::VPVideoDecoding decoder;
+    decoder.init();
+    decoder.decode(pixel_buffer, length, eframe);
 
     encoder.release();
+    decoder.release();*/
 
-    //colorEncoder.convertI420ToBGRA(data, pixel_buffer);
-    delete [] data;*/
     callback_frame(pixel_buffer);
+    //[self stopRecording];
     
     CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
 

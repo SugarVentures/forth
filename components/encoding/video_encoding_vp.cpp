@@ -35,29 +35,84 @@ namespace oppvs
 		return ERRS_ENCODING_OK;
 	}
 
+	int VPVideoEncoding::init(VideoStreamInfo& info)
+	{
+		vpx_codec_err_t res;
+		vpx_codec_iface_t *(*const codec_interface)() = &vpx_codec_vp8_cx;
+		m_numSources = info.noSources;
+
+		for (int i = 0; i < m_numSources; i++)
+		{
+			if (!vpx_img_alloc(&m_controllers[i].image, VPX_IMG_FMT_I420, info.sources[i].width, info.sources[i].height, 1)) {
+	    		printf("Failed to allocate image.\n");
+	    		m_controllers[i].state = false;
+	    		continue;
+ 			}
+ 			res = vpx_codec_enc_config_default(codec_interface(), &m_controllers[i].config, 0);
+ 			if (res)
+ 			{
+ 				printf("Failed to get default codec config\n");
+ 				m_controllers[i].state = false;
+ 				continue;
+ 			}
+ 			m_controllers[i].config.g_w = info.sources[i].width;
+ 			m_controllers[i].config.g_h = info.sources[i].height;
+
+ 			if (vpx_codec_enc_init(&m_controllers[i].codec, codec_interface(), &m_controllers[i].config, 0))
+		 	{
+		 		printf("Failed to initialize encoder\n");
+		 		m_controllers[i].state = false;
+		 		continue;
+		 	}
+		 	m_controllers[i].source = info.sources[i].source;
+		 	m_controllers[i].state = true;
+		 	m_controllers[i].frameIndex = 1;
+		}
+
+		return ERRS_ENCODING_OK;
+	}
+
 	int VPVideoEncoding::encode(PixelBuffer& pf, uint32_t* length, uint8_t** encoded_frame)
 	{
-		int frame_index = 1;
+		uint32_t frameIndex;
 	 	int flags = 0;
 	 	vpx_codec_iter_t iter = NULL;
 	  	const vpx_codec_cx_pkt_t *pkt = NULL;
+		vpx_codec_ctx_t *codec = NULL;
+		vpx_image_t *image = NULL;
+		for (int i = 0; i < m_numSources; i++)
+		{
+			if (m_controllers[i].source == pf.source && m_controllers[i].state)
+			{
+				codec = &m_controllers[i].codec;
+				image = &m_controllers[i].image;
+				frameIndex = m_controllers[i].frameIndex++;
+			}
+		}
 
-		if (updateImage(pf) < 0)
+		if (!codec)
+		{
+			printf("No codec availble for this frame\n");
+			return -1;
+		}
+		if (updateImage(pf, image) < 0)
+		{
+			printf("Cannot convert to I420\n");
 			return -1;	  	
+		}
 
-
-	  	const vpx_codec_err_t res = vpx_codec_encode(&m_codec, &m_image, frame_index, 1,
+	  	const vpx_codec_err_t res = vpx_codec_encode(codec, image, frameIndex, 1,
 	                                               flags, VPX_DL_GOOD_QUALITY);
 	  
 	  	if (res != VPX_CODEC_OK)
 	    	printf("Failed to encode frame\n");
 
-	    while ((pkt = vpx_codec_get_cx_data(&m_codec, &iter)) != NULL) {
+	    while ((pkt = vpx_codec_get_cx_data(codec, &iter)) != NULL) {
 	    	switch (pkt->kind) {
 				case VPX_CODEC_CX_FRAME_PKT:
 					*length = pkt->data.frame.sz;
 					*encoded_frame = static_cast<uint8_t*>(pkt->data.frame.buf);
-					printf("encoded\n");
+					//printf("Out length: %d\n", *length);
 					break;
 				default:
 					break;
@@ -66,22 +121,22 @@ namespace oppvs
 		return 0;
 	}
 
-	int VPVideoEncoding::updateImage(PixelBuffer& pf)
+	int VPVideoEncoding::updateImage(PixelBuffer& pf, vpx_image_t *img)
 	{
 		uint16_t frame_width = pf.width[0];
 		uint16_t frame_height = pf.height[0];
 
-		int result = libyuv::ARGBToI420((const uint8_t*)pf.plane[0], frame_width*4,
-		      m_image.planes[0], m_image.stride[0],
-		      m_image.planes[1], m_image.stride[1],
-		      m_image.planes[2], m_image.stride[2],
+		int result = libyuv::ARGBToI420((const uint8_t*)pf.plane[0], pf.stride[0],
+		      img->planes[0], img->stride[0],
+		      img->planes[1], img->stride[1],
+		      img->planes[2], img->stride[2],
 		      frame_width, frame_height);
 
-		m_image.w = m_image.d_w = frame_width;
-		m_image.h = m_image.d_h = frame_height;
+		img->w = img->d_w = frame_width;
+		img->h = img->d_h = frame_height;
 
-		m_image.x_chroma_shift = m_image.y_chroma_shift = 1;
-		m_image.planes[3] = NULL;
+		img->x_chroma_shift = img->y_chroma_shift = 1;
+		img->planes[3] = NULL;
 
 		//printf("%d %d %d %d\n", m_image.w, m_image.d_w, m_image.stride[1], m_image.stride[2]);
 
@@ -90,6 +145,12 @@ namespace oppvs
 
 	int VPVideoEncoding::release()
 	{
+		for (int i = 0; i < m_numSources; i++)
+		{
+			vpx_img_free(&m_controllers[i].image);
+			vpx_codec_destroy(&m_controllers[i].codec);
+		}
+
 		vpx_img_free(&m_image);
  	
  		if (vpx_codec_destroy(&m_codec))

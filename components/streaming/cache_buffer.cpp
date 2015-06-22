@@ -14,8 +14,8 @@ namespace oppvs
 				pixelBuffer[i].stride[0] = info.sources[i].stride;
 				pixelBuffer[i].order = info.sources[i].order;
 				pixelBuffer[i].nbytes = info.sources[i].height * info.sources[i].stride;
-				pixelBuffer[i].plane[0] = NULL;
-				//pixelBuffer[i].plane[0] = new uint8_t[pixelBuffer[i].nbytes];
+				//pixelBuffer[i].plane[0] = NULL;
+				pixelBuffer[i].plane[0] = new uint8_t[pixelBuffer[i].nbytes];
 				pixelBuffer[i].source = info.sources[i].source;
 			}
 		}
@@ -36,7 +36,7 @@ namespace oppvs
 		{
 			if (pixelBuffer[i].source == source)
 			{	
-				pixelBuffer[i].plane[0] = new uint8_t[pixelBuffer[i].nbytes];
+				//pixelBuffer[i].plane[0] = new uint8_t[pixelBuffer[i].nbytes];
 				//pixelBuffer[i].plane[0] = new uint8_t[pixelBuffer[i].width[0] * pixelBuffer[i].height[0] * 3 / 2];
 				return true;
 			}
@@ -50,7 +50,7 @@ namespace oppvs
 		{
 			if (pixelBuffer[i].source == source)
 			{	
-				delete [] pixelBuffer[i].plane[0];
+				//delete [] pixelBuffer[i].plane[0];
 			}
 		}
 	}
@@ -83,7 +83,7 @@ namespace oppvs
 		return NULL;
 	}
 
-	void CacheBuffer::push(uint8_t source)
+	void CacheBuffer::push(uint8_t source, uint32_t length)
 	{
 		for (int i = 0; i < m_numSources; i++)
 		{
@@ -94,9 +94,11 @@ namespace oppvs
 				pf->height[0] = pixelBuffer[i].height[0];
 				pf->stride[0] = pixelBuffer[i].stride[0];
 				pf->order = pixelBuffer[i].order;
-				pf->nbytes = pixelBuffer[i].nbytes;
-				pf->plane[0] = pixelBuffer[i].plane[0];
-				pixelBuffer[i].plane[0] = NULL;
+				printf("Length: %u\n", length);
+				pf->nbytes = length;
+				pf->plane[0] = new uint8_t[length];
+				memcpy(pf->plane[0], pixelBuffer[i].plane[0], length);
+				//pixelBuffer[i].plane[0] = NULL;
 				pf->source = source;
 				m_framePool.push(pf);
 			}
@@ -111,11 +113,11 @@ namespace oppvs
 		}
 		if (!isWaiting)
 		{
-			if (m_framePool.size() < 5)
+			/*if (m_framePool.size() < 5)
 			{
 				isWaiting = true;
 				return std::shared_ptr<PixelBuffer>();
-			}
+			}*/
 			
 			std::shared_ptr<std::shared_ptr<PixelBuffer>> ptr = m_framePool.try_pop();
 			if (ptr.get() != NULL)

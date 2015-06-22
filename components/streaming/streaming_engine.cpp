@@ -29,6 +29,7 @@ namespace oppvs
 		m_subscribe = NULL;
 		
 		SRTPSocket::initSRTPLib();
+
 		if (pthread_mutex_init(&m_mutex, NULL) != 0)
 		{
 			printf("Cannot init mutex\n");
@@ -42,8 +43,17 @@ namespace oppvs
 		delete m_receiveThread;
 		delete m_renderThread;
 
-		delete m_publisher;
-		delete m_subscribe;
+		if (m_publisher)
+		{
+			delete m_publisher;
+			m_encoder.release();
+		}
+
+		if (m_subscribe)
+		{
+			delete m_subscribe;
+			m_decoder.release();
+		}		
 
 		if (m_serviceInfo.videoStreamInfo.noSources > 0)
 		{			
@@ -134,6 +144,7 @@ namespace oppvs
 		m_subscribers.push_back(stream);
 
 		m_messageHandler.setNumClients(m_subscribers.size());
+		m_messageHandler.setEncoder(&m_encoder);
 		
 		setIsRunning(true);
 		m_sendThread = new Thread(runStreaming, (void*)stream);
@@ -192,7 +203,7 @@ namespace oppvs
 		m_publisher->start();
 		printf("SSRC: %u\n", m_publisher->getServiceKey());
 		
-		
+		m_encoder.init(m_serviceInfo.videoStreamInfo);
 		return 0;
 	}
 
@@ -209,6 +220,9 @@ namespace oppvs
 		setStreamInfo(info + curPos, len);
 		//Setup cache
 		m_cacheBuffer = new CacheBuffer(m_serviceInfo.videoStreamInfo);
+
+		//Setup decoder
+		m_decoder.init();
 
 		printServiceInfo();
 		printf("SSRC: %u\n", m_subscribe->getServiceKey());
@@ -331,12 +345,13 @@ namespace oppvs
 		std::shared_ptr<PixelBuffer> pf = m_cacheBuffer->pop();
 		if (pf.get() != NULL)
 		{
-			VideoFrameEncoding decoder;
 			PixelBuffer pixelBuffer = *pf;
 			uint8_t* data = pixelBuffer.plane[0];
-			decoder.convertI420ToBGRA(data, pixelBuffer);
+			//decoder.convertI420ToBGRA(data, pixelBuffer);
+			if (m_decoder.decode(pixelBuffer, pixelBuffer.nbytes, data) != -1)
+				m_callback(pixelBuffer);
 			delete [] data;
-			m_callback(pixelBuffer);
+			
 		}
 	}
 }

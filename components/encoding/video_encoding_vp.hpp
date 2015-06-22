@@ -9,10 +9,20 @@
 
 namespace oppvs
 {
+	struct EncodingController
+	{
+		uint8_t source;
+		bool state;
+		vpx_codec_ctx_t codec;
+		vpx_codec_enc_cfg_t config;
+		vpx_image_t image;
+		uint32_t frameIndex;
+	};
 
 	class VPVideoEncoding
 	{
 	public:
+		int init(VideoStreamInfo&);
 		int init(int width, int height);
 		int encode(PixelBuffer& pf, uint32_t *length, uint8_t** encoded_frame);	//Frame in YUV12 or I420 format
 
@@ -22,7 +32,10 @@ namespace oppvs
 		vpx_codec_enc_cfg_t m_configuration;
 		vpx_image_t m_image;
 
-		int updateImage(PixelBuffer& pf);
+		uint8_t m_numSources;
+		EncodingController m_controllers[OPPVS_MAX_CAPTURE_SOURCES];
+
+		int updateImage(PixelBuffer& pf, vpx_image_t *img);
 	};
 }
 

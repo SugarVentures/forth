@@ -20,7 +20,7 @@ namespace oppvs
 			bool allocateBuffer(uint8_t source);
 			void delocateBuffer(uint8_t source);
 
-			void push(uint8_t source);	//Push frame of source to pool
+			void push(uint8_t source, uint32_t length);	//Push frame of source to pool
 			std::shared_ptr<PixelBuffer> pop();
 		private:
 			PixelBuffer pixelBuffer[OPPVS_MAX_CAPTURE_SOURCES];

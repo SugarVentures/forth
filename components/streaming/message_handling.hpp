@@ -7,6 +7,7 @@
 #include "cache_buffer.hpp"
 
 #include "video_encoding.hpp"
+#include "video_encoding_vp.hpp"
 
 namespace oppvs
 {
@@ -14,6 +15,7 @@ namespace oppvs
 	const static uint8_t FLAG_START_FRAME = 1;
 	const static uint8_t FLAG_MIDDLE_FRAME = 2;
 	const static uint8_t FLAG_END_FRAME = 3;
+	const static uint8_t FLAG_ONE_FRAME = 4;
 	const static uint16_t MAX_FRAMES_IN_POOL = 10;
 	const static uint8_t MESSAGE_HEADER_SIZE = 4;
 
@@ -48,6 +50,7 @@ namespace oppvs
 		virtual ~MessageHandling();
 
 		void setNumClients(uint8_t clients);
+		void setEncoder(VPVideoEncoding*);
 		void addMessage(PixelBuffer& pf);
 		void getNextMessage(uint8_t** pdata, uint16_t* length, uint32_t* ts);
 		bool releaseMessage();
@@ -59,7 +62,7 @@ namespace oppvs
 		uint8_t m_sentClients;
 		uint32_t m_timestamp;
 
-		VideoFrameEncoding m_encoder;
+		VPVideoEncoding *m_encoder;
 	};
 
 	class MessageParsing
@@ -76,6 +79,7 @@ namespace oppvs
 		int oldseq;
 		int count;
 		uint32_t m_currentTimestamp;
+		long int m_totalLength;
 	};
 
 };

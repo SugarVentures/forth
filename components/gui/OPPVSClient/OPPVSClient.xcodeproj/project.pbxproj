@@ -363,6 +363,8 @@
 					../OPPVSRendering/OPPVSRendering,
 					../../../libs/libyuv/include,
 					../../encoding,
+					../../../libs/libvpx,
+					../../error,
 				);
 				INFOPLIST_FILE = OPPVSClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -394,6 +396,8 @@
 					../OPPVSRendering/OPPVSRendering,
 					../../../libs/libyuv/include,
 					../../encoding,
+					../../../libs/libvpx,
+					../../error,
 				);
 				INFOPLIST_FILE = OPPVSClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
