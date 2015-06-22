@@ -77,13 +77,13 @@ namespace oppvs
 		      m_image.planes[2], m_image.stride[2],
 		      frame_width, frame_height);
 
-		/*m_image.w = m_image.d_w = frame_width;
-		m_image.h = m_image.d_h = frame_height;*/
+		m_image.w = m_image.d_w = frame_width;
+		m_image.h = m_image.d_h = frame_height;
 
 		m_image.x_chroma_shift = m_image.y_chroma_shift = 1;
 		m_image.planes[3] = NULL;
 
-		printf("%d %d %d %d\n", m_image.w, m_image.d_w, m_image.stride[1], m_image.stride[2]);
+		//printf("%d %d %d %d\n", m_image.w, m_image.d_w, m_image.stride[1], m_image.stride[2]);
 
 		return result;
 	}

@@ -27,10 +27,11 @@ namespace oppvs
 	    	vpx_codec_control(&m_codec, VP8D_GET_FRAME_CORRUPTED, &corrupted);
 			if (corrupted) {
 				printf("corrupted\n");
+				continue;
 			}
 
-			printf("%d %d %d %d\n", img->w, img->d_w, img->stride[1], img->stride[2]);
-	      updateImage(pf, img);
+			//printf("%d %d %d %d\n", img->w, img->d_w, img->stride[1], img->stride[2]);
+	      	updateImage(pf, img);
 	      ++frame_cnt;
 	    }
 	    return ERRS_DECODING_OK;
@@ -38,16 +39,13 @@ namespace oppvs
 
 	int VPVideoDecoding::updateImage(PixelBuffer& pf, vpx_image_t* img)
 	{
-		uint16_t frame_width = pf.width[0];
 
-		const uint32_t uv_stride = frame_width / 2;
-
-		int result = libyuv::I420ToARGB(img->planes[0], pf.width[0],
-	               img->planes[1], uv_stride,
-	               img->planes[2], uv_stride,
+		int result = libyuv::I420ToARGB(img->planes[0], img->stride[0],
+	               img->planes[1], img->stride[1],
+	               img->planes[2], img->stride[2],
 	               pf.plane[0], pf.stride[0],
 	               pf.width[0], pf.height[0]);
-		return 0;
+		return result;
 	}
 
 	int VPVideoDecoding::release()
