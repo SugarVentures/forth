@@ -17,6 +17,7 @@ namespace oppvs
 		vpx_codec_enc_cfg_t config;
 		vpx_image_t image;
 		uint32_t frameIndex;
+		int picID;
 	};
 
 	class VPVideoEncoding
@@ -24,7 +25,7 @@ namespace oppvs
 	public:
 		int init(VideoStreamInfo&);
 		int init(int width, int height);
-		int encode(PixelBuffer& pf, uint32_t *length, uint8_t** encoded_frame);	//Frame in YUV12 or I420 format
+		int encode(PixelBuffer& pf, uint32_t *length, uint8_t** encoded_frame, int* picID, bool *isKey);	//Frame in YUV12 or I420 format
 
 		int release();
 	private:

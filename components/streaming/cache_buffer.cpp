@@ -107,7 +107,7 @@ namespace oppvs
 
 	std::shared_ptr<PixelBuffer> CacheBuffer::pop()
 	{
-		if (m_framePool.size() > OPPVS_MAX_CACHE_POOL_SIZE)
+		if (m_framePool.size() > 0)
 		{
 			isWaiting = false;
 		}

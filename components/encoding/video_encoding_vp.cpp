@@ -25,6 +25,8 @@ namespace oppvs
 
 	 	m_configuration.g_w = width;
 	 	m_configuration.g_h = height;
+	 	m_configuration.rc_min_quantizer = 4;
+	 	m_configuration.rc_max_quantizer = 56;
 
 	 	if (vpx_codec_enc_init(&m_codec, codec_interface(), &m_configuration, 0))
 	 	{
@@ -66,13 +68,14 @@ namespace oppvs
 		 	}
 		 	m_controllers[i].source = info.sources[i].source;
 		 	m_controllers[i].state = true;
-		 	m_controllers[i].frameIndex = 1;
+		 	m_controllers[i].frameIndex = 0;
+		 	m_controllers[i].picID = rand() % 128;
 		}
 
 		return ERRS_ENCODING_OK;
 	}
 
-	int VPVideoEncoding::encode(PixelBuffer& pf, uint32_t* length, uint8_t** encoded_frame)
+	int VPVideoEncoding::encode(PixelBuffer& pf, uint32_t* length, uint8_t** encoded_frame, int* picID, bool* isKey)
 	{
 		uint32_t frameIndex;
 	 	int flags = 0;
@@ -87,6 +90,8 @@ namespace oppvs
 				codec = &m_controllers[i].codec;
 				image = &m_controllers[i].image;
 				frameIndex = m_controllers[i].frameIndex++;
+				*picID = m_controllers[i].picID;
+				m_controllers[i].picID = (m_controllers[i].picID + 1) % 128;
 			}
 		}
 
@@ -112,12 +117,14 @@ namespace oppvs
 				case VPX_CODEC_CX_FRAME_PKT:
 					*length = pkt->data.frame.sz;
 					*encoded_frame = static_cast<uint8_t*>(pkt->data.frame.buf);
+					*isKey = pkt->data.frame.flags & VPX_FRAME_IS_KEY;
 					//printf("Out length: %d\n", *length);
 					break;
 				default:
 					break;
 			}
 	    }
+	    
 		return 0;
 	}
 

@@ -17,7 +17,7 @@ namespace oppvs
 	const static uint8_t FLAG_END_FRAME = 3;
 	const static uint8_t FLAG_ONE_FRAME = 4;
 	const static uint16_t MAX_FRAMES_IN_POOL = 10;
-	const static uint8_t MESSAGE_HEADER_SIZE = 4;
+	const static uint8_t MESSAGE_HEADER_SIZE = 10;
 
 	class Message
 	{
@@ -30,6 +30,21 @@ namespace oppvs
 		uint8_t getSource();
 		void setSegID(uint16_t seg);
 		uint16_t getSegID();
+
+		//Header for VP8 packets
+		void setVP8Required(uint8_t req);
+		uint8_t getVP8Required();
+		void setVP8OptX(uint8_t optx);
+		uint8_t getVP8OptX();
+		void setVP8OptY(uint8_t opty);
+		uint8_t getVP8OptY();
+		void setSize0(uint8_t size0);
+		uint8_t getSize0();
+		void setSize1(uint8_t size1);
+		uint8_t getSize1();
+		void setSize2(uint8_t size2);
+		uint8_t getSize2();
+
 		void setData(const uint8_t *data, uint16_t length);
 
 		uint16_t getLength();
@@ -41,6 +56,7 @@ namespace oppvs
 		uint16_t m_length;
 		uint32_t m_timestamp;
 		uint8_t m_data[OPPVS_NETWORK_PACKET_LENGTH];
+
 	};
 
 	class MessageHandling
@@ -63,6 +79,14 @@ namespace oppvs
 		uint32_t m_timestamp;
 
 		VPVideoEncoding *m_encoder;
+
+		static const uint8_t SBit = 1 << 4;
+		static const uint8_t XBit = 1 << 7;
+		static const uint8_t IBit = 1 << 7;
+		static const uint8_t HBit = 1 << 4;
+		static const uint8_t Size0BitMask = 7;
+		static const uint8_t Size0BitShift = 5;
+
 	};
 
 	class MessageParsing
@@ -80,6 +104,15 @@ namespace oppvs
 		int count;
 		uint32_t m_currentTimestamp;
 		long int m_totalLength;
+
+		static const uint8_t SBit = 1 << 4;
+		static const uint8_t XBit = 1 << 7;
+		static const uint8_t IBit = 1 << 7;
+		static const uint8_t HBit = 1 << 4;
+		static const uint8_t Size0BitShift = 5;
+
+		bool isKeyFrame;
+		bool showFrame;
 	};
 
 };

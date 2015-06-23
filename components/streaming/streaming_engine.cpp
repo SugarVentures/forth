@@ -342,6 +342,7 @@ namespace oppvs
 
 	void StreamingEngine::pullData()
 	{
+
 		std::shared_ptr<PixelBuffer> pf = m_cacheBuffer->pop();
 		if (pf.get() != NULL)
 		{

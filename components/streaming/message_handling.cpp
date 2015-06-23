@@ -45,6 +45,78 @@ namespace oppvs
 		return seg;
 	}
 
+	void Message::setVP8Required(uint8_t req)
+	{
+		memcpy(m_data + 4, &req, 1);
+	}
+		
+	uint8_t Message::getVP8Required()
+	{
+		uint8_t req = 0;
+		memcpy(&req, m_data + 4, 1);
+		return req;
+	}
+		
+	void Message::setVP8OptX(uint8_t optx)
+	{
+		memcpy(m_data + 5, &optx, 1);
+	}
+
+	uint8_t Message::getVP8OptX()
+	{
+		uint8_t optx = 0;
+		memcpy(&optx, m_data + 5, 1);
+		return optx;
+	}
+		
+	void Message::setVP8OptY(uint8_t opty)
+	{
+		memcpy(m_data + 6, &opty, 1);
+	}
+		
+	uint8_t Message::getVP8OptY()
+	{
+		uint8_t opty = 0;
+		memcpy(&opty, m_data + 6, 1);
+		return opty;
+	}
+
+	void Message::setSize0(uint8_t size0)
+	{
+		memcpy(m_data + 7, &size0, 1);
+	}
+		
+	uint8_t Message::getSize0()
+	{
+		uint8_t size0 = 0;
+		memcpy(&size0, m_data + 7, 1);
+		return size0;
+	}
+		
+	void Message::setSize1(uint8_t size1)
+	{
+		memcpy(m_data + 8, &size1, 1);
+	}
+
+	uint8_t Message::getSize1()
+	{
+		uint8_t size1 = 0;
+		memcpy(&size1, m_data + 8, 1);
+		return size1;
+	}
+		
+	void Message::setSize2(uint8_t size2)
+	{
+		memcpy(m_data + 9, &size2, 1);
+	}
+		
+	uint8_t Message::getSize2()
+	{
+		uint8_t size2 = 0;
+		memcpy(&size2, m_data + 9, 1);
+		return size2;
+	}
+
 	void Message::setData(const uint8_t* data, uint16_t length)
 	{
 		if (length > OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE)
@@ -101,7 +173,9 @@ namespace oppvs
 		//Encoding
 		uint8_t* data = NULL;
 		uint32_t encodingLength = 0;
-		if (m_encoder->encode(pf, &encodingLength, &data) < 0)
+		bool isKey;
+		int picID = -1;
+		if (m_encoder->encode(pf, &encodingLength, &data, &picID, &isKey) < 0)
 			return;
 
 		printf("Length: %u\n", encodingLength);
@@ -112,12 +186,22 @@ namespace oppvs
 		uint16_t count = 0;
 		while (msgLength > 0)
 		{
+			uint8_t req = XBit;
+			if (count == 0)
+				req |= SBit;
+			uint8_t optX = IBit;
+			uint8_t optY = (picID & 127);
+
 
 			std::shared_ptr<Message> message(new Message);
 			message->setSource(pf.source);
 			message->setData(curPos, sendLength);
 			message->setSegID(count);
 			message->setTimestamp(m_timestamp);
+
+			message->setVP8Required(req);
+			message->setVP8OptX(optX);
+			message->setVP8OptY(optY);
 
 			curPos += sendLength;
 			msgLength -= sendLength;
@@ -128,6 +212,18 @@ namespace oppvs
 					message->setFlag(FLAG_START_FRAME);
 				else
 					message->setFlag(FLAG_ONE_FRAME);
+
+				uint8_t o1 = (encodingLength & Size0BitMask) << Size0BitShift; // Size0
+				o1 |= HBit; // H (show frame)
+				if (!isKey)
+				{
+					o1 |= 1; //P (Inverse frame)
+				}
+
+				message->setSize0(o1);
+				message->setSize1(static_cast<uint8_t>(encodingLength >> 3));	//Size 1
+				message->setSize2(static_cast<uint8_t>(encodingLength >> 11));	//Size 2
+
 			}
 			else if (msgLength <= 0)
 			{
@@ -217,22 +313,50 @@ namespace oppvs
 		if (!m_cacheBuffer)
 			return;
 		uint32_t loc = 0;
+		uint8_t req;
+		uint8_t optx;
+		uint8_t opty;
+		int picID;
+		uint8_t o1;
+
+		req = message.getVP8Required();
+		if ((message.getFlag() == FLAG_START_FRAME) && !(req & SBit))
+			return;
+
+		if (req &XBit)
+		{
+			optx = message.getVP8OptX();
+			if (optx & IBit)
+			{
+				opty = message.getVP8OptY();
+				picID = opty >> 1;
+			}
+		}
 
 		switch (message.getFlag())
 		{
 			case FLAG_START_FRAME:
-				m_cacheBuffer->delocateBuffer(message.getSource());
-				m_cacheBuffer->allocateBuffer(message.getSource());
+			case FLAG_ONE_FRAME:
+				/*m_cacheBuffer->delocateBuffer(message.getSource());
+				m_cacheBuffer->allocateBuffer(message.getSource());*/
 				m_currentTimestamp = message.getTimestamp();
 				oldseq = message.getSegID();
 				m_totalLength = 0;
+
+				o1 = message.getSize0();
+				printf("o1: %d\n", o1);
+				/*if (o1 & 1)
+					showFrame = true;
+				else
+					showFrame = false;*/
+				//isKeyFrame = (o1 & HBit);
+
 				break;
 			case FLAG_MIDDLE_FRAME:
-				if (m_totalLength == -1)
-				{
+				if (m_totalLength == -1)				
 					//Lost first segement;
 					return;
-				}
+			
 				/*if (m_currentTimestamp != message.getTimestamp())
 					printf("Error\n");
 				else
@@ -242,8 +366,9 @@ namespace oppvs
 				break;
 		}
 
+
+
 		loc = message.getSegID() * (message.getLength() - MESSAGE_HEADER_SIZE);
-		//printf("Seg: %u location: %lu\n", message.getSegID(), loc);
 		uint8_t* dest = m_cacheBuffer->getBufferAddress(message.getSource(), loc);
 		if (dest)
 		{
@@ -253,13 +378,21 @@ namespace oppvs
 
 		if (message.getFlag() == FLAG_ONE_FRAME)
 		{
-			m_cacheBuffer->push(message.getSource(), message.getLength() - MESSAGE_HEADER_SIZE);
+			//m_cacheBuffer->push(message.getSource(), message.getLength() - MESSAGE_HEADER_SIZE);
 			m_totalLength = -1;
 		}
 		else if (message.getFlag() == FLAG_END_FRAME)
 		{
-			m_cacheBuffer->push(message.getSource(), m_totalLength);
+			if (oldseq != -1)
+			{
+				uint32_t len = (message.getSegID() - oldseq)*(OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) + message.getLength() - MESSAGE_HEADER_SIZE;
+				printf("Correct len: %u %u\n", len, m_totalLength);
+				if (len == m_totalLength)
+					m_cacheBuffer->push(message.getSource(), m_totalLength);	
+			}
+			
 			m_totalLength = -1;
+			oldseq = -1;
 		}
 	}
 }
