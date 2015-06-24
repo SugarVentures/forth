@@ -90,7 +90,7 @@ static GLint default_frame_buffer = 0;
     if ([self isInitialized] == true)
     {
         //[self setup];
-        glGenBuffers(2, pbo);
+        glGenBuffers(1, pbo);
         self.initialized = false;
         [self generatePBO];
     };
@@ -130,10 +130,10 @@ static GLint default_frame_buffer = 0;
     glBindVertexArrayAPPLE(0);
     
     glBindTexture(GL_TEXTURE_2D, 0);*/
-        
+
     glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, pbo[0]);
-    if (pixelBuffer)
-        glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, stride*frameHeight, pixelBuffer, GL_STATIC_DRAW_ARB);
+    glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, stride*frameHeight, NULL, GL_STREAM_DRAW_ARB);
+    glBufferSubDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0, stride*frameHeight, pixelBuffer);
     
     glEnable(GL_TEXTURE_RECTANGLE_ARB);
     glBindTexture(GL_TEXTURE_RECTANGLE_ARB, texID[[self indexTexture]]);
@@ -181,7 +181,7 @@ static GLint default_frame_buffer = 0;
     glDisable(GL_TEXTURE_RECTANGLE_ARB);
     glShadeModel(GL_FLAT);
     
-    
+    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
     // Call super to finalize the drawing. By default all it does is call glFlush().
     [super drawInCGLContext:glContext pixelFormat:pixelFormat forLayerTime:timeInterval displayTime:timeStamp];
 }

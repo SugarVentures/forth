@@ -180,7 +180,8 @@ namespace oppvs
 		if (m_encoder->encode(pf, &encodingLength, &data, &picID, &isKey) < 0)
 			return;
 
-		printf("Length: %u\n", encodingLength);
+		//printf("Length: %u\n", encodingLength);
+
 		int msgLength = encodingLength;
 		int sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) : msgLength;
 		const uint8_t* curPos = data;

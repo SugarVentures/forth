@@ -133,6 +133,10 @@ void frameCallback(oppvs::PixelBuffer& pf)
     [renderingView setIndexTexture:pf.source];
 
     pf.order = (uint8_t)renderingView.order;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [renderingView setNeedsDisplay];
+    });
+    
     oppvs::StreamingEngine* streamer = (oppvs::StreamingEngine*)controller->streamer;
     if (streamer)
     {
@@ -141,12 +145,6 @@ void frameCallback(oppvs::PixelBuffer& pf)
             streamer->pushData(pf);
         }
     }
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [renderingView setNeedsDisplay];
-    });
-    
-
 }
 
 #pragma mark Utilities

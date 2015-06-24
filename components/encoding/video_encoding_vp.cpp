@@ -107,7 +107,7 @@ namespace oppvs
 		}
 
 	  	const vpx_codec_err_t res = vpx_codec_encode(codec, image, frameIndex, 1,
-	                                               flags, VPX_DL_GOOD_QUALITY);
+	                                               flags, VPX_DL_REALTIME);
 	  
 	  	if (res != VPX_CODEC_OK)
 	    	printf("Failed to encode frame\n");

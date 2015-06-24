@@ -7,7 +7,7 @@
 
 namespace oppvs
 {
-	const static int OPPVS_MAX_CACHE_POOL_SIZE = 20;
+	const static int OPPVS_MAX_CACHE_POOL_SIZE = 30;
 
 	class CacheBuffer
 	{

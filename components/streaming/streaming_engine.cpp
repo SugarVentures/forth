@@ -70,7 +70,7 @@ namespace oppvs
 		while (1)
 		{
 			stream->sendStream();
-			usleep(50);
+			usleep(20000);
 		}
 		return NULL;
 	}
@@ -89,7 +89,7 @@ namespace oppvs
 		while (1)
 		{
 			engine->pullData();
-			usleep(50);
+			usleep(20000);
 		}
 	}
 
