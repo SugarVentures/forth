@@ -1,5 +1,6 @@
 #include "message_handling.hpp"
 #include <string.h>
+#include "error.hpp"
 
 namespace oppvs
 {
@@ -122,6 +123,7 @@ namespace oppvs
 		if (length > OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE)
 			length = OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE;
 		memcpy(m_data + MESSAGE_HEADER_SIZE, data, length);
+		//printHashCode(data, length);
 		m_length = length + MESSAGE_HEADER_SIZE;
 	}
 
@@ -181,7 +183,6 @@ namespace oppvs
 		printf("Length: %u\n", encodingLength);
 		int msgLength = encodingLength;
 		int sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) : msgLength;
-		//const uint8_t* curPos = pf.plane[0];
 		const uint8_t* curPos = data;
 		uint16_t count = 0;
 		while (msgLength > 0)
@@ -318,6 +319,8 @@ namespace oppvs
 		uint8_t opty;
 		int picID;
 		uint8_t o1;
+		bool showFrame = false;
+		bool keyFrame = false;
 
 		req = message.getVP8Required();
 		if ((message.getFlag() == FLAG_START_FRAME) && !(req & SBit))
@@ -337,20 +340,17 @@ namespace oppvs
 		{
 			case FLAG_START_FRAME:
 			case FLAG_ONE_FRAME:
-				/*m_cacheBuffer->delocateBuffer(message.getSource());
-				m_cacheBuffer->allocateBuffer(message.getSource());*/
+				m_cacheBuffer->delocateBuffer(message.getSource());
+				m_cacheBuffer->allocateBuffer(message.getSource());
 				m_currentTimestamp = message.getTimestamp();
 				oldseq = message.getSegID();
 				m_totalLength = 0;
 
 				o1 = message.getSize0();
-				printf("o1: %d\n", o1);
-				/*if (o1 & 1)
-					showFrame = true;
-				else
-					showFrame = false;*/
-				//isKeyFrame = (o1 & HBit);
-
+				showFrame = o1 & 1;
+				o1 >>= Size0BitShift;
+				//printf("Size: %u \n", o1 + 8 * message.getSize1() + 2048 * message.getSize2());
+				keyFrame = o1 & HBit;
 				break;
 			case FLAG_MIDDLE_FRAME:
 				if (m_totalLength == -1)				
@@ -367,18 +367,18 @@ namespace oppvs
 		}
 
 
-
-		loc = message.getSegID() * (message.getLength() - MESSAGE_HEADER_SIZE);
+		loc = message.getSegID() * (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE);
 		uint8_t* dest = m_cacheBuffer->getBufferAddress(message.getSource(), loc);
 		if (dest)
 		{
 			memcpy(dest, message.getData() + MESSAGE_HEADER_SIZE, message.getLength() - MESSAGE_HEADER_SIZE);
+			//printHashCode(message.getData() + MESSAGE_HEADER_SIZE, message.getLength() - MESSAGE_HEADER_SIZE);
 			m_totalLength += message.getLength() - MESSAGE_HEADER_SIZE;
 		}
 
 		if (message.getFlag() == FLAG_ONE_FRAME)
 		{
-			//m_cacheBuffer->push(message.getSource(), message.getLength() - MESSAGE_HEADER_SIZE);
+			m_cacheBuffer->push(message.getSource(), message.getLength() - MESSAGE_HEADER_SIZE);
 			m_totalLength = -1;
 		}
 		else if (message.getFlag() == FLAG_END_FRAME)
@@ -386,7 +386,7 @@ namespace oppvs
 			if (oldseq != -1)
 			{
 				uint32_t len = (message.getSegID() - oldseq)*(OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) + message.getLength() - MESSAGE_HEADER_SIZE;
-				printf("Correct len: %u %u\n", len, m_totalLength);
+				//printf("Correct len: %u %u\n", len, m_totalLength);
 				if (len == m_totalLength)
 					m_cacheBuffer->push(message.getSource(), m_totalLength);	
 			}

@@ -111,8 +111,6 @@ namespace oppvs
 		static const uint8_t HBit = 1 << 4;
 		static const uint8_t Size0BitShift = 5;
 
-		bool isKeyFrame;
-		bool showFrame;
 	};
 
 };

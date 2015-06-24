@@ -77,7 +77,7 @@ namespace oppvs
 
 	int VPVideoEncoding::encode(PixelBuffer& pf, uint32_t* length, uint8_t** encoded_frame, int* picID, bool* isKey)
 	{
-		uint32_t frameIndex;
+		uint32_t frameIndex = 0;
 	 	int flags = 0;
 	 	vpx_codec_iter_t iter = NULL;
 	  	const vpx_codec_cx_pkt_t *pkt = NULL;
@@ -119,6 +119,7 @@ namespace oppvs
 					*encoded_frame = static_cast<uint8_t*>(pkt->data.frame.buf);
 					*isKey = pkt->data.frame.flags & VPX_FRAME_IS_KEY;
 					//printf("Out length: %d\n", *length);
+					//printHashCode(*encoded_frame, *length);
 					break;
 				default:
 					break;

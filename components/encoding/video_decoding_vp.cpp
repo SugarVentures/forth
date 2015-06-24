@@ -20,6 +20,8 @@ namespace oppvs
 		vpx_image_t *img = NULL;
 		int frame_cnt = 0;
 		int error = 0;
+		//printf("Decode length: %u\n", length);
+		//printHashCode(frame, length);
 		if (vpx_codec_decode(&m_codec, frame, (unsigned int)length, NULL, 0))
 		{
     		printf("Failed to decode frame.\n");
@@ -30,8 +32,8 @@ namespace oppvs
 	    	vpx_codec_control(&m_codec, VP8D_GET_FRAME_CORRUPTED, &corrupted);
 			if (corrupted) {
 				printf("corrupted\n");
-				//error = -1;
-				//continue;
+				error = -1;
+				return error;
 			}
 
 			//printf("%d %d %d %d\n", img->w, img->d_w, img->stride[1], img->stride[2]);

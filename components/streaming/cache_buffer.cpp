@@ -94,7 +94,7 @@ namespace oppvs
 				pf->height[0] = pixelBuffer[i].height[0];
 				pf->stride[0] = pixelBuffer[i].stride[0];
 				pf->order = pixelBuffer[i].order;
-				printf("Length: %u\n", length);
+				//printf("Length: %u\n", length);
 				pf->nbytes = length;
 				pf->plane[0] = new uint8_t[length];
 				memcpy(pf->plane[0], pixelBuffer[i].plane[0], length);

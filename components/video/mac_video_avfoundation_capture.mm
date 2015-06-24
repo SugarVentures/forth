@@ -93,8 +93,7 @@
 
     [pixelBufferOptions release];
  	[super dealloc];
-
- }
+}
 
 //For testing
  - (void) saveScreenShot: (CGImageRef) image_ref as: (NSString*) filename
@@ -507,26 +506,7 @@
 
     pixel_buffer.format = oppvs::PF_BGRA32;
 
-    //For testing encoding
-    
-    /*oppvs::VPVideoEncoding encoder;
-    encoder.init(pixel_buffer.width[0], pixel_buffer.height[0]);
-
-    uint8_t* eframe = NULL;
-    uint32_t length = 0;
-    encoder.encode(pixel_buffer, &length, &eframe);
-
-    
-
-    oppvs::VPVideoDecoding decoder;
-    decoder.init();
-    decoder.decode(pixel_buffer, length, eframe);
-
-    encoder.release();
-    decoder.release();*/
-
     callback_frame(pixel_buffer);
-    //[self stopRecording];
     
     CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
 
