@@ -86,8 +86,8 @@ namespace oppvs
 		MessageParsing m_messageParser;
 
 		CacheBuffer *m_cacheBuffer;
-		VPVideoEncoding m_encoder;
-		VPVideoDecoding m_decoder;
+		VPVideoEncoder m_encoder;
+		VPVideoDecoder m_decoder;
 	};
 
 }

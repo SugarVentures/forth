@@ -22,7 +22,7 @@ namespace oppvs
 		int picID;
 	};
 
-	class VPVideoEncoding
+	class VPVideoEncoder
 	{
 	public:
 		int init(VideoStreamInfo&);

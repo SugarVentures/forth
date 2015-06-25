@@ -158,7 +158,7 @@ namespace oppvs
 		while (1)
 		{
 			msgHandler->encodeMessage();
-			usleep(20000);
+			usleep(2000);
 		}
 		return NULL;
 	}
@@ -226,7 +226,7 @@ namespace oppvs
 		}
 		delete [] pf.plane[0];
 
-		printf("Length: %u\n", encodingLength);
+		//printf("Length: %u\n", encodingLength);
 
 		int msgLength = encodingLength;
 		int sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) : msgLength;
@@ -334,7 +334,7 @@ namespace oppvs
 		}
 	}
 
-	void MessageHandling::setEncoder(VPVideoEncoding* encoder)
+	void MessageHandling::setEncoder(VPVideoEncoder* encoder)
 	{	
 		m_encoder = encoder;
 	}

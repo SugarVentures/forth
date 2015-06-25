@@ -9,17 +9,25 @@
 
 namespace oppvs
 {
+	struct DecodingController
+	{
+		uint8_t source;
+		bool state;
+		vpx_codec_ctx_t codec;
+	};
 
-	class VPVideoDecoding
+	class VPVideoDecoder
 	{
 	public:
 		int init();
+		int init(VideoStreamInfo&);
 		int decode(PixelBuffer& pf, uint32_t length, uint8_t* frame);	//Frame in YUV12 or I420 format
 
 		int release();
 	private:
 		vpx_codec_ctx_t m_codec;
-		vpx_codec_dec_cfg_t m_configuration;
+		uint8_t m_numSources;
+		DecodingController m_controllers[OPPVS_MAX_CAPTURE_SOURCES];
 
 		int updateImage(PixelBuffer& pf, vpx_image_t *img);
 	};

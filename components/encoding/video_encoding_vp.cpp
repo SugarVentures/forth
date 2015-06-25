@@ -4,7 +4,7 @@
 
 namespace oppvs
 {
-	int VPVideoEncoding::init(int width, int height)
+	int VPVideoEncoder::init(int width, int height)
 	{
 		vpx_codec_err_t res;
 		vpx_codec_iface_t *(*const codec_interface)() = &vpx_codec_vp8_cx;
@@ -27,6 +27,10 @@ namespace oppvs
 	 	m_configuration.g_h = height;
 	 	m_configuration.rc_min_quantizer = 4;
 	 	m_configuration.rc_max_quantizer = 56;
+	 	m_configuration.g_timebase.num = 1;
+	 	m_configuration.g_timebase.den = 30;
+	 	m_configuration.rc_target_bitrate = 500;
+	 	m_configuration.g_threads = 4;
 
 	 	if (vpx_codec_enc_init(&m_codec, codec_interface(), &m_configuration, 0))
 	 	{
@@ -37,7 +41,7 @@ namespace oppvs
 		return ERRS_ENCODING_OK;
 	}
 
-	int VPVideoEncoding::init(VideoStreamInfo& info)
+	int VPVideoEncoder::init(VideoStreamInfo& info)
 	{
 		vpx_codec_err_t res;
 		vpx_codec_iface_t *(*const codec_interface)() = &vpx_codec_vp8_cx;
@@ -59,6 +63,13 @@ namespace oppvs
  			}
  			m_controllers[i].config.g_w = info.sources[i].width;
  			m_controllers[i].config.g_h = info.sources[i].height;
+ 			m_controllers[i].config.rc_min_quantizer = 4;
+			m_controllers[i].config.rc_max_quantizer = 56;
+			m_controllers[i].config.g_timebase.num = 1;
+			m_controllers[i].config.g_timebase.den = 30;
+			m_controllers[i].config.rc_target_bitrate = 500;
+			m_controllers[i].config.g_threads = 2;
+
 
  			if (vpx_codec_enc_init(&m_controllers[i].codec, codec_interface(), &m_controllers[i].config, 0))
 		 	{
@@ -75,7 +86,7 @@ namespace oppvs
 		return ERRS_ENCODING_OK;
 	}
 
-	int VPVideoEncoding::encode(PixelBuffer& pf, uint32_t* length, uint8_t** encoded_frame, int* picID, bool* isKey)
+	int VPVideoEncoder::encode(PixelBuffer& pf, uint32_t* length, uint8_t** encoded_frame, int* picID, bool* isKey)
 	{
 		uint32_t frameIndex = 0;
 	 	int flags = 0;
@@ -94,6 +105,9 @@ namespace oppvs
 				m_controllers[i].picID = (m_controllers[i].picID + 1) % 128;
 			}
 		}
+
+		/*codec = &m_codec;
+		image = &m_image;*/
 
 		if (!codec)
 		{
@@ -129,7 +143,7 @@ namespace oppvs
 		return 0;
 	}
 
-	int VPVideoEncoding::updateImage(PixelBuffer& pf, vpx_image_t *img)
+	int VPVideoEncoder::updateImage(PixelBuffer& pf, vpx_image_t *img)
 	{
 		uint16_t frame_width = pf.width[0];
 		uint16_t frame_height = pf.height[0];
@@ -151,7 +165,7 @@ namespace oppvs
 		return result;
 	}
 
-	int VPVideoEncoding::release()
+	int VPVideoEncoder::release()
 	{
 		for (int i = 0; i < m_numSources; i++)
 		{

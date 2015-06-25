@@ -70,7 +70,7 @@ namespace oppvs
 		while (1)
 		{
 			stream->sendStream();
-			usleep(2000);
+			usleep(20);
 		}
 		return NULL;
 	}
@@ -89,7 +89,7 @@ namespace oppvs
 		while (1)
 		{
 			engine->pullData();
-			usleep(20000);
+			usleep(2000);
 		}
 	}
 
@@ -222,7 +222,7 @@ namespace oppvs
 		m_cacheBuffer = new CacheBuffer(m_serviceInfo.videoStreamInfo);
 
 		//Setup decoder
-		m_decoder.init();
+		m_decoder.init(m_serviceInfo.videoStreamInfo);
 
 		printServiceInfo();
 		printf("SSRC: %u\n", m_subscribe->getServiceKey());

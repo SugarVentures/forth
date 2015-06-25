@@ -67,7 +67,7 @@ namespace oppvs
 		virtual ~MessageHandling();
 
 		void setNumClients(uint8_t clients);
-		void setEncoder(VPVideoEncoding*);
+		void setEncoder(VPVideoEncoder*);
 		void addMessage(PixelBuffer& pf);
 		void encodeMessage();
 		void getNextMessage(uint8_t** pdata, uint16_t* length, uint32_t* ts);
@@ -81,7 +81,7 @@ namespace oppvs
 		uint8_t m_sentClients;
 		uint32_t m_timestamp;
 
-		VPVideoEncoding *m_encoder;
+		VPVideoEncoder *m_encoder;
 		Thread *m_encodingThread;
 
 		static const uint8_t SBit = 1 << 4;
