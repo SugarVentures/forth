@@ -150,8 +150,9 @@ static GLint default_frame_buffer = 0;
                     0);
 
     glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, pbo[pboNextIndex]);
-    glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, stride*frameHeight, NULL, GL_STREAM_DRAW_ARB);
-    glBufferSubDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0, stride*frameHeight, pixelBuffer);
+    //glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, stride*frameHeight, NULL, GL_STREAM_DRAW_ARB);
+    //glBufferSubDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0, stride*frameHeight, pixelBuffer);
+    glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, stride*frameHeight, pixelBuffer, GL_STREAM_DRAW_ARB);
     
     glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
     
