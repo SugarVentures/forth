@@ -321,11 +321,13 @@ namespace oppvs
 		{
 			std::shared_ptr<std::shared_ptr<Message>> ptrmsg = m_messagePool.try_pop();
 			
-			m_sentClients = 0;
-			std::shared_ptr<Message> message = *ptrmsg;
-			if (message->getFlag() == FLAG_END_FRAME || message->getFlag() == FLAG_ONE_FRAME)
-				m_numFramesInPool--;
-
+			if (ptrmsg.get() != NULL)
+			{
+				m_sentClients = 0;
+				std::shared_ptr<Message> message = *ptrmsg;
+				if (message->getFlag() == FLAG_END_FRAME || message->getFlag() == FLAG_ONE_FRAME)
+					m_numFramesInPool--;
+			}
 			return true;
 		}
 		else
