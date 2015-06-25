@@ -70,7 +70,7 @@ namespace oppvs
 		while (1)
 		{
 			stream->sendStream();
-			usleep(20000);
+			usleep(2000);
 		}
 		return NULL;
 	}

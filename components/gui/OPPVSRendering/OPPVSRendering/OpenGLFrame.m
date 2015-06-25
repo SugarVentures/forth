@@ -146,13 +146,13 @@ static GLint default_frame_buffer = 0;
                     frameWidth,
                     frameHeight,
                     GL_BGRA,
-                    GL_UNSIGNED_BYTE,
+                    GL_UNSIGNED_INT_8_8_8_8_REV,
                     0);
 
     glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, pbo[pboNextIndex]);
     glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, stride*frameHeight, NULL, GL_STREAM_DRAW_ARB);
     glBufferSubDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0, stride*frameHeight, pixelBuffer);
-        
+    
     glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
     
     glColor4f(1.0, 1.0, 1.0, 1.0);

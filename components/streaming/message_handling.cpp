@@ -152,19 +152,33 @@ namespace oppvs
 		return m_timestamp;
 	}
 
+	void* runEncoding(void* p)
+	{
+		MessageHandling* msgHandler = (MessageHandling*)p;
+		while (1)
+		{
+			msgHandler->encodeMessage();
+			usleep(20000);
+		}
+		return NULL;
+	}
+
 	MessageHandling::MessageHandling() : m_numFramesInPool(0), m_sentClients(0)
 	{
 		m_timestamp = 0;
+		m_encodingThread = new Thread(runEncoding, (void*)this);
+		m_encodingThread->create();
 	}
 
 	MessageHandling::~MessageHandling()
 	{
+		delete m_encodingThread;
 	}
 
 
 	bool MessageHandling::isEmptyPool()
 	{
-		return (m_messagePool.size() == 0);
+		return m_messagePool.empty();
 	}
 
 	void MessageHandling::addMessage(PixelBuffer& pf)
@@ -172,15 +186,47 @@ namespace oppvs
 		if (m_numFramesInPool >= MAX_FRAMES_IN_POOL)
 			return;
 
+		std::shared_ptr<PixelBuffer> pixelbuffer(new PixelBuffer);
+		pixelbuffer->source = pf.source;
+		pixelbuffer->plane[0] = new uint8_t[pf.nbytes];
+		memcpy(pixelbuffer->plane[0], pf.plane[0], pf.nbytes);
+		pixelbuffer->nbytes = pf.nbytes;
+		pixelbuffer->width[0] = pf.width[0];
+		pixelbuffer->height[0] = pf.height[0];
+		pixelbuffer->stride[0] = pf.stride[0];
+
+		m_framePool.push(pixelbuffer);
+		m_numFramesInPool++;
+
+	}
+
+	void MessageHandling::encodeMessage()
+	{
+		if (m_framePool.empty())
+			return;
+
+		std::shared_ptr<std::shared_ptr<PixelBuffer>> ptrFrame = m_framePool.pop();
+		if (ptrFrame.get() == NULL)
+		{
+			return;
+		}
+
+		//m_numFramesInPool--;
+		std::shared_ptr<PixelBuffer> frame = *ptrFrame;
+		PixelBuffer pf = *frame;
 		//Encoding
 		uint8_t* data = NULL;
 		uint32_t encodingLength = 0;
 		bool isKey;
 		int picID = -1;
 		if (m_encoder->encode(pf, &encodingLength, &data, &picID, &isKey) < 0)
+		{
+			delete [] pf.plane[0];
 			return;
+		}
+		delete [] pf.plane[0];
 
-		//printf("Length: %u\n", encodingLength);
+		printf("Length: %u\n", encodingLength);
 
 		int msgLength = encodingLength;
 		int sendLength = msgLength > (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE) : msgLength;
@@ -243,7 +289,7 @@ namespace oppvs
 
 		//printf("Count: %d\n", count);
 		m_timestamp++;
-		m_numFramesInPool++;
+
 
 	}
 

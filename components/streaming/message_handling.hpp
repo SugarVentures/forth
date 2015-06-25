@@ -8,6 +8,7 @@
 
 #include "video_encoding.hpp"
 #include "video_encoding_vp.hpp"
+#include "thread.hpp"
 
 namespace oppvs
 {
@@ -68,17 +69,20 @@ namespace oppvs
 		void setNumClients(uint8_t clients);
 		void setEncoder(VPVideoEncoding*);
 		void addMessage(PixelBuffer& pf);
+		void encodeMessage();
 		void getNextMessage(uint8_t** pdata, uint16_t* length, uint32_t* ts);
 		bool releaseMessage();
 		bool isEmptyPool();
 	private:
 		tsqueue<std::shared_ptr<Message>> m_messagePool;
+		tsqueue<std::shared_ptr<PixelBuffer>> m_framePool;
 		uint16_t m_numFramesInPool;
 		uint8_t m_numClients;
 		uint8_t m_sentClients;
 		uint32_t m_timestamp;
 
 		VPVideoEncoding *m_encoder;
+		Thread *m_encodingThread;
 
 		static const uint8_t SBit = 1 << 4;
 		static const uint8_t XBit = 1 << 7;
@@ -86,6 +90,7 @@ namespace oppvs
 		static const uint8_t HBit = 1 << 4;
 		static const uint8_t Size0BitMask = 7;
 		static const uint8_t Size0BitShift = 5;
+
 
 	};
 
