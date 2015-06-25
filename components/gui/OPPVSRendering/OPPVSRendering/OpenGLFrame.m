@@ -38,6 +38,7 @@ GLuint fBO;
 GLuint dBO;
 
 GLuint pbo[2];  //0: read 1: write
+GLuint pboIndex;
 static GLint default_frame_buffer = 0;
 
 - (id) init
@@ -57,6 +58,7 @@ static GLint default_frame_buffer = 0;
         [self setInitialized:TRUE];
         [self setBorderWidth:1];
         
+        pboIndex = 0;
     }
     return self;
 }
@@ -90,7 +92,7 @@ static GLint default_frame_buffer = 0;
     if ([self isInitialized] == true)
     {
         //[self setup];
-        glGenBuffers(1, pbo);
+        glGenBuffers(2, pbo);
         self.initialized = false;
         [self generatePBO];
     };
@@ -130,14 +132,13 @@ static GLint default_frame_buffer = 0;
     glBindVertexArrayAPPLE(0);
     
     glBindTexture(GL_TEXTURE_2D, 0);*/
+    pboIndex = (pboIndex + 1) % 2;
+    GLuint pboNextIndex = (pboIndex + 1) % 2;
 
-    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, pbo[0]);
-    glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, stride*frameHeight, NULL, GL_STREAM_DRAW_ARB);
-    glBufferSubDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0, stride*frameHeight, pixelBuffer);
-    
     glEnable(GL_TEXTURE_RECTANGLE_ARB);
     glBindTexture(GL_TEXTURE_RECTANGLE_ARB, texID[[self indexTexture]]);
-
+    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, pbo[pboIndex]);
+    
     glTexSubImage2D(GL_TEXTURE_RECTANGLE_ARB,
                     0,
                     0,
@@ -147,6 +148,11 @@ static GLint default_frame_buffer = 0;
                     GL_BGRA,
                     GL_UNSIGNED_BYTE,
                     0);
+
+    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, pbo[pboNextIndex]);
+    glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, stride*frameHeight, NULL, GL_STREAM_DRAW_ARB);
+    glBufferSubDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0, stride*frameHeight, pixelBuffer);
+        
     glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
     
     glColor4f(1.0, 1.0, 1.0, 1.0);
