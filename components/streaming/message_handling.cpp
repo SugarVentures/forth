@@ -267,6 +267,10 @@ namespace oppvs
 				{
 					o1 |= 1; //P (Inverse frame)
 				}
+				else
+				{
+					printf("Key frame %d\n", o1 & HBit);
+				}
 
 				message->setSize0(o1);
 				message->setSize1(static_cast<uint8_t>(encodingLength >> 3));	//Size 1
@@ -346,6 +350,7 @@ namespace oppvs
 		m_cacheBuffer = NULL;
 		oldseq = -1;
 		m_totalLength = -1;
+		isSeenKeyFrame = false;
 	}
 
 	MessageParsing::~MessageParsing()
@@ -399,7 +404,12 @@ namespace oppvs
 				showFrame = o1 & 1;
 				o1 >>= Size0BitShift;
 				//printf("Size: %u \n", o1 + 8 * message.getSize1() + 2048 * message.getSize2());
-				keyFrame = o1 & HBit;
+				keyFrame = message.getSize0() & HBit;
+				if (keyFrame && !isSeenKeyFrame)
+				{
+					printf("Key frame\n");
+					isSeenKeyFrame = true;
+				}
 				break;
 			case FLAG_MIDDLE_FRAME:
 				if (m_totalLength == -1)				
@@ -415,6 +425,8 @@ namespace oppvs
 				break;
 		}
 
+		if (!isSeenKeyFrame)
+			return;
 
 		loc = message.getSegID() * (OPPVS_NETWORK_PACKET_LENGTH - MESSAGE_HEADER_SIZE);
 		uint8_t* dest = m_cacheBuffer->getBufferAddress(message.getSource(), loc);

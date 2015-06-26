@@ -1,6 +1,7 @@
 #include "video_decoding_vp.hpp"
 #include <stdio.h>
 #include <string.h>
+#include "utility.h"
 
 namespace oppvs
 {
@@ -56,6 +57,8 @@ namespace oppvs
 			printf("Cannot find codec to decode frame\n");
 			return -1;
 		}
+
+		printHashCode(frame, length);
 
 		if (vpx_codec_decode(codec, frame, (unsigned int)length, NULL, 0))
 		{

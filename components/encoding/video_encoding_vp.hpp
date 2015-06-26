@@ -6,7 +6,7 @@
 #include "error.hpp"
 #include "datatypes.hpp"
 #include "libyuv.h"
-
+#include "utility.h"
 
 
 namespace oppvs

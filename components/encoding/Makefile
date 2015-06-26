@@ -5,12 +5,13 @@ RM = rm -f
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error  \
 		-I$(rootDir)/../../libs/libyuv/include \
 		-I$(rootDir)/../../libs/libvpx \
-		-I$(rootDir)/../../libs/libsrtp/crypto/include  
+		-I$(rootDir)/../../libs/libsrtp/crypto/include  \
+		-I$(rootDir)/../misc
 
 CFLAGS = -Wall -g
 
 LDFLAGS = -L$(rootDir)/../../libs
-LIBS = -lyuv -lvpx -lsrtp
+LIBS = -lyuv -lvpx -lsrtp -lmisc
 
 OBJLIBS = libencodingengine.so
 
