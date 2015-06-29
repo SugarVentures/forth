@@ -123,26 +123,13 @@ namespace oppvs
 					}
 				}
 			}
-			else
+			else if (rcvLen > 0)
+
 			{
+				printf("Recv len: %d\n", rcvLen);
 				message.setLength(rcvLen);
 				message.setTimestamp(timestamp);
 				m_messageParser->updateMessage(message);
-
-				switch (message.getFlag())
-				{
-					case FLAG_START_FRAME:						
-						break;
-					case FLAG_MIDDLE_FRAME:
-						//printf("Midlle segement\n");
-						break;
-					case FLAG_END_FRAME:
-						//printf("End frame\n");						
-						//m_receiveEvent(m_owner, message.getSource(), 0);
-
-						break;
-				}
-				
 			}
 			
 		}
