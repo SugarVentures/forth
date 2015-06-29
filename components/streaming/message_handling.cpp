@@ -268,9 +268,7 @@ namespace oppvs
 					o1 |= 1; //P (Inverse frame)
 				}
 				else
-				{
-					printf("Key frame %d\n", o1 & HBit);
-				}
+					printf("Key frame \n");
 
 				message->setSize0(o1);
 				message->setSize1(static_cast<uint8_t>(encodingLength >> 3));	//Size 1
@@ -432,6 +430,7 @@ namespace oppvs
 		uint8_t* dest = m_cacheBuffer->getBufferAddress(message.getSource(), loc);
 		if (dest)
 		{
+			printf("Loc %u %d %d\n", loc, message.getLength() - MESSAGE_HEADER_SIZE);
 			memcpy(dest, message.getData() + MESSAGE_HEADER_SIZE, message.getLength() - MESSAGE_HEADER_SIZE);
 			//printHashCode(message.getData() + MESSAGE_HEADER_SIZE, message.getLength() - MESSAGE_HEADER_SIZE);
 			m_totalLength += message.getLength() - MESSAGE_HEADER_SIZE;

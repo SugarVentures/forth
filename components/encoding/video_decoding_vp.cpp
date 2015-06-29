@@ -30,6 +30,7 @@ namespace oppvs
  			}
  			else
  			{
+ 				printf("Init codec successfully\n");
  				m_controllers[i].state = true;
  			}
 		}
