@@ -399,13 +399,14 @@ namespace oppvs
 				m_totalLength = 0;
 
 				o1 = message.getSize0();
-				showFrame = o1 & 1;
+				showFrame = o1 & HBit;
+				keyFrame = !(o1 & 1);
 				o1 >>= Size0BitShift;
 				//printf("Size: %u \n", o1 + 8 * message.getSize1() + 2048 * message.getSize2());
-				keyFrame = message.getSize0() & HBit;
+				if (keyFrame)
+					printf("Key frame\n");
 				if (keyFrame && !isSeenKeyFrame)
 				{
-					printf("Key frame\n");
 					isSeenKeyFrame = true;
 				}
 				break;
@@ -430,7 +431,7 @@ namespace oppvs
 		uint8_t* dest = m_cacheBuffer->getBufferAddress(message.getSource(), loc);
 		if (dest)
 		{
-			printf("Loc %u %d %d\n", loc, message.getLength() - MESSAGE_HEADER_SIZE);
+			//printf("Loc %u %d %d\n", loc, message.getLength() - MESSAGE_HEADER_SIZE);
 			memcpy(dest, message.getData() + MESSAGE_HEADER_SIZE, message.getLength() - MESSAGE_HEADER_SIZE);
 			//printHashCode(message.getData() + MESSAGE_HEADER_SIZE, message.getLength() - MESSAGE_HEADER_SIZE);
 			m_totalLength += message.getLength() - MESSAGE_HEADER_SIZE;

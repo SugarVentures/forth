@@ -126,7 +126,7 @@ namespace oppvs
 			else if (rcvLen > 0)
 
 			{
-				printf("Recv len: %d\n", rcvLen);
+				//printf("Recv len: %d\n", rcvLen);
 				message.setLength(rcvLen);
 				message.setTimestamp(timestamp);
 				m_messageParser->updateMessage(message);

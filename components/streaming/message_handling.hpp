@@ -84,12 +84,12 @@ namespace oppvs
 		VPVideoEncoder *m_encoder;
 		Thread *m_encodingThread;
 
-		static const uint8_t SBit = 1 << 4;
-		static const uint8_t XBit = 1 << 7;
-		static const uint8_t IBit = 1 << 7;
-		static const uint8_t HBit = 1 << 4;
-		static const uint8_t Size0BitMask = 7;
-		static const uint8_t Size0BitShift = 5;
+		uint8_t SBit = 1 << 4;
+		uint8_t XBit = 1 << 7;
+		uint8_t IBit = 1 << 7;
+		uint8_t HBit = 1 << 4;
+		uint8_t Size0BitMask = 7;
+		uint8_t Size0BitShift = 5;
 
 
 	};
