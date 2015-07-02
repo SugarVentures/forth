@@ -85,7 +85,8 @@ namespace oppvs
 				printf("Failed to send message\n");
 				m_error = -1;
 			}
-
+			//else
+			//	printf("Sent message %d\n", length);
 			m_busy = !m_messageHandler->releaseMessage();
 			if (!m_busy)
 				m_error = 1;

@@ -309,6 +309,7 @@ namespace oppvs
 			*length = message->getLength();
 			*ts = message->getTimestamp();
 			m_sentClients++;
+			currentMessage = ptrmsg;
 		}
 	}
 
@@ -321,15 +322,26 @@ namespace oppvs
 	{
 		if (m_sentClients >= m_numClients)
 		{
-			std::shared_ptr<std::shared_ptr<Message>> ptrmsg = m_messagePool.try_pop();
-			
+			//printf("Sent Client: %d \n", m_sentClients);
+			std::shared_ptr<std::shared_ptr<Message>> ptrmsg = m_messagePool.try_front();
 			if (ptrmsg.get() != NULL)
 			{
-				m_sentClients = 0;
-				std::shared_ptr<Message> message = *ptrmsg;
-				if (message->getFlag() == FLAG_END_FRAME || message->getFlag() == FLAG_ONE_FRAME)
-					m_numFramesInPool--;
+				if (*ptrmsg == *currentMessage)
+				{
+					ptrmsg = m_messagePool.try_pop();
+			
+					if (ptrmsg.get() != NULL)
+					{
+						//printf("Pop\n");
+						m_sentClients = 0;
+						std::shared_ptr<Message> message = *ptrmsg;
+						if (message->getFlag() == FLAG_END_FRAME || message->getFlag() == FLAG_ONE_FRAME)
+							m_numFramesInPool--;
+					}
+				}
 			}
+
+			
 			return true;
 		}
 		else

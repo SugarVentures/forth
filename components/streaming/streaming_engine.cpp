@@ -143,13 +143,15 @@ namespace oppvs
 		stream->setSender(remoteaddr);
 		m_subscribers.push_back(stream);
 
+		if (m_subscribers.size() == 1)
+		{
+			m_messageHandler.setEncoder(&m_encoder);
+			setIsRunning(true);
+		}
 		m_messageHandler.setNumClients(m_subscribers.size());
-		m_messageHandler.setEncoder(&m_encoder);
-		
-		setIsRunning(true);
 		m_sendThread = new Thread(runStreaming, (void*)stream);
 		m_sendThread->create();
-
+		
 		return 0;
 	}
 

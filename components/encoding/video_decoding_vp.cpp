@@ -59,7 +59,7 @@ namespace oppvs
 			return -1;
 		}
 
-		printHashCode(frame, length);
+		//printHashCode(frame, length);
 
 		if (vpx_codec_decode(codec, frame, (unsigned int)length, NULL, 0))
 		{

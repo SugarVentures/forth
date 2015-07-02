@@ -133,7 +133,7 @@ namespace oppvs
 					*encoded_frame = static_cast<uint8_t*>(pkt->data.frame.buf);
 					*isKey = pkt->data.frame.flags & VPX_FRAME_IS_KEY;
 					//printf("Out length: %d\n", *length);
-					printHashCode(*encoded_frame, *length);
+					//printHashCode(*encoded_frame, *length);
 					break;
 				default:
 					break;

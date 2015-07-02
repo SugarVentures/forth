@@ -91,7 +91,7 @@ namespace oppvs
 		uint8_t Size0BitMask = 7;
 		uint8_t Size0BitShift = 5;
 
-
+		std::shared_ptr<std::shared_ptr<Message>> currentMessage;
 	};
 
 	class MessageParsing
