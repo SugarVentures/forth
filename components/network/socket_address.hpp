@@ -27,7 +27,7 @@ namespace oppvs
 		void toSocketAddr(struct sockaddr_in* addr) const;
 		std::string toString() const;
 	
-	private:
+	protected:
 		IPAddress m_ip;
 		uint16_t m_port;
 	};
@@ -37,6 +37,7 @@ namespace oppvs
 		SocketAddress local;
 		SocketAddress remote;
 	};
+
 }
 
 #endif

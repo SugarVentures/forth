@@ -43,6 +43,12 @@ namespace oppvs
 	  			return mu_address.ip4;
 	  		}
 
+	  		in6_addr getIPv6() const {
+	  			return mu_address.ip6;
+	  		}
+
+	  		int getAddressFamily();
+
 	  		bool getIPFromSockAddr(const struct sockaddr& addr);
 	  		
 		private:

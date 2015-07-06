@@ -22,4 +22,9 @@ namespace oppvs
 		memset(&mu_address, 0, sizeof(mu_address));
 	    mu_address.ip4 = in;
 	}
+
+	int IPAddress::getAddressFamily()
+	{
+		return m_addressFamily;
+	}
 }

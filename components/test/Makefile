@@ -5,7 +5,8 @@ RM = rm -f
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../thread -I$(rootDir)/../misc \
 		-I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include  \
 		-I$(rootDir)/../../libs/libyuv/include -I$(rootDir)/../encoding \
-		-I$(rootDir)/../../libs/libvpx -I$(rootDir)/../error
+		-I$(rootDir)/../../libs/libvpx -I$(rootDir)/../error \
+		-I$(rootDir)/../network
 
 CFLAGS	= -Wall -g -std=c++11
 
@@ -23,7 +24,7 @@ OBJS = $(subst .cpp,.o,$(SRCS))
 
 rootDir = .
 
-all: testvideoengine testnetworkengine teststream testvp proclib
+all: testvideoengine testnetworkengine teststream testvp teststun proclib
 
 testvideoengine: $(OBJS)
 	$(CXX) $(INCDIR) $(CFLAGS) $(VIDEOLDFLAGS) $(VIDEOLIBS) $(OBJS) -o testvideoengine
@@ -48,6 +49,12 @@ testvp: testvp.o
 	$(CXX) $(INCDIR) $(CFLAGS) $(ENCODINGFLAGS) $< $(ENCODINGLIBS) -o $@
 
 testvp.o: testvp.cpp
+	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
+
+teststun: teststun.o
+	$(CXX)  $(INCDIR) $(CFLAGS) $(NETWORKLDFLAGS) $< $(NETWORKLIBS) -o $@ 
+
+teststun.o: teststun.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
 
 proclib:
