@@ -23,7 +23,7 @@ namespace oppvs
 	    mu_address.ip4 = in;
 	}
 
-	int IPAddress::getAddressFamily()
+	int IPAddress::getAddressFamily() const
 	{
 		return m_addressFamily;
 	}

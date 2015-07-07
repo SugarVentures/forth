@@ -47,7 +47,7 @@ namespace oppvs
 	  			return mu_address.ip6;
 	  		}
 
-	  		int getAddressFamily();
+	  		int getAddressFamily() const;
 
 	  		bool getIPFromSockAddr(const struct sockaddr& addr);
 	  		

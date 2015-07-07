@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "stun_socket_address.hpp"
+#include "stun_socket.hpp"
+
 
 int main()
 {
@@ -8,6 +10,10 @@ int main()
 	oppvs::StunSocketAddress socketAddress;
 	oppvs::StunTransactionId transactionId;
 
-	socketAddress.applyXorMap(transactionId);
+	//socketAddress.applyXorMap(transactionId);
+
+	oppvs::StunSocket socket;
+	int ret = socket.initUDP(socketAddress, oppvs::RolePP);
+	printf("Init UDP: %d\n", ret);
 	return 0;
 }

@@ -16,6 +16,9 @@ namespace oppvs
 	int PhysicalSocket::Create(int family, int type, int protocol)
 	{
 		int on = 1;
+		if (m_socketfd != - 1)
+			Close();
+		
 		m_socketfd = socket(family, type, protocol);
 		int status = setsockopt(m_socketfd, SOL_SOCKET, SO_REUSEADDR, (const char *) &on, sizeof(on));
 		if (status == -1)

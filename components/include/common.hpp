@@ -8,7 +8,7 @@
 
 
 #if( DEBUG == 1 )
-#define ASSERT( expression ) 				        \	
+#define ASSERT( expression ) 				        \
   	oppvs::localAssert(expression, __FUNCTION__, __FILE__, __LINE__, #expression)
 	
 #elif( DEBUG == 0 )
@@ -20,7 +20,6 @@ namespace oppvs
 {
 	bool localAssert(bool result, const char* function, const char* file, int line, const char* expression)
 	{
-		std::cout << result;
 		if (!result)
 		{
 			std::cout << expression;
