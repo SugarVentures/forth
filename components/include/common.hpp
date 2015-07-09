@@ -18,7 +18,7 @@
 
 namespace oppvs 
 {
-	bool localAssert(bool result, const char* function, const char* file, int line, const char* expression)
+	inline bool localAssert(bool result, const char* function, const char* file, int line, const char* expression)
 	{
 		if (!result)
 		{
