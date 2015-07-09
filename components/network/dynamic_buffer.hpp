@@ -25,7 +25,7 @@ namespace oppvs
 		void setSize(size_t);
 		void setCapacity(size_t);
 		void appendData(const void* data, size_t length);
-
+		void moveTo(DynamicBuffer* buffer);
 
 		DynamicBuffer& operator=(const DynamicBuffer& buf);
 		bool operator==(const DynamicBuffer& buf) const;
@@ -34,6 +34,7 @@ namespace oppvs
 		uint8_t* data();
 		const uint8_t* dataC() const;
 		size_t capacity() const;
+
 	};
 
 	typedef std::shared_ptr<DynamicBuffer> SharedDynamicBufferRef;

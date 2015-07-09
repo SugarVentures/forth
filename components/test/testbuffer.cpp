@@ -54,6 +54,14 @@ int main()
 	buffer3.appendData(data, 10);
 	std::cout << buffer3.size() << " " << buffer3.capacity() << std::endl;
 
+	buffer3.appendData(data, 10);
+	std::cout << buffer3.size() << " " << buffer3.capacity() << std::endl;
+
+
+	buffer3.moveTo(&buffer);
+	std::cout << "Buffer: " << buffer.size() << " " << buffer.capacity() << std::endl;
+	std::cout << "Buffer3: " << buffer3.size() << " " << buffer3.capacity() << std::endl;
+
 	std::shared_ptr<DynamicBuffer> p(new DynamicBuffer(data, 10));
 	std::thread t1(thr, p), t2(thr, p), t3(thr, p);
     p.reset(); // release ownership from main
