@@ -12,12 +12,38 @@ namespace oppvs
 		init(data, length, length);
 	}
 
-	size_t DynamicBuffer::size()
+	DynamicBuffer::DynamicBuffer(const void* data, size_t length, size_t capacity)
+	{
+		init(data, length, capacity);
+	}
+
+	DynamicBuffer::DynamicBuffer(const DynamicBuffer& buffer)
+	{
+		init(buffer.dataC(), buffer.size(), buffer.capacity());
+	}
+
+	DynamicBuffer& DynamicBuffer::operator=(const DynamicBuffer& buf) {
+    	if (&buf != this) {
+    		init(buf.dataC(), buf.size(), buf.size());
+    	}
+    	return *this;
+	}
+
+	bool DynamicBuffer::operator==(const DynamicBuffer& buf) const {
+		return (m_allocatedSize == buf.size() &&
+	        memcmp(m_data.get(), buf.dataC(), m_allocatedSize) == 0);
+	}
+	
+	bool DynamicBuffer::operator!=(const DynamicBuffer& buf) const {
+		return !operator==(buf);
+	}
+
+	size_t DynamicBuffer::size() const
 	{
 		return m_allocatedSize;
 	}
 
-	size_t DynamicBuffer::capacity()
+	size_t DynamicBuffer::capacity() const
 	{
 		return m_capacity;
 	}
@@ -39,8 +65,8 @@ namespace oppvs
 	{
 		if (capacity > m_capacity)
 		{
-			unique_ptr<uint8_t[]> data(new uint8_t[capacity]);
-			memcpy(data, m_data.get(), m_allocatedSize);
+			std::unique_ptr<uint8_t[]> data(new uint8_t[capacity]);
+			memcpy(data.get(), m_data.get(), m_allocatedSize);
 			m_data.swap(data);
 			m_capacity = capacity;
 		}
@@ -51,11 +77,23 @@ namespace oppvs
 		return m_data.get();
 	}
 
+	const uint8_t* DynamicBuffer::dataC() const
+	{
+		return m_data.get();
+	}	
+
 	void DynamicBuffer::init(const void* data, size_t length, size_t capacity)
 	{
 		m_data.reset(new uint8_t[m_capacity = capacity]);
 		setData(data, length);
 	}
 
+	void DynamicBuffer::appendData(const void* data, size_t length)
+	{
+		ASSERT(data != NULL || length == 0);
+		size_t oldSize = m_allocatedSize;
+		setSize(oldSize + length);
+		memcpy(m_data.get() + oldSize, data, length);
+	}
 
 }

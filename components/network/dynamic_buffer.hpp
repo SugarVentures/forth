@@ -18,14 +18,25 @@ namespace oppvs
 	public:
 		DynamicBuffer();
 		DynamicBuffer(const void* data, size_t length);
-		size_t size();
+		DynamicBuffer(const void* data, size_t length, size_t capacity);
+		DynamicBuffer(const DynamicBuffer& buffer);
+		size_t size() const;
 		void setData(const void* data, size_t length);
 		void setSize(size_t);
 		void setCapacity(size_t);
+		void appendData(const void* data, size_t length);
+
+
+		DynamicBuffer& operator=(const DynamicBuffer& buf);
+		bool operator==(const DynamicBuffer& buf) const;
+		bool operator!=(const DynamicBuffer& buf) const;
 
 		uint8_t* data();
-		size_t capacity();
+		const uint8_t* dataC() const;
+		size_t capacity() const;
 	};
+
+	typedef std::shared_ptr<DynamicBuffer> SharedDynamicBufferRef;
 }
 
 #endif
