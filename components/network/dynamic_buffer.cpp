@@ -96,6 +96,13 @@ namespace oppvs
 		memcpy(m_data.get() + oldSize, data, length);
 	}
 
+	void DynamicBuffer::updateData(const void* data, size_t length, size_t pos)
+	{
+		ASSERT(data != NULL || length == 0);
+		ASSERT(pos + length <= m_capacity);
+		memcpy(m_data.get() + pos, data, length);
+	}
+
 	void DynamicBuffer::moveTo(DynamicBuffer* buffer)
 	{
 		ASSERT(buffer != NULL);

@@ -7,8 +7,8 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../erro
 
 CFLAGS = -Wall -g
 
-LDFLAGS = -L$(rootDir)/../../libs/libsrtp
-LIBS = -lsrtp
+LDFLAGS = -L$(rootDir)/../../libs/libsrtp -L$(rootDir)/../../libs
+LIBS = -lsrtp -lmisc
 
 OBJLIBS = libnetworkengine.so
 

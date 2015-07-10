@@ -6,6 +6,7 @@
 #define OPPVS_DATA_STREAM_HPP
 
 #include "dynamic_buffer.hpp"
+#include <mutex>
 
 namespace oppvs
 {
@@ -15,8 +16,25 @@ namespace oppvs
 	private:
 		DynamicBuffer* p_buffer;	//Direct pointer to the buffer
 		SharedDynamicBufferRef	sp_buffer;	//Thread safe pointer to the buffer
+
+		size_t m_currentPos;
+		bool m_noGrow;	//Disable the buffer growing
+		std::mutex m_io_mutex;
+
 	public:
 		DataStream();
+		DataStream(SharedDynamicBufferRef&);
+
+		void reset();
+		size_t size();
+		size_t capacity();
+		void disableGrowing(bool);
+		size_t getPosition();
+		int setAbsolutePosition(size_t pos);
+		int setRelativePosition(int offset);
+
+		int write(void* data, size_t length);
+		int read(void* data, size_t length);
 
 		uint8_t* getUnSafeDataPointer();
 		SharedDynamicBufferRef getBuffer();

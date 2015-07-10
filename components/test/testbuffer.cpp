@@ -5,7 +5,6 @@
 
 #include "dynamic_buffer.hpp"
 
-
 using namespace oppvs;
 
 void thr(std::shared_ptr<DynamicBuffer> p)
@@ -71,6 +70,7 @@ int main()
               << ", p.use_count() = " << p.use_count() << '\n';
     t1.join(); t2.join(); t3.join();
     
+
 
 	return 0;
 }

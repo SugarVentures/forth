@@ -15,5 +15,7 @@ int main()
 	oppvs::StunSocket socket;
 	int ret = socket.initUDP(socketAddress, oppvs::RolePP);
 	printf("Init UDP: %d\n", ret);
+
+	
 	return 0;
 }

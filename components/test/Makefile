@@ -24,7 +24,7 @@ OBJS = $(subst .cpp,.o,$(SRCS))
 
 rootDir = .
 
-all: testvideoengine testnetworkengine teststream testvp teststun testbuffer proclib
+all: testvideoengine testnetworkengine teststream testvp teststun testbuffer testdatastream proclib
 
 testvideoengine: $(OBJS)
 	$(CXX) $(INCDIR) $(CFLAGS) $(VIDEOLDFLAGS) $(VIDEOLIBS) $(OBJS) -o testvideoengine
@@ -61,6 +61,12 @@ testbuffer: testbuffer.o
 	$(CXX)  $(INCDIR) $(CFLAGS) $(NETWORKLDFLAGS) $< $(NETWORKLIBS) -o $@ 
 
 testbuffer.o: testbuffer.cpp
+	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
+
+testdatastream: testdatastream.o
+	$(CXX)  $(INCDIR) $(CFLAGS) $(NETWORKLDFLAGS) $< $(NETWORKLIBS) -o $@ 
+
+testdatastream.o: testdatastream.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
 
 proclib:
