@@ -21,6 +21,11 @@ int main()
 	config.addressPrimaryAdvertised.setIP(oppvs::IPAddress("127.0.0.1"));
 	oppvs::StunServer server;
 	server.init(config);
+	server.start();
 
+	while (1)
+	{
+		usleep(100);
+	}
 	return 0;
 }

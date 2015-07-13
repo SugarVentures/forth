@@ -17,11 +17,16 @@ namespace oppvs
 		~StunServerThread();
 
 		int init(StunSocket* sockets, StunTransportAddressSet* stas, SocketRole role);
+		int start();
+		int run();
 	private:
 		StunSocket* m_sendSockets;
 		std::vector<StunSocket*> m_listenSockets;
 
 		StunTransportAddressSet m_stas;
+
+		static void* threadExecuteFunction(void* param);
+		bool m_exitThread;
 	};
 }
 

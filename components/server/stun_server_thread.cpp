@@ -3,7 +3,7 @@
 
 namespace oppvs
 {
-	StunServerThread::StunServerThread() : m_stas()
+	StunServerThread::StunServerThread() : Thread(threadExecuteFunction, this), m_stas(), m_exitThread(false)
 	{
 		m_sendSockets = NULL;
 		m_listenSockets.clear();
@@ -44,6 +44,28 @@ namespace oppvs
 			m_listenSockets.push_back(&sockets[role]);
 		}
 
+		return 0;
+	}
+
+	int StunServerThread::start()
+	{
+		create();
+		return 0;
+	}
+
+	void* StunServerThread::threadExecuteFunction(void* pthis)
+	{
+		StunServerThread* thread = (StunServerThread*)pthis;
+		thread->run();
+		return NULL;
+	}
+
+	int StunServerThread::run()
+	{
+		while (!m_exitThread)
+		{
+			usleep(100);
+		}
 		return 0;
 	}
 }

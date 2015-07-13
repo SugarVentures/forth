@@ -102,6 +102,11 @@ namespace oppvs
 
 	int StunServer::start()
 	{
+		for (int i = 0; i < m_threads.size(); i++)
+		{
+			StunServerThread* thread = m_threads[i];
+			thread->start();
+		}
 		return 0;
 	}
 
