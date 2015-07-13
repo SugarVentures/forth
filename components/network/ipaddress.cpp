@@ -27,4 +27,20 @@ namespace oppvs
 	{
 		return m_addressFamily;
 	}
+
+	bool IPAddress::isZero() const
+	{
+		const static uint8_t ZERO_ARRAY[16] = {};
+		if (m_addressFamily == AF_INET)
+		{
+			
+			return !memcmp(&mu_address.ip4, ZERO_ARRAY, sizeof(mu_address.ip4));
+		}
+		if (m_addressFamily == AF_INET6)
+		{
+			return !memcmp(&mu_address.ip6, ZERO_ARRAY, sizeof(mu_address.ip6));
+		}
+		printf("Not ipv4 or ipv6\n");
+		return 0;
+	}
 }

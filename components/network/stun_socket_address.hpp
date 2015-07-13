@@ -10,6 +10,7 @@ namespace oppvs
 	{
 	public:
 		void applyXorMap(const StunTransactionId&);
+		bool isZeroAddress() const;
 	};
 }
 

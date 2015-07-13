@@ -30,4 +30,9 @@ namespace oppvs
 	        pIp[i] = pIp[i] ^ transid.id[i];
 	    }
 	}
+
+	bool StunSocketAddress::isZeroAddress() const
+	{
+		return m_ip.isZero();
+	}
 }

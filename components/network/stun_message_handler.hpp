@@ -8,7 +8,7 @@ namespace oppvs
 	struct StunTransportAddress
 	{
 		StunSocketAddress addr;
-		bool fValid; // set to false if not valid (basic mode and most TCP/SSL scenarios)
+		bool isValid; // set to false if not valid (basic mode and most TCP/SSL scenarios)
 	};
 
 	struct StunTransportAddressSet

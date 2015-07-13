@@ -15,6 +15,7 @@ void thr(std::shared_ptr<DynamicBuffer> p)
     {
       static std::mutex io_mutex;
       std::lock_guard<std::mutex> lk(io_mutex);
+      std::cout << std::this_thread::get_id() << '\n';
       lp->setSize(lp->size() + 2);
       std::cout << "local pointer in a thread:\n"
                 << "  lp.size() = " << lp.get()

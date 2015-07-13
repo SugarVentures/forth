@@ -50,6 +50,8 @@ namespace oppvs
 	  		int getAddressFamily() const;
 
 	  		bool getIPFromSockAddr(const struct sockaddr& addr);
+
+	  		bool isZero() const;
 	  		
 		private:
 			int m_addressFamily;

@@ -2,7 +2,7 @@
 
 #include "stun_socket_address.hpp"
 #include "stun_socket.hpp"
-
+#include "stun_server.hpp"
 
 int main()
 {
@@ -12,10 +12,15 @@ int main()
 
 	//socketAddress.applyXorMap(transactionId);
 
-	oppvs::StunSocket socket;
-	int ret = socket.initUDP(socketAddress, oppvs::RolePP);
-	printf("Init UDP: %d\n", ret);
+	oppvs::StunServerConfiguration config;
+	config.enabledPP = true;
+	config.enabledPA = true;
+	config.enabledAP = true;
+	config.enabledAA = true;
 
-	
+	config.addressPrimaryAdvertised.setIP(oppvs::IPAddress("127.0.0.1"));
+	oppvs::StunServer server;
+	server.init(config);
+
 	return 0;
 }

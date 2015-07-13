@@ -15,9 +15,6 @@ void thr(DataStream* p, int i)
     DataStream *lp = p; // thread-safe, even though the
                                   // shared use_count is incremented
     {
-      //static std::mutex io_mutex;
-      //std::lock_guard<std::mutex> lk(io_mutex);
-      //std::cout << std::this_thread::get_id() << '\n';
       uint8_t no = 1;
       if (i % 2)
       	lp->write(&no, 1);
@@ -27,7 +24,10 @@ void thr(DataStream* p, int i)
       	
       }
       
-      	std::cout << "Size of data stream: " << std::this_thread::get_id() << " " << lp->size() << std::endl;
+      static std::mutex io_mutex;
+      std::lock_guard<std::mutex> lk(io_mutex);
+      
+      std::cout << "Size of data stream: " << std::this_thread::get_id() << " " << lp->size() << std::endl;
     }
 }
 
@@ -60,19 +60,15 @@ int main()
 	std::cout << "multithread" << std::endl;
 
 	//Test multithread
-	/*std::thread t[10];
-	for (int i = 0; i < 10; i++)
+	size_t n = 10;
+	std::thread t[10];
+	for (int i = 0; i < n; i++)
 	{
 		t[i] = std::thread(thr, &dataStream, i);
-		std::cout << "Size of data stream: " << t[i].get_id() << std::endl;
-		t[i].join();
-	}*/
-	std::thread t1(thr, &dataStream, 1);
-	t1.join();
-	std::thread t2(thr, &dataStream, 2);
-	t2.join();
+
+	}
 	
-    //for (auto& th : t) th.join();
+    for (auto& th : t) th.join();
     
 
 	return 0;

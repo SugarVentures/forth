@@ -1,7 +1,10 @@
 #ifndef OPPVS_STUN_SERVER_HPP
 #define OPPVS_STUN_SERVER_HPP
 
-#include "stun_socket_address.hpp"
+#include "stun_socket.hpp"
+#include "stun_message_handler.hpp"
+#include "stun_server_thread.hpp"
+#include <vector>
 
 namespace oppvs
 {
@@ -27,7 +30,7 @@ namespace oppvs
 
 		bool enabledDosProtection;
 
-		StunServerConfiguration() :
+		StunServerConfiguration()
 		{
 			enabledPP = false;
 			enabledPA = false;
@@ -43,16 +46,20 @@ namespace oppvs
 	class StunServer
 	{
 	public:
-		int init();
+		int init(const StunServerConfiguration&);
 		int shutdown();
 
 		int start();
 		int stop();
-	private:
-		StunSocketAddress m_sockets[4];
 
 		StunServer();
 		~StunServer();
+	private:
+		StunSocket m_sockets[4];
+		std::vector<StunServerThread*> m_threads;
+
+		int addSocket(StunTransportAddressSet* pStas, SocketRole role, 
+			const StunSocketAddress& addressListen, const StunSocketAddress& addressAdvertised);
 	};
 }
 

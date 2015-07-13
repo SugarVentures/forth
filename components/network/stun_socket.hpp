@@ -14,6 +14,8 @@ namespace oppvs
 
 		void reset();
 		int init(int socktype, const StunSocketAddress& addlocal, SocketRole role, bool fSetReuseFlag);
+
+		
 	public:
 		StunSocket();
 		int Close();
@@ -22,6 +24,7 @@ namespace oppvs
 		void setRole(SocketRole);
 
 		int initUDP(const StunSocketAddress& addlocal, SocketRole role);
+		bool isValid();
 
 	};
 }
