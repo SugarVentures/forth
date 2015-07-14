@@ -54,6 +54,14 @@ namespace oppvs
 		return send(destsock, msg, len, 0);
 	}
 
+	int PhysicalSocket::Send(int sockfd, void* msg, uint16_t len, const SocketAddress& dest)
+	{
+		struct sockaddr_in sockAddr;
+		dest.toSocketAddr(&sockAddr);
+		return sendto(sockfd, msg, len, 0, (struct sockaddr*)&sockAddr, sizeof(sockAddr));
+		return 0;
+	}
+
 	int PhysicalSocket::Receive(void* msg, uint16_t len)
 	{
 		return recv(m_socketfd, msg, len, 0);
