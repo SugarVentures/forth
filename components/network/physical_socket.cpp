@@ -97,4 +97,9 @@ namespace oppvs
 	{
 		return m_remoteAddress;
 	}
+
+	int PhysicalSocket::getSocketHandle()
+	{
+		return m_socketfd;
+	}
 }

@@ -33,6 +33,7 @@ namespace oppvs
 		void setReceiveTimeOut(int expire);
 		SocketAddress& getLocalAddress();
 		SocketAddress& getRemoteAddress();
+		int getSocketHandle();
 	
 	protected:
 		int m_socketfd;
