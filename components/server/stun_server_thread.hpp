@@ -21,12 +21,15 @@ namespace oppvs
 		int run();
 	private:
 		StunSocket* m_sendSockets;
+		int m_rotation;
 		std::vector<StunSocket*> m_listenSockets;
 
 		StunTransportAddressSet m_stas;
+		bool m_exitThread;
 
 		static void* threadExecuteFunction(void* param);
-		bool m_exitThread;
+		StunSocket* waitForSocketData();
+		
 	};
 }
 
