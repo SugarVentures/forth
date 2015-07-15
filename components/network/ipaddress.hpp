@@ -30,12 +30,18 @@ namespace oppvs
 			}
 
 			IPAddress(const std::string& hostname);
+			IPAddress(int family): m_addressFamily(family) {}
 
 			virtual ~IPAddress() {}
 
 			explicit IPAddress(const in_addr& ip4) : m_addressFamily(AF_INET) {
 	    		memset(&mu_address, 0, sizeof(mu_address));
 	    		mu_address.ip4 = ip4;
+	  		}
+
+	  		explicit IPAddress(const in6_addr& ip6) : m_addressFamily(AF_INET6) {
+	  			memset(&mu_address, 0, sizeof(mu_address));
+	  			mu_address.ip6 = ip6;
 	  		}
 
 	  		std::string toString() const;
