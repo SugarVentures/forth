@@ -112,4 +112,11 @@ namespace oppvs
 		m_allocatedSize = 0;
 		m_capacity = 0;
 	}
+
+	void DynamicBuffer::reset()
+	{
+		m_allocatedSize = 0;
+		m_capacity = 0;
+		m_data.reset(nullptr);
+	}
 }

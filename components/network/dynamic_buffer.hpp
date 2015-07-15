@@ -27,6 +27,7 @@ namespace oppvs
 		void appendData(const void* data, size_t length);
 		void updateData(const void* data, size_t length, size_t pos);
 		void moveTo(DynamicBuffer* buffer);
+		void reset();
 
 		DynamicBuffer& operator=(const DynamicBuffer& buf);
 		bool operator==(const DynamicBuffer& buf) const;
