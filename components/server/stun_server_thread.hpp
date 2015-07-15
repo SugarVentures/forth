@@ -6,6 +6,7 @@
 
 #include "stun_socket.hpp"
 #include "stun_message_handler.hpp"
+#include "dynamic_buffer.hpp"
 #include <vector>
 
 namespace oppvs
@@ -29,6 +30,11 @@ namespace oppvs
 
 		static void* threadExecuteFunction(void* param);
 		StunSocket* waitForSocketData();
+		int allocBuffers();
+		int releaseBuffers();
+
+		SharedDynamicBufferRef m_incomingBuffer;
+		SharedDynamicBufferRef m_outgoingBuffer;
 		
 	};
 }

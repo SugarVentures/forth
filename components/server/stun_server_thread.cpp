@@ -55,6 +55,7 @@ namespace oppvs
 		}
 
 		m_exitThread = false;
+		allocBuffers();
 		return 0;
 	}
 
@@ -93,7 +94,7 @@ namespace oppvs
 	    }
 
 	    // wait indefinitely for a socket
-    	ret = select(highestSocketValue+1, &set, NULL, NULL, NULL);
+    	ret = select(highestSocketValue + 1, &set, NULL, NULL, NULL);
     	if (ret < 0)
     	{
     		printf("Select error\n");
@@ -123,6 +124,7 @@ namespace oppvs
 	{
 		size_t noSockets = m_listenSockets.size();
 		bool isMultiSockets = (noSockets > 1);
+		int flags = isMultiSockets ? MSG_DONTWAIT : 0;
 		StunSocket* psocket = m_listenSockets[0];
 		int noSendSockets = 0;
 		noSendSockets += (int)(m_stas.set[RolePP].isValid);
@@ -130,19 +132,46 @@ namespace oppvs
 		noSendSockets += (int)(m_stas.set[RoleAP].isValid);
 		noSendSockets += (int)(m_stas.set[RoleAA].isValid);
 
-		printf("Starting listener: %d send %d recv\n", noSockets, noSendSockets);
+		printf("Starting listener: %lu send %d recv\n", noSockets, noSendSockets);
 
 		while (!m_exitThread)
 		{
 			if (isMultiSockets)
 			{
 				psocket = waitForSocketData();
-				if (psocket)
-					printf("Selected socket: %s\n", psocket->getLocalAddress().toString().c_str());
-				psocket = NULL;
 			}
-			usleep(100);
+			ASSERT(psocket != NULL);
+			
+			StunSocketAddress remote;
+			StunSocketAddress local;
+			int rcvlen = psocket->ReceiveMsg(psocket->getSocketHandle(), 
+				m_incomingBuffer->data(), m_incomingBuffer->size(), flags, remote, local);
+
+			if (rcvlen < 0)
+				continue;
+
+			local.setPort(psocket->getLocalAddress().getPort());
+
+			printf("Receive data from %s at %s\n", remote.toString().c_str(), local.toString().c_str());
+			m_incomingBuffer->setSize(rcvlen);
+			
 		}
+		return 0;
+	}
+
+	int StunServerThread::allocBuffers()
+	{
+		m_incomingBuffer = SharedDynamicBufferRef(new DynamicBuffer());
+		m_incomingBuffer->setSize(MAX_STUN_MESSAGE_SIZE);
+		m_outgoingBuffer = SharedDynamicBufferRef(new DynamicBuffer());
+		m_outgoingBuffer->setSize(MAX_STUN_MESSAGE_SIZE);	
+		return 0;
+	}
+
+	int StunServerThread::releaseBuffers()
+	{
+		m_incomingBuffer->reset();
+		m_outgoingBuffer->reset();
 		return 0;
 	}
 }
