@@ -7,6 +7,9 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../erro
 
 CFLAGS = -Wall -g
 
+#IP6 support in OSX
+CFLAGS +=  -D__APPLE_USE_RFC_3542
+
 LDFLAGS = -L$(rootDir)/../../libs/libsrtp -L$(rootDir)/../../libs
 LIBS = -lsrtp -lmisc
 

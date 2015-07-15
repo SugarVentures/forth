@@ -15,6 +15,8 @@ namespace oppvs
 		SocketAddress();
 		SocketAddress(const struct sockaddr_in& addr);
 		SocketAddress(const struct sockaddr& addr);
+		SocketAddress(const struct sockaddr_in6 addr);
+		SocketAddress(int family);
 
 		void setIP(const IPAddress& ip);
 		const IPAddress& getIP() const;
@@ -26,6 +28,7 @@ namespace oppvs
 
 		void toSocketAddr(struct sockaddr_in* addr) const;
 		std::string toString() const;
+
 	
 	protected:
 		IPAddress m_ip;

@@ -29,19 +29,24 @@ namespace oppvs
 		virtual int Send(int destsock, void* msg, uint16_t len);
 		virtual int Send(int sockfd, void* msg, uint16_t len, const SocketAddress& dest);
 		virtual int Receive(void* msg, uint16_t len);
+		virtual int ReceiveMsg(int sockfd, void* buf, uint16_t len, int flags, SocketAddress& src, SocketAddress& dest);
 		virtual int Close(int destsock);
 
 		void setReceiveTimeOut(int expire);
 		SocketAddress& getLocalAddress();
 		SocketAddress& getRemoteAddress();
 		int getSocketHandle();
-	
+
+		int enablePacketInfoOption(bool enable);
 	protected:
 		int m_socketfd;
 		SocketAddress m_localAddress;
 		SocketAddress m_remoteAddress;
 	private:
-		
+		int enablePacketInfoOptionCommon(int level, int option1, int option2, bool enable);
+		int enablePacketInfoOptionIpv4(bool enable);
+		int enablePacketInfoOptionIpv6(bool enable);
+	
 		int m_backlog;
 	};
 }

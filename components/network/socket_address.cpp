@@ -25,6 +25,17 @@ namespace oppvs
 		}
 	}
 
+	SocketAddress::SocketAddress(int family)
+	{
+		m_ip = IPAddress(family);
+	}
+
+	SocketAddress::SocketAddress(const struct sockaddr_in6 addr)
+	{
+		m_ip = IPAddress(addr.sin6_addr);
+		m_port = ntohs(addr.sin6_port);
+	}
+
 	void SocketAddress::clear()
 	{
 		m_ip = IPAddress();
