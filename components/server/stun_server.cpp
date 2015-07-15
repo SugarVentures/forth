@@ -22,6 +22,7 @@ namespace oppvs
 			printf("Failed to init udp for primary address \n");
 			return -1;
 		}
+		m_sockets[role].enablePacketInfoOption(true);
 		printf("Success to init %d\n", role);
 		pStas->set[role].isValid = true;
 		if (addressAdvertised.isZeroAddress() == false)
