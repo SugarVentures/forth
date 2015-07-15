@@ -142,18 +142,17 @@ namespace oppvs
 			}
 			ASSERT(psocket != NULL);
 			
-			StunSocketAddress remote;
-			StunSocketAddress local;
 			int rcvlen = psocket->ReceiveMsg(psocket->getSocketHandle(), 
-				m_incomingBuffer->data(), m_incomingBuffer->size(), flags, remote, local);
+				m_incomingBuffer->data(), m_incomingBuffer->size(), flags, m_incomingMessage.remoteAddress, m_incomingMessage.localAddress);
 
 			if (rcvlen < 0)
 				continue;
 
-			local.setPort(psocket->getLocalAddress().getPort());
-
-			printf("Receive data from %s at %s\n", remote.toString().c_str(), local.toString().c_str());
+			m_incomingMessage.localAddress.setPort(psocket->getLocalAddress().getPort());
+			m_incomingMessage.role = psocket->getRole();
 			m_incomingBuffer->setSize(rcvlen);
+
+			handleMessage();
 			
 		}
 		return 0;
@@ -172,6 +171,24 @@ namespace oppvs
 	{
 		m_incomingBuffer->reset();
 		m_outgoingBuffer->reset();
+		return 0;
+	}
+
+	int StunServerThread::handleMessage()
+	{
+		printf("Receive data from %s at %s\n", m_incomingMessage.remoteAddress.toString().c_str(), 
+			m_incomingMessage.localAddress.toString().c_str());
+
+		m_outgoingMessage.destinationAddress = m_incomingMessage.remoteAddress;
+		m_outgoingMessage.role = m_incomingMessage.role;
+
+		ASSERT(m_sendSockets[m_outgoingMessage.role].isValid());
+		int sock = m_sendSockets[m_outgoingMessage.role].getSocketHandle();
+		StunSocket* psocket = &m_sendSockets[m_outgoingMessage.role];
+		ASSERT(sock != -1);
+		char buffer[20] = "hello";
+		if (psocket->Send(sock, buffer, 20, m_outgoingMessage.destinationAddress) >= 0)
+			printf("Sent response to %s\n", m_outgoingMessage.destinationAddress.toString().c_str());
 		return 0;
 	}
 }

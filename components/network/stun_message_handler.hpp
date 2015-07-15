@@ -5,6 +5,23 @@
 
 namespace oppvs
 {
+	class StunMessageHandler;
+
+	struct StunIncomingMessage
+	{
+		SocketRole role;
+		StunSocketAddress localAddress;
+		StunSocketAddress remoteAddress;
+		StunMessageHandler *handler;
+		bool isConnectionOriented;     // true for TCP or TLS (where we can't send back to a different port)
+	};
+
+	struct StunOutgoingMessage
+	{
+		SocketRole role;
+		StunSocketAddress destinationAddress;
+	};
+
 	struct StunTransportAddress
 	{
 		StunSocketAddress addr;

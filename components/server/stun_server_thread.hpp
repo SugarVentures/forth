@@ -32,9 +32,13 @@ namespace oppvs
 		StunSocket* waitForSocketData();
 		int allocBuffers();
 		int releaseBuffers();
+		int handleMessage();
 
 		SharedDynamicBufferRef m_incomingBuffer;
 		SharedDynamicBufferRef m_outgoingBuffer;
+
+		StunIncomingMessage m_incomingMessage;
+		StunOutgoingMessage m_outgoingMessage;
 		
 	};
 }
