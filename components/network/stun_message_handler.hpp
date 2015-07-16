@@ -2,6 +2,7 @@
 #define OPPVS_STUN_MESSAGE_HANDLER_HPP
 
 #include "stun_socket.hpp"
+#include "data_stream.hpp"
 
 namespace oppvs
 {
@@ -35,7 +36,14 @@ namespace oppvs
 
 	class StunMessageHandler
 	{
-		
+    private:
+        DataStream m_dataStream;
+        StunTransactionId m_transactionId;
+    public:
+        StunMessageHandler();
+        DataStream& getDataStream();
+
+        int addMessageType(StunMessageType msgType, StunMessageClass msgClass);
 	};
 }
 
