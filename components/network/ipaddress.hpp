@@ -54,6 +54,7 @@ namespace oppvs
 	  		}
 
 	  		int getAddressFamily() const;
+	  		int getRawBytes(uint8_t* data, uint16_t length) const;
 
 	  		bool getIPFromSockAddr(const struct sockaddr& addr);
 

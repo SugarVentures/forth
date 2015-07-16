@@ -39,13 +39,20 @@ namespace oppvs
     private:
         DataStream m_dataStream;
         StunTransactionId m_transactionId;
+
+        int addMappedAddressCommon(uint16_t type, const StunSocketAddress& address);
     public:
         StunMessageHandler();
         DataStream& getDataStream();
 
+        //Message Header
         int addMessageType(StunMessageType msgType, StunMessageClass msgClass);
         int addTransactionID(const StunTransactionId& transactionid);	//4 bytes magic cookies & 12 bytes transaction id
         int addMessageLength();
+
+        //Message Attributes
+        int addAttributeHeader(uint16_t type, uint16_t size);
+        int addMappedAddress(const StunSocketAddress& address);
 	};
 
 }

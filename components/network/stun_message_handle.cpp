@@ -53,4 +53,50 @@ namespace oppvs {
     	m_dataStream.setAbsolutePosition(currentPos);
     	return 0;
     }
+
+    int StunMessageHandler::addAttributeHeader(uint16_t type, uint16_t size)
+    {
+    	int ret = 0;
+    	ret = m_dataStream.writeUInt16(htons(type));
+    	if (ret >= 0)
+    		ret = m_dataStream.writeUInt16(htons(size));
+    	return ret;
+    }
+
+    int StunMessageHandler::addMappedAddressCommon(uint16_t attribute, const StunSocketAddress& address)
+    {
+    	uint16_t port;
+    	size_t length;
+    	uint8_t ip[STUN_IPV6_LENGTH];
+    
+    	uint8_t family = (address.getIP().getAddressFamily() == AF_INET) ? STUN_ATTRIBUTE_FIELD_IPV4 :STUN_ATTRIBUTE_FIELD_IPV6;
+    	size_t attributeSize = (family == STUN_ATTRIBUTE_FIELD_IPV4) ? STUN_ATTRIBUTE_MAPPEDADDRESS_SIZE_IPV4 : STUN_ATTRIBUTE_MAPPEDADDRESS_SIZE_IPV6;
+
+    	if (addAttributeHeader(attribute, attributeSize) < 0)
+    		return -1;
+
+    	port = address.getPort();
+    	int ret = 0;
+    	length = address.getIP().getRawBytes(ip, sizeof(ip));
+
+    	if (length != STUN_IPV6_LENGTH && length != STUN_IPV4_LENGTH)
+    		return -1;
+    	ret = m_dataStream.writeUInt8(0);
+    	if (ret < 0)
+    		return -1;
+    	ret = m_dataStream.writeUInt8(family);
+    	if (ret < 0)
+    		return -1;
+    	ret = m_dataStream.writeUInt16(port);
+    	if (ret < 0)
+    		return -1;
+    	ret = m_dataStream.write(ip, length);
+
+    	return 0;
+    }
+
+    int StunMessageHandler::addMappedAddress(const StunSocketAddress& address)
+    {
+    	return addMappedAddressCommon(STUN_ATTRIBUTE_MAPPEDADDRESS, address);
+    }
 }

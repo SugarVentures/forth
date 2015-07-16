@@ -37,7 +37,9 @@ namespace oppvs
 		int write(void* data, size_t length);
 		int read(void* data, size_t length);
 
+		int writeUInt8(uint8_t value) { return write(&value, sizeof(value)); }
 		int writeUInt16(uint16_t value) { return write(&value, sizeof(value)); }
+
 
 		uint8_t* getUnSafeDataPointer();
 		SharedDynamicBufferRef getBuffer();
