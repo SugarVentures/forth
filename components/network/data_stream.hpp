@@ -25,6 +25,7 @@ namespace oppvs
 		DataStream();
 		DataStream(SharedDynamicBufferRef&);
 
+		void grow(size_t size);
 		void reset();
 		size_t size();
 		size_t capacity();
@@ -35,6 +36,8 @@ namespace oppvs
 
 		int write(void* data, size_t length);
 		int read(void* data, size_t length);
+
+		int writeUInt16(uint16_t value) { return write(&value, sizeof(value)); }
 
 		uint8_t* getUnSafeDataPointer();
 		SharedDynamicBufferRef getBuffer();
