@@ -30,4 +30,27 @@ namespace oppvs {
 
     	return 0;
     }
+
+    int StunMessageHandler::addTransactionID(const StunTransactionId& transactionid)
+    {
+    	m_transactionId = transactionid;
+    	return m_dataStream.write((void*)transactionid.id, sizeof(transactionid.id));
+    }
+
+    int StunMessageHandler::addMessageLength()
+    {
+    	uint16_t len = m_dataStream.size();
+    	size_t currentPos = m_dataStream.getPosition();
+    	if (len < STUN_HEADER_SIZE)
+    	{
+    		printf("Wrong size in stun message\n");
+    		return -1;
+    	}
+
+    	len -= STUN_HEADER_SIZE;
+    	m_dataStream.setAbsolutePosition(2);	//Message length is at 3 & 4th byte
+    	m_dataStream.writeUInt16(htons(len));
+    	m_dataStream.setAbsolutePosition(currentPos);
+    	return 0;
+    }
 }

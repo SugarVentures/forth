@@ -44,7 +44,10 @@ namespace oppvs
         DataStream& getDataStream();
 
         int addMessageType(StunMessageType msgType, StunMessageClass msgClass);
+        int addTransactionID(const StunTransactionId& transactionid);	//4 bytes magic cookies & 12 bytes transaction id
+        int addMessageLength();
 	};
+
 }
 
 #endif
