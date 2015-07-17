@@ -34,11 +34,12 @@ namespace oppvs
 		int setAbsolutePosition(size_t pos);
 		int setRelativePosition(int offset);
 
-		int write(void* data, size_t length);
+		int write(const void* data, size_t length);
 		int read(void* data, size_t length);
 
 		int writeUInt8(uint8_t value) { return write(&value, sizeof(value)); }
 		int writeUInt16(uint16_t value) { return write(&value, sizeof(value)); }
+		int writeUInt32(uint32_t value) { return write(&value, sizeof(value)); }
 
 
 		uint8_t* getUnSafeDataPointer();

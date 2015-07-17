@@ -202,7 +202,6 @@ namespace oppvs
                 }
 #endif
             }
-		    printf("Src: %s Dest: %s\n", src.toString().c_str(), dest.toString().c_str());
 
 		}
 

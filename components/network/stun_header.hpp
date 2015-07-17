@@ -94,10 +94,10 @@ namespace oppvs
 
 	enum StunMessageClass
 	{
-	    StunMsgClassRequest=0x00,
-	    StunMsgClassIndication=0x01,
-	    StunMsgClassSuccessResponse=0x02,
-	    StunMsgClassFailureResponse=0x03,
+	    StunMsgClassRequest = 0x00,
+	    StunMsgClassIndication = 0x01,
+	    StunMsgClassSuccessResponse = 0x02,
+	    StunMsgClassFailureResponse = 0x03,
 	    StunMsgClassInvalidMessageClass = 0xff
 	};
 
@@ -202,5 +202,10 @@ namespace oppvs
 	    return (SocketRole)(((uint16_t)sr) ^ 0x02);
 	}
 
+	inline bool IsValidTransactionId(StunTransactionId transactionid)
+	{
+		uint8_t zerobytes[sizeof(transactionid.id)] = {};
+		return (memcmp(transactionid.id, zerobytes, sizeof(transactionid.id)) != 0);
+	}
 }
 #endif

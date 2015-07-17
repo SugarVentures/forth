@@ -11,10 +11,21 @@
 #define ASSERT( expression ) 				        \
   	oppvs::localAssert(expression, __FUNCTION__, __FILE__, __LINE__, #expression)
 	
-#elif( DEBUG == 0 )
+#else
 #define ASSERT( result )					\
 	void(0)
-#endif 
+#endif
+
+inline void cta_noop(const char* psz)
+{
+    ;
+}
+
+#define COMPILE_TIME_ASSERT(x) {char name$$[(x)?1:-1]; cta_noop(name$$);}
+
+#ifndef UNREFERENCED_VARIABLE
+#define UNREFERENCED_VARIABLE(unrefparam) ((void)unrefparam)
+#endif
 
 namespace oppvs 
 {

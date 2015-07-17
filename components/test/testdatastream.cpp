@@ -33,12 +33,18 @@ void thr(DataStream* p, int i)
 
 int main()
 {
+	DataStream ds;
+	ds.grow(2);
+	std::cout << ds.size() << " " << ds.capacity() << std::endl;
+
 	SharedDynamicBufferRef bufRef(new DynamicBuffer());
 	DataStream dataStream(bufRef);
 
+
 	uint16_t a = 12;
 	dataStream.write(&a, sizeof(uint16_t));
-	std::cout << "Size of data stream: " << dataStream.size() << std::endl;
+	dataStream.grow(3);
+	std::cout << "Size of data stream: " << dataStream.size() << " " << dataStream.capacity() << std::endl;
 
 	uint8_t b = 1;
 	if (dataStream.setAbsolutePosition(1) < 0)

@@ -3,15 +3,16 @@ CXX = g++
 RM = rm -f
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error  \
-		 -I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include  
+		 -I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include   \
+		 -I$(rootDir)/../misc
 
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -std=c++11
 
 #IP6 support in OSX
 CFLAGS +=  -D__APPLE_USE_RFC_3542
 
 LDFLAGS = -L$(rootDir)/../../libs/libsrtp -L$(rootDir)/../../libs
-LIBS = -lsrtp -lmisc
+LIBS = -lsrtp -lmisc -lssl -lmisccpp
 
 OBJLIBS = libnetworkengine.so
 

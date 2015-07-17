@@ -53,7 +53,7 @@ namespace oppvs
 		return sp_buffer;
 	}
 
-	int DataStream::write(void* data, size_t length)
+	int DataStream::write(const void* data, size_t length)
 	{
 		if (data == NULL || length == 0)
 		{
