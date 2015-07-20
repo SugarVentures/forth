@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 
 		int socket = clientSocket.getSocketHandle();
 
-		if (clientSocket.Send(socket, testmsg, sizeof(testmsg), destination) < 0)
+		if (clientSocket.Send(socket, buffer->data(), buffer->size(), destination) < 0)
 		{
 			std::cout << "Send error " << strerror(errno);
 		}

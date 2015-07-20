@@ -207,5 +207,7 @@ namespace oppvs
 		uint8_t zerobytes[sizeof(transactionid.id)] = {};
 		return (memcmp(transactionid.id, zerobytes, sizeof(transactionid.id)) != 0);
 	}
+
+	
 }
 #endif

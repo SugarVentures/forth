@@ -5,10 +5,14 @@
 #include "data_stream.hpp"
 #include "stun_auth.hpp"
 #include "atomic_helper.hpp"
+#include "fasthash.h"
 
 namespace oppvs
 {
     class StunMessageBuilder;
+    int getXorMappedAddress(uint8_t* pData, size_t size, StunTransactionId &transid, StunSocketAddress* pAddr);
+	int getMappedAddress(uint8_t* pData, size_t size, StunSocketAddress* pAddr);
+
 
 	struct StunIncomingMessage
 	{
@@ -87,6 +91,93 @@ namespace oppvs
     	int addMessageIntegrityShortTerm(const char* pPassword);
     	int addMessageIntegrityLongTerm(const char* pUserName, const char* pRealm, const char* pPassword);
 
+	};
+
+	class StunMessageParser
+	{
+	public:
+		enum ReaderParseState
+	    {
+	        HeaderNotRead,
+	        HeaderValidated,
+	        BodyValidated,
+	        ParseError
+	    };
+
+		StunMessageParser();
+		void reset();
+
+		void setAllowLegacyFormat(bool value);
+    
+    	ReaderParseState addBytes(const uint8_t* pData, uint32_t size);
+    	uint16_t getNumberBytesNeeded();
+    	ReaderParseState getState();
+
+    	bool isMessageLegacyFormat();
+    
+	    bool hasFingerprintAttribute();
+	    bool isFingerprintAttributeValid();
+    
+    	bool hasMessageIntegrityAttribute();
+    	int validateMessageIntegrityShort(const char* pszPassword);
+    	int validateMessageIntegrityLong(const char* pszUser, const char* pszRealm, const char* pszPassword);
+    
+	    int getAttributeByType(uint16_t attributeType, StunAttribute* pAttribute);
+	    int getAttributeByIndex(int index, StunAttribute* pAttribute);
+	    int getAttributeCount();
+
+	    void getTransactionId(StunTransactionId* pTransId );
+	    StunMessageClass getMessageClass();
+	    uint16_t getMessageType();
+
+	    int getResponsePort(uint16_t *pPort);
+	    int getChangeRequest(StunChangeRequestAttribute* pChangeRequest);
+	    int getPaddingAttributeSize(uint16_t* pSizePadding);
+	    int getErrorCode(uint16_t* pErrorNumber);
+
+	    SharedDynamicBufferRef getBuffer();
+	    
+	    
+	    int getXorMappedAddress(StunSocketAddress* pAddress);
+	    int getMappedAddress(StunSocketAddress* pAddress);
+	    int getOtherAddress(StunSocketAddress* pAddress);
+	    int getResponseOriginAddress(StunSocketAddress* pAddress);
+	    
+	    int getStringAttributeByType(uint16_t attributeType, char* pszValue, /*in-out*/ size_t size);
+	    
+
+	   	DataStream& getStream();
+
+	private:
+		DataStream m_dataStream;
+		bool m_allowLegacyFormat;
+		bool m_messageIsLegacyFormat;
+
+		ReaderParseState m_state;
+
+		static const size_t MAX_NUM_ATTRIBUTES = 30;
+
+		typedef FastHash<uint16_t, StunAttribute, MAX_NUM_ATTRIBUTES, 53> AttributeHashTable; // 53 is a prime number for a reasonable table width
+    
+    	AttributeHashTable m_mapAttributes;
+    
+    	// special index values for message integrity attribute validation
+    	int m_indexFingerprint;
+    	int m_indexMessageIntegrity;
+    	int m_countAttributes;
+    
+
+	    StunTransactionId m_transactionid;
+	    uint16_t m_msgTypeNormalized;
+	    StunMessageClass m_msgClass;
+	    uint16_t m_msgLength;
+
+	    int readHeader();
+	    int readBody();
+
+	    int getAddressHelper(uint16_t attribType, StunSocketAddress* pAddr);
+	    
+	    int validateMessageIntegrity(uint8_t* key, size_t keylength);
 	};
 
 }
