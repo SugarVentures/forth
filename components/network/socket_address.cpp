@@ -36,6 +36,14 @@ namespace oppvs
 		m_port = ntohs(addr.sin6_port);
 	}
 
+	SocketAddress::SocketAddress(uint32_t ipHostByteOrder, uint16_t port)
+	{
+	    in_addr addr = {};
+	    addr.s_addr = htonl(ipHostByteOrder);
+	    m_ip = IPAddress(addr);
+	    m_port = htons(port);
+	}
+
 	void SocketAddress::clear()
 	{
 		m_ip = IPAddress();

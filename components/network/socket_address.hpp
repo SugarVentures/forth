@@ -17,6 +17,7 @@ namespace oppvs
 		SocketAddress(const struct sockaddr& addr);
 		SocketAddress(const struct sockaddr_in6 addr);
 		SocketAddress(int family);
+		SocketAddress(uint32_t ipHostByteOrder, uint16_t port);
 
 		void setIP(const IPAddress& ip);
 		const IPAddress& getIP() const;
