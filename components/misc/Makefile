@@ -14,7 +14,7 @@ OBJLIBS = libmisc.so
 OBJLIBS_CPP = libmisccpp.so
 
 SRCS = md5.c random_unique32.c utility.c
-SRCS_CPP = atomic_helper.cpp
+SRCS_CPP = atomic_helper.cpp fasthash.cpp
 
 OBJS = $(subst .c,.o,$(SRCS))
 OBJS_CPP = $(subst .cpp,.o,$(SRCS_CPP))
@@ -32,6 +32,7 @@ $(OBJLIBS_CPP): $(OBJS_CPP)
 
 %.o: %.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -c -o $@ $<
+
 
 md5driver.o: md5main.c
 	$(CC) $(CFLAGS)  -o $@ -L. -lmisc $<
