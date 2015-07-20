@@ -25,6 +25,7 @@ namespace oppvs
 		DataStream();
 		DataStream(SharedDynamicBufferRef&);
 
+		void attach(SharedDynamicBufferRef& buf, bool allowWritting);
 		void grow(size_t size);
 		void reset();
 		size_t size();

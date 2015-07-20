@@ -12,6 +12,17 @@ namespace oppvs
 		p_buffer = spBuffer.get();
 	}
 
+	void DataStream::attach(SharedDynamicBufferRef& spBuffer, bool allowWritting)
+	{
+		reset();
+		sp_buffer = spBuffer;
+		p_buffer = sp_buffer.get();
+		if (sp_buffer && allowWritting)
+		{
+			sp_buffer->setSize(0);
+		}
+	}
+
 	void DataStream::grow(size_t size)
 	{
 		if (sp_buffer.get() == nullptr)
