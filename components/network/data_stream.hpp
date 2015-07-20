@@ -42,6 +42,9 @@ namespace oppvs
 		int writeUInt16(uint16_t value) { return write(&value, sizeof(value)); }
 		int writeUInt32(uint32_t value) { return write(&value, sizeof(value)); }
 
+		int readUInt8(uint8_t* pvalue) { return read(pvalue, sizeof(*pvalue)); }
+		int readUInt16(uint16_t* pvalue) { return read(pvalue, sizeof(*pvalue)); }
+		int readUInt32(uint32_t* pvalue) { return read(pvalue, sizeof(*pvalue)); }
 
 		uint8_t* getUnSafeDataPointer();
 		SharedDynamicBufferRef getBuffer();
