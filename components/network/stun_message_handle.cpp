@@ -622,9 +622,174 @@ namespace oppvs {
 		m_allowLegacyFormat = value;
 	}
     
-	/*StunMessageParser::ReaderParseState StunMessageParser::addBytes(const uint8_t* pData, uint32_t size)
+    int StunMessageParser::readHeader()
+    {
+    	bool isHeaderValid = false;
+	    uint16_t msgType;
+	    uint16_t msgLength;
+	    uint32_t cookie;
+	    StunTransactionId transID;
+
+	    if (m_dataStream.setAbsolutePosition(0) < 0)
+	    	return -1;
+	    if (m_dataStream.readUInt16(&msgType) < 0)
+	    	return -1;
+	    if (m_dataStream.readUInt16(&msgLength) < 0)
+	    	return -1;
+	    if (m_dataStream.read(&transID.id, sizeof(transID.id)) < 0)
+	    	return -1;
+
+	    // convert from big endian to native type
+	    msgType = ntohs(msgType);
+	    msgLength = ntohs(msgLength);
+
+	    memcpy(&cookie, transID.id, 4);
+	    cookie = ntohl(cookie);
+
+    	m_messageIsLegacyFormat = !(cookie == STUN_COOKIE);
+
+    	isHeaderValid = ( (0==(msgType & 0xc000)) && ((msgLength%4)==0) );
+
+    	// if we aren't in legacy format (the default), then the cookie field of the transaction id must be the STUN_COOKIE
+    	isHeaderValid = (isHeaderValid && (m_allowLegacyFormat || !m_messageIsLegacyFormat));
+
+    	if (isHeaderValid == false)
+    		return -1;
+
+    	m_msgTypeNormalized = (  (msgType & 0x000f) | ((msgType & 0x00e0)>>1) | ((msgType & 0x3E00)>>2)  );
+    	m_msgLength = msgLength;
+
+    	m_transactionid = transID;
+
+    	if(m_msgLength > MAX_STUN_MESSAGE_SIZE)
+    		return -1;
+
+
+	    if (STUN_IS_REQUEST(msgType))
+	    {
+	        m_msgClass = StunMsgClassRequest;
+	    }
+	    else if (STUN_IS_INDICATION(msgType))
+	    {
+	        m_msgClass = StunMsgClassIndication;
+	    }
+	    else if (STUN_IS_SUCCESS_RESP(msgType))
+	    {
+	        m_msgClass = StunMsgClassSuccessResponse;
+	    }
+	    else if (STUN_IS_ERR_RESP(msgType))
+	    {
+	        m_msgClass = StunMsgClassFailureResponse;
+	    }
+	    else
+	    {
+	        // couldn't possibly happen, because msgClass is only two bits
+	        m_msgClass = StunMsgClassInvalidMessageClass;
+	        return -1;
+	    }
+	    return 0;
+	    
+    }
+
+    int StunMessageParser::readBody()
+    {
+    	size_t currentSize = m_dataStream.size();
+    	size_t bytesConsumed = STUN_HEADER_SIZE;
+    	int hr = 0;
+
+    	if (m_dataStream.setAbsolutePosition(STUN_HEADER_SIZE) < 0)
+    		return -1;
+
+	    while (hr == 0 && (bytesConsumed < currentSize))
+	    {
+	        uint16_t attributeType;
+	        uint16_t attributeLength;
+	        uint16_t attributeOffset;
+	        int paddingLength=0;
+
+	        hr = m_dataStream.readUInt16(&attributeType);
+
+	        if (hr == 0)
+	        {
+	            hr = m_dataStream.readUInt16(&attributeLength);
+	        }
+
+	        if (hr == 0)
+	        {
+	            attributeOffset = m_dataStream.getPosition();
+	            attributeType = ntohs(attributeType);
+	            attributeLength = ntohs(attributeLength);
+
+	            // todo - if an attribute has no size, it's length is not padded by 4 bytes, right?
+	            if (attributeLength % 4)
+	            {
+	                paddingLength = 4 - attributeLength % 4;
+	            }
+
+	            hr = (attributeLength <= MAX_STUN_ATTRIBUTE_SIZE) ? 0 : -1;
+	        }
+
+	        if (hr == 0)
+	        {
+	            int result;
+	            StunAttribute attrib;
+	            attrib.attributeType = attributeType;
+	            attrib.size = attributeLength;
+	            attrib.offset = attributeOffset;
+
+	            // if we have already read in more attributes than MAX_NUM_ATTRIBUTES, then Insert call will fail (this is how we gate too many attributes)
+	            result = m_mapAttributes.Insert(attributeType, attrib);
+	            hr = (result >= 0) ? 0 : -1;
+	        }
+	        
+	        if (hr == 0)
+	        {
+	            
+	            if (attributeType == STUN_ATTRIBUTE_FINGERPRINT)
+	            {
+	                m_indexFingerprint = m_countAttributes;
+	            }
+	            
+	            if (attributeType == STUN_ATTRIBUTE_MESSAGEINTEGRITY)
+	            {
+	                m_indexMessageIntegrity = m_countAttributes;
+	            }
+	            
+	            m_countAttributes++;
+	        }
+	        
+
+	        
+	        if (hr == 0)
+	        {
+	            hr = m_dataStream.setRelativePosition(attributeLength);
+	        }
+
+	        // consume the padding
+	        if (hr == 0)
+	        {
+	            if (paddingLength > 0)
+	            {
+	                hr = m_dataStream.setRelativePosition(paddingLength);
+	            }
+	        }
+
+	        if (hr == 0)
+	        {
+	            bytesConsumed += sizeof(attributeType) + sizeof(attributeLength) + attributeLength + paddingLength;
+	        }
+	    }
+
+	    // I don't think we could consume more bytes than stream size, but it's a worthy check to still keep here
+	    hr = (bytesConsumed == currentSize) ? 0 : -1;
+
+	    return hr;
+    }
+
+	StunMessageParser::ReaderParseState StunMessageParser::addBytes(const uint8_t* pData, uint32_t size)
 	{
 	    size_t currentSize;
+	    int hr = 0;
 
 	    if (m_state == ParseError)
 	    {
@@ -650,45 +815,45 @@ namespace oppvs {
 	    {
 	        if (currentSize >= STUN_HEADER_SIZE)
 	        {
-	            hr = ReadHeader();
+	            hr = readHeader();
 
-	            _state = SUCCEEDED(hr) ? HeaderValidated : ParseError;
+	            m_state = hr == 0 ? HeaderValidated : ParseError;
 
-	            if (SUCCEEDED(hr) && (_msgLength==0))
+	            if (hr == 0 && (m_msgLength==0))
 	            {
-	                _state = BodyValidated;
+	                m_state = BodyValidated;
 	            }
 	        }
 	    }
 
-	    if (_state == HeaderValidated)
+	    if (m_state == HeaderValidated)
 	    {
-	        if (currentSize >= (_msgLength+STUN_HEADER_SIZE))
+	        if (currentSize >= (m_msgLength + STUN_HEADER_SIZE))
 	        {
-	            if (currentSize == (_msgLength+STUN_HEADER_SIZE))
+	            if (currentSize == (m_msgLength+STUN_HEADER_SIZE))
 	            {
-	                hr = ReadBody();
-	                _state = SUCCEEDED(hr) ? BodyValidated : ParseError;
+	                hr = readBody();
+	                m_state = hr == 0 ? BodyValidated : ParseError;
 	            }
 	            else
 	            {
 	                // TOO MANY BYTES FED IN
-	                _state = ParseError;
+	                m_state = ParseError;
 	            }
 	        }
 	    }
 
-	    if (_state == BodyValidated)
+	    if (m_state == BodyValidated)
 	    {
 	        // What?  After validating the body, the caller still passes in way too many bytes?
-	        if (currentSize > (_msgLength+STUN_HEADER_SIZE))
+	        if (currentSize > (m_msgLength + STUN_HEADER_SIZE))
 	        {
-	            _state = ParseError;
+	            m_state = ParseError;
 	        }
 	    }
 
-	    return _state;
-	}*/
+	    return m_state;
+	}
 
 	uint16_t StunMessageParser::getNumberBytesNeeded()
 	{
@@ -1127,20 +1292,81 @@ namespace oppvs {
     	return ::oppvs::getMappedAddress(pAddrStart, pAttrib->size, pAddr);
     }
 
-    /*int StunMessageParser::getXorMappedAddress(StunSocketAddress* pAddress)
+    int StunMessageParser::getXorMappedAddress(StunSocketAddress* pAddress)
     {
+	    int hr = getAddressHelper(STUN_ATTRIBUTE_XORMAPPEDADDRESS, pAddress);
+	    
+	    if (hr == -1)
+	    {
+	        // this is the vovida compat address attribute
+	        hr = getAddressHelper(STUN_ATTRIBUTE_XORMAPPEDADDRESS_OPTIONAL, pAddress);
+	    }
+	    
+	    if (hr == 0)
+	    {
+	        pAddress->applyXorMap(m_transactionid);
+	    }
 
-    }*/
+	    return hr;
+    }
 
     int StunMessageParser::getMappedAddress(StunSocketAddress* pAddress)
     {
     	return getAddressHelper(STUN_ATTRIBUTE_MAPPEDADDRESS, pAddress);
     }
 
-    /*int StunMessageParser::getOtherAddress(StunSocketAddress* pAddress);
-    int StunMessageParser::getResponseOriginAddress(StunSocketAddress* pAddress);
+    int StunMessageParser::getOtherAddress(StunSocketAddress* pAddress)
+    {
+    	int hr = 0;
     
-    int StunMessageParser::getStringAttributeByType(uint16_t attributeType, char* pszValue, /*in-out*/ //size_t size);
+	    hr = getAddressHelper(STUN_ATTRIBUTE_OTHER_ADDRESS, pAddress);
+	    
+	    if (hr == -1)
+	    {
+	        // look for the legacy changed address attribute that a legacy (RFC 3489) server would send
+	        hr = getAddressHelper(STUN_ATTRIBUTE_CHANGEDADDRESS, pAddress);
+	    }
+	    
+	    return hr;
+    }
+
+    int StunMessageParser::getResponseOriginAddress(StunSocketAddress* pAddress)
+    {
+    	int hr = 0;
+    
+    	hr = getAddressHelper(STUN_ATTRIBUTE_RESPONSE_ORIGIN, pAddress);
+    
+	    if (hr == -1)
+	    {
+	        // look for the legacy address attribute that a legacy (RFC 3489) server would send
+	        hr = getAddressHelper(STUN_ATTRIBUTE_SOURCEADDRESS, pAddress);
+	    }
+	    
+	    return hr;
+    }
+    
+    int StunMessageParser::getStringAttributeByType(uint16_t attributeType, char* pszValue, /*in-out*/ size_t size)
+    {
+	    StunAttribute* pAttrib = m_mapAttributes.Lookup(attributeType);
+	    
+	    if (pszValue == NULL || pAttrib == NULL)
+	    {
+	    	printf("Invalid argument \n");
+	    	return -1;
+	    }
+	    
+	    // size needs to be 1 greater than attrib.size so we can properly copy over a null char at the end
+	    if (pAttrib->size >= size)
+	    {
+	    	printf("Invalid argument \n");
+	    	return -1;
+	    }
+	    
+	    memcpy(pszValue, m_dataStream.getUnSafeDataPointer() + pAttrib->offset, pAttrib->size);
+	    pszValue[pAttrib->size] = '\0';
+	    
+		return 0;
+    }
     
 
    	DataStream& StunMessageParser::getStream()
@@ -1148,6 +1374,119 @@ namespace oppvs {
    		return m_dataStream;
    	}
 
+   	/*
+   		Functions of StunRequestHandler
+   	*/
+
+   	StunRequestHandler::StunRequestHandler() : mp_addrSet(NULL), mp_msgIn(NULL), mp_msgOut(NULL), 
+   		m_integrity(), m_error(), m_isRequestHasResponsePort(false), m_transactionid(), m_legacyMode(false)
+   	{
+
+   	}
+
+   	void StunRequestHandler::setMsgIn(const StunIncomingMessage* msgin)
+   	{
+   		mp_msgIn = msgin;
+   	}
+    	
+    void StunRequestHandler::setMsgOut(StunOutgoingMessage* msgout)
+    {
+    	mp_msgOut = msgout;
+    }
+
+    StunOutgoingMessage* StunRequestHandler::getMsgOut()
+    {
+    	return mp_msgOut;
+    }
+    	
+    void StunRequestHandler::setTransportAddressSet(StunTransportAddressSet* addrset)
+    {
+    	mp_addrSet = addrset;
+    }
+    
+
+   	int StunRequestHandler::processRequest(const StunIncomingMessage* msgIn, StunOutgoingMessage* msgOut, 
+    		StunTransportAddressSet* pAddressSet)
+   	{
+   		if (msgIn == NULL || msgOut == NULL)
+   		{
+   			printf("processRequest: Invalid argument\n");
+   			return -1;
+   		}
+
+   		if (msgIn->handler == NULL || !IsValidSocketRole(msgIn->role))
+   		{
+   			printf("processRequest: Invalid argument\n");
+   			return -1;
+   		}
+
+   		if (msgOut->buffer == NULL)
+   		{
+   			printf("processRequest: Invalid argument\n");
+   			return -1;
+   		}
+
+   		if (msgOut->buffer->size() < MAX_STUN_MESSAGE_SIZE)
+   		{
+   			printf("processRequest: Invalid argument\n");
+   			return -1;
+   		}
+
+   		if (pAddressSet == NULL) {
+   			printf("processRequest: Invalid argument\n");
+   			return -1;	
+   		}
+
+   		if (msgIn->handler->getState() != StunMessageParser::BodyValidated)
+   		{
+   			printf("processRequest: Unepxected error\n");
+   			return -1;
+   		}
+
+   		msgOut->role = msgIn->role;
+   		msgOut->destinationAddress = msgIn->remoteAddress;
+   		StunRequestHandler handler;
+   		handler.setMsgIn(msgIn);
+   		handler.setMsgOut(msgOut);
+   		handler.setTransportAddressSet(pAddressSet);
+
+   		handler.processRequestImpl();
+   		return 0;
+   	}
+
+   	int StunRequestHandler::processBindingRequest()
+   	{
+   		return 0;
+   	}
+    
+    void StunRequestHandler::buildErrorResponse()
+    {
+
+    }
+
+    int StunRequestHandler::validateAuth()
+    {
+    	return 0;
+    }
+
+    int StunRequestHandler::processRequestImpl()
+    {
+    	StunMessageParser& parser = *(mp_msgIn->handler);
+    	if (parser.getMessageClass() != StunMsgClassRequest)
+    		return -1;
+
+    	m_error.msgclass = StunMsgClassFailureResponse;
+    	m_error.msgtype = parser.getMessageType();
+
+    	parser.getTransactionId(&m_transactionid);
+    	m_legacyMode = parser.isMessageLegacyFormat();
+    	
+    	return 0;
+    }
+
+   	/*
+   		utility functions
+   	*/
    	int getMappedAddress(uint8_t* pData, size_t size, StunSocketAddress* pAddr)
 	{
 	    uint16_t port;

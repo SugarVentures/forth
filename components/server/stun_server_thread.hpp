@@ -39,6 +39,9 @@ namespace oppvs
 
 		StunIncomingMessage m_incomingMessage;
 		StunOutgoingMessage m_outgoingMessage;
+
+		StunMessageParser m_messageParser;
+		SharedDynamicBufferRef m_readerBuffer;
 		
 	};
 }

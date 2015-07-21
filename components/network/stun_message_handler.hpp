@@ -10,6 +10,7 @@
 namespace oppvs
 {
     class StunMessageBuilder;
+    class StunMessageParser;
     int getXorMappedAddress(uint8_t* pData, size_t size, StunTransactionId &transid, StunSocketAddress* pAddr);
 	int getMappedAddress(uint8_t* pData, size_t size, StunSocketAddress* pAddr);
 
@@ -19,7 +20,7 @@ namespace oppvs
 		SocketRole role;
 		StunSocketAddress localAddress;
 		StunSocketAddress remoteAddress;
-        StunMessageBuilder *handler;
+        StunMessageParser *handler;
 		bool isConnectionOriented;     // true for TCP or TLS (where we can't send back to a different port)
 	};
 
@@ -27,6 +28,7 @@ namespace oppvs
 	{
 		SocketRole role;
 		StunSocketAddress destinationAddress;
+		SharedDynamicBufferRef buffer;
 	};
 
 	struct StunTransportAddress
@@ -39,6 +41,27 @@ namespace oppvs
 	{
 		StunTransportAddress set[4]; // one for each socket role RolePP, RolePA, RoleAP, and RoleAA
 	};
+
+	struct StunMessageIntegrity
+	{
+	    bool fSendWithIntegrity;
+	    
+	    bool fUseLongTerm;
+	    char szUser[MAX_STUN_AUTH_STRING_SIZE+1]; // used for computing the message-integrity value
+	    char szRealm[MAX_STUN_AUTH_STRING_SIZE+1]; // used for computing the message-integrity value
+	    char szPassword[MAX_STUN_AUTH_STRING_SIZE+1]; // used for computing the message-integrity value
+	};
+
+	struct StunErrorCode
+	{
+	    uint16_t errorcode;
+	    StunMessageClass msgclass;
+	    uint16_t msgtype;
+	    uint16_t attribUnknown; // for now, just send back one unknown attribute at a time
+	    char szNonce[MAX_STUN_AUTH_STRING_SIZE+1];
+	    char szRealm[MAX_STUN_AUTH_STRING_SIZE+1];
+	};
+
 
     class StunMessageBuilder
 	{
@@ -178,6 +201,42 @@ namespace oppvs
 	    int getAddressHelper(uint16_t attribType, StunSocketAddress* pAddr);
 	    
 	    int validateMessageIntegrity(uint8_t* key, size_t keylength);
+	};
+
+	class StunRequestHandler
+	{
+	public:
+    	static int processRequest(const StunIncomingMessage* msgIn, StunOutgoingMessage* msgOut, 
+    		StunTransportAddressSet* pAddressSet);
+
+    	void setMsgIn(const StunIncomingMessage* msgin);
+    	void setMsgOut(StunOutgoingMessage* msgout);
+    	void setTransportAddressSet(StunTransportAddressSet* addrset);
+    	StunOutgoingMessage* getMsgOut();
+	private:
+	    
+	    StunRequestHandler();
+
+	    int processBindingRequest();
+	    void buildErrorResponse();
+	    int validateAuth();
+	    int processRequestImpl();
+	    
+	    // input
+	    StunTransportAddressSet* mp_addrSet;
+	    const StunIncomingMessage* mp_msgIn;
+	    StunOutgoingMessage* mp_msgOut;
+	    
+	    // member variables to remember along the way
+	    StunMessageIntegrity m_integrity;
+	    StunErrorCode m_error;
+	    
+	    bool m_isRequestHasResponsePort;
+	    StunTransactionId m_transactionid;
+	    bool m_legacyMode;
+	    
+	    bool hasAddress(SocketRole role);
+	    bool isIPAddressZeroOrInvalid(SocketRole role);
 	};
 
 }

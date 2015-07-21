@@ -3,7 +3,7 @@ CXX = g++
 RM = rm -f
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error  \
-		 -I$(rootDir)/../network -I$(rootDir)/../thread
+		 -I$(rootDir)/../network -I$(rootDir)/../thread -I$(rootDir)/../misc
 
 CFLAGS = -Wall -g
 

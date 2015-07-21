@@ -163,7 +163,17 @@ namespace oppvs
 		m_incomingBuffer = SharedDynamicBufferRef(new DynamicBuffer());
 		m_incomingBuffer->setSize(MAX_STUN_MESSAGE_SIZE);
 		m_outgoingBuffer = SharedDynamicBufferRef(new DynamicBuffer());
-		m_outgoingBuffer->setSize(MAX_STUN_MESSAGE_SIZE);	
+		m_outgoingBuffer->setSize(MAX_STUN_MESSAGE_SIZE);
+		m_readerBuffer = SharedDynamicBufferRef(new DynamicBuffer());
+		m_readerBuffer->setSize(MAX_STUN_MESSAGE_SIZE);
+
+		m_messageParser.reset();
+		m_messageParser.getStream().attach(m_readerBuffer, true);
+
+		m_incomingMessage.isConnectionOriented = false;
+		m_incomingMessage.handler = &m_messageParser;
+		m_outgoingMessage.buffer = m_outgoingBuffer;
+
 		return 0;
 	}
 
@@ -171,6 +181,10 @@ namespace oppvs
 	{
 		m_incomingBuffer->reset();
 		m_outgoingBuffer->reset();
+		m_readerBuffer->reset();
+		m_messageParser.reset();
+		m_incomingMessage.handler = NULL;
+		m_outgoingMessage.buffer->reset();
 		return 0;
 	}
 
@@ -178,6 +192,19 @@ namespace oppvs
 	{
 		printf("Receive data from %s at %s\n", m_incomingMessage.remoteAddress.toString().c_str(), 
 			m_incomingMessage.localAddress.toString().c_str());
+
+		m_messageParser.reset();
+		m_readerBuffer->setSize(0);
+		m_messageParser.getStream().attach(m_readerBuffer, true);
+
+		m_messageParser.addBytes(m_incomingBuffer->data(), m_incomingBuffer->size());
+		if (m_messageParser.getState() != StunMessageParser::BodyValidated)
+		{
+			printf("Error in parsing message \n");
+			return -1;
+		}
+
+		StunRequestHandler::processRequest(&m_incomingMessage, &m_outgoingMessage, &m_stas);
 
 		m_outgoingMessage.destinationAddress = m_incomingMessage.remoteAddress;
 		m_outgoingMessage.role = m_incomingMessage.role;
