@@ -9,6 +9,7 @@ namespace oppvs
 	class StunSocketAddress : public SocketAddress
 	{
 	public:
+		StunSocketAddress() : SocketAddress() {}
 		StunSocketAddress(uint32_t ipHostByteOrder, uint16_t port) : SocketAddress(ipHostByteOrder, port) {}
 		StunSocketAddress(const struct sockaddr_in6 addr) : SocketAddress(addr) {}
 		void applyXorMap(const StunTransactionId&);
