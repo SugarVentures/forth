@@ -1456,6 +1456,149 @@ namespace oppvs {
 
    	int StunRequestHandler::processBindingRequest()
    	{
+   		StunMessageParser& reader = *(mp_msgIn->handler);
+    	printf("processBindingRequest starts\n");
+	    bool requestHasPaddingAttribute = false;
+	    SocketRole socketOutput = mp_msgIn->role; // initialize to be from the socket we received from
+	    StunChangeRequestAttribute changerequest = {};
+	    bool sendOtherAddress = false;
+	    bool sendOriginAddress = false;
+	    SocketRole socketOther;
+	    StunSocketAddress addrOrigin;
+	    StunSocketAddress addrOther;
+	    StunMessageBuilder builder;
+	    uint16_t paddingSize = 0;
+	    int hrResult;
+
+    
+    	mp_msgOut->buffer->setSize(0);
+    	builder.getDataStream().attach(mp_msgOut->buffer, true);
+
+	    // if the client request smells like RFC 3478, then send the resposne back in the same way
+	    builder.setLegacyMode(m_legacyMode);
+
+	    // check for an alternate response port
+	    // check for padding attribute (todo - figure out how to inject padding into the response)
+	    // check for a change request and validate we can do it. If so, set _socketOutput. If not, fill out _error and return.
+	    // determine if we have an "other" address to notify the caller about
+
+
+	    // did the request come with a padding request
+	    if (reader.getPaddingAttributeSize(&paddingSize) == 0)
+	    {
+	        // todo - figure out how we're going to get the MTU size of the outgoing interface
+	        requestHasPaddingAttribute = true;
+	    }
+    
+	    // as per 5780, section 6.1, If the Request contained a PADDING attribute...
+	    // "If the Request also contains the RESPONSE-PORT attribute the server MUST return an error response of type 400."
+	    if (m_isRequestHasResponsePort && requestHasPaddingAttribute)
+	    {
+	        m_error.errorcode = STUN_ERROR_BADREQUEST;
+	        return -1;
+	    }
+    
+	    // handle change request logic and figure out what "other-address" attribute is going to be
+	    // Some clients (like jstun) will send a change-request attribute with neither the IP or PORT flag set
+	    // So ignore this block of code in that case (because the fConnectionOriented check below could fail)
+	    hrResult = reader.getChangeRequest(&changerequest);
+	    if (hrResult == 0 && (changerequest.fChangeIP || changerequest.fChangePort))
+	    {
+	        if (changerequest.fChangeIP)
+	        {
+	            socketOutput = SocketRoleSwapIP(socketOutput);
+	        }
+	        if(changerequest.fChangePort)
+	        {
+	            socketOutput = SocketRoleSwapPort(socketOutput);
+	        }
+
+	        // IsValidSocketRole just validates the enum, not whether or not we can send on it
+	        ASSERT(IsValidSocketRole(socketOutput));
+
+	        // now, make sure we have the ability to send from another socket
+	        // For TCP/TLS, we can't send back from another port
+	        if ((hasAddress(socketOutput) == false) || mp_msgIn->isConnectionOriented)
+	        {
+	            // send back an error. We're being asked to respond using another address that we don't have a socket for
+	            m_error.errorcode = STUN_ERROR_BADREQUEST;
+	            return -1;
+	        }
+	    }    
+    
+    	sendOtherAddress = hasAddress(RolePP) && hasAddress(RolePA) && hasAddress(RoleAP) && hasAddress(RoleAA);
+
+	    if (sendOtherAddress)
+	    {
+	        socketOther = SocketRoleSwapIP(SocketRoleSwapPort(mp_msgIn->role));
+	        // so if our ip address is "0.0.0.0", disable this attribute
+	        sendOtherAddress = (isIPAddressZeroOrInvalid(socketOther) == false);
+	        
+	        // so if the local address of the other socket isn't known (e.g. ip == "0.0.0.0"), disable this attribute
+	        if (sendOtherAddress)
+	        {
+	            addrOther = mp_addrSet->set[socketOther].addr;
+	        }
+	    }
+
+	    
+	    // What's our address origin?
+	    addrOrigin = mp_addrSet->set[socketOutput].addr;
+	    if (addrOrigin.getIP().isZero())
+	    {
+	        // Since we're sending back from the IP address we received on, we can just use the address the message came in on
+	        // Otherwise, we don't actually know it
+	        if (socketOutput == mp_msgIn->role)
+	        {
+	            addrOrigin = mp_msgIn->localAddress;
+	        }
+	    }
+	    sendOriginAddress = (false == addrOrigin.getIP().isZero());
+
+	    // Success - we're all clear to build the response
+	    mp_msgOut->role = socketOutput;
+	    
+	    builder.addMessageType(StunMsgTypeBinding, StunMsgClassSuccessResponse);
+	    builder.addTransactionID(m_transactionid);
+    
+	    // paranoia - just to be consistent with Vovida, send the attributes back in the same order it does
+	    // I suspect there are clients out there that might be hardcoded to the ordering
+	    
+	    // MAPPED-ADDRESS
+	    // SOURCE-ADDRESS (RESPONSE-ORIGIN)
+	    // CHANGED-ADDRESS (OTHER-ADDRESS)
+	    // XOR-MAPPED-ADDRESS (XOR-MAPPED_ADDRESS-OPTIONAL)
+	    builder.addMappedAddress(mp_msgIn->remoteAddress);
+
+	    if (sendOriginAddress)
+	    {
+	        builder.addResponseOriginAddress(addrOrigin); // pass true to send back SOURCE_ADDRESS, otherwise, pass false to send back RESPONSE-ORIGIN
+	    }
+
+	    if (sendOtherAddress)
+	    {
+	        builder.addOtherAddress(addrOther); // pass true to send back CHANGED-ADDRESS, otherwise, pass false to send back OTHER-ADDRESS
+	    }
+
+	    // send back the XOR-MAPPED-ADDRESS (encoded as an optional message for legacy clients)
+	    builder.addXorMappedAddress(mp_msgIn->remoteAddress);
+	    
+	    
+	    // finally - if we're supposed to have a message integrity attribute as a result of authorization, add it at the very end
+	    if (m_integrity.fSendWithIntegrity)
+	    {
+	        if (m_integrity.fUseLongTerm == false)
+	        {
+	            builder.addMessageIntegrityShortTerm(m_integrity.szPassword);
+	        }
+	        else
+	        {
+	            builder.addMessageIntegrityLongTerm(m_integrity.szUser, m_integrity.szRealm, m_integrity.szPassword);
+	        }
+	    }
+
+	    builder.addMessageLength();
+
    		return 0;
    	}
     
@@ -1481,7 +1624,72 @@ namespace oppvs {
     	parser.getTransactionId(&m_transactionid);
     	m_legacyMode = parser.isMessageLegacyFormat();
     	
+    	uint16_t responseport;
+    	parser.getResponsePort(&responseport);
+    	if (responseport != 0)
+    	{
+    		m_isRequestHasResponsePort = true;
+    		if (mp_msgIn->isConnectionOriented)
+    		{
+    			// special case for TCP - we can't do a response port for connection oriented sockets
+	            // so just flag this request as an error
+	            // todo - consider relaxing this check since the calling code is going to ignore the response address anyway for TCP
+            	m_error.errorcode = STUN_ERROR_BADREQUEST;
+	        }
+	        else
+	        {
+	            mp_msgOut->destinationAddress.setPort(responseport);
+	        }
+    	}
+
+    	if (m_error.errorcode == 0)
+    	{
+    		if (parser.getMessageType() !=  StunMsgTypeBinding)
+    		{
+    			m_error.errorcode = STUN_ERROR_BADREQUEST;
+    		}
+    	}
+
+    	int hrResult = 0;
+    	if (m_error.errorcode == 0)
+	    {
+	        hrResult = validateAuth(); // returns S_OK if _pAuth is NULL
+	        
+	        // if auth didn't succeed, but didn't set an error code, then setup a generic error response
+	        if (hrResult == -1 && (m_error.errorcode == 0))
+	        {
+	            m_error.errorcode = STUN_ERROR_BADREQUEST;
+	        }
+	    }
+	    
+	    
+	    if (m_error.errorcode == 0)
+	    {
+	        hrResult = processBindingRequest();
+	        if (hrResult == -1 && (m_error.errorcode == 0))
+	        {
+	            m_error.errorcode = STUN_ERROR_BADREQUEST;
+	        }
+	    }
+	    
+	    if (m_error.errorcode != 0)
+	    {
+	        buildErrorResponse();
+	    }
+
     	return 0;
+    }
+
+    bool StunRequestHandler::hasAddress(SocketRole role)
+    {
+    	return (mp_addrSet && IsValidSocketRole(role) && mp_addrSet->set[role].isValid);
+	    
+    }
+
+    bool StunRequestHandler::isIPAddressZeroOrInvalid(SocketRole role)
+    {
+    	 bool isValid = hasAddress(role) && (mp_addrSet->set[role].addr.getIP().isZero() == false);
+    	return !isValid;
     }
 
    	/*

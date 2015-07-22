@@ -206,15 +206,14 @@ namespace oppvs
 
 		StunRequestHandler::processRequest(&m_incomingMessage, &m_outgoingMessage, &m_stas);
 
-		m_outgoingMessage.destinationAddress = m_incomingMessage.remoteAddress;
-		m_outgoingMessage.role = m_incomingMessage.role;
-
+		ASSERT(m_stas.set[m_outgoingMessage.role].isValid);
 		ASSERT(m_sendSockets[m_outgoingMessage.role].isValid());
+
 		int sock = m_sendSockets[m_outgoingMessage.role].getSocketHandle();
 		StunSocket* psocket = &m_sendSockets[m_outgoingMessage.role];
 		ASSERT(sock != -1);
-		char buffer[20] = "hello";
-		if (psocket->Send(sock, buffer, 20, m_outgoingMessage.destinationAddress) >= 0)
+		
+		if (psocket->Send(sock, m_outgoingBuffer->data(), m_outgoingBuffer->size(), m_outgoingMessage.destinationAddress) >= 0)
 			printf("Sent response to %s\n", m_outgoingMessage.destinationAddress.toString().c_str());
 		return 0;
 	}
