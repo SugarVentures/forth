@@ -31,13 +31,28 @@ int main(int argc, char* argv[])
 	if (opt == 0)
 	{
 		oppvs::StunServerConfiguration config;
-		config.enabledPP = true;
-		config.enabledPA = true;
-		config.enabledAP = true;
-		config.enabledAA = true;
-
 		config.addressPrimaryAdvertised.setIP(oppvs::IPAddress("127.0.0.1"));
 		config.addressPrimaryAdvertised.setPort(oppvs::DEFAULT_STUN_PORT);
+
+		config.addressAlternateAdvertised.setIP(oppvs::IPAddress("192.168.0.103"));
+		config.addressAlternateAdvertised.setPort(oppvs::DEFAULT_STUN_PORT + 1);
+
+		config.enabledPP = true;
+		config.addressPP = config.addressPrimaryAdvertised;
+		config.addressPP.setPort(oppvs::DEFAULT_STUN_PORT);
+
+		config.enabledPA = true;
+		config.addressPA = config.addressPrimaryAdvertised;
+		config.addressPA.setPort(oppvs::DEFAULT_STUN_PORT + 1);
+
+		config.enabledAP = true;
+		config.addressAP = config.addressAlternateAdvertised;
+		config.addressAP.setPort(oppvs::DEFAULT_STUN_PORT);
+
+		config.enabledAA = true;
+		config.addressAA = config.addressAlternateAdvertised;
+		config.addressAA.setPort(oppvs::DEFAULT_STUN_PORT + 1);
+		
 		oppvs::StunServer server;
 		server.init(config);
 		server.start();
@@ -54,6 +69,7 @@ int main(int argc, char* argv[])
     	timeval tv = {};
 
 		std::cout << "Client starts" << std::endl;
+		
 		oppvs::StunSocket clientSocket;
 		clientSocket.initUDP(socketAddress, oppvs::RolePP);
 		oppvs::StunSocketAddress destination;
@@ -72,11 +88,11 @@ int main(int argc, char* argv[])
 		else
 			builder.addRandomTransactionID(&transactionId);
 
+
+
 		builder.getResult(buffer);
 
 		std::cout << "Current size: " << buffer->size() << std::endl;
-		
-		char testmsg[20] = "hello";
 
 		if (clientSocket.enablePacketInfoOption(true) < 0)
 			std::cout << "Cannot enable packet info option\n";
@@ -99,14 +115,15 @@ int main(int argc, char* argv[])
 	        tv.tv_sec = 5;
 	        int ret = select(socket + 1, &set, NULL, NULL, &tv);
 	        oppvs::SocketAddress remote, local;
+	        char testmsg[oppvs::MAX_STUN_MESSAGE_SIZE];
 
         	if (ret > 0)
         	{
 
-				if (clientSocket.ReceiveMsg(socket, testmsg, 20, MSG_DONTWAIT, remote, local) >= 0)
+				if (clientSocket.ReceiveMsg(socket, testmsg, sizeof(testmsg), MSG_DONTWAIT, remote, local) >= 0)
 				{
 
-					std::cout << testmsg << std::endl;
+					std::cout << testmsg[0] << std::endl;
 				}
 				else
 				{
