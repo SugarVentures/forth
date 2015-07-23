@@ -830,7 +830,7 @@ namespace oppvs {
 	    {
 	        if (currentSize >= (m_msgLength + STUN_HEADER_SIZE))
 	        {
-	            if (currentSize == (m_msgLength+STUN_HEADER_SIZE))
+	            if (currentSize == (m_msgLength + STUN_HEADER_SIZE))
 	            {
 	                hr = readBody();
 	                m_state = hr == 0 ? BodyValidated : ParseError;
@@ -1426,7 +1426,7 @@ namespace oppvs {
    			return -1;
    		}
 
-   		if (msgOut->buffer->size() < MAX_STUN_MESSAGE_SIZE)
+   		if (msgOut->buffer->capacity() < MAX_STUN_MESSAGE_SIZE)
    		{
    			printf("processRequest: Invalid argument\n");
    			return -1;
