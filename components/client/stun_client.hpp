@@ -37,16 +37,22 @@ namespace oppvs {
 	{
 	public:
 		StunClient();
+		~StunClient();
 		int init(StunClientConfiguration& config);
+		int release();
 		int sendBindingRequest();
 		void waitResponse();
-		int processResponse(SharedDynamicBufferRef& pmsg, StunSocketAddress& remoteAddr, StunSocketAddress& localAddr);
+		int processResponse(StunSocketAddress& remoteAddr, StunSocketAddress& localAddr);
 	private:
 		StunClientConfiguration m_configuration;
 		StunSocket m_socket;
 		StunTransactionId m_transactionId;
-		oppvs::StunMessageBuilder m_messageBuilder;
+		
+		StunMessageBuilder m_messageBuilder;
 		SharedDynamicBufferRef m_messageBuffer;
+
+		StunMessageParser m_messageParser;
+		SharedDynamicBufferRef m_parserBuffer;
 	};
 
 } // oppvs

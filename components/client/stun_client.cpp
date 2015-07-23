@@ -6,6 +6,11 @@ namespace oppvs {
 
 	}
 
+	StunClient::~StunClient()
+	{
+		release();
+	}
+
 	int StunClient::init(StunClientConfiguration& config)
 	{
 		if (config.serverAddress.getIP().isZero() || config.serverAddress.getPort() == 0)
@@ -41,6 +46,19 @@ namespace oppvs {
 			return -1;
 		}
 
+		//Init buffer for response
+		m_parserBuffer = SharedDynamicBufferRef(new DynamicBuffer());
+
+		m_messageParser.reset();
+		m_messageParser.getStream().attach(m_parserBuffer, true);
+
+		return 0;
+	}
+
+	int StunClient::release()
+	{
+		m_parserBuffer->reset();
+		m_messageParser.reset();
 		return 0;
 	}
 
@@ -88,7 +106,7 @@ namespace oppvs {
 
 		while (true)
 		{
-			oppvs::SocketAddress remote, local;
+			StunSocketAddress remote, local;
 			int ret = select(sock + 1, &set, NULL, NULL, &tv);
 			if (ret > 0)
         	{
@@ -98,6 +116,7 @@ namespace oppvs {
 					local.setPort(m_socket.getLocalAddress().getPort());
 					m_messageBuffer->setSize(ret);
 					std::cout << "Receive " <<  ret << " bytes " << local.toString() << " - " << remote.toString() << std::endl;
+					processResponse(remote, local);
 				}
 				else
 				{
@@ -107,9 +126,17 @@ namespace oppvs {
 		}
 	}
 
-	int StunClient::processResponse(SharedDynamicBufferRef& pmsg, StunSocketAddress& remoteAddr, StunSocketAddress& localAddr)
+	int StunClient::processResponse(StunSocketAddress& remoteAddr, StunSocketAddress& localAddr)
 	{
+		StunMessageParser::ReaderParseState readerstate = StunMessageParser::HeaderNotRead;
+    	StunTransactionId transid;
 
+    	readerstate = m_messageParser.addBytes(m_messageBuffer->data(), m_messageBuffer->size());
+    	if (readerstate != StunMessageParser::BodyValidated)
+    	{
+    		std::cout << "failed to process response" << std::endl;
+    		return -1;
+    	}
 		return 0;
 	}
 
