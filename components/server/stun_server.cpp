@@ -73,7 +73,19 @@ namespace oppvs
 
 		if (config.enabledMultithreadMode)
 		{
-
+			printf("Config multiple threads for stun server\n");
+			StunServerThread* thread = NULL;
+			for (size_t index = 0; index < 4; index++)
+			{
+				SocketRole rolePrimaryRecv = m_sockets[index].getRole();
+                ASSERT(rolePrimaryRecv == (SocketRole)index);
+                thread = new StunServerThread();
+                if (thread == NULL)
+                	return -1;
+                
+                m_threads.push_back(thread);
+                thread->init(m_sockets, &stas, rolePrimaryRecv);
+			}
 		}
 		else
 		{
@@ -113,6 +125,7 @@ namespace oppvs
 
 	int StunServer::stop()
 	{
+
 		return 0;
 	}
 }
