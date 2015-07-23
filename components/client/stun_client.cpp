@@ -130,6 +130,9 @@ namespace oppvs {
 	{
 		StunMessageParser::ReaderParseState readerstate = StunMessageParser::HeaderNotRead;
     	StunTransactionId transid;
+    	StunSocketAddress mappedAddress;
+    	StunSocketAddress otherAddress;
+    	bool hasOtherAddress = false;
 
     	readerstate = m_messageParser.addBytes(m_messageBuffer->data(), m_messageBuffer->size());
     	if (readerstate != StunMessageParser::BodyValidated)
@@ -143,6 +146,20 @@ namespace oppvs {
     	if (cmp != 0)
     		return -1;
     	std::cout << "Pass validate transaction id" << std::endl;
+
+    	if (m_messageParser.getXorMappedAddress(&mappedAddress) < 0)
+    	{
+    		if (m_messageParser.getMappedAddress(&mappedAddress) < 0)
+    			return -1;
+    	}
+
+    	std::cout << mappedAddress.toString() << std::endl;
+    	if (m_messageParser.getOtherAddress(&otherAddress) < 0)
+    		hasOtherAddress = false;
+    	else
+    		hasOtherAddress = true;
+
+    	std::cout << otherAddress.toString() << std::endl;
 		return 0;
 	}
 
