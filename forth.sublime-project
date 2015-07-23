@@ -4,5 +4,10 @@
 		{
 			"path": "."
 		}
-	]
+	],
+	"settings":
+	{
+	 "sublimegdb_commandline": "gdb -nx -readnow -fullname --interpreter=mi -args ./teststun",
+	 "sublimegdb_workingdir": "${folder:${project_path:components/test/teststun}}"
+	}
 }

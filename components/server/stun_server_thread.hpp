@@ -20,6 +20,9 @@ namespace oppvs
 		int init(StunSocket* sockets, StunTransportAddressSet* stas, SocketRole role);
 		int start();
 		int run();
+
+		int signalForStop(bool postMessages);
+    	int waitForStopAndClose();
 	private:
 		StunSocket* m_sendSockets;
 		int m_rotation;

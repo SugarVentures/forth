@@ -17,11 +17,13 @@ namespace oppvs
 		Thread(thread_routine routine, void* param);		
 		int create();
 		void waitUntilNextEvent();
+		void waitUntilEnding();
 		virtual ~Thread();
 	private:
 		pthread_t m_threadId;
 		thread_routine m_routine;
 		void* m_params;
+		bool m_isValid;
 	};
 }
 

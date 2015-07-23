@@ -18,6 +18,7 @@ namespace oppvs
 	{
 		m_routine = routine;
 		m_params = params;
+		m_isValid = false;
 	}
 
 	Thread::~Thread()
@@ -28,13 +29,23 @@ namespace oppvs
 	int Thread::create()
 	{
 		int error = pthread_create(&m_threadId, NULL, m_routine, m_params);
-		print_thread_id(m_threadId);
+		//print_thread_id(m_threadId);
+		m_isValid = true;
 		return error;
 	}
 
 	void Thread::waitUntilNextEvent()
 	{
 
+	}
+
+	void Thread::waitUntilEnding()
+	{
+		void* pRetValFromThread = NULL;
+		if (m_isValid)
+			pthread_join(m_threadId, &pRetValFromThread);
+		m_isValid = false;
+		m_threadId = (pthread_t)-1;
 	}
 
 }

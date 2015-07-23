@@ -11,7 +11,8 @@ namespace oppvs
 
 	StunServerThread::~StunServerThread()
 	{
-
+		signalForStop(true);
+		waitForStopAndClose();
 	}
 
 	int StunServerThread::init(StunSocket* sockets, StunTransportAddressSet* stas, SocketRole role)
@@ -215,6 +216,49 @@ namespace oppvs
 		
 		if (psocket->Send(sock, m_outgoingBuffer->data(), m_outgoingBuffer->size(), m_outgoingMessage.destinationAddress) >= 0)
 			printf("Sent response to %s\n", m_outgoingMessage.destinationAddress.toString().c_str());
+		return 0;
+	}
+
+	int StunServerThread::signalForStop(bool postMessages)
+	{
+
+		m_exitThread = true;
+
+	    // have the socket send a message to itself
+	    // if another thread is sharing the same socket, this may wake that thread up to
+	    // but all the threads should be started and shutdown together
+	    if (postMessages)
+	    {
+	        for (size_t index = 0; index < m_listenSockets.size(); index++)
+	        {
+	            char data = 'x';
+	            
+	            ASSERT(m_listenSockets[index] != NULL);
+	            
+	            SocketAddress addr = m_listenSockets[index]->getLocalAddress();
+	            // If no specific adapter was binded to, IP will be 0.0.0.0
+	            // Linux evidently treats 0.0.0.0 IP as loopback (and works)
+	            // On Windows you can't send to 0.0.0.0. sendto will fail - switch to sending to localhost
+	            if (addr.getIP().isZero())
+	            {
+	                StunSocketAddress addrLocal;
+	                addrLocal.setIP(IPAddress());
+	                addrLocal.setPort(addr.getPort());
+	                addr = addrLocal;
+
+	            }
+	            m_listenSockets[index]->Send(m_listenSockets[index]->getSocketHandle(), &data, 1, addr);
+	        }
+	    }
+		return 0;    	
+	}
+
+	int StunServerThread::waitForStopAndClose()
+	{
+		waitUntilEnding();
+		releaseBuffers();
+		m_listenSockets.clear();
+		m_sendSockets = NULL;
 		return 0;
 	}
 }

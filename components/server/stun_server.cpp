@@ -125,7 +125,29 @@ namespace oppvs
 
 	int StunServer::stop()
 	{
+		for(unsigned i = 0; i < m_threads.size(); ++i) {
+			StunServerThread* thread = m_threads[i];
+			if (thread != NULL)
+			{
+				thread->signalForStop(false);
+			}
+		}
 
+		for(unsigned i = 0; i < m_threads.size(); ++i) {
+			StunServerThread* thread = m_threads[i];
+			if (thread != NULL)
+			{
+				thread->signalForStop(true);
+			}
+		}
+
+		for(unsigned i = 0; i < m_threads.size(); ++i) {
+			StunServerThread* thread = m_threads[i];
+			if (thread != NULL)
+			{
+				thread->waitForStopAndClose();
+			}
+		}
 		return 0;
 	}
 }

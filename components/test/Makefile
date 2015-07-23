@@ -7,7 +7,7 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../threa
 		-I$(rootDir)/../../libs/libyuv/include -I$(rootDir)/../encoding \
 		-I$(rootDir)/../../libs/libvpx -I$(rootDir)/../error \
 		-I$(rootDir)/../network \
-		-I$(rootDir)/../server
+		-I$(rootDir)/../server -I$(rootDir)/../client
 
 CFLAGS	= -Wall -g -std=c++11
 
@@ -15,7 +15,7 @@ VIDEOLDFLAGS = -L$(rootDir)/../../libs
 VIDEOLIBS = -lvideoengine -lstreaming -lyuv
 
 NETWORKLDFLAGS = -L$(rootDir)/../../libs
-NETWORKLIBS = -lnetworkengine -lstreaming -lyuv -lencodingengine -lserver
+NETWORKLIBS = -lnetworkengine -lstreaming -lyuv -lencodingengine -lserver -lclient
 
 ENCODINGFLAGS = -L$(rootDir)/../../libs -L/Users/caominhtrang/Downloads/libvpx
 ENCODINGLIBS = -lyuv -lvpx
@@ -81,6 +81,7 @@ proclib:
 	cp $(rootDir)/../../libs/*.a $(rootDir)
 	cp $(rootDir)/../encoding/*.so $(rootDir)
 	cp $(rootDir)/../server/*.so $(rootDir)
+	cp $(rootDir)/../client/*.so $(rootDir)
 	cp /Users/caominhtrang/Downloads/libvpx/libvpx.a $(rootDir)
 clean:
 	$(RM) *.o
