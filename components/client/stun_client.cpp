@@ -137,6 +137,12 @@ namespace oppvs {
     		std::cout << "failed to process response" << std::endl;
     		return -1;
     	}
+
+    	m_messageParser.getTransactionId(&transid);
+    	int cmp = memcmp(transid.id, m_transactionId.id, sizeof(m_transactionId.id));
+    	if (cmp != 0)
+    		return -1;
+    	std::cout << "Pass validate transaction id" << std::endl;
 		return 0;
 	}
 
