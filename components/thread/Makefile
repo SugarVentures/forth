@@ -3,14 +3,14 @@ CXX = g++
 RM = rm -f
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error 
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -fPIC
 
 OBJLIBS = libthreadengine.so
 
 SRCS = $(wildcard *.cpp)
 OBJS = $(subst .cpp,.o,$(SRCS))
 
-
+LDFLAGS = -pthread
 
 rootDir = .
 

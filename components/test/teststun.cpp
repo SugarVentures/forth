@@ -10,6 +10,7 @@
 #include "crc.hpp"
 #include <iomanip>
 #include <string>
+#include <signal.h>
 
 bool interrupt;
 

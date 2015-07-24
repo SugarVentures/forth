@@ -5,7 +5,7 @@ RM = rm -f
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error  \
 		 -I$(rootDir)/../network -I$(rootDir)/../thread -I$(rootDir)/../misc
 
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -fPIC -std=c++11
 
 LDFLAGS = -L$(rootDir)/../../libs/
 LIBS = -lnetworkengine -lmisc -lthreadengine

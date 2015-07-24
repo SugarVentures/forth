@@ -20,6 +20,10 @@ extern "C"
 {
 #endif
 
+#ifndef u_long
+#define u_long unsigned long 
+#endif
+
 static u_long md_32(char *string, int length);
 uint32_t random32(int type);
 

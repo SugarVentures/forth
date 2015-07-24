@@ -4,6 +4,7 @@
 #include "datatypes.hpp"
 #include "common.hpp"
 #include <memory>
+#include <cstring>
 
 namespace oppvs
 {

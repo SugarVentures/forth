@@ -945,6 +945,7 @@ namespace oppvs {
     	bool noOtherAttributesAfterIntegrity = false;
     	const size_t c_hmacsize = 20;
     	uint8_t hmaccomputed[c_hmacsize] = {}; // zero-init
+    	unsigned int hmaclength = c_hmacsize;
 	    HMAC_CTX ctx = {};
 	    uint32_t chunk32;
 	    uint16_t chunk16;

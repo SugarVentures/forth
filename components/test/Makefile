@@ -9,13 +9,14 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../threa
 		-I$(rootDir)/../network \
 		-I$(rootDir)/../server -I$(rootDir)/../client
 
-CFLAGS	= -Wall -g -std=c++11
+CFLAGS	= -Wall -g -fPIC -std=c++11
 
 VIDEOLDFLAGS = -L$(rootDir)/../../libs
 VIDEOLIBS = -lvideoengine -lstreaming -lyuv
 
 NETWORKLDFLAGS = -L$(rootDir)/../../libs
-NETWORKLIBS = -lnetworkengine -lstreaming -lyuv -lencodingengine -lserver -lclient
+#NETWORKLIBS = -lnetworkengine -lstreaming -lyuv -lencodingengine -lserver -lclient
+NETWORKLIBS = -lnetworkengine -lserver -lclient
 
 ENCODINGFLAGS = -L$(rootDir)/../../libs -L/Users/caominhtrang/Downloads/libvpx
 ENCODINGLIBS = -lyuv -lvpx
@@ -25,7 +26,8 @@ OBJS = $(subst .cpp,.o,$(SRCS))
 
 rootDir = .
 
-all: testvideoengine testnetworkengine teststream testvp teststun testbuffer testdatastream proclib
+#all: testvideoengine testnetworkengine teststream testvp teststun testbuffer testdatastream proclib
+all: teststun
 
 testvideoengine: $(OBJS)
 	$(CXX) $(INCDIR) $(CFLAGS) $(VIDEOLDFLAGS) $(VIDEOLIBS) $(OBJS) -o testvideoengine

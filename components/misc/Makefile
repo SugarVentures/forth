@@ -3,7 +3,7 @@ CXX = g++
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include  
 
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -fPIC
 
 LDFLAGS = -L$(rootDir)/../../libs/libsrtp
 LIBS = -lsrtp
@@ -35,8 +35,7 @@ $(OBJLIBS_CPP): $(OBJS_CPP)
 
 
 md5driver.o: md5main.c
-	$(CC) $(CFLAGS)  -o $@ -L. -lmisc $<
-
+	$(CC) $(CFLAGS)  -o $@ $< -L. -lmisc -lm
 
 install:
 	cp *.so ./../../libs

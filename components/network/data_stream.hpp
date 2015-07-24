@@ -7,6 +7,7 @@
 
 #include "dynamic_buffer.hpp"
 #include <mutex>
+#include <cstring>
 
 namespace oppvs
 {

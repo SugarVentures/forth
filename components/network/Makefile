@@ -6,13 +6,13 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../erro
 		 -I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include   \
 		 -I$(rootDir)/../misc
 
-CFLAGS = -Wall -g -std=c++11
+CFLAGS = -Wall -g -fPIC -std=c++11
 
 #IP6 support in OSX
-CFLAGS +=  -D__APPLE_USE_RFC_3542
+#CFLAGS +=  -D__APPLE_USE_RFC_3542
 
 LDFLAGS = -L$(rootDir)/../../libs/libsrtp -L$(rootDir)/../../libs
-LIBS = -lsrtp -lmisc -lssl -lmisccpp
+LIBS = -lsrtp -lmisc -lssl -lcrypto -lmisccpp
 
 OBJLIBS = libnetworkengine.so
 
@@ -30,7 +30,7 @@ $(OBJLIBS): $(OBJS)
 
 
 %.o: %.cpp
-	$(CXX) $(INCDIR) $(CFLAGS) -c -o $@ $<	
+	$(CXX) $(INCDIR) $(CFLAGS)  -c -o $@ $<	
 
 install:
 	cp *.so $(rootDir)/../../libs
