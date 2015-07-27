@@ -6,9 +6,9 @@
     'targets': [
         {
             'target_name': 'network_engine',
-            'type': 'static_library',
+            'type': 'shared_library',
             'dependencies': [
-        
+                '../misc/misc.gyp:libmisc2',
             ],
             'include_dirs': [
                 '../../libs/libsrtp/include',
@@ -16,7 +16,9 @@
                 '../include',
                 '../misc'
             ],
-
+            'libraries': [
+                '../../libs/libsrtp.a'
+            ],
             'conditions': [
                 ['OS == "mac"', {
                     'defines': [
@@ -28,7 +30,6 @@
 
                 }]
             ],
-
 
             'sources': [
                 #headers
@@ -44,6 +45,7 @@
                 'stun_header.hpp',
                 'stun_message_handler.hpp',
                 'stun_socket_address.hpp',
+                'stun_socket.hpp',
 
                 #sources
                  'client_socket.cpp',
@@ -56,6 +58,7 @@
                 'srtp_socket.cpp',
                 'stun_message_handler.cpp',
                 'stun_socket_address.cpp',
+                'stun_socket.cpp'
             ]
 
         }

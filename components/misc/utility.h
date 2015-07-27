@@ -5,7 +5,7 @@
 #ifndef OPPVS_MISC_H
 #define OPPVS_MISC_H
 
-#include "../include/brg_types.h"
+#include "brg_types.h"
 
 #ifdef __cplusplus
 extern "C" 
