@@ -1,4 +1,8 @@
 {
+    'includes': [
+        '../../common.gypi'
+    ],
+
     'targets': [
         {
             'target_name': 'misc',
@@ -38,9 +42,9 @@
                 'crc.hpp',
                 'fasthash.h',
                 'atomic_helper.cpp',  
-                'fasthash.cpp'  
-            ]
-
+                'fasthash.cpp'
+            ],
+            
         }
     ]    
 }

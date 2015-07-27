@@ -1,4 +1,8 @@
 {
+    'includes': [
+        '../../common.gypi'
+    ],
+    
     "targets": [
         {
             "target_name": "thread_engine",
