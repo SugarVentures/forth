@@ -1605,7 +1605,44 @@ namespace oppvs {
     
     void StunRequestHandler::buildErrorResponse()
     {
+    	StunMessageBuilder builder;
+	    SharedDynamicBufferRef spBuffer;
+	    
 
+	    mp_msgOut->buffer->setSize(0);
+	    builder.getDataStream().attach(mp_msgOut->buffer, true);
+	    
+	    // set RFC 3478 mode if the request appears to be that way
+	    builder.setLegacyMode(m_legacyMode);
+	    
+	    builder.addMessageType((StunMessageType)m_error.msgtype, m_error.msgclass);
+	    builder.addTransactionID(m_transactionid);
+	    builder.addErrorCode(m_error.errorcode, "FAILED");
+	    
+	    if ((m_error.errorcode == STUN_ERROR_UNKNOWNATTRIB) && (m_error.attribUnknown != 0))
+	    {
+	        builder.addUnknownAttributes(&m_error.attribUnknown, 1);
+	    }
+	    else if ((m_error.errorcode == STUN_ERROR_STALENONCE) || (m_error.errorcode == STUN_ERROR_UNAUTHORIZED))
+	    {
+	        if (m_error.szNonce[0])
+	        {
+	            builder.addStringAttribute(STUN_ATTRIBUTE_NONCE, m_error.szNonce);
+	        }
+	        
+	        if (m_error.szRealm[0])
+	        {
+	            builder.addStringAttribute(STUN_ATTRIBUTE_REALM, m_error.szRealm);
+	        }
+	    }
+
+	    builder.addMessageLength();
+	    builder.getResult(spBuffer);
+
+	    ASSERT(spBuffer->size() != 0);
+	    ASSERT(spBuffer == mp_msgOut->buffer);
+
+	    return;
     }
 
     int StunRequestHandler::validateAuth()
@@ -1625,7 +1662,7 @@ namespace oppvs {
     	parser.getTransactionId(&m_transactionid);
     	m_legacyMode = parser.isMessageLegacyFormat();
     	
-    	uint16_t responseport;
+    	uint16_t responseport = 0;
     	parser.getResponsePort(&responseport);
     	if (responseport != 0)
     	{
