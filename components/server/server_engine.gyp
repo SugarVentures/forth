@@ -1,4 +1,9 @@
-{
+{   
+
+    'includes': [
+        '../../common.gypi'
+    ],
+    
     'targets': [
         {
             'target_name': 'libstun_server',

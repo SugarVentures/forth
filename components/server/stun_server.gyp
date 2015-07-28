@@ -1,4 +1,8 @@
 {
+    'includes': [
+        '../../common.gypi'
+    ],
+
     'targets': [
         {
             'target_name': 'stun_server',
@@ -12,15 +16,22 @@
             'dependencies': [
                 'server_engine.gyp:libstun_server',
             ],
-            'libraries': [
-                '../../libs/libsrtp.a',
-            ],
+            
             'conditions': [
                 ['OS == "mac"', {
                     'xcode_settings': {
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                     },
+                    'libraries': [
+                        '../../libs/libsrtp.a',
+                    ],
 
+                }],
+                ['OS == "linux"', {
+                    'libraries': [
+                    
+                        '../../../libs/libsrtp.a',
+                    ],
                 }]
             ],
             'sources': [

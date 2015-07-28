@@ -16,9 +16,7 @@
                 '../include',
                 '../misc'
             ],
-            'libraries': [
-                '../../libs/libsrtp.a'
-            ],
+
             'conditions': [
                 ['OS == "mac"', {
                     'defines': [
@@ -27,7 +25,19 @@
                     'xcode_settings': {
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                     },
+                    'libraries': [
+                    
+                        '../../libs/libsrtp.a',
+                    ],
 
+                }],
+                ['OS == "linux"', {
+                    'libraries': [
+                    
+                        '../../../libs/libsrtp.a',
+                        '-lssl',
+                        '-lcrypto'
+                    ],
                 }]
             ],
 
