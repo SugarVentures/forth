@@ -1,0 +1,226 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		564939C0D5BD1EA93F71D84A /* stun_server_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C75751B6B5D421A79120C971 /* stun_server_thread.cpp */; };
+		5978A07AF062759C544A502A /* stun_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8ED27437C685883A07C616D /* stun_server.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1527D46C162F42CE65DB9E0D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5BF89FDE5C7E350730C95FED /* network_engine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6A03BA77C2A08309394D31E0;
+			remoteInfo = network_engine;
+		};
+		A854ABEE4C3098A644AA8D4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5BF89FDE5C7E350730C95FED /* network_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A7F6871F862C7E97C58BFF4C;
+			remoteInfo = network_engine;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5BF89FDE5C7E350730C95FED /* network_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = network_engine.xcodeproj; path = ../network/network_engine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		69DB7A79DD3A3780ECDCC255 /* stun_server_thread.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_server_thread.hpp; sourceTree = "<group>"; };
+		8838DE66DA158ABDE0D411EE /* libstun_server.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libstun_server.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8ED27437C685883A07C616D /* stun_server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stun_server.cpp; sourceTree = "<group>"; };
+		AEDCE49788E5BC68C1094ED8 /* server_engine.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = server_engine.gyp; sourceTree = "<group>"; };
+		C75751B6B5D421A79120C971 /* stun_server_thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stun_server_thread.cpp; sourceTree = "<group>"; };
+		F82401C0D05E50B1FDBFF2B1 /* stun_server.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_server.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DDA6197666347D67FD7EB0A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		338AD8F97FE04CEF7486F4C5 /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				AEDCE49788E5BC68C1094ED8 /* server_engine.gyp */,
+			);
+			name = Build;
+			sourceTree = "<group>";
+		};
+		36E8AD2B4653A42EF4E424EC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9525FA66FD3758EB83CDD95C /* libnetwork_engine.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4E0000729979E9CEA83D7578 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A8ED27437C685883A07C616D /* stun_server.cpp */,
+				F82401C0D05E50B1FDBFF2B1 /* stun_server.hpp */,
+				C75751B6B5D421A79120C971 /* stun_server_thread.cpp */,
+				69DB7A79DD3A3780ECDCC255 /* stun_server_thread.hpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		6842E3825C17BC6F33C0BD33 /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				5BF89FDE5C7E350730C95FED /* network_engine.xcodeproj */,
+			);
+			name = Projects;
+			sourceTree = "<group>";
+		};
+		AC3361AF3ABE2B106513E266 = {
+			isa = PBXGroup;
+			children = (
+				4E0000729979E9CEA83D7578 /* Source */,
+				6842E3825C17BC6F33C0BD33 /* Projects */,
+				EEC95E7A88D3B1CE65AAAAB3 /* Products */,
+				338AD8F97FE04CEF7486F4C5 /* Build */,
+			);
+			sourceTree = "<group>";
+		};
+		EEC95E7A88D3B1CE65AAAAB3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8838DE66DA158ABDE0D411EE /* libstun_server.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F30403C336C5CF9E92E81D4B /* libstun_server */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 39BD949ED577DACA2F258C68 /* Build configuration list for PBXNativeTarget "libstun_server" */;
+			buildPhases = (
+				F2C1063BCD205DADB8B55C1C /* Sources */,
+				DDA6197666347D67FD7EB0A1 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4EB13DA54DC53439B4C1252A /* PBXTargetDependency */,
+			);
+			name = libstun_server;
+			productName = stun_server;
+			productReference = 8838DE66DA158ABDE0D411EE /* libstun_server.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D0494C9DDE80A152B9E152C4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
+			buildConfigurationList = 3E284928655E8B043242F5F7 /* Build configuration list for PBXProject "server_engine" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = AC3361AF3ABE2B106513E266;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 36E8AD2B4653A42EF4E424EC /* Products */;
+					ProjectRef = 5BF89FDE5C7E350730C95FED /* network_engine.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				F30403C336C5CF9E92E81D4B /* libstun_server */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9525FA66FD3758EB83CDD95C /* libnetwork_engine.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libnetwork_engine.dylib;
+			remoteRef = A854ABEE4C3098A644AA8D4E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F2C1063BCD205DADB8B55C1C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5978A07AF062759C544A502A /* stun_server.cpp in Sources */,
+				564939C0D5BD1EA93F71D84A /* stun_server_thread.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4EB13DA54DC53439B4C1252A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = network_engine;
+			targetProxy = 1527D46C162F42CE65DB9E0D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C3886434F79A0DB79047D174 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					../include,
+					../thread,
+					../network,
+					../misc,
+				);
+				PRODUCT_NAME = stun_server;
+			};
+			name = Default;
+		};
+		F0CC203F014C67C413B7CC9B /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		39BD949ED577DACA2F258C68 /* Build configuration list for PBXNativeTarget "libstun_server" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3886434F79A0DB79047D174 /* Default */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Default;
+		};
+		3E284928655E8B043242F5F7 /* Build configuration list for PBXProject "server_engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0CC203F014C67C413B7CC9B /* Default */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D0494C9DDE80A152B9E152C4 /* Project object */;
+}

@@ -8,7 +8,7 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../erro
 CFLAGS = -Wall -g -fPIC -std=c++11
 
 LDFLAGS = -L$(rootDir)/../../libs/
-LIBS = -lnetworkengine -lmisc -lthreadengine
+LIBS = -lnetworkengine -lthreadengine
 
 OBJLIBS = libserver.so
 

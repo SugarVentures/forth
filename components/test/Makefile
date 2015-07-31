@@ -27,7 +27,7 @@ OBJS = $(subst .cpp,.o,$(SRCS))
 rootDir = .
 
 #all: testvideoengine testnetworkengine teststream testvp teststun testbuffer testdatastream proclib
-all: teststun
+all: teststun proclib
 
 testvideoengine: $(OBJS)
 	$(CXX) $(INCDIR) $(CFLAGS) $(VIDEOLDFLAGS) $(VIDEOLIBS) $(OBJS) -o testvideoengine
@@ -78,7 +78,6 @@ proclib:
 	cp $(rootDir)/../thread/*.so $(rootDir)
 	cp $(rootDir)/../misc/*.so $(rootDir)
 	cp $(rootDir)/../streaming/*.so $(rootDir)
-	cp $(rootDir)/../*.so $(rootDir)
 	cp $(rootDir)/../../libs/libsrtp/*.a $(rootDir)
 	cp $(rootDir)/../../libs/*.a $(rootDir)
 	cp $(rootDir)/../encoding/*.so $(rootDir)

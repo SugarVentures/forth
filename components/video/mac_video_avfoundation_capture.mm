@@ -12,8 +12,6 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <ApplicationServices/ApplicationServices.h> //For saving screenshots
 
-#include "video_encoding_vp.hpp"
-#include "video_decoding_vp.hpp"
 
 @interface MacVideoAVFoundationCapture : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, 
     AVCaptureFileOutputDelegate,AVCaptureFileOutputRecordingDelegate> {

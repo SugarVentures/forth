@@ -1,0 +1,333 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02D29913CECD4CD481B69DC3 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F55F95F987E4E74BBC2F0149 /* libsrtp.a */; };
+		10615577838F6BB2BDD95A46 /* dynamic_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBDF73A9B8BB93AC44609CF6 /* dynamic_buffer.cpp */; };
+		43B1C919EDE08DBCD3B7B40A /* socket_address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22E227BFC04203BC423B8FF1 /* socket_address.cpp */; };
+		4C0F5DE898D367162329B7B0 /* libmisc2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B7677F96DEDFB6D40B4D4CFE /* libmisc2.dylib */; };
+		4E4009CF0A7C77A1B75445A3 /* stun_message_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB9E0848033C8FB4494029A9 /* stun_message_handler.cpp */; };
+		5D9EB9068D11C3E5D9E97032 /* physical_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE3D3138FAE375CAE63E6D5 /* physical_socket.cpp */; };
+		689F5A56BA372150598CE085 /* ipaddress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2749152E1B5A9CD5C6AA0 /* ipaddress.cpp */; };
+		714DFA4A6FD9D2335B309527 /* client_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0150C5BEADC4795DFD86B1C3 /* client_socket.cpp */; };
+		79A9476EA438C6F2DB025383 /* server_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FDA22583E54011EE72944E /* server_socket.cpp */; };
+		83A0AFE07A7FF6111077FD38 /* srtp_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D7275FDADF133CB5FF7AC54 /* srtp_socket.cpp */; };
+		9E72BFD3FB71CE4D94B99582 /* stun_socket_address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9D6F2CD9BF33F08D696EA6D /* stun_socket_address.cpp */; };
+		CD71C0E7B453F38051CB3398 /* stun_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23506EF17EF57A619D29EE2 /* stun_socket.cpp */; };
+		D9E45DAD53F2C927BB8EBC01 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22B53B07C4466C44870A4AC0 /* data_stream.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		73A26DAAF05191EF91EE9EA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9650ED4276959143F9D3195E /* misc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8EC063B91534944B343F3ACB;
+			remoteInfo = misc;
+		};
+		97765EDE8A62EA7ED70D9C03 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9650ED4276959143F9D3195E /* misc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 62735BE20608A489F566957C;
+			remoteInfo = libmisc1;
+		};
+		CFEC1EE892C0033C2D599DFA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9650ED4276959143F9D3195E /* misc.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BE0C37C3CD9ADF617F9763D5;
+			remoteInfo = libmisc2;
+		};
+		E0244639DE8E5AF849557E07 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9650ED4276959143F9D3195E /* misc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4EC49AA1DA067A1C8DE82739;
+			remoteInfo = libmisc2;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0150C5BEADC4795DFD86B1C3 /* client_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = client_socket.cpp; sourceTree = "<group>"; };
+		13EBD7ADBD4E297A3DDC3D3D /* stun_socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_socket.hpp; sourceTree = "<group>"; };
+		22B53B07C4466C44870A4AC0 /* data_stream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = data_stream.cpp; sourceTree = "<group>"; };
+		22E227BFC04203BC423B8FF1 /* socket_address.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = socket_address.cpp; sourceTree = "<group>"; };
+		27F8F9A51733545D37AFBD0F /* data_stream.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = data_stream.hpp; sourceTree = "<group>"; };
+		2B0030566163BCF665DB1981 /* srtp_socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = srtp_socket.hpp; sourceTree = "<group>"; };
+		494F1B0BDA985CE71238D0AB /* stun_socket_address.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_socket_address.hpp; sourceTree = "<group>"; };
+		61B15BDCBB1D603FA2CCCA47 /* stun_message_handler.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_message_handler.hpp; sourceTree = "<group>"; };
+		679B71C4F80529D017B0BE36 /* stun_auth.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_auth.hpp; sourceTree = "<group>"; };
+		6D7275FDADF133CB5FF7AC54 /* srtp_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = srtp_socket.cpp; sourceTree = "<group>"; };
+		70654BF91B67BCBADF991F62 /* dynamic_buffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = dynamic_buffer.hpp; sourceTree = "<group>"; };
+		7910601B897C9A6CE6602DB6 /* server_socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = server_socket.hpp; sourceTree = "<group>"; };
+		9650ED4276959143F9D3195E /* misc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = misc.xcodeproj; path = ../misc/misc.xcodeproj; sourceTree = SOURCE_ROOT; };
+		A7F6871F862C7E97C58BFF4C /* libnetwork_engine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libnetwork_engine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9252735E1036B032263D1AA /* ipaddress.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = ipaddress.hpp; sourceTree = "<group>"; };
+		A9CD6518C0C765EEC817B629 /* network_engine.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = network_engine.gyp; sourceTree = "<group>"; };
+		B23506EF17EF57A619D29EE2 /* stun_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stun_socket.cpp; sourceTree = "<group>"; };
+		B2C685C0EADA52C48AE7B9B6 /* socket_address.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = socket_address.hpp; sourceTree = "<group>"; };
+		BCE3D3138FAE375CAE63E6D5 /* physical_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = physical_socket.cpp; sourceTree = "<group>"; };
+		CBD66D19F199163219100C48 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
+		CBDF73A9B8BB93AC44609CF6 /* dynamic_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = dynamic_buffer.cpp; sourceTree = "<group>"; };
+		D1C2749152E1B5A9CD5C6AA0 /* ipaddress.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ipaddress.cpp; sourceTree = "<group>"; };
+		D4AEEB07944D92C2A785ECC5 /* stun_header.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_header.hpp; sourceTree = "<group>"; };
+		D9D6F2CD9BF33F08D696EA6D /* stun_socket_address.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stun_socket_address.cpp; sourceTree = "<group>"; };
+		DB9E0848033C8FB4494029A9 /* stun_message_handler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stun_message_handler.cpp; sourceTree = "<group>"; };
+		E66BBB86150F2FE432F65B6C /* client_socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = client_socket.hpp; sourceTree = "<group>"; };
+		E6FDA22583E54011EE72944E /* server_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = server_socket.cpp; sourceTree = "<group>"; };
+		F2C28000F8358B8E9C0CB2BE /* physical_socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = physical_socket.hpp; sourceTree = "<group>"; };
+		F55F95F987E4E74BBC2F0149 /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsrtp.a; path = ../../libs/libsrtp.a; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		611FCF49418E84A3D69A6EE9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C0F5DE898D367162329B7B0 /* libmisc2.dylib in Frameworks */,
+				02D29913CECD4CD481B69DC3 /* libsrtp.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		13CDF293D538778792C6ADAB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A7F6871F862C7E97C58BFF4C /* libnetwork_engine.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2E9B980D40ABC4B40E5DE57F /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0150C5BEADC4795DFD86B1C3 /* client_socket.cpp */,
+				E66BBB86150F2FE432F65B6C /* client_socket.hpp */,
+				22B53B07C4466C44870A4AC0 /* data_stream.cpp */,
+				27F8F9A51733545D37AFBD0F /* data_stream.hpp */,
+				CBDF73A9B8BB93AC44609CF6 /* dynamic_buffer.cpp */,
+				70654BF91B67BCBADF991F62 /* dynamic_buffer.hpp */,
+				D1C2749152E1B5A9CD5C6AA0 /* ipaddress.cpp */,
+				A9252735E1036B032263D1AA /* ipaddress.hpp */,
+				BCE3D3138FAE375CAE63E6D5 /* physical_socket.cpp */,
+				F2C28000F8358B8E9C0CB2BE /* physical_socket.hpp */,
+				E6FDA22583E54011EE72944E /* server_socket.cpp */,
+				7910601B897C9A6CE6602DB6 /* server_socket.hpp */,
+				22E227BFC04203BC423B8FF1 /* socket_address.cpp */,
+				B2C685C0EADA52C48AE7B9B6 /* socket_address.hpp */,
+				6D7275FDADF133CB5FF7AC54 /* srtp_socket.cpp */,
+				2B0030566163BCF665DB1981 /* srtp_socket.hpp */,
+				679B71C4F80529D017B0BE36 /* stun_auth.hpp */,
+				D4AEEB07944D92C2A785ECC5 /* stun_header.hpp */,
+				DB9E0848033C8FB4494029A9 /* stun_message_handler.cpp */,
+				61B15BDCBB1D603FA2CCCA47 /* stun_message_handler.hpp */,
+				B23506EF17EF57A619D29EE2 /* stun_socket.cpp */,
+				13EBD7ADBD4E297A3DDC3D3D /* stun_socket.hpp */,
+				D9D6F2CD9BF33F08D696EA6D /* stun_socket_address.cpp */,
+				494F1B0BDA985CE71238D0AB /* stun_socket_address.hpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		4550CD5943FA00DD7A6CF06D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D75DA55D963B0B102A12164F /* libmisc.dylib */,
+				F203E8A5DD6F656D1B2BB39B /* libmisc1.dylib */,
+				B7677F96DEDFB6D40B4D4CFE /* libmisc2.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		699724E66E0D6DB898D5EB46 = {
+			isa = PBXGroup;
+			children = (
+				2E9B980D40ABC4B40E5DE57F /* Source */,
+				A58E575A4BF1476BD2AB6BBA /* Projects */,
+				8D468DB9A11B6F11AE4B7BAB /* Frameworks */,
+				13CDF293D538778792C6ADAB /* Products */,
+				BED61ADE773AF1F9D8EB4D64 /* Build */,
+			);
+			sourceTree = "<group>";
+		};
+		8D468DB9A11B6F11AE4B7BAB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F55F95F987E4E74BBC2F0149 /* libsrtp.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A58E575A4BF1476BD2AB6BBA /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				9650ED4276959143F9D3195E /* misc.xcodeproj */,
+			);
+			name = Projects;
+			sourceTree = "<group>";
+		};
+		BED61ADE773AF1F9D8EB4D64 /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				CBD66D19F199163219100C48 /* common.gypi */,
+				A9CD6518C0C765EEC817B629 /* network_engine.gyp */,
+			);
+			name = Build;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6A03BA77C2A08309394D31E0 /* network_engine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F24B14C5DDB48D08BBC585D /* Build configuration list for PBXNativeTarget "network_engine" */;
+			buildPhases = (
+				58042948E49212B748E7C123 /* Sources */,
+				611FCF49418E84A3D69A6EE9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2EFC2771EB93FECE0AA15027 /* PBXTargetDependency */,
+			);
+			name = network_engine;
+			productName = network_engine;
+			productReference = A7F6871F862C7E97C58BFF4C /* libnetwork_engine.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A18950637EC120C9640C292C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
+			buildConfigurationList = 64319BC3CB50808CBA133CD0 /* Build configuration list for PBXProject "network_engine" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 699724E66E0D6DB898D5EB46;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4550CD5943FA00DD7A6CF06D /* Products */;
+					ProjectRef = 9650ED4276959143F9D3195E /* misc.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				6A03BA77C2A08309394D31E0 /* network_engine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B7677F96DEDFB6D40B4D4CFE /* libmisc2.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libmisc2.dylib;
+			remoteRef = E0244639DE8E5AF849557E07 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D75DA55D963B0B102A12164F /* libmisc.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libmisc.dylib;
+			remoteRef = 73A26DAAF05191EF91EE9EA0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F203E8A5DD6F656D1B2BB39B /* libmisc1.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libmisc1.dylib;
+			remoteRef = 97765EDE8A62EA7ED70D9C03 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		58042948E49212B748E7C123 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				714DFA4A6FD9D2335B309527 /* client_socket.cpp in Sources */,
+				D9E45DAD53F2C927BB8EBC01 /* data_stream.cpp in Sources */,
+				10615577838F6BB2BDD95A46 /* dynamic_buffer.cpp in Sources */,
+				689F5A56BA372150598CE085 /* ipaddress.cpp in Sources */,
+				5D9EB9068D11C3E5D9E97032 /* physical_socket.cpp in Sources */,
+				79A9476EA438C6F2DB025383 /* server_socket.cpp in Sources */,
+				43B1C919EDE08DBCD3B7B40A /* socket_address.cpp in Sources */,
+				83A0AFE07A7FF6111077FD38 /* srtp_socket.cpp in Sources */,
+				4E4009CF0A7C77A1B75445A3 /* stun_message_handler.cpp in Sources */,
+				9E72BFD3FB71CE4D94B99582 /* stun_socket_address.cpp in Sources */,
+				CD71C0E7B453F38051CB3398 /* stun_socket.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2EFC2771EB93FECE0AA15027 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libmisc2;
+			targetProxy = CFEC1EE892C0033C2D599DFA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E5A389640AA15EE5A320222A /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = __APPLE_USE_RFC_3542;
+				HEADER_SEARCH_PATHS = (
+					../../libs/libsrtp/include,
+					../../libs/libsrtp/crypto/include,
+					../include,
+					../misc,
+				);
+				LIBRARY_SEARCH_PATHS = ../../libs;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
+				PRODUCT_NAME = network_engine;
+			};
+			name = Default;
+		};
+		FDDE5933E40D577863616B48 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		64319BC3CB50808CBA133CD0 /* Build configuration list for PBXProject "network_engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDDE5933E40D577863616B48 /* Default */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Default;
+		};
+		7F24B14C5DDB48D08BBC585D /* Build configuration list for PBXNativeTarget "network_engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5A389640AA15EE5A320222A /* Default */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A18950637EC120C9640C292C /* Project object */;
+}

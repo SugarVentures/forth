@@ -8,8 +8,13 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../erro
 
 CFLAGS = -Wall -g -fPIC -std=c++11
 
+OS := $(shell uname)
+
+
 #IP6 support in OSX
-#CFLAGS +=  -D__APPLE_USE_RFC_3542
+ifeq "$(OS)" "Darwin"
+CFLAGS +=  -D__APPLE_USE_RFC_3542
+endif
 
 LDFLAGS = -L$(rootDir)/../../libs/libsrtp -L$(rootDir)/../../libs
 LIBS = -lsrtp -lmisc -lssl -lcrypto -lmisccpp

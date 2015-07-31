@@ -24,6 +24,19 @@ int main(int argc, char* argv[])
 	int opt;
 	interrupt = 0;
 	
+	uint32_t num = 38912;
+
+	uint32_t b0,b1,b2,b3;
+	uint32_t res;
+
+	b0 = (num & 0x000000ff) << 24u;
+	b1 = (num & 0x0000ff00) << 8u;
+	b2 = (num & 0x00ff0000) >> 8u;
+	b3 = (num & 0xff000000) >> 24u;
+
+	res = b0 | b1 | b2 | b3;
+	std::cout << res << std::endl;
+
 
 	if (argc > 1)
 		opt = atoi(argv[1]);
@@ -44,9 +57,10 @@ int main(int argc, char* argv[])
 	if (opt == 0)
 	{
 		signal(SIGINT, signalhandler);
+		char* hostname = argv[2];
 
 		oppvs::StunServerConfiguration config;
-		config.addressPrimaryAdvertised.setIP(oppvs::IPAddress("127.0.0.1"));
+		config.addressPrimaryAdvertised.setIP(oppvs::IPAddress(hostname));
 		config.addressPrimaryAdvertised.setPort(oppvs::DEFAULT_STUN_PORT);
 
 		config.addressAlternateAdvertised.setIP(oppvs::IPAddress("192.168.0.107"));
@@ -90,6 +104,7 @@ int main(int argc, char* argv[])
 		std::cout << "Server address: " << hostname << ":" << port << std::endl;
 		oppvs::StunClient client;
 		oppvs::StunClientConfiguration config;
+		config.localAddress.setIP(oppvs::IPAddress("192.168.0.103"));
 		config.serverAddress.setIP(oppvs::IPAddress(hostname));
 		config.serverAddress.setPort(port);
 		if (client.init(config) < 0)

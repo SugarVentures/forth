@@ -191,7 +191,7 @@ namespace oppvs
 
 	int StunServerThread::handleMessage()
 	{
-		printf("Receive data from %s at %s\n", m_incomingMessage.remoteAddress.toString().c_str(), 
+		printf("Receive data %d from %s at %s\n", m_incomingBuffer->size(), m_incomingMessage.remoteAddress.toString().c_str(), 
 			m_incomingMessage.localAddress.toString().c_str());
 
 		m_messageParser.reset();

@@ -86,7 +86,7 @@ namespace oppvs {
 		}
 		else
 		{
-			std::cout << "sent to " << m_configuration.serverAddress.toString() << std::endl;
+			std::cout << "sent " << m_messageBuffer->size() << " to " << m_configuration.serverAddress.toString() << std::endl;
 		}
 
 		return 0;
