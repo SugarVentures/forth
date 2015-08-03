@@ -5,7 +5,8 @@ RM = rm -f
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error  \
 		 -I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include  \
 		 -I$(rootDir)/../thread -I$(rootDir)/../misc \
-		 -I$(rootDir)/../../libs/libyuv/include -I$(rootDir)/../encoding
+		 -I$(rootDir)/../../libs/libyuv/include -I$(rootDir)/../encoding \
+		 -I$(rootDir)/../../libs/libvpx
 
 
 CFLAGS = -Wall -g -std=c++11
