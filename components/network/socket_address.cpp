@@ -60,6 +60,11 @@ namespace oppvs
 		m_port = port;
 	}
 
+	uint16_t SocketAddress::getPortNBO() const
+	{
+		return htons(m_port);
+	}
+
 	void SocketAddress::toSocketAddr(struct sockaddr_in* addr) const
 	{
 		memset(addr, 0, sizeof(sockaddr_in));

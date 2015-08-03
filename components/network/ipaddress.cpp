@@ -59,6 +59,7 @@ namespace oppvs
 			{
 				ip = htonl(ip);
 			}
+			printf("IP: %u\n", ip);
 			memcpy(data, &ip, sizeof(ip));
 			return sizeof(ip);
 		}

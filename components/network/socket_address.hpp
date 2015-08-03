@@ -25,6 +25,8 @@ namespace oppvs
 		void setPort(int port);
 		uint16_t getPort() const;
 
+		uint16_t getPortNBO() const;
+
 		void clear();
 
 		void toSocketAddr(struct sockaddr_in* addr) const;
