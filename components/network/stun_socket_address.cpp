@@ -10,7 +10,8 @@ namespace oppvs
 		in6_addr* ip6;
 		in_addr* ip4;
 
-		pPort = (uint8_t*)&m_port;
+		uint16_t port = htons(m_port);
+		pPort = (uint8_t*)&port;
 		if (m_ip.getAddressFamily() == AF_INET)
 		{			
 			ip4 = m_ip.getIPv4Pointer();
@@ -30,7 +31,7 @@ namespace oppvs
 	        pIp[i] = pIp[i] ^ transid.id[i];
 	    }
 
-	    
+	    m_port = ntohs(port);
 	}
 
 	bool StunSocketAddress::isZeroAddress() const
