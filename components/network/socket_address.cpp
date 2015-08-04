@@ -41,7 +41,7 @@ namespace oppvs
 	    in_addr addr = {};
 	    addr.s_addr = htonl(ipHostByteOrder);
 	    m_ip = IPAddress(addr);
-	    m_port = htons(port);
+	    m_port = port;
 	}
 
 	void SocketAddress::clear()
