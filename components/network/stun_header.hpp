@@ -22,6 +22,8 @@
 	RFC 5780 - Nat behavior discovery using STUN
 */
 
+#include <cstring>
+
 #ifndef OPPVS_STUN_HPP
 #define OPPVS_STUN_HPP
 
