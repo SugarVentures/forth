@@ -225,9 +225,11 @@ namespace oppvs {
     	if (addAttributeHeader(attribute, attributeSize) < 0)
     		return -1;
 
-    	port = address.getPort();
+    	port = address.getPortNBO();
     	int ret = 0;
+    	std::cout << "Add Mapped Address common" << std::endl;
     	length = address.getIP().getRawBytes(ip, sizeof(ip));
+    	std::cout << "Port: " << port << std::endl;
 
     	if (length != STUN_IPV6_LENGTH && length != STUN_IPV4_LENGTH)
     		return -1;
@@ -1307,7 +1309,6 @@ namespace oppvs {
 	    {
 	        pAddress->applyXorMap(m_transactionid);
 	    }
-
 	    return hr;
     }
 
@@ -1569,6 +1570,7 @@ namespace oppvs {
 	    // SOURCE-ADDRESS (RESPONSE-ORIGIN)
 	    // CHANGED-ADDRESS (OTHER-ADDRESS)
 	    // XOR-MAPPED-ADDRESS (XOR-MAPPED_ADDRESS-OPTIONAL)
+	    std::cout << "Mapped Address " << mp_msgIn->remoteAddress.toString() << std::endl;
 	    builder.addMappedAddress(mp_msgIn->remoteAddress);
 
 	    if (sendOriginAddress)
