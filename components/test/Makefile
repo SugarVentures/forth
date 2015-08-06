@@ -7,7 +7,12 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../threa
 		-I$(rootDir)/../../libs/libyuv/include -I$(rootDir)/../encoding \
 		-I$(rootDir)/../../libs/libvpx -I$(rootDir)/../error \
 		-I$(rootDir)/../network \
-		-I$(rootDir)/../server -I$(rootDir)/../client
+		-I$(rootDir)/../server -I$(rootDir)/../client 
+
+INCDIR += -I$(rootDir)/../../libs/libnice -I$(rootDir)/../../libs/libnice/agent \
+		  -I/usr/local/include/glib-2.0 \
+		  -I$(rootDir)/../../libs/libnice/include
+
 
 CFLAGS	= -Wall -g -fPIC -std=c++11
 
@@ -27,7 +32,7 @@ OBJS = $(subst .cpp,.o,$(SRCS))
 rootDir = .
 
 #all: testvideoengine testnetworkengine teststream testvp teststun testbuffer testdatastream proclib
-all: teststun proclib
+all: testice proclib
 
 testvideoengine: $(OBJS)
 	$(CXX) $(INCDIR) $(CFLAGS) $(VIDEOLDFLAGS) $(VIDEOLIBS) $(OBJS) -o testvideoengine
@@ -70,6 +75,12 @@ testdatastream: testdatastream.o
 	$(CXX)  $(INCDIR) $(CFLAGS) $(NETWORKLDFLAGS) $< $(NETWORKLIBS) -o $@ 
 
 testdatastream.o: testdatastream.cpp
+	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
+
+testice: testice.o
+	$(CXX) $(INCDIR) $(CFLAGS) $< -o $@
+
+testice.o: testice.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
 
 proclib:
