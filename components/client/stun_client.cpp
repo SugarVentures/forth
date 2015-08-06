@@ -64,6 +64,8 @@ namespace oppvs {
 
 	int StunClient::sendBindingRequest()
 	{
+		StunChangeRequestAttribute attribChangeRequest = {};
+
 		if (m_messageBuilder.addBindingRequestHeader() < 0)
 		{
 			std::cout << "Failed to add binding request header" << std::endl;
@@ -74,6 +76,9 @@ namespace oppvs {
 			m_messageBuilder.addTransactionID(m_transactionId);
 		else
 			m_messageBuilder.addRandomTransactionID(&m_transactionId);
+
+		m_messageBuilder.addChangeRequest(attribChangeRequest);
+		m_messageBuilder.addMessageLength();
 
 		m_messageBuilder.getResult(m_messageBuffer);
 
@@ -153,13 +158,13 @@ namespace oppvs {
     			return -1;
     	}
 
-    	std::cout << mappedAddress.toString() << std::endl;
+    	std::cout << "Mapped Address " << mappedAddress.toString() << std::endl;
     	if (m_messageParser.getOtherAddress(&otherAddress) < 0)
     		hasOtherAddress = false;
     	else
     		hasOtherAddress = true;
 
-    	std::cout << otherAddress.toString() << std::endl;
+    	std::cout << "Other Address " << otherAddress.toString() << std::endl;
 		return 0;
 	}
 
