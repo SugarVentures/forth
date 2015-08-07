@@ -7,7 +7,7 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../erro
 		 -I$(rootDir)/../misc
 
 INCDIR += -I$(rootDir)/../../libs/libnice -I$(rootDir)/../../libs/libnice/agent \
-		  -I/usr/local/include/glib-2.0 \
+		  -I/usr/local/include/glib-2.0  \
 		  -I$(rootDir)/../../libs/libnice/include \
 		  -I$(rootDir)/../thread
 
