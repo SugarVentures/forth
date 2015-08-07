@@ -29,7 +29,20 @@ namespace oppvs {
 			password = pwd;
 		}
 	};
-	
+
+	struct IceCandidate
+	{
+		unsigned int component;
+	    std::string foundation;
+	    std::string ip;
+	    unsigned int network;
+	    unsigned int port;
+	    unsigned int priority;
+	    std::string protocol;
+	    std::string rel_addr;
+	    unsigned int rel_port;
+	    std::string type;
+	};
 } // oppvs
 
 #endif // OPPVS_ICE_COMMON_HPP

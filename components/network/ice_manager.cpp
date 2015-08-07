@@ -62,11 +62,11 @@ namespace oppvs {
 		return 0;
 	}
 
-	int IceManager::createStream(guint ncomponents)
+	IceStream* IceManager::createStream(guint ncomponents)
 	{
 		guint stream_id = nice_agent_add_stream(m_agent, ncomponents);
 		if (stream_id == 0)
-			return -1;
+			return NULL;
 
 		std::cout << "Ice Stream id: " << stream_id << std::endl;
 		IceStream *stream = new IceStream(m_agent, stream_id, ncomponents);
@@ -88,16 +88,12 @@ namespace oppvs {
 	        }
 	    }
 
-	    // Start gathering local candidates
-	    //if (!nice_agent_gather_candidates(m_agent, stream_id))
-	    //	std::cout << "Failed to gather candidates" << std::endl;
-
-		return 0;
+		return stream;
 	}
 
 	int IceManager::removeStream(guint streamid)
 	{
-		if (getStreamByID(streamid) < 0)
+		if (getStreamByID(streamid) != NULL)
 		{
 			std::cout << "Not found stream id " << streamid << std::endl;
 			return -1;
@@ -106,21 +102,24 @@ namespace oppvs {
 		return 0;
 	}
 
-	int IceManager::getStreamByID(guint streamid)
+	IceStream* IceManager::getStreamByID(guint streamid)
 	{
 		std::vector<IceStream*>::const_iterator it;
 		for (it = m_streams.begin(); it != m_streams.end(); ++it)
 		{
 			IceStream* stream = *it;
 			if (stream->getStreamID() == streamid)
-				return 0;
+				return stream;
 		}
-		return -1;
+		return NULL;
 	}
 
-	void IceManager::cb_candidate_gathering_done( NiceAgent *agent, guint stream_id, gpointer user_data )
+	void IceManager::cb_candidate_gathering_done(NiceAgent *agent, guint stream_id, gpointer user_data)
 	{
 		std::cout << "Gather candidate done" << std::endl;
+		IceManager* manager = (IceManager*)user_data;
+		IceStream* stream = manager->getStreamByID(stream_id);
+		stream->convertNiceCandidateToIceCandidate(nice_agent_get_local_candidates(agent, stream_id, 1));
 	}
     
     void IceManager::cb_new_selected_pair( NiceAgent *agent, guint stream_id, guint component_id,

@@ -2,6 +2,8 @@
 #define OPPVS_ICE_STREAM_HPP
 
 #include "nice/nice.h"
+#include "ice_common.hpp"
+#include <vector>
 
 namespace oppvs
 {
@@ -12,8 +14,17 @@ namespace oppvs
 		~IceStream();
 
 		guint getStreamID();
+		
+		int requestLocalCandidatesFromComponent(guint component_id = 1);
+		int requestLocalCandidates();
+
+		std::vector<IceCandidate> convertNiceCandidateToIceCandidate(GSList* cands);
 	private:
 		guint m_streamID;
+		NiceAgent* m_agent;
+		guint m_noComponents;
+    
+		
 	};
 }
 

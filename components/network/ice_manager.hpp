@@ -18,7 +18,7 @@ namespace oppvs {
 
 		int init(const IceServerInfo& stun, const IceServerInfo& turn);
 		int release();
-		int createStream(guint ncomponents = 1);
+		IceStream* createStream(guint ncomponents = 1);
 		int removeStream(guint streamid);
 	private:
 		NiceAgent* m_agent;
@@ -39,7 +39,7 @@ namespace oppvs {
 
     	static void *runGlobalMainloop(void* arg);
 
-    	int getStreamByID(guint streamid);
+    	IceStream* getStreamByID(guint streamid);
 
 	};
 } // oppvs
