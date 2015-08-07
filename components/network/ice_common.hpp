@@ -29,6 +29,7 @@ namespace oppvs {
 			password = pwd;
 		}
 	};
+	
 } // oppvs
 
 #endif // OPPVS_ICE_COMMON_HPP

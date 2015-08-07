@@ -2,9 +2,9 @@
 #include <iostream>
 
 namespace oppvs {
-	IceManager::IceManager() : m_agent(NULL), m_globalMainLoop(NULL)
+	IceManager::IceManager() : m_agent(NULL), m_globalMainLoop(NULL), m_globalMainLoopThread(NULL)
 	{
-		m_globalMainLoopThread = new Thread(IceManager::runGlobalMainloop, (void*)this);
+		
 	}
 
 	IceManager::~IceManager()
@@ -16,6 +16,12 @@ namespace oppvs {
 	    	g_main_loop_unref(m_globalMainLoop);
 
 	    delete m_globalMainLoopThread;
+
+	    while (m_streams.empty())
+	    {
+	    	delete m_streams.back();
+	    	m_streams.pop_back();
+	    }
 	}
 
 	int IceManager::init(const IceServerInfo& stun, const IceServerInfo& turn)
@@ -45,6 +51,7 @@ namespace oppvs {
 		g_signal_connect(m_agent, "new-selected-pair", G_CALLBACK(cb_new_selected_pair), (gpointer)this);
 		g_signal_connect(m_agent, "component-state-changed", G_CALLBACK(cb_component_state_changed), (gpointer)this);
 
+		m_globalMainLoopThread = new Thread(IceManager::runGlobalMainloop, (void*)m_globalMainLoop);
 		m_globalMainLoopThread->create();
   		return 0;
 	}
@@ -55,9 +62,65 @@ namespace oppvs {
 		return 0;
 	}
 
+	int IceManager::createStream(guint ncomponents)
+	{
+		guint stream_id = nice_agent_add_stream(m_agent, ncomponents);
+		if (stream_id == 0)
+			return -1;
+
+		std::cout << "Ice Stream id: " << stream_id << std::endl;
+		IceStream *stream = new IceStream(m_agent, stream_id, ncomponents);
+		m_streams.push_back(stream);	
+
+		// Attach to the component to receive the data
+	    for (guint component_id = 1; component_id <= ncomponents; component_id++ )
+	        nice_agent_attach_recv(m_agent, stream_id, component_id, g_main_loop_get_context(m_globalMainLoop), 
+	        	cb_nice_recv, (gpointer)stream);
+
+	    // Setting turn server properties
+	    if (m_turnServer.serverAddress != "")
+	    {
+	        std::cout << "Setup TURN server info" << std::endl;
+	        for (guint component_id = 1; component_id <= ncomponents; component_id++)
+	        {
+	            nice_agent_set_relay_info(m_agent, stream_id, component_id, m_turnServer.serverAddress.c_str(), m_turnServer.port,
+	                                       m_turnServer.username.c_str(), m_turnServer.password.c_str(), NICE_RELAY_TYPE_TURN_UDP);
+	        }
+	    }
+
+	    // Start gathering local candidates
+	    //if (!nice_agent_gather_candidates(m_agent, stream_id))
+	    //	std::cout << "Failed to gather candidates" << std::endl;
+
+		return 0;
+	}
+
+	int IceManager::removeStream(guint streamid)
+	{
+		if (getStreamByID(streamid) < 0)
+		{
+			std::cout << "Not found stream id " << streamid << std::endl;
+			return -1;
+		}
+		nice_agent_remove_stream(m_agent, streamid);
+		return 0;
+	}
+
+	int IceManager::getStreamByID(guint streamid)
+	{
+		std::vector<IceStream*>::const_iterator it;
+		for (it = m_streams.begin(); it != m_streams.end(); ++it)
+		{
+			IceStream* stream = *it;
+			if (stream->getStreamID() == streamid)
+				return 0;
+		}
+		return -1;
+	}
+
 	void IceManager::cb_candidate_gathering_done( NiceAgent *agent, guint stream_id, gpointer user_data )
 	{
-
+		std::cout << "Gather candidate done" << std::endl;
 	}
     
     void IceManager::cb_new_selected_pair( NiceAgent *agent, guint stream_id, guint component_id,
