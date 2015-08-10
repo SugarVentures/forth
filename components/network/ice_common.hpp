@@ -6,6 +6,13 @@
 #include <string>
 
 namespace oppvs {
+
+	static const char* IceStateName[] = {"disconnected", "gathering", "connecting",
+                                    "connected", "ready", "failed"};
+
+	static const char* IceCandidateTypeName[] = {"host", "srflx", "prflx", "relay"};
+	static const char* IceCandidateProtocol[] = {"udp", "tcp active", "tcp passive", "tcp so"};
+
 	struct IceServerInfo
 	{
 		std::string serverAddress;
@@ -35,7 +42,6 @@ namespace oppvs {
 		unsigned int component;
 	    std::string foundation;
 	    std::string ip;
-	    unsigned int network;
 	    unsigned int port;
 	    unsigned int priority;
 	    std::string protocol;

@@ -12,9 +12,6 @@
 
 namespace oppvs {
 
-	static const char* iceStateName[] = {"disconnected", "gathering", "connecting",
-                                    "connected", "ready", "failed"};
-
 	class IceManager {
 	public:
 		IceManager();
@@ -38,7 +35,7 @@ namespace oppvs {
                                       gchar *lfoundation, gchar *rfoundation, gpointer user_data );
     	static void cb_nice_recv( NiceAgent *agent, guint stream_id, guint component_id,
                               guint len, gchar *buf, gpointer user_data );
-    	static void cb_component_state_changed(NiceAgent *agent, guint _stream_id, 
+    	static void cb_component_state_changed(NiceAgent *agent, guint stream_id, 
     						guint component_id, guint state, gpointer data);
 
     	static void *runGlobalMainloop(void* arg);

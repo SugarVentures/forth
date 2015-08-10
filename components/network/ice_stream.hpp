@@ -8,6 +8,7 @@
 
 namespace oppvs
 {
+
 	class IceStream
 	{
 	public:
@@ -19,7 +20,7 @@ namespace oppvs
 		int requestLocalCandidatesFromComponent(guint component_id = 1);
 		int requestLocalCandidates();
 
-		std::vector<IceCandidate> convertNiceCandidateToIceCandidate(GSList* cands);
+		void convertNiceCandidateToIceCandidate(GSList* cands, std::vector<IceCandidate>& results);
 
 		std::string getLocalUsername() const;
 		std::string getLocalPassword() const;

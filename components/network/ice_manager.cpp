@@ -123,7 +123,8 @@ namespace oppvs {
 		cands = nice_agent_get_local_candidates(agent, stream_id, 1);
 		if (cands)
 		{
-			stream->convertNiceCandidateToIceCandidate(cands);
+			std::vector<IceCandidate> candidates;
+			stream->convertNiceCandidateToIceCandidate(cands, candidates);
    			g_slist_free_full(cands, (GDestroyNotify)&nice_candidate_free);
    		}
 
@@ -142,12 +143,12 @@ namespace oppvs {
 
     }
 
-    void IceManager::cb_component_state_changed(NiceAgent *agent, guint _stream_id, 
+    void IceManager::cb_component_state_changed(NiceAgent *agent, guint stream_id, 
     						guint component_id, guint state, gpointer data)
     {
-    	std::cout  << "SIGNAL: state changed Stream: " << _stream_id
+    	std::cout  << "SIGNAL: state changed Stream: " << stream_id
     			   << " Component ID: " << component_id
-    			   << " State: " << iceStateName[state] << std::endl;
+    			   << " State: " << IceStateName[state] << std::endl;
     	
     }
 
