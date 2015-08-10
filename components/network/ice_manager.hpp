@@ -11,6 +11,10 @@
 #include <vector>
 
 namespace oppvs {
+
+	static const char* iceStateName[] = {"disconnected", "gathering", "connecting",
+                                    "connected", "ready", "failed"};
+
 	class IceManager {
 	public:
 		IceManager();

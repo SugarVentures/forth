@@ -4,7 +4,7 @@
 namespace oppvs {
 	IceManager::IceManager() : m_agent(NULL), m_globalMainLoop(NULL), m_globalMainLoopThread(NULL)
 	{
-		
+			
 	}
 
 	IceManager::~IceManager()
@@ -119,7 +119,14 @@ namespace oppvs {
 		std::cout << "Gather candidate done" << std::endl;
 		IceManager* manager = (IceManager*)user_data;
 		IceStream* stream = manager->getStreamByID(stream_id);
-		stream->convertNiceCandidateToIceCandidate(nice_agent_get_local_candidates(agent, stream_id, 1));
+		GSList *cands = NULL;
+		cands = nice_agent_get_local_candidates(agent, stream_id, 1);
+		if (cands)
+		{
+			stream->convertNiceCandidateToIceCandidate(cands);
+   			g_slist_free_full(cands, (GDestroyNotify)&nice_candidate_free);
+   		}
+
 	}
     
     void IceManager::cb_new_selected_pair( NiceAgent *agent, guint stream_id, guint component_id,
@@ -138,7 +145,10 @@ namespace oppvs {
     void IceManager::cb_component_state_changed(NiceAgent *agent, guint _stream_id, 
     						guint component_id, guint state, gpointer data)
     {
-
+    	std::cout  << "SIGNAL: state changed Stream: " << _stream_id
+    			   << " Component ID: " << component_id
+    			   << " State: " << iceStateName[state] << std::endl;
+    	
     }
 
     void* IceManager::runGlobalMainloop(void* arg)

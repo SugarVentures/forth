@@ -4,6 +4,7 @@
 #include "nice/nice.h"
 #include "ice_common.hpp"
 #include <vector>
+#include <cstring>
 
 namespace oppvs
 {
@@ -19,12 +20,16 @@ namespace oppvs
 		int requestLocalCandidates();
 
 		std::vector<IceCandidate> convertNiceCandidateToIceCandidate(GSList* cands);
+
+		std::string getLocalUsername() const;
+		std::string getLocalPassword() const;
 	private:
 		guint m_streamID;
 		NiceAgent* m_agent;
 		guint m_noComponents;
     
-		
+		std::string m_localUsername;
+		std::string m_localPassword;
 	};
 }
 

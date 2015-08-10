@@ -4,12 +4,24 @@
 namespace oppvs {
 	IceStream::IceStream(NiceAgent* agent, guint streamid, guint ncomponents): m_streamID(streamid), m_agent(agent), m_noComponents(ncomponents)
 	{
-
+		gchar *username, *password;
+	    if (nice_agent_get_local_credentials(agent, streamid, &username, &password))
+	    {
+		    m_localUsername = username;
+		    m_localPassword = password;
+		    g_free(username);
+		    g_free(password);
+		}
+		else
+		{
+			m_localUsername = "";
+			m_localPassword = "";
+		}
 	}
 
 	IceStream::~IceStream()
 	{
-
+		nice_agent_remove_stream(m_agent, m_streamID);
 	}
 
 	guint IceStream::getStreamID()
@@ -73,5 +85,15 @@ namespace oppvs {
 	    }
 
 	    return candidates;
+	}
+
+	std::string IceStream::getLocalUsername() const
+	{
+		return m_localUsername;
+	}
+
+	std::string IceStream::getLocalPassword() const
+	{
+		return m_localPassword;
 	}
 } // oppvs
