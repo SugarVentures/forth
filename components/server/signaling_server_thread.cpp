@@ -61,8 +61,11 @@ namespace oppvs {
 			{
 				continue;
 			}
+
+			
 			std::cout << "Receive msg from " << remoteAddress.toString() << " at: " << psocket->getLocalAddress().toString() << std::endl;
 			m_incomingBuffer->setSize(rcvlen);
+			handleMessage();
 		}
 		return 0;
 	}
@@ -79,7 +82,12 @@ namespace oppvs {
 		m_incomingBuffer->setSize(MAX_SIGNALING_MESSAGE_SIZE);
 		m_outgoingBuffer = SharedDynamicBufferRef(new DynamicBuffer());
 		m_outgoingBuffer->setSize(MAX_SIGNALING_MESSAGE_SIZE);
+	
+		m_readerBuffer = SharedDynamicBufferRef(new DynamicBuffer());
+		m_readerBuffer->setSize(MAX_SIGNALING_MESSAGE_SIZE);
 		
+		m_messageReader.reset();
+		m_messageReader.getStream().attach(m_readerBuffer, true);
 	}
 
 	void SignalingServerThread::releaseBuffers()
@@ -129,5 +137,14 @@ namespace oppvs {
 		m_listenSockets.clear();
 		m_sendSockets = NULL;
 		return 0;
+	}
+
+	void SignalingServerThread::handleMessage()
+	{
+		m_messageReader.reset();
+		m_readerBuffer->setSize(0);
+		m_messageReader.getStream().attach(m_readerBuffer, true);
+
+		m_messageReader.addBytes(m_incomingBuffer->data(), m_incomingBuffer->size());	
 	}
 } // oppvs

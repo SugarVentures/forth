@@ -5,6 +5,7 @@
 #include "dynamic_buffer.hpp"
 #include "physical_socket.hpp"
 #include "signaling_common.hpp"
+#include "signaling_message_reader.hpp"
 
 #include <vector>
 
@@ -31,8 +32,13 @@ namespace oppvs {
 		SharedDynamicBufferRef m_incomingBuffer;
 		SharedDynamicBufferRef m_outgoingBuffer;
 
+		SharedDynamicBufferRef m_readerBuffer;
+		SignalingMessageReader m_messageReader;
+
 		void allocBuffers();
 		void releaseBuffers();
+
+		void handleMessage();
 	};
 	
 } // oppvs
