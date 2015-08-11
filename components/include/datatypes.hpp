@@ -18,6 +18,7 @@
 #define OPPVS_NETWORK_PACKET_LENGTH 1500
 #define OPPVS_MAX_CAPTURE_SOURCES 5
 
+
 namespace oppvs {
 	typedef enum PixelFormat {
 		PF_UYVY422 = 1,		/* Cb Y0 Cr Y1 */

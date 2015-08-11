@@ -1,0 +1,9 @@
+#ifndef OPPVS_SIGNALING_COMMON_HPP
+#define OPPVS_SIGNALING_COMMON_HPP
+
+namespace oppvs {
+	const static int DEFAULT_SIGNALING_PORT = 33333;
+	const static int MAX_SIGNALING_MESSAGE_SIZE = 1000;
+} // oppvs
+
+#endif // OPPVS_SIGNALING_COMMON_HPP
