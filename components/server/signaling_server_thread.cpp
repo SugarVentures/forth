@@ -62,6 +62,7 @@ namespace oppvs {
 				continue;
 			}
 			std::cout << "Receive msg from " << remoteAddress.toString() << " at: " << psocket->getLocalAddress().toString() << std::endl;
+			m_incomingBuffer->setSize(rcvlen);
 		}
 		return 0;
 	}

@@ -53,11 +53,42 @@ namespace oppvs {
 
 	int SignalingServer::stop()
 	{
+		for(unsigned i = 0; i < m_threads.size(); ++i) {
+			SignalingServerThread* thread = m_threads[i];
+			if (thread != NULL)
+			{
+				thread->signalForStop(false);
+			}
+		}
+
+		for(unsigned i = 0; i < m_threads.size(); ++i) {
+			SignalingServerThread* thread = m_threads[i];
+			if (thread != NULL)
+			{
+				thread->signalForStop(true);
+			}
+		}
+
+		for(unsigned i = 0; i < m_threads.size(); ++i) {
+			SignalingServerThread* thread = m_threads[i];
+			if (thread != NULL)
+			{
+				thread->waitForStopAndClose();
+			}
+		}
 		return 0;
 	}
 
 	int SignalingServer::shutdown()
 	{
+		stop();
+		m_socket.Close();
+		for (int i = 0; i < m_threads.size(); i++)
+		{
+			SignalingServerThread* thread = m_threads[i];
+			delete thread;
+			m_threads[i] = NULL;
+		}
 		m_threads.clear();
 		return 0;
 	}
