@@ -39,15 +39,19 @@ namespace oppvs {
 
 	int SignalingManager::sendRequest()
 	{
-		char msg[20] = "hello";
-		if (m_socket.Send(m_socket.getSocketHandle(), msg, 20, m_serverAddress) < 0)
+		if (m_messageBuilder.addMessageType(SignalingStreamRegister) < 0)
+			return -1;
+
+		SharedDynamicBufferRef buffer;
+		m_messageBuilder.getResult(buffer);
+		if (m_socket.Send(m_socket.getSocketHandle(), buffer->data(), buffer->size(), m_serverAddress) < 0)
 		{
 			std::cout << "Send error " << strerror(errno);
 			return -1;
 		}
 		else
 		{
-			std::cout << "sent " << std::endl;
+			std::cout << "sent done " << buffer->size() << " bytes" << std::endl;
 		}
 		return 0;
 	}

@@ -4,6 +4,7 @@
 #include "socket_address.hpp"
 #include "physical_socket.hpp"
 #include "signaling_common.hpp"
+#include "signaling_message_builder.hpp"
 
 namespace oppvs {
 	class SignalingManager
@@ -17,6 +18,7 @@ namespace oppvs {
 	private:
 		PhysicalSocket m_socket;
 		SocketAddress m_serverAddress;
+		SignalingMessageBuilder m_messageBuilder;
 	};
 } // oppvs
 
