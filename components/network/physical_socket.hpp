@@ -38,6 +38,7 @@ namespace oppvs
 		int getSocketHandle();
 
 		int enablePacketInfoOption(bool enable);
+		bool isValid();
 	protected:
 		int m_socketfd;
 		SocketAddress m_localAddress;

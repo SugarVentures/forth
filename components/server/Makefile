@@ -10,29 +10,23 @@ CFLAGS = -Wall -g -fPIC -std=c++11
 LDFLAGS = -L$(rootDir)/../../libs/
 LIBS = -lnetworkengine -lthreadengine
 
-OBJLIBS = libserver.so
-
-SRCS = $(wildcard *.cpp)
+SRCS = signaling_server_thread.cpp signaling_server.cpp signaling_server_main.cpp
 OBJS = $(subst .cpp,.o,$(SRCS))
 
 
 
 rootDir = .
 
-all: $(OBJLIBS) install
+all: sig_server
 
-$(OBJLIBS): $(OBJS)
-	$(CXX) $(INCDIR) $(LDFLAGS) -fgnu-runtime -shared -o $(OBJLIBS) $(OBJS) $(LIBS)
+sig_server: $(OBJS)
+	$(CXX) $(INCDIR) $(LDFLAGS) -o sig_server $(OBJS) $(LIBS)
 
 
 %.o: %.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -c -o $@ $<	
 
-install:
-	cp *.so $(rootDir)/../../libs
-
 clean:
 	$(RM) *.o
-	$(RM) *.so
 
  

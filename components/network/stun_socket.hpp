@@ -24,7 +24,6 @@ namespace oppvs
 		void setRole(SocketRole);
 
 		int initUDP(const StunSocketAddress& addlocal, SocketRole role);
-		bool isValid();
 
 	};
 }

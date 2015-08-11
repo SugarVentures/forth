@@ -252,4 +252,9 @@ namespace oppvs
 	{
 		return m_socketfd;
 	}
+
+	bool PhysicalSocket::isValid()
+	{
+		return (m_socketfd != -1);
+	}
 }

@@ -49,8 +49,4 @@ namespace oppvs
 		return init(SOCK_DGRAM, addlocal, role, false);
 	}
 
-	bool StunSocket::isValid()
-	{
-		return (m_socketfd != -1);
-	}
 }
