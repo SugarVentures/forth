@@ -4,6 +4,7 @@
 #include "thread.hpp"
 #include "dynamic_buffer.hpp"
 #include "physical_socket.hpp"
+#include "signaling_common.hpp"
 
 #include <vector>
 
@@ -17,6 +18,9 @@ namespace oppvs {
 		int init(PhysicalSocket* sockets);
 		int run();
 		int start();
+
+		int signalForStop(bool postMessages);
+		int waitForStopAndClose();
 	private:
 		PhysicalSocket* m_sendSockets;
 		std::vector<PhysicalSocket*> m_listenSockets;
@@ -24,7 +28,11 @@ namespace oppvs {
 		static void* threadExecuteFunction(void* param);
 		bool m_exitThread;
 
+		SharedDynamicBufferRef m_incomingBuffer;
+		SharedDynamicBufferRef m_outgoingBuffer;
 
+		void allocBuffers();
+		void releaseBuffers();
 	};
 	
 } // oppvs

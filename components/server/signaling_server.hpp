@@ -3,12 +3,13 @@
 
 #include "socket_address.hpp"
 #include "physical_socket.hpp"
+#include "signaling_common.hpp"
 #include "signaling_server_thread.hpp"
 
 #include <vector>
 
 namespace oppvs {
-	const static int DEFAULT_SIGNALING_PORT = 33333;
+
 	
 	struct SignalingServerConfiguration
 	{

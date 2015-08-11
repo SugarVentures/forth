@@ -36,6 +36,7 @@ namespace oppvs {
 			printf("Binding error %s\n", strerror(errno));
 			return -1;
 		}
+
 		printf("Add socket for signaling: %s\n", m_socket.getLocalAddress().toString().c_str());
 		return 0;		
 	}

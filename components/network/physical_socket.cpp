@@ -68,6 +68,11 @@ namespace oppvs
 		return recv(m_socketfd, msg, len, 0);
 	}
 
+	int PhysicalSocket::Receive(int sockfd, void* msg, uint16_t len)
+	{
+		return recv(sockfd, msg, len, 0);
+	}
+
 	int PhysicalSocket::enablePacketInfoOptionCommon(int level, int option1, int option2, bool enable)
 	{
 		int isEnable = enable ? 1 : 0;

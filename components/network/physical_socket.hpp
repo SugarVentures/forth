@@ -29,6 +29,7 @@ namespace oppvs
 		virtual int Send(int destsock, void* msg, uint16_t len);
 		virtual int Send(int sockfd, void* msg, uint16_t len, const SocketAddress& dest);
 		virtual int Receive(void* msg, uint16_t len);
+		virtual int Receive(int sockfd, void* msg, uint16_t len);
 		virtual int ReceiveMsg(int sockfd, void* buf, uint16_t len, int flags, SocketAddress& src, SocketAddress& dest);
 		virtual int Close(int destsock);
 
