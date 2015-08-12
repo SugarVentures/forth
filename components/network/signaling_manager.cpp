@@ -37,15 +37,20 @@ namespace oppvs {
 		return 0;
 	}
 
-	int SignalingManager::sendRequest()
+	int SignalingManager::sendRequest(std::string username, std::string password, std::vector<IceCandidate>& candidates)
 	{
-		if (m_messageBuilder.addMessageType(SignalingStreamRegister) < 0)
+		if (m_messageBuilder.addMessageType(SignalingIceResponse) < 0)
 			return -1;
 
 		uint32_t streamKey = 1234567;
 		if (m_messageBuilder.addStreamKey(streamKey) < 0)
 			return -1;
 
+		if (m_messageBuilder.addIceUsername(username) < 0)
+			return -1;
+
+		if (m_messageBuilder.addIcePassword(password) < 0)
+			return -1;
 
 		SharedDynamicBufferRef buffer;
 		if (m_messageBuilder.getResult(buffer) < 0)

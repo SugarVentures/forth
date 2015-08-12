@@ -20,6 +20,9 @@ void callbackCandidateGatheringDone(void* object, std::string username, std::str
 	std::cout << "call back " << std::endl;
 	std::cout << "Local credential: " << username << " " << password << std::endl;
 
+	oppvs::SignalingManager *sigManager = (oppvs::SignalingManager*)object;
+	sigManager->sendRequest(username, password, candidates);
+
 	for (int i = 0; i < candidates.size(); i++)
 	{
         std::cout << "Candidate: " << candidates[i].component << " "
