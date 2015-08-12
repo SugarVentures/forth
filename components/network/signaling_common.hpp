@@ -4,7 +4,7 @@
 namespace oppvs {
 	const static int DEFAULT_SIGNALING_PORT = 33333;
 	const static int MAX_SIGNALING_MESSAGE_SIZE = 1000;
-	const static int SIGNALING_HEADER_SIZE = 5;
+	const static int SIGNALING_HEADER_SIZE = 7;
 
 	enum SignalingUserRole
 	{

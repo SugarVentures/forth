@@ -46,8 +46,14 @@ namespace oppvs {
 		if (m_messageBuilder.addStreamKey(streamKey) < 0)
 			return -1;
 
+
 		SharedDynamicBufferRef buffer;
-		m_messageBuilder.getResult(buffer);
+		if (m_messageBuilder.getResult(buffer) < 0)
+		{
+			std::cout << "Can not build the message to send" << std::endl;
+			return -1;
+		}
+
 		if (m_socket.Send(m_socket.getSocketHandle(), buffer->data(), buffer->size(), m_serverAddress) < 0)
 		{
 			std::cout << "Send error " << strerror(errno);

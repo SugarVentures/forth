@@ -14,10 +14,11 @@ namespace oppvs {
 		DataStream& getDataStream();
 		int getResult(SharedDynamicBufferRef& buffer);
 
+		//Header part
 		int addMessageType(SignalingMessageType type);
 		int addStreamKey(uint32_t streamKey);
+		int addMessageLength();
 	private:
-		uint32_t m_streamKey;
 		DataStream m_dataStream;
 	};
 } // oppvs
