@@ -15,6 +15,7 @@ namespace oppvs {
 		int getResult(SharedDynamicBufferRef& buffer);
 
 		int addMessageType(SignalingMessageType type);
+		int addStreamKey(uint32_t streamKey);
 	private:
 		uint32_t m_streamKey;
 		DataStream m_dataStream;

@@ -26,7 +26,15 @@ namespace oppvs {
 	{
 		uint8_t msgType = type;
 		m_dataStream.grow(100);
-		if (m_dataStream.writeUInt8(htons(msgType)) < 0)
+		if (m_dataStream.writeUInt8(msgType) < 0)
+			return -1;
+
+		return 0;
+	}
+
+	int SignalingMessageBuilder::addStreamKey(uint32_t streamKey)
+	{
+		if (m_dataStream.writeUInt32(htonl(streamKey)) < 0)
 			return -1;
 
 		return 0;

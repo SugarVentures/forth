@@ -42,6 +42,10 @@ namespace oppvs {
 		if (m_messageBuilder.addMessageType(SignalingStreamRegister) < 0)
 			return -1;
 
+		uint32_t streamKey = 1234567;
+		if (m_messageBuilder.addStreamKey(streamKey) < 0)
+			return -1;
+
 		SharedDynamicBufferRef buffer;
 		m_messageBuilder.getResult(buffer);
 		if (m_socket.Send(m_socket.getSocketHandle(), buffer->data(), buffer->size(), m_serverAddress) < 0)
