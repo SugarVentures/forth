@@ -46,7 +46,6 @@ namespace oppvs {
 		bool isMultiSockets = (noSockets > 1);
 		int flags = isMultiSockets ? MSG_DONTWAIT : 0;
 		PhysicalSocket* psocket = m_listenSockets[0];
-		
 		psocket->Listen();
 		SocketAddress localAddress, remoteAddress;
 		while (!m_exitThread)

@@ -7,11 +7,39 @@
 
 #include "signaling_server.hpp"
 
-bool interrupt;
 
-void signalhandler(int param)
+// This routine will set SIGINT And SIGTERM to "blocked" status only so that the
+// child worker threads will never have these events raised on them.
+int initAppExitListener()
 {
- 	interrupt = 1;
+    sigset_t sigs;   
+    int ret;
+    sigemptyset(&sigs);
+    sigaddset(&sigs, SIGINT);
+    sigaddset(&sigs, SIGTERM);
+
+    ret = pthread_sigmask(SIG_BLOCK, &sigs, NULL);
+    if (ret > 0)
+    	std::cout << "Server exit error: " << ret << std::endl;
+    return 0;
+}
+
+void waitForAppExitSignal()
+{
+    while (true)
+    {
+        sigset_t sigs;
+        sigemptyset(&sigs);
+        sigaddset(&sigs, SIGINT);
+        sigaddset(&sigs, SIGTERM);
+        int sig = 0;
+        
+        int ret = sigwait(&sigs, &sig);
+        if ((sig == SIGINT) || (sig == SIGTERM))
+        {
+            break;
+        }
+    }
 }
 
 int main(int argc, char* argv[])
@@ -25,7 +53,9 @@ int main(int argc, char* argv[])
 	char* localAddress = argv[1];
 	char* publicAddress = argv[2];
 
-	signal(SIGINT, signalhandler);
+	signal(SIGPIPE, SIG_IGN);
+    
+    initAppExitListener();
 
 	oppvs::SignalingServerConfiguration config;
 	config.addressListen.setIP(oppvs::IPAddress(localAddress));
@@ -36,12 +66,10 @@ int main(int argc, char* argv[])
 	
 	oppvs::SignalingServer server;
 	std::cout << "Start server" << std::endl;
+
+
 	server.init(config);
 	server.start();
-
-	while (!interrupt)
-	{
-		usleep(100);
-	}
+	waitForAppExitSignal();
 	return 0;
 }
