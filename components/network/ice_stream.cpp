@@ -77,13 +77,6 @@ namespace oppvs {
 	        candidate.rel_port = rel_port;
 	        candidate.type = IceCandidateTypeName[cand->type];
 
-	        std::cout << "Candidate: " << candidate.component << " "
-	     			  << candidate.foundation << " "
-	     			  << ip << " "
-	     			  << candidate.protocol << " "
-	     			  << port << " "
-	     			  << candidate.type << std::endl;
-
 	        candidates.push_back(candidate);
 	    }
 	}

@@ -39,14 +39,14 @@ namespace oppvs {
 
 	struct IceCandidate
 	{
-		unsigned int component;
+		uint16_t component;
 	    std::string foundation;
 	    std::string ip;
-	    unsigned int port;
-	    unsigned int priority;
+	    uint16_t port;
+	    uint16_t priority;
 	    std::string protocol;
 	    std::string rel_addr;
-	    unsigned int rel_port;
+	    uint16_t rel_port;
 	    std::string type;
 	};
 } // oppvs

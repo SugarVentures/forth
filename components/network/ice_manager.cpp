@@ -2,9 +2,14 @@
 #include <iostream>
 
 namespace oppvs {
-	IceManager::IceManager() : m_agent(NULL), m_globalMainLoop(NULL), m_globalMainLoopThread(NULL)
+	IceManager::IceManager() : m_agent(NULL), m_globalMainLoop(NULL), m_globalMainLoopThread(NULL), m_cbObject(NULL)
 	{
 			
+	}
+
+	IceManager::IceManager(void* object) : m_agent(NULL), m_globalMainLoop(NULL), m_globalMainLoopThread(NULL), m_cbObject(object)
+	{
+
 	}
 
 	IceManager::~IceManager()
@@ -22,6 +27,16 @@ namespace oppvs {
 	    	delete m_streams.back();
 	    	m_streams.pop_back();
 	    }
+	}
+
+	void IceManager::registerCallback(callbackCandidateGatheringDone cb)
+	{
+		cbCandidateGatheringDone = cb;
+	}
+
+	void* IceManager::getCallbackObject()
+	{
+		return m_cbObject;
 	}
 
 	int IceManager::init(const IceServerInfo& stun, const IceServerInfo& turn)
@@ -126,6 +141,9 @@ namespace oppvs {
 			std::vector<IceCandidate> candidates;
 			stream->convertNiceCandidateToIceCandidate(cands, candidates);
    			g_slist_free_full(cands, (GDestroyNotify)&nice_candidate_free);
+
+   			manager->cbCandidateGatheringDone(manager->getCallbackObject(), 
+   				stream->getLocalUsername(), stream->getLocalPassword(), candidates);
    		}
 
 	}
