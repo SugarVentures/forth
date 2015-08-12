@@ -96,7 +96,8 @@ namespace oppvs {
 
 	int SignalingMessageReader::readStringAttribute(uint16_t type, std::string& s)
 	{
-		uint16_t attributeType, attributeLength;
+		uint16_t attributeType = 0, attributeLength = 0;
+		uint8_t paddingLength = 0;
 		if (m_dataStream.readUInt16(&attributeType) < 0)
 		{
 			return -1;
@@ -111,12 +112,17 @@ namespace oppvs {
 			return -1;
 		}
 		attributeLength = ntohs(attributeLength);
+		if (attributeLength % 4)
+        {
+            paddingLength = 4 - attributeLength % 4;
+        }
 		char localbuf[attributeLength];
 		if (m_dataStream.read((void*)localbuf, attributeLength) < 0)
 		{
 			return -1;
 		}
 		s = std::string(localbuf);
+		m_dataStream.setRelativePosition(paddingLength);
 		return 0;
 	}
 } // oppvs
