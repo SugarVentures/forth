@@ -27,6 +27,7 @@ void callbackCandidateGatheringDone(void* object, std::string username, std::str
 	{
         std::cout << "Candidate: " << candidates[i].component << " "
 			  << candidates[i].foundation << " "
+			  << candidates[i].priority << " "
 			  << candidates[i].ip << " "
 			  << candidates[i].protocol << " "
 			  << candidates[i].port << " "

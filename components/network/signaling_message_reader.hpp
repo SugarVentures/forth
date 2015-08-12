@@ -20,6 +20,7 @@ namespace oppvs {
 		int readHeader();
 		int readBody();
 		int readStringAttribute(uint16_t type, std::string& s);
+		int readUInt16Attribute(uint16_t type, uint16_t* attr);
 	};
 } // oppvs
 

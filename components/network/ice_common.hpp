@@ -43,7 +43,7 @@ namespace oppvs {
 	    std::string foundation;
 	    std::string ip;
 	    uint16_t port;
-	    uint16_t priority;
+	    uint32_t priority;
 	    std::string protocol;
 	    std::string rel_addr;
 	    uint16_t rel_port;

@@ -52,6 +52,9 @@ namespace oppvs {
 		if (m_messageBuilder.addIcePassword(password) < 0)
 			return -1;
 
+		if (m_messageBuilder.addIceCandidates(candidates) < 0)
+			return -1;
+
 		SharedDynamicBufferRef buffer;
 		if (m_messageBuilder.getResult(buffer) < 0)
 		{

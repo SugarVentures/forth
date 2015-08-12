@@ -125,6 +125,14 @@ namespace oppvs {
 
 	int SignalingMessageBuilder::addIceCandidates(std::vector<IceCandidate>& candidates)
 	{
+		uint16_t noCandidates = candidates.size();
+		if (noCandidates == 0)
+			return -1;
+
+		noCandidates = htons(noCandidates);
+		if (addAttribute(SIGNALING_ATTRIBUTE_ICE_NO_CANDIDATES, &noCandidates, 2) < 0)
+			return -1;
+
 
 		return 0;
 	}

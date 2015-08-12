@@ -24,6 +24,7 @@ namespace oppvs {
 
 	const static uint16_t SIGNALING_ATTRIBUTE_ICE_USERNAME = 0x0001;
 	const static uint16_t SIGNALING_ATTRIBUTE_ICE_PASSWORD = 0x0002;
+	const static uint16_t SIGNALING_ATTRIBUTE_ICE_NO_CANDIDATES = 0x0003;
 
 	inline SignalingMessageType convertToSignalingMessageType(uint16_t value)
 	{

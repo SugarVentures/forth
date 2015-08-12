@@ -88,8 +88,13 @@ namespace oppvs {
     		{
     			return -1;
     		}
-
+    		uint16_t noCandidates = 0;
+    		if (readUInt16Attribute(SIGNALING_ATTRIBUTE_ICE_NO_CANDIDATES, &noCandidates) < 0)
+    		{
+    			return -1;
+    		}
     		std::cout << "Username: " << username << " password: " << password << std::endl;
+    		std::cout << "Candidates: " << noCandidates << std::endl;
     	}
     	return 0;
 	}
@@ -124,5 +129,37 @@ namespace oppvs {
 		s = std::string(localbuf);
 		m_dataStream.setRelativePosition(paddingLength);
 		return 0;
+	}
+
+	int SignalingMessageReader::readUInt16Attribute(uint16_t type, uint16_t* attr)
+	{
+		uint16_t attributeType = 0, attributeLength = 0;
+		uint8_t paddingLength = 0;
+		if (m_dataStream.readUInt16(&attributeType) < 0)
+		{
+			return -1;
+		}
+		attributeType = ntohs(attributeType);
+		if (attributeType != type)
+		{
+			return -1;
+		}
+		if (m_dataStream.readUInt16(&attributeLength) < 0)
+		{
+			return -1;
+		}
+		attributeLength = ntohs(attributeLength);
+		if (attributeLength % 4)
+        {
+            paddingLength = 4 - attributeLength % 4;
+        }
+		
+		if (m_dataStream.read((void*)attr, attributeLength) < 0)
+		{
+			return -1;
+		}
+		*attr = ntohs(*attr);
+		m_dataStream.setRelativePosition(paddingLength);
+		return 0;	
 	}
 } // oppvs
