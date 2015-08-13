@@ -12,18 +12,20 @@ namespace oppvs {
 	public:
 		SignalingMessageBuilder();
 		~SignalingMessageBuilder();
+
+		void reset();
 	
 		DataStream& getDataStream();
 		int getResult(SharedDynamicBufferRef& buffer);
 
 		//Header part
 		int addMessageType(SignalingMessageType type);
-		int addStreamKey(uint32_t streamKey);
+		int addStreamKey(const std::string& streamKey);
 		int addMessageLength();
 
 		//Body part
-		int addIceUsername(std::string username);
-		int addIcePassword(std::string password);
+		int addIceUsername(const std::string& username);
+		int addIcePassword(const std::string& password);
 		int addIceCandidates(std::vector<IceCandidate>& candidates);
 	private:
 		DataStream m_dataStream;

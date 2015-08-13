@@ -18,10 +18,13 @@ namespace oppvs {
 
 		int init();
 		int sendRequest(std::string username, std::string password, std::vector<IceCandidate>& candidates);
+		int sendStreamRegister(const std::string& streamKey);
 	private:
 		PhysicalSocket m_socket;
 		SocketAddress m_serverAddress;
 		SignalingMessageBuilder m_messageBuilder;
+
+		int sendSignal();
 	};
 } // oppvs
 

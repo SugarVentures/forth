@@ -45,7 +45,7 @@ namespace oppvs {
 			return -1;
 		PhysicalSocket* psocket = m_listenSockets[0];
 		psocket->Listen();
-		SocketAddress localAddress, remoteAddress;
+		SocketAddress remoteAddress;
 		while (!m_exitThread)
 		{
 			int sockfd = psocket->Accept(remoteAddress);
@@ -54,14 +54,16 @@ namespace oppvs {
 
 			int rcvlen = psocket->Receive(sockfd, m_incomingBuffer->data(), m_incomingBuffer->size());
 
-			if (rcvlen < 0)
+			if (rcvlen <= 0)
 			{
 				continue;
 			}
-
 			
 			std::cout << "Receive msg from " << remoteAddress.toString() << " at: " << psocket->getLocalAddress().toString() << std::endl;
+			std::cout << "Bytes: " << rcvlen << std::endl;
 			m_incomingBuffer->setSize(rcvlen);
+			m_outgoingMessage.sock = sockfd;
+			m_outgoingMessage.destination = remoteAddress;
 			handleMessage();
 		}
 		return 0;
@@ -143,6 +145,15 @@ namespace oppvs {
 		m_messageReader.getStream().attach(m_readerBuffer, true);
 
 		m_messageReader.addBytes(m_incomingBuffer->data(), m_incomingBuffer->size());
+		switch (m_messageReader.getMessageType())
+		{
+			case SignalingStreamRegister:
+				if (buildIceRequest() < 0)
+					return;
+				sendResponse();
+				break;
+		}
+
 		std::vector<IceCandidate>& candidates = m_messageReader.getIceCandidates();
 
 		for (int i = 0; i < candidates.size(); i++)
@@ -155,5 +166,32 @@ namespace oppvs {
 				  << candidates[i].port << " "
 				  << candidates[i].type << std::endl;
 		}
+	}
+
+	int SignalingServerThread::buildIceRequest()
+	{
+		m_messageBuilder.reset();
+		if (m_messageBuilder.addMessageType(SignalingIceRequest) < 0)
+			return -1;
+
+		if (m_messageBuilder.addStreamKey(m_messageReader.getStreamKey()) < 0)
+			return -1;
+
+		return 0;
+	}
+
+	void SignalingServerThread::sendResponse()
+	{
+		SharedDynamicBufferRef buffer;
+		if (m_messageBuilder.getResult(buffer) < 0)
+		{
+			std::cout << "Can not build the message to send" << std::endl;
+			return;
+		}
+
+		PhysicalSocket* psocket = &m_sendSockets[0];
+		
+		if (psocket->Send(m_outgoingMessage.sock, buffer->data(), buffer->size()) >= 0)
+			printf("Sent response to %s\n", m_outgoingMessage.destination.toString().c_str());
 	}
 } // oppvs

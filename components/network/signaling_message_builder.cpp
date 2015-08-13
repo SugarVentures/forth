@@ -3,12 +3,17 @@
 namespace oppvs {
 	SignalingMessageBuilder::SignalingMessageBuilder() 
 	{
-
+		reset();
 	}
 
 	SignalingMessageBuilder::~SignalingMessageBuilder()
 	{
+		reset();
+	}
 
+	void SignalingMessageBuilder::reset()
+	{
+		m_dataStream.reset();
 	}
 
 	DataStream& SignalingMessageBuilder::getDataStream()
@@ -37,9 +42,11 @@ namespace oppvs {
 		return 0;
 	}
 
-	int SignalingMessageBuilder::addStreamKey(uint32_t streamKey)
+	int SignalingMessageBuilder::addStreamKey(const std::string& streamKey)
 	{
-		if (m_dataStream.writeUInt32(htonl(streamKey)) < 0)
+		if (streamKey.length() != STREAM_KEY_SIZE)
+			return -1;
+		if (m_dataStream.write(streamKey.c_str(), STREAM_KEY_SIZE) < 0)
 			return -1;
 
 		return 0;
@@ -113,12 +120,12 @@ namespace oppvs {
 		return addAttribute(type, s.c_str(), s.length());
 	}
 
-	int SignalingMessageBuilder::addIceUsername(std::string username)
+	int SignalingMessageBuilder::addIceUsername(const std::string& username)
 	{
 		return addStringAttribute(SIGNALING_ATTRIBUTE_ICE_USERNAME, username);
 	}
 
-	int SignalingMessageBuilder::addIcePassword(std::string password)
+	int SignalingMessageBuilder::addIcePassword(const std::string& password)
 	{
 		return addStringAttribute(SIGNALING_ATTRIBUTE_ICE_PASSWORD, password);
 	}

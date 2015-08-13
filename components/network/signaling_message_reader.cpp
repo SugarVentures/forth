@@ -50,7 +50,7 @@ namespace oppvs {
 	{
 		uint16_t msgType = 0;
 		uint16_t msgLength = 0;
-		uint32_t streamKey = 0;
+		char streamKey[STREAM_KEY_SIZE];
 		if (m_dataStream.setAbsolutePosition(0) < 0)
 	    	return -1;
 	    if (m_dataStream.readUInt16(&msgType) < 0)
@@ -58,14 +58,15 @@ namespace oppvs {
 	    if (m_dataStream.readUInt16(&msgLength) < 0)
 	    	return -1;
 
-	    if (m_dataStream.readUInt32(&streamKey) < 0)
+	    if (m_dataStream.read(streamKey, STREAM_KEY_SIZE) < 0)
 	    	return -1;
+
 	    msgType = ntohs(msgType);
 	    msgLength = ntohs(msgLength);
-	    streamKey = ntohl(streamKey);
 
-	    printf("%d %d %u\n", msgType, msgLength, streamKey);
+	    printf("%d %d %s\n", msgType, msgLength, streamKey);
 	    m_messageType = convertToSignalingMessageType(msgType);
+	    m_streamKey = std::string(streamKey, STREAM_KEY_SIZE);
 		return 0;
 	}
 
@@ -212,5 +213,15 @@ namespace oppvs {
 	std::vector<IceCandidate>& SignalingMessageReader::getIceCandidates()
 	{
 		return m_candidates;
+	}
+
+	SignalingMessageType SignalingMessageReader::getMessageType()
+	{
+		return m_messageType;
+	}
+
+	std::string& SignalingMessageReader::getStreamKey()
+	{
+		return m_streamKey;
 	}
 } // oppvs

@@ -6,10 +6,17 @@
 #include "physical_socket.hpp"
 #include "signaling_common.hpp"
 #include "signaling_message_reader.hpp"
+#include "signaling_message_builder.hpp"
 
 #include <vector>
 
 namespace oppvs {
+	struct SignalingOutgoingMessage
+	{
+		int sock;
+		SocketAddress destination;
+	};
+
 	class SignalingServerThread : public Thread
 	{
 	public:
@@ -35,10 +42,15 @@ namespace oppvs {
 		SharedDynamicBufferRef m_readerBuffer;
 		SignalingMessageReader m_messageReader;
 
+		SignalingMessageBuilder m_messageBuilder;
+		SignalingOutgoingMessage m_outgoingMessage;
+
 		void allocBuffers();
 		void releaseBuffers();
 
 		void handleMessage();
+		void sendResponse();
+		int buildIceRequest();
 	};
 	
 } // oppvs

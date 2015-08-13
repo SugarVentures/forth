@@ -25,24 +25,25 @@ namespace oppvs {
 		{
 			std::cout << "Binding error " << strerror(errno) << std::endl;
 			return -1;
-		}
-
-		std::cout << "Address for signaling: " << m_socket.getLocalAddress().toString() << std::endl;
+		}		
 
 		if (m_socket.Connect(m_serverAddress) < 0)
 		{
 			std::cout << "Cannot connect to signaling server" << std::endl;
 			return -1;
 		}
+		std::cout << "Address for signaling: " << m_socket.getLocalAddress().toString() << std::endl;
 		return 0;
 	}
 
 	int SignalingManager::sendRequest(std::string username, std::string password, std::vector<IceCandidate>& candidates)
 	{
+		m_messageBuilder.reset();
+		
 		if (m_messageBuilder.addMessageType(SignalingIceResponse) < 0)
 			return -1;
 
-		uint32_t streamKey = 1234567;
+		std::string streamKey = std::string("1234", 4);
 		if (m_messageBuilder.addStreamKey(streamKey) < 0)
 			return -1;
 
@@ -55,6 +56,24 @@ namespace oppvs {
 		if (m_messageBuilder.addIceCandidates(candidates) < 0)
 			return -1;
 
+		return sendSignal();
+	}
+
+	int SignalingManager::sendStreamRegister(const std::string& streamKey)
+	{
+		if (streamKey == "")
+			return -1;
+		m_messageBuilder.reset();
+		if (m_messageBuilder.addMessageType(SignalingStreamRegister) < 0)
+			return -1;
+		if (m_messageBuilder.addStreamKey(streamKey) < 0)
+			return -1;
+
+		return sendSignal();
+	}
+
+	int SignalingManager::sendSignal()
+	{
 		SharedDynamicBufferRef buffer;
 		if (m_messageBuilder.getResult(buffer) < 0)
 		{

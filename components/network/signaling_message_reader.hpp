@@ -16,10 +16,13 @@ namespace oppvs {
 		void reset();
 		DataStream& getStream();
 		std::vector<IceCandidate>& getIceCandidates();
+		SignalingMessageType getMessageType();
+		std::string& getStreamKey();
 	private:
 		DataStream m_dataStream;
 		SignalingMessageType m_messageType;
 		std::vector<IceCandidate> m_candidates;
+		std::string m_streamKey;
 
 		int readHeader();
 		int readBody();
