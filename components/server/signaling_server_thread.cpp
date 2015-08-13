@@ -43,8 +43,6 @@ namespace oppvs {
 		size_t noSockets = m_listenSockets.size();
 		if (noSockets == 0)
 			return -1;
-		bool isMultiSockets = (noSockets > 1);
-		int flags = isMultiSockets ? MSG_DONTWAIT : 0;
 		PhysicalSocket* psocket = m_listenSockets[0];
 		psocket->Listen();
 		SocketAddress localAddress, remoteAddress;
@@ -144,6 +142,18 @@ namespace oppvs {
 		m_readerBuffer->setSize(0);
 		m_messageReader.getStream().attach(m_readerBuffer, true);
 
-		m_messageReader.addBytes(m_incomingBuffer->data(), m_incomingBuffer->size());	
+		m_messageReader.addBytes(m_incomingBuffer->data(), m_incomingBuffer->size());
+		std::vector<IceCandidate>& candidates = m_messageReader.getIceCandidates();
+
+		for (int i = 0; i < candidates.size(); i++)
+		{
+	        std::cout << "Candidate: " << candidates[i].component << " "
+				  << candidates[i].foundation << " "
+				  << candidates[i].priority << " "
+				  << candidates[i].ip << " "
+				  << candidates[i].protocol << " "
+				  << candidates[i].port << " "
+				  << candidates[i].type << std::endl;
+		}
 	}
 } // oppvs

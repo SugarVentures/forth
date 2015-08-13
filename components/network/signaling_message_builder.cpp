@@ -126,6 +126,8 @@ namespace oppvs {
 	int SignalingMessageBuilder::addIceCandidates(std::vector<IceCandidate>& candidates)
 	{
 		uint16_t noCandidates = candidates.size();
+		uint32_t priority = 0;
+		uint16_t port = 0;
 		if (noCandidates == 0)
 			return -1;
 
@@ -133,7 +135,31 @@ namespace oppvs {
 		if (addAttribute(SIGNALING_ATTRIBUTE_ICE_NO_CANDIDATES, &noCandidates, 2) < 0)
 			return -1;
 
-
+		for (uint16_t i = 0; i < candidates.size(); i++)
+		{
+			if (addStringAttribute(SIGNALING_ATTRIBUTE_ICE_FOUNDATION, candidates[i].foundation) < 0)
+			{
+				return -1;
+			}
+			priority = htonl(candidates[i].priority);
+			if (addAttribute(SIGNALING_ATTRIBUTE_ICE_PRIORITY, &priority, 4) < 0)
+			{
+				return -1;
+			}
+			if (addStringAttribute(SIGNALING_ATTRIBUTE_ICE_IP_ADDRESS, candidates[i].ip) < 0)
+			{
+				return -1;
+			}
+			port = htons(candidates[i].port);
+			if (addAttribute(SIGNALING_ATTRIBUTE_ICE_PORT, &port, 2) < 0)
+			{
+				return -1;
+			}
+			if (addStringAttribute(SIGNALING_ATTRIBUTE_ICE_TYPE, candidates[i].type) < 0)
+			{
+				return -1;
+			}
+		}
 		return 0;
 	}
 } // oppvs

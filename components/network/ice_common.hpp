@@ -48,6 +48,19 @@ namespace oppvs {
 	    std::string rel_addr;
 	    uint16_t rel_port;
 	    std::string type;
+
+	    IceCandidate()
+	    {
+	    	component = 0;
+	    	foundation = "";
+	    	ip = "";
+	    	port = 0;
+	    	priority = 0;
+	    	protocol = "";
+	    	rel_addr = "";
+	    	rel_port = 0;
+	    	type = "";
+	    }
 	};
 } // oppvs
 

@@ -95,27 +95,47 @@ namespace oppvs {
     		}
     		std::cout << "Username: " << username << " password: " << password << std::endl;
     		std::cout << "Candidates: " << noCandidates << std::endl;
+    		m_candidates.clear();
+    		m_candidates.reserve(noCandidates);
+
+    		for (int i = 0; i < noCandidates; ++i)
+    		{
+    			IceCandidate candidate;
+    			if (readStringAttribute(SIGNALING_ATTRIBUTE_ICE_FOUNDATION, candidate.foundation) < 0)    			
+    			{
+    				return -1;
+    			}
+    			if (readUInt32Attribute(SIGNALING_ATTRIBUTE_ICE_PRIORITY, &candidate.priority) < 0)
+    			{
+    				return -1;
+    			}
+    			if (readStringAttribute(SIGNALING_ATTRIBUTE_ICE_IP_ADDRESS, candidate.ip) < 0)
+    			{
+    				return -1;
+    			}
+    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_ICE_PORT, &candidate.port) < 0)
+    			{
+    				return -1;
+    			}
+    			if (readStringAttribute(SIGNALING_ATTRIBUTE_ICE_TYPE, candidate.type) < 0)
+    			{
+    				return -1;
+    			}
+
+    			m_candidates.push_back(candidate);
+    		}
     	}
     	return 0;
 	}
 
 	int SignalingMessageReader::readStringAttribute(uint16_t type, std::string& s)
 	{
-		uint16_t attributeType = 0, attributeLength = 0;
+		uint16_t attributeLength = 0;
 		uint8_t paddingLength = 0;
-		if (m_dataStream.readUInt16(&attributeType) < 0)
-		{
+		
+		if (readAttributeLength(type, &attributeLength) < 0)
 			return -1;
-		}
-		attributeType = ntohs(attributeType);
-		if (attributeType != type)
-		{
-			return -1;
-		}
-		if (m_dataStream.readUInt16(&attributeLength) < 0)
-		{
-			return -1;
-		}
+
 		attributeLength = ntohs(attributeLength);
 		if (attributeLength % 4)
         {
@@ -126,15 +146,52 @@ namespace oppvs {
 		{
 			return -1;
 		}
-		s = std::string(localbuf);
+		s = std::string(localbuf, attributeLength);
 		m_dataStream.setRelativePosition(paddingLength);
 		return 0;
 	}
 
 	int SignalingMessageReader::readUInt16Attribute(uint16_t type, uint16_t* attr)
 	{
+		uint16_t attributeLength = 0;
+		if (readAttributeLength(type, &attributeLength) < 0)
+			return -1;
+
+		attributeLength = ntohs(attributeLength);
+		if (attributeLength != 2)
+			return -1;
+
+		if (m_dataStream.read((void*)attr, attributeLength) < 0)
+		{
+			return -1;
+		}
+		*attr = ntohs(*attr);
+		m_dataStream.setRelativePosition(2); //Move 2 bytes padding
+		return 0;	
+	}
+
+	int SignalingMessageReader::readUInt32Attribute(uint16_t type, uint32_t* attr)
+	{
+		uint16_t attributeLength = 0;
+		if (readAttributeLength(type, &attributeLength) < 0)
+			return -1;
+
+		attributeLength = ntohs(attributeLength);
+		if (attributeLength != 4)
+			return -1;
+
+		if (m_dataStream.read((void*)attr, attributeLength) < 0)
+		{
+			return -1;
+		}
+		*attr = ntohl(*attr);
+
+		return 0;
+	}
+
+	int SignalingMessageReader::readAttributeLength(uint16_t type, uint16_t* length)
+	{
 		uint16_t attributeType = 0, attributeLength = 0;
-		uint8_t paddingLength = 0;
 		if (m_dataStream.readUInt16(&attributeType) < 0)
 		{
 			return -1;
@@ -148,18 +205,12 @@ namespace oppvs {
 		{
 			return -1;
 		}
-		attributeLength = ntohs(attributeLength);
-		if (attributeLength % 4)
-        {
-            paddingLength = 4 - attributeLength % 4;
-        }
-		
-		if (m_dataStream.read((void*)attr, attributeLength) < 0)
-		{
-			return -1;
-		}
-		*attr = ntohs(*attr);
-		m_dataStream.setRelativePosition(paddingLength);
-		return 0;	
+		*length = attributeLength;
+		return 0;
+	}
+
+	std::vector<IceCandidate>& SignalingMessageReader::getIceCandidates()
+	{
+		return m_candidates;
 	}
 } // oppvs
