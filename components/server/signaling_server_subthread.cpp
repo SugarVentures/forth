@@ -12,10 +12,11 @@ namespace oppvs {
 		releaseBuffers();
 	}
 
-	int SignalingServerSubThread::init(PhysicalSocket* socket, int sockfd)
+	int SignalingServerSubThread::init(PhysicalSocket* socket, int sockfd, const SocketAddress& remote)
 	{
 		m_socket = socket;
 		m_sockfd = sockfd;
+		m_remote = remote;
 		m_exitThread = false;
 		allocBuffers();
 		return 0;
@@ -42,11 +43,8 @@ namespace oppvs {
 				break;
 			}
 
-			std::cout << "Receive msg from " << m_socket->getRemoteAddress().toString() << " at: " << m_socket->getLocalAddress().toString() << std::endl;
-			std::cout << "Bytes: " << rcvlen << std::endl;
+			std::cout << "Receives Bytes: " << rcvlen << std::endl;
 			m_incomingBuffer->setSize(rcvlen);
-			m_outgoingMessage.sock = m_sockfd;
-			m_outgoingMessage.destination = m_socket->getRemoteAddress();
 			handleMessage();
 
 		}
@@ -67,7 +65,8 @@ namespace oppvs {
 
 	void SignalingServerSubThread::waitForStopAndClose()
 	{
-		m_socket->Close(m_sockfd);
+		if (m_socket != NULL)
+			m_socket->Close(m_sockfd);
 		waitUntilEnding();
 		m_socket = NULL;
 	}
@@ -148,8 +147,8 @@ namespace oppvs {
 			return;
 		}
 		
-		if (m_socket->Send(m_outgoingMessage.sock, buffer->data(), buffer->size()) >= 0)
-			printf("Sent response to %s\n", m_outgoingMessage.destination.toString().c_str());
+		if (m_socket->Send(m_sockfd, buffer->data(), buffer->size()) >= 0)
+			printf("Sent response to %s\n", m_remote.toString().c_str());
 	}
 
 } // oppvs

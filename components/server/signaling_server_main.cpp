@@ -71,5 +71,6 @@ int main(int argc, char* argv[])
 	server.init(config);
 	server.start();
 	waitForAppExitSignal();
+    server.shutdown();
 	return 0;
 }

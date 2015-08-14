@@ -9,11 +9,6 @@
 
 namespace oppvs
 {
-	struct SignalingOutgoingMessage
-	{
-		int sock;
-		SocketAddress destination;
-	};
 
 	class SignalingServerSubThread : public Thread
 	{
@@ -21,7 +16,7 @@ namespace oppvs
 		SignalingServerSubThread();
 		~SignalingServerSubThread();
 
-		int init(PhysicalSocket* socket, int sockfd);
+		int init(PhysicalSocket* socket, int sockfd, const SocketAddress& remote);
 		void start();
 		void signalForStop();
 		void waitForStopAndClose();
@@ -29,6 +24,7 @@ namespace oppvs
 		PhysicalSocket* m_socket;
 		int m_sockfd;
 		bool m_exitThread;
+		SocketAddress m_remote;
 		static void* threadExecuteFunction(void* param);
 
 		void run();
@@ -40,7 +36,6 @@ namespace oppvs
 		SignalingMessageReader m_messageReader;
 
 		SignalingMessageBuilder m_messageBuilder;
-		SignalingOutgoingMessage m_outgoingMessage;
 
 		void allocBuffers();
 		void releaseBuffers();
