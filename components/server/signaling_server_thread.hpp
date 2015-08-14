@@ -5,17 +5,12 @@
 #include "dynamic_buffer.hpp"
 #include "physical_socket.hpp"
 #include "signaling_common.hpp"
-#include "signaling_message_reader.hpp"
-#include "signaling_message_builder.hpp"
 
+#include "signaling_server_subthread.hpp"
 #include <vector>
 
 namespace oppvs {
-	struct SignalingOutgoingMessage
-	{
-		int sock;
-		SocketAddress destination;
-	};
+
 
 	class SignalingServerThread : public Thread
 	{
@@ -32,25 +27,12 @@ namespace oppvs {
 	private:
 		PhysicalSocket* m_sendSockets;
 		std::vector<PhysicalSocket*> m_listenSockets;
+		std::vector<SignalingServerSubThread*> m_threads;
 
 		static void* threadExecuteFunction(void* param);
+
 		bool m_exitThread;
 
-		SharedDynamicBufferRef m_incomingBuffer;
-		SharedDynamicBufferRef m_outgoingBuffer;
-
-		SharedDynamicBufferRef m_readerBuffer;
-		SignalingMessageReader m_messageReader;
-
-		SignalingMessageBuilder m_messageBuilder;
-		SignalingOutgoingMessage m_outgoingMessage;
-
-		void allocBuffers();
-		void releaseBuffers();
-
-		void handleMessage();
-		void sendResponse();
-		int buildIceRequest();
 	};
 	
 } // oppvs

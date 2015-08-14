@@ -10,7 +10,7 @@ CFLAGS = -Wall -g -fPIC -std=c++11
 LDFLAGS = -L$(rootDir)/../../libs/
 LIBS = -lnetworkengine -lthreadengine
 
-SRCS = signaling_server_thread.cpp signaling_server.cpp signaling_server_main.cpp
+SRCS = signaling_server_subthread.cpp signaling_server_thread.cpp signaling_server.cpp signaling_server_main.cpp
 OBJS = $(subst .cpp,.o,$(SRCS))
 
 
