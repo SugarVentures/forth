@@ -9,7 +9,7 @@ namespace oppvs {
 
 	SignalingServer::~SignalingServer()
 	{
-
+		shutdown();
 	}
 
 	void SignalingServer::init(const SignalingServerConfiguration& config)
@@ -53,14 +53,6 @@ namespace oppvs {
 
 	int SignalingServer::stop()
 	{
-		for(unsigned i = 0; i < m_threads.size(); ++i) {
-			SignalingServerThread* thread = m_threads[i];
-			if (thread != NULL)
-			{
-				thread->signalForStop(false);
-			}
-		}
-
 		for(unsigned i = 0; i < m_threads.size(); ++i) {
 			SignalingServerThread* thread = m_threads[i];
 			if (thread != NULL)

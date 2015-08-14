@@ -40,6 +40,7 @@ namespace oppvs
 	{
 		sp_buffer.reset();
 		p_buffer = NULL;
+		m_currentPos = 0;
 	}
 
 	size_t DataStream::size()

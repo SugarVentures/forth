@@ -3,7 +3,7 @@
 #include <iostream>
 
 namespace oppvs {
-	SignalingManager::SignalingManager(const SocketAddress& address): m_serverAddress(address)
+	SignalingManager::SignalingManager(const SocketAddress& address): m_serverAddress(address), m_interrupt(false)
 	{
 
 	}
@@ -33,18 +33,29 @@ namespace oppvs {
 			return -1;
 		}
 		std::cout << "Address for signaling: " << m_socket.getLocalAddress().toString() << std::endl;
+
+		//Init buffer for response
+		m_incomingBuffer = SharedDynamicBufferRef(new DynamicBuffer());
+		m_incomingBuffer->setSize(MAX_SIGNALING_MESSAGE_SIZE);
+
+		m_readerBuffer = SharedDynamicBufferRef(new DynamicBuffer());
 		return 0;
 	}
 
-	int SignalingManager::sendRequest(std::string username, std::string password, std::vector<IceCandidate>& candidates)
+	void SignalingManager::registerCallback(callbackOnReceiveIceRequest cb, void* object)
+	{
+		cbOnReceiveIceRequest = cb;
+		m_object = object;
+	}
+
+	int SignalingManager::sendIceResponse(std::string username, std::string password, std::vector<IceCandidate>& candidates)
 	{
 		m_messageBuilder.reset();
-		
+
 		if (m_messageBuilder.addMessageType(SignalingIceResponse) < 0)
 			return -1;
 
-		std::string streamKey = std::string("1234", 4);
-		if (m_messageBuilder.addStreamKey(streamKey) < 0)
+		if (m_messageBuilder.addStreamKey(m_streamKey) < 0)
 			return -1;
 
 		if (m_messageBuilder.addIceUsername(username) < 0)
@@ -63,6 +74,7 @@ namespace oppvs {
 	{
 		if (streamKey == "")
 			return -1;
+		m_streamKey = streamKey;
 		m_messageBuilder.reset();
 		if (m_messageBuilder.addMessageType(SignalingStreamRegister) < 0)
 			return -1;
@@ -91,5 +103,69 @@ namespace oppvs {
 			std::cout << "sent done " << buffer->size() << " bytes" << std::endl;
 		}
 		return 0;
+	}
+
+	void SignalingManager::waitResponse()
+	{
+		fd_set set;
+    	timeval tv = {};
+    	int sock = m_socket.getSocketHandle();
+
+    	m_incomingBuffer->setSize(0);
+        FD_ZERO(&set);
+        FD_SET(sock, &set);
+        tv.tv_usec = 500000; // half-second
+        tv.tv_sec = 5;
+
+		while (!m_interrupt)
+		{
+			//int ret = select(sock + 1, &set, NULL, NULL, &tv);
+			//if (ret > 0)
+        	{
+        		int ret = m_socket.Receive(sock, m_incomingBuffer->data(), m_incomingBuffer->capacity());
+				if (ret >= 0)
+				{
+					m_incomingBuffer->setSize(ret);
+					std::cout << "Receive " <<  ret << " bytes " << m_socket.getLocalAddress().toString() << " - " 
+					<< m_socket.getRemoteAddress().toString() << std::endl;
+					processResponse();
+				}
+				else
+				{
+					std::cout << "Receive error " << strerror(errno);
+					break;
+				}
+			}
+		}
+	}
+
+	void SignalingManager::release()
+	{
+		m_incomingBuffer.reset();
+		m_messageReader.reset();
+	}
+
+	void SignalingManager::signalForStop()
+	{
+		m_interrupt = true;
+	}
+
+	void SignalingManager::processResponse()
+	{
+		m_messageReader.reset();
+		m_readerBuffer->setSize(0);
+		m_messageReader.getStream().attach(m_readerBuffer, true);
+
+		m_messageReader.addBytes(m_incomingBuffer->data(), m_incomingBuffer->size());
+		switch (m_messageReader.getMessageType())
+		{
+			case SignalingIceRequest:
+				std::cout << "Receive Ice Request" << std::endl;
+				cbOnReceiveIceRequest(m_object);
+				m_interrupt = true;
+				break;
+			default:
+				break;
+		}
 	}
 } // oppvs

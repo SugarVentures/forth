@@ -52,20 +52,30 @@ namespace oppvs {
 			if (sockfd < 0)
 				continue;
 
-			int rcvlen = psocket->Receive(sockfd, m_incomingBuffer->data(), m_incomingBuffer->size());
-
-			if (rcvlen <= 0)
+			std::cout << "Accept connection from client: " << remoteAddress.toString() << std::endl;
+			while (true)
 			{
-				continue;
+				int rcvlen = psocket->Receive(sockfd, m_incomingBuffer->data(), m_incomingBuffer->capacity());
+
+				if (rcvlen <= 0)
+				{
+					std::cout << "Error in receiving packet" << std::endl;
+					break;
+				}
+
+				std::cout << "Receive msg from " << remoteAddress.toString() << " at: " << psocket->getLocalAddress().toString() << std::endl;
+				std::cout << "Bytes: " << rcvlen << std::endl;
+				m_incomingBuffer->setSize(rcvlen);
+				m_outgoingMessage.sock = sockfd;
+				m_outgoingMessage.destination = remoteAddress;
+				handleMessage();
+
 			}
+			psocket->Close(sockfd);
+		
 			
-			std::cout << "Receive msg from " << remoteAddress.toString() << " at: " << psocket->getLocalAddress().toString() << std::endl;
-			std::cout << "Bytes: " << rcvlen << std::endl;
-			m_incomingBuffer->setSize(rcvlen);
-			m_outgoingMessage.sock = sockfd;
-			m_outgoingMessage.destination = remoteAddress;
-			handleMessage();
 		}
+
 		return 0;
 	}
 
@@ -97,40 +107,13 @@ namespace oppvs {
 
 	int SignalingServerThread::signalForStop(bool postMessages)
 	{
-
 		m_exitThread = true;
-
-	    // have the socket send a message to itself
-	    // if another thread is sharing the same socket, this may wake that thread up to
-	    // but all the threads should be started and shutdown together
-	    if (postMessages)
-	    {
-	        for (size_t index = 0; index < m_listenSockets.size(); index++)
-	        {
-	            char data = 'x';
-	            
-	            ASSERT(m_listenSockets[index] != NULL);
-	            
-	            SocketAddress addr = m_listenSockets[index]->getLocalAddress();
-	            // If no specific adapter was binded to, IP will be 0.0.0.0
-	            // Linux evidently treats 0.0.0.0 IP as loopback (and works)
-	            // On Windows you can't send to 0.0.0.0. sendto will fail - switch to sending to localhost
-	            if (addr.getIP().isZero())
-	            {
-	                SocketAddress addrLocal;
-	                addrLocal.setIP(IPAddress());
-	                addrLocal.setPort(addr.getPort());
-	                addr = addrLocal;
-
-	            }
-	            m_listenSockets[index]->Send(m_listenSockets[index]->getSocketHandle(), &data, 1, addr);
-	        }
-	    }
 		return 0;    	
 	}
 
 	int SignalingServerThread::waitForStopAndClose()
 	{
+		m_listenSockets[0]->Close();
 		waitUntilEnding();
 		releaseBuffers();
 		m_listenSockets.clear();
@@ -144,7 +127,8 @@ namespace oppvs {
 		m_readerBuffer->setSize(0);
 		m_messageReader.getStream().attach(m_readerBuffer, true);
 
-		m_messageReader.addBytes(m_incomingBuffer->data(), m_incomingBuffer->size());
+		if (m_messageReader.addBytes(m_incomingBuffer->data(), m_incomingBuffer->size()) < 0)
+			return;
 		switch (m_messageReader.getMessageType())
 		{
 			case SignalingStreamRegister:
@@ -152,20 +136,24 @@ namespace oppvs {
 					return;
 				sendResponse();
 				break;
+			case SignalingIceResponse:
+				std::cout << "Receive Ice Response" << std::endl;
+				std::vector<IceCandidate>& candidates = m_messageReader.getIceCandidates();
+
+				for (int i = 0; i < candidates.size(); i++)
+				{
+			        std::cout << "Candidate: " << candidates[i].component << " "
+						  << candidates[i].foundation << " "
+						  << candidates[i].priority << " "
+						  << candidates[i].ip << " "
+						  << candidates[i].protocol << " "
+						  << candidates[i].port << " "
+						  << candidates[i].type << std::endl;
+				}
+				break;
 		}
 
-		std::vector<IceCandidate>& candidates = m_messageReader.getIceCandidates();
-
-		for (int i = 0; i < candidates.size(); i++)
-		{
-	        std::cout << "Candidate: " << candidates[i].component << " "
-				  << candidates[i].foundation << " "
-				  << candidates[i].priority << " "
-				  << candidates[i].ip << " "
-				  << candidates[i].protocol << " "
-				  << candidates[i].port << " "
-				  << candidates[i].type << std::endl;
-		}
+		
 	}
 
 	int SignalingServerThread::buildIceRequest()
