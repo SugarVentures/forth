@@ -33,6 +33,7 @@ namespace oppvs {
 			return -1;
 		}
 		std::cout << "Address for signaling: " << m_socket.getLocalAddress().toString() << std::endl;
+		m_socket.setReceiveTimeOut(OPPVS_NETWORK_MAX_WAIT_TIME);
 
 		//Init buffer for response
 		m_incomingBuffer = SharedDynamicBufferRef(new DynamicBuffer());
@@ -115,28 +116,26 @@ namespace oppvs {
         FD_ZERO(&set);
         FD_SET(sock, &set);
         tv.tv_usec = 500000; // half-second
-        tv.tv_sec = 5;
+        tv.tv_sec = OPPVS_NETWORK_MAX_WAIT_TIME;
 
 		while (!m_interrupt)
 		{
-			//int ret = select(sock + 1, &set, NULL, NULL, &tv);
-			//if (ret > 0)
-        	{
-        		int ret = m_socket.Receive(sock, m_incomingBuffer->data(), m_incomingBuffer->capacity());
-				if (ret >= 0)
-				{
-					m_incomingBuffer->setSize(ret);
-					std::cout << "Receive " <<  ret << " bytes " << m_socket.getLocalAddress().toString() << " - " 
-					<< m_socket.getRemoteAddress().toString() << std::endl;
-					processResponse();
-				}
-				else
-				{
-					std::cout << "Receive error " << strerror(errno);
-					break;
-				}
+			
+    		int ret = m_socket.Receive(sock, m_incomingBuffer->data(), m_incomingBuffer->capacity());
+			if (ret > 0)
+			{
+				m_incomingBuffer->setSize(ret);
+				std::cout << "Receive " <<  ret << " bytes " << m_socket.getLocalAddress().toString() << " - " 
+				<< m_socket.getRemoteAddress().toString() << std::endl;
+				processResponse();
+			}
+			else
+			{
+				std::cout << "Receive error " << strerror(errno) << std::endl;
+				break;
 			}
 		}
+		m_socket.Close();
 	}
 
 	void SignalingManager::release()

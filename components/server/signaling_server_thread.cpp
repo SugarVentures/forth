@@ -61,7 +61,7 @@ namespace oppvs {
 			std::cout << "Accept connection from client: " << remoteAddress.toString() << std::endl;
 			SignalingServerSubThread *thread = new SignalingServerSubThread();
 			thread->init(psocket, sockfd, remoteAddress);
-			thread->start();
+			//thread->start();
 			m_threads.push_back(thread);
 		}
 

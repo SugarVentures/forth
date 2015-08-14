@@ -22,7 +22,7 @@ namespace oppvs {
 
 	    delete m_globalMainLoopThread;
 
-	    while (m_streams.empty())
+	    while (m_streams.size() > 0)
 	    {
 	    	delete m_streams.back();
 	    	m_streams.pop_back();
