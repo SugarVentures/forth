@@ -29,6 +29,13 @@ inline void cta_noop(const char* psz)
 
 namespace oppvs 
 {
+
+	enum StreamingRole
+	{
+		ROLE_BROADCASTER,
+		ROLE_VIEWER
+	};
+
 	inline bool localAssert(bool result, const char* function, const char* file, int line, const char* expression)
 	{
 		if (!result)

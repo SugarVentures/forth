@@ -18,6 +18,8 @@
 #include "video_capture.hpp"
 #include "video_decoding_vp.hpp"
 
+#include "signaling_handler.hpp"
+
 
 #include <vector>
 
@@ -27,11 +29,14 @@ extern "C"
 }
 
 namespace oppvs
-{	
-	enum StreamingRole
+{
+
+	struct StreamingConfiguration
 	{
-		ROLE_BROADCASTER,
-		ROLE_VIEWER
+		IceServerInfo stunServer;
+		IceServerInfo turnServer;
+		SocketAddress signalingServerAddress;
+		StreamingRole role;
 	};
 
 	class StreamingEngine
@@ -40,8 +45,9 @@ namespace oppvs
 		StreamingEngine();
 		~StreamingEngine();
 
-		void init(StreamingRole role, const std::string& stun, const std::string& turn, 
-			const std::string& username, const std::string& password);
+		int init(StreamingRole role, const std::string& stun, const std::string& turn, 
+			const std::string& username, const std::string& password, const std::string& signaling, uint16_t port);
+		int start(const std::string& streamkey);
 
 		void setup();		
 
@@ -99,6 +105,9 @@ namespace oppvs
 		VPVideoEncoder m_encoder;
 		VPVideoDecoder m_decoder;
 
+		StreamingConfiguration 	m_configuration;
+		SignalingHandler 		m_signaler;
+		IceManager				m_iceManager;
 	};
 
 }

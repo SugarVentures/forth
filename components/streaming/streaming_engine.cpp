@@ -14,7 +14,6 @@ namespace oppvs
 		m_cacheBuffer = NULL;
 		m_messageParser = MessageParsing();
 
-		
 	}
 
 	void StreamingEngine::setup()
@@ -67,7 +66,34 @@ namespace oppvs
 		if (m_cacheBuffer)
 			delete m_cacheBuffer;
 
-		
+	}
+
+
+	int StreamingEngine::init(StreamingRole role, const std::string& stun, const std::string& turn, 
+			const std::string& username, const std::string& password, const std::string& signaling, uint16_t port)
+	{
+		//Update configuration
+		m_configuration.stunServer = IceServerInfo(stun, oppvs::DEFAULT_STUN_PORT, "", "");
+		m_configuration.turnServer = IceServerInfo(turn, oppvs::DEFAULT_STUN_PORT, username, password);
+		m_configuration.role = role;
+
+		m_configuration.signalingServerAddress.setIP(oppvs::IPAddress(signaling));
+		m_configuration.signalingServerAddress.setPort(port);
+
+		if (m_signaler.init(m_configuration.signalingServerAddress, role) < 0)
+			return -1;
+
+		if (m_iceManager.init(m_configuration.stunServer, m_configuration.turnServer) < 0)
+			return -1;
+		return 0;
+	}
+
+	int StreamingEngine::start(const std::string& streamkey)
+	{
+		if (m_signaler.start(streamkey) < 0)
+			return -1;
+
+		return 0;
 	}
 
 	void* runStreaming(void* p)

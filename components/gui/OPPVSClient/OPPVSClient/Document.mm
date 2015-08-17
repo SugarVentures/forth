@@ -41,7 +41,21 @@ void frameCallback(oppvs::PixelBuffer& pf)
 
 - (void)initReceiver: (NSString*)server withPort: (NSInteger)port
 {
-    render = (ViewController*)viewController;
+    streamEngine = new oppvs::StreamingEngine();
+    if (streamEngine->init(oppvs::ROLE_VIEWER, "192.168.0.106", "192.168.0.106", "turn", "password",
+                             "127.0.0.1", 33333) < 0)
+    {
+        NSLog(@"Failed to init streaming engine");
+        return;
+    }
+    
+    if (streamEngine->start("1234") < 0)
+    {
+        NSLog(@"Failed to start streaming engine");
+        return;
+    }
+    
+    /*render = (ViewController*)viewController;
     streamEngine = new oppvs::StreamingEngine();
     streamEngine->setup();
     streamEngine->registerCallback(frameCallback);
@@ -49,7 +63,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     service.type = oppvs::ST_VIDEO_STREAMING;
     service.key = 123;
     std::string serverAddr([server UTF8String]);
-    streamEngine->initSubscribeChannel(serverAddr, port, service);
+    streamEngine->initSubscribeChannel(serverAddr, port, service);*/
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {

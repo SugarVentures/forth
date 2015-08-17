@@ -103,8 +103,19 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 
 - (void) startStreaming
 {
-
-    streamingEngine.setup();
+    if (streamingEngine.init(oppvs::ROLE_BROADCASTER, "192.168.0.106", "192.168.0.106", "turn", "password",
+                             "127.0.0.1", 33333) < 0)
+    {
+        NSLog(@"Failed to init streaming engine");
+        return;
+    }
+    
+    if (streamingEngine.start("1234") < 0)
+    {
+        NSLog(@"Failed to start streaming engine");
+        return;
+    }
+    /*streamingEngine.setup();
     streamingEngine.setStreamInfo(videoEngine->getVideoActiveSources());
     streamingEngine.initPublishChannel();
     std::string info = streamingEngine.getStreamInfo();
@@ -112,7 +123,7 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
     ViewController* view = (ViewController*)viewController;
     NSString *streaminfo = [NSString stringWithCString:info.c_str()
                                                encoding:[NSString defaultCStringEncoding]];
-    [view setStreamInfo:streaminfo];
+    [view setStreamInfo:streaminfo];*/
 }
 
 - (void) stopStreaming
