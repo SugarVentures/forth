@@ -17,9 +17,14 @@ namespace oppvs {
 
 		int init(const SocketAddress& server, StreamingRole role);
 		int start(const std::string& streamKey);
+		int sendStreamRequest(std::string username, std::string password, std::vector<oppvs::IceCandidate>& candidates);
 		
 		static void* run(void* object);
+		static void callbackCandidateGatheringDone(void* object, std::string username, std::string password, std::vector<oppvs::IceCandidate>& candidates);
+		static void callbackOnIceResponse(void* object, std::string& username, std::string& password, std::vector<oppvs::IceCandidate>& candidates);
+		
 		void waitingSignal();
+
 	};
 } // oppvs
 

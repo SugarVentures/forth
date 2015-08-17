@@ -85,6 +85,8 @@ namespace oppvs
 
 		if (m_iceManager.init(m_configuration.stunServer, m_configuration.turnServer) < 0)
 			return -1;
+
+		m_iceManager.attachCallbackEvent(SignalingHandler::callbackCandidateGatheringDone, (void*)&m_signaler);
 		return 0;
 	}
 
@@ -92,7 +94,10 @@ namespace oppvs
 	{
 		if (m_signaler.start(streamkey) < 0)
 			return -1;
-
+		
+		IceStream* stream = m_iceManager.createStream();
+		stream->requestLocalCandidates();
+		
 		return 0;
 	}
 

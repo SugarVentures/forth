@@ -31,12 +31,18 @@ namespace oppvs {
 		void registerCallback(callbackOnReceive cb, void* object);
 		void* getCallbackObject();
 
+		void attachCallbackEvent(callbackCandidateGatheringDone cb, void* object);
+
 		callbackCandidateGatheringDone cbCandidateGatheringDone;
 		callbackNewSubscriber cbNewSubscriber;
 		void* m_channel;
 
 		callbackOnReceive cbOnReceive;
 		void* rcvObject;
+
+		callbackCandidateGatheringDone cbCandidateGatheringDoneEvent;
+    	void*	cbCandidateGatheringDoneObject;
+
 	private:
 		NiceAgent* m_agent;
 		IceServerInfo m_stunServer;
@@ -58,7 +64,7 @@ namespace oppvs {
 
     	static void *runGlobalMainloop(void* arg);
 
-
+    	
 	};
 } // oppvs
 

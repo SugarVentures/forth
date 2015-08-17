@@ -4,7 +4,7 @@
 namespace oppvs {
 	IceManager::IceManager() : m_agent(NULL), m_globalMainLoop(NULL), m_globalMainLoopThread(NULL), m_cbObject(NULL)
 	{
-			
+		cbCandidateGatheringDoneObject = NULL;
 	}
 
 	IceManager::IceManager(void* object) : m_agent(NULL), m_globalMainLoop(NULL), m_globalMainLoopThread(NULL), m_cbObject(object)
@@ -144,8 +144,9 @@ namespace oppvs {
 			stream->convertNiceCandidateToIceCandidate(cands, candidates);
    			g_slist_free_full(cands, (GDestroyNotify)&nice_candidate_free);
 
-   			manager->cbCandidateGatheringDone(manager->getCallbackObject(), 
-   				stream->getLocalUsername(), stream->getLocalPassword(), candidates);
+   			if (manager->cbCandidateGatheringDoneObject != NULL)
+	   			manager->cbCandidateGatheringDoneEvent(manager->cbCandidateGatheringDoneObject, 
+	   				stream->getLocalUsername(), stream->getLocalPassword(), candidates);
    		}
 
 	}
@@ -210,5 +211,11 @@ namespace oppvs {
     {
     	cbOnReceive = cb;
     	rcvObject = object;
+    }
+
+    void IceManager::attachCallbackEvent(callbackCandidateGatheringDone cb, void* object)
+    {
+    	cbCandidateGatheringDoneEvent = cb;
+    	cbCandidateGatheringDoneObject = object;
     }
 } // oppvs

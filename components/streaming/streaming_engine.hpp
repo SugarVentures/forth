@@ -73,6 +73,7 @@ namespace oppvs
 		
 		void updateQueue();
 
+
 	private:
 		uint32_t m_ssrc;
 		PublishChannel* m_publisher;
