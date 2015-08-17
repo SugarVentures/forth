@@ -92,6 +92,8 @@ namespace oppvs {
 	        nice_agent_attach_recv(m_agent, stream_id, component_id, g_main_loop_get_context(m_globalMainLoop), 
 	        	cb_nice_recv, (gpointer)stream);
 
+	    
+
 	    // Setting turn server properties
 	    if (m_turnServer.serverAddress != "")
 	    {
@@ -148,17 +150,21 @@ namespace oppvs {
 
 	}
     
-    void IceManager::cb_new_selected_pair( NiceAgent *agent, guint stream_id, guint component_id,
-                                      gchar *lfoundation, gchar *rfoundation, gpointer user_data )
+    void IceManager::cb_new_selected_pair(NiceAgent *agent, guint stream_id, guint component_id,
+                                      gchar *lfoundation, gchar *rfoundation, gpointer user_data)
     {
-
-    	
+    	printf("New selected pair\n");
+    	IceManager* manager = (IceManager*)user_data;
+		IceStream* stream = manager->getStreamByID(stream_id);
+    	manager->cbNewSubscriber(manager->m_channel, stream);
     }
 
-    void IceManager::cb_nice_recv( NiceAgent *agent, guint stream_id, guint component_id,
-                              guint len, gchar *buf, gpointer user_data )
+    void IceManager::cb_nice_recv(NiceAgent *agent, guint stream_id, guint component_id,
+                              guint len, gchar *buf, gpointer user_data)
     {
-
+	   	IceStream* stream = (IceStream*)user_data;
+		//manager->cbOnReceive(manager->rcvObject, (uint8_t*)buf, len);
+		stream->receive(len, buf, component_id);
     }
 
     void IceManager::cb_component_state_changed(NiceAgent *agent, guint stream_id, 
@@ -167,15 +173,42 @@ namespace oppvs {
     	std::cout  << "SIGNAL: state changed Stream: " << stream_id
     			   << " Component ID: " << component_id
     			   << " State: " << IceStateName[state] << std::endl;
-    	
+    	if (state == NICE_COMPONENT_STATE_READY) {
+    		NiceCandidate *local, *remote;
+    		if (nice_agent_get_selected_pair(agent, stream_id, component_id,
+                &local, &remote))
+            {
+            	gchar ipaddr[INET6_ADDRSTRLEN];
+				nice_address_to_string(&local->addr, ipaddr);
+				printf("\nNegotiation complete: ([%s]:%d,",
+				 	ipaddr, nice_address_get_port(&local->addr));
+				nice_address_to_string(&remote->addr, ipaddr);
+				printf(" [%s]:%d)\n", ipaddr, nice_address_get_port(&remote->addr));
+
+    		}
+    	}
+    	else if (state == NICE_COMPONENT_STATE_FAILED) {
+    		
+  		}
     }
 
     void* IceManager::runGlobalMainloop(void* arg)
     {
-    	std::cout<< "Run global main loop" << std::endl;
+    	std::cout<< "Run global Ice main loop" << std::endl;
     	GMainLoop *global_mainloop = (GMainLoop *)arg;
     	g_main_loop_run(global_mainloop);
     	return NULL;
     }
 
+    void IceManager::registerChannelCallback(callbackNewSubscriber cb, void* channel)
+    {
+    	cbNewSubscriber = cb;
+    	m_channel = channel;
+    }
+
+    void IceManager::registerCallback(callbackOnReceive cb, void* object)
+    {
+    	cbOnReceive = cb;
+    	rcvObject = object;
+    }
 } // oppvs

@@ -78,7 +78,7 @@ namespace oppvs {
     	if (m_dataStream.setAbsolutePosition(SIGNALING_HEADER_SIZE) < 0)
     		return -1;
     	
-    	if (m_messageType == SignalingIceResponse)
+    	if (m_messageType == SignalingIceResponse || m_messageType == SignalingStreamRequest)
     	{
     		std::string username, password;
     		if (readStringAttribute(SIGNALING_ATTRIBUTE_ICE_USERNAME, username) < 0)
@@ -96,6 +96,8 @@ namespace oppvs {
     		}
     		std::cout << "Username: " << username << " password: " << password << std::endl;
     		std::cout << "Candidates: " << noCandidates << std::endl;
+    		m_username = username;
+    		m_password = password;
     		m_candidates.clear();
     		m_candidates.reserve(noCandidates);
 
@@ -223,5 +225,15 @@ namespace oppvs {
 	std::string& SignalingMessageReader::getStreamKey()
 	{
 		return m_streamKey;
+	}
+
+	std::string& SignalingMessageReader::getUsername()
+	{
+		return m_username;
+	}
+
+	std::string& SignalingMessageReader::getPassword()
+	{
+		return m_password;
 	}
 } // oppvs

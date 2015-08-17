@@ -12,7 +12,8 @@
 #include <vector>
 
 namespace oppvs {
-	typedef void (*callbackOnReceiveIceRequest)(void* object);
+	typedef void (*callbackOnReceiveIceResponse)(void* object, std::string& remoteUser, std::string& remotePassword, std::vector<IceCandidate>& candidates);
+
 	class SignalingManager
 	{
 	public:
@@ -22,13 +23,18 @@ namespace oppvs {
 		int init();
 		int sendIceResponse(std::string username, std::string password, std::vector<IceCandidate>& candidates);
 		int sendStreamRegister(const std::string& streamKey);
+		int sendStreamRequest(const std::string& username, const std::string& password, 
+			const std::vector<IceCandidate>& candidates);
 		void waitResponse();
 		void signalForStop();
 
-		void registerCallback(callbackOnReceiveIceRequest cb, void* object);
+		void registerCallback(callbackOnReceiveIceResponse cb, void* object);
+
+		void setStreamKey(const std::string& streamKey);
 		
 	private:
 		PhysicalSocket m_socket;
+		PhysicalSocket m_listenSocket; 	//Used to receive information of viewers
 		SocketAddress m_serverAddress;
 		SignalingMessageBuilder m_messageBuilder;
 
@@ -39,7 +45,8 @@ namespace oppvs {
 		std::string m_streamKey;
 		bool m_interrupt;
 
-		callbackOnReceiveIceRequest cbOnReceiveIceRequest;
+		callbackOnReceiveIceResponse cbOnReceiveIceResponse;
+
 		void* m_object;
 
 		int sendSignal();

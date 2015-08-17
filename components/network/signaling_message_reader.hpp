@@ -18,11 +18,15 @@ namespace oppvs {
 		std::vector<IceCandidate>& getIceCandidates();
 		SignalingMessageType getMessageType();
 		std::string& getStreamKey();
+		std::string& getUsername();
+		std::string& getPassword();
 	private:
 		DataStream m_dataStream;
 		SignalingMessageType m_messageType;
 		std::vector<IceCandidate> m_candidates;
 		std::string m_streamKey;
+		std::string m_username;
+		std::string m_password;
 
 		int readHeader();
 		int readBody();

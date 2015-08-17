@@ -25,7 +25,7 @@ namespace oppvs {
 		{
 			std::cout << "Binding error " << strerror(errno) << std::endl;
 			return -1;
-		}		
+		}
 
 		if (m_socket.Connect(m_serverAddress) < 0)
 		{
@@ -33,19 +33,21 @@ namespace oppvs {
 			return -1;
 		}
 		std::cout << "Address for signaling: " << m_socket.getLocalAddress().toString() << std::endl;
-		m_socket.setReceiveTimeOut(OPPVS_NETWORK_MAX_WAIT_TIME);
+		//m_socket.setReceiveTimeOut(OPPVS_NETWORK_MAX_WAIT_TIME);
 
 		//Init buffer for response
 		m_incomingBuffer = SharedDynamicBufferRef(new DynamicBuffer());
 		m_incomingBuffer->setSize(MAX_SIGNALING_MESSAGE_SIZE);
 
 		m_readerBuffer = SharedDynamicBufferRef(new DynamicBuffer());
+
 		return 0;
 	}
 
-	void SignalingManager::registerCallback(callbackOnReceiveIceRequest cb, void* object)
+
+	void SignalingManager::registerCallback(callbackOnReceiveIceResponse cb, void* object)
 	{
-		cbOnReceiveIceRequest = cb;
+		cbOnReceiveIceResponse = cb;
 		m_object = object;
 	}
 
@@ -85,6 +87,29 @@ namespace oppvs {
 		return sendSignal();
 	}
 
+	int SignalingManager::sendStreamRequest(const std::string& username, const std::string& password, 
+			const std::vector<IceCandidate>& candidates)
+	{
+		if (m_streamKey == "" || username == "" || password == "" || candidates.size() == 0)
+			return -1;
+		m_messageBuilder.reset();
+		if (m_messageBuilder.addMessageType(SignalingStreamRequest) < 0)
+			return -1;
+		if (m_messageBuilder.addStreamKey(m_streamKey) < 0)
+			return -1;
+
+		if (m_messageBuilder.addIceUsername(username) < 0)
+			return -1;
+
+		if (m_messageBuilder.addIcePassword(password) < 0)
+			return -1;
+
+		if (m_messageBuilder.addIceCandidates(candidates) < 0)
+			return -1;
+
+		return sendSignal();
+	}
+
 	int SignalingManager::sendSignal()
 	{
 		SharedDynamicBufferRef buffer;
@@ -108,15 +133,9 @@ namespace oppvs {
 
 	void SignalingManager::waitResponse()
 	{
-		fd_set set;
-    	timeval tv = {};
     	int sock = m_socket.getSocketHandle();
 
     	m_incomingBuffer->setSize(0);
-        FD_ZERO(&set);
-        FD_SET(sock, &set);
-        tv.tv_usec = 500000; // half-second
-        tv.tv_sec = OPPVS_NETWORK_MAX_WAIT_TIME;
 
 		while (!m_interrupt)
 		{
@@ -131,11 +150,11 @@ namespace oppvs {
 			}
 			else
 			{
+				if (ret == 0)
+					break;
 				std::cout << "Receive error " << strerror(errno) << std::endl;
-				break;
 			}
 		}
-		m_socket.Close();
 	}
 
 	void SignalingManager::release()
@@ -147,6 +166,7 @@ namespace oppvs {
 	void SignalingManager::signalForStop()
 	{
 		m_interrupt = true;
+		m_socket.Close();
 	}
 
 	void SignalingManager::processResponse()
@@ -160,11 +180,23 @@ namespace oppvs {
 		{
 			case SignalingIceRequest:
 				std::cout << "Receive Ice Request" << std::endl;
-				cbOnReceiveIceRequest(m_object);
 				m_interrupt = true;
 				break;
+			case SignalingIceResponse:
+			{
+				std::cout << "Receive Ice Response" << std::endl;
+				std::vector<IceCandidate>& candidates = m_messageReader.getIceCandidates();
+				cbOnReceiveIceResponse(m_object, m_messageReader.getUsername(), m_messageReader.getPassword(), candidates);
+
+			}
+
 			default:
 				break;
 		}
+	}
+
+	void SignalingManager::setStreamKey(const std::string& streamkey)
+	{
+		m_streamKey = streamkey;
 	}
 } // oppvs

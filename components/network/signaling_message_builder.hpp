@@ -26,7 +26,7 @@ namespace oppvs {
 		//Body part
 		int addIceUsername(const std::string& username);
 		int addIcePassword(const std::string& password);
-		int addIceCandidates(std::vector<IceCandidate>& candidates);
+		int addIceCandidates(const std::vector<IceCandidate>& candidates);
 	private:
 		DataStream m_dataStream;
 

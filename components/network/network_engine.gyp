@@ -56,6 +56,10 @@
                 'stun_message_handler.hpp',
                 'stun_socket_address.hpp',
                 'stun_socket.hpp',
+                'signaling_common.hpp',
+                'signaling_manager.hpp',
+                'signaling_message_builder.hpp',
+                'signaling_message_reader.hpp',
 
                 #sources
                  'client_socket.cpp',
@@ -68,7 +72,10 @@
                 'srtp_socket.cpp',
                 'stun_message_handler.cpp',
                 'stun_socket_address.cpp',
-                'stun_socket.cpp'
+                'stun_socket.cpp',
+                'signaling_manager.cpp',
+                'signaling_message_builder.cpp',
+                'signaling_message_reader.cpp'
             ]
 
         }

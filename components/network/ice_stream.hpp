@@ -8,6 +8,7 @@
 
 namespace oppvs
 {
+	typedef void (*callbackOnReceive)(void* object, uint8_t* data, uint32_t len);
 
 	class IceStream
 	{
@@ -19,11 +20,23 @@ namespace oppvs
 		
 		int requestLocalCandidatesFromComponent(guint component_id = 1);
 		int requestLocalCandidates();
+		void setRemoteCredentials(const std::string& username, const std::string& password);
+		void setRemoteCandidates(std::vector<IceCandidate> rcands);
 
 		void convertNiceCandidateToIceCandidate(GSList* cands, std::vector<IceCandidate>& results);
+		std::vector<GSList*> convertIceCandidateToNiceCandidate(std::vector<IceCandidate> cands);
 
 		std::string getLocalUsername() const;
 		std::string getLocalPassword() const;
+
+		void send(guint size, gchar* data, guint component_id = 1);
+    	void receive(guint size, gchar* data, guint component_id);
+
+    	callbackOnReceive cbOnReceive;
+		void* rcvObject;
+
+		void registerCallback(callbackOnReceive cb, void* object);
+    
 	private:
 		guint m_streamID;
 		NiceAgent* m_agent;
@@ -31,6 +44,8 @@ namespace oppvs
     
 		std::string m_localUsername;
 		std::string m_localPassword;
+		std::string m_remoteUsername;
+		std::string m_remotePassword;
 	};
 }
 

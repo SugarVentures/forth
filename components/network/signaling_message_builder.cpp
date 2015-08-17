@@ -130,7 +130,7 @@ namespace oppvs {
 		return addStringAttribute(SIGNALING_ATTRIBUTE_ICE_PASSWORD, password);
 	}
 
-	int SignalingMessageBuilder::addIceCandidates(std::vector<IceCandidate>& candidates)
+	int SignalingMessageBuilder::addIceCandidates(const std::vector<IceCandidate>& candidates)
 	{
 		uint16_t noCandidates = candidates.size();
 		uint32_t priority = 0;
