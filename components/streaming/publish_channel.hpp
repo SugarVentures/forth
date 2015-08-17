@@ -4,25 +4,29 @@
 
 #include "channel.hpp"
 
+
 namespace oppvs
 {
-	typedef void (*on_new_subscriber_event)(void* owner, const SocketAddress& remoteaddr, SocketAddress& localaddr);
 
 	class PublishChannel : public Channel
 	{
 	public:
-		PublishChannel(void* owner, on_new_subscriber_event event);
+		PublishChannel(void* owner, callbackNewSubscriber event);
 		virtual ~PublishChannel();
 		int start();
 		void waitingSubscribers();
 
 		static void* run(void* object);
+		static void callbackCandidateGatheringDoneImpl(void* object, std::string username, std::string password, std::vector<oppvs::IceCandidate>& candidates);
+		static void callbackOnIceResponse(void* object, std::string& username, std::string& password, std::vector<oppvs::IceCandidate>& candidates);
 	private:
 		ServerSocket m_server;
 		bool m_interrupt;
-		on_new_subscriber_event m_event;
+		callbackNewSubscriber m_event;
 		void* m_owner;
 		Thread* m_thread;
+
+		
 	};
 }
 

@@ -9,6 +9,9 @@
 #include "network.hpp"
 #include "thread.hpp"
 
+#include "ice_manager.hpp"
+#include "signaling_manager.hpp"
+
 namespace oppvs
 {
 	enum ServiceType
@@ -33,7 +36,7 @@ namespace oppvs
 		Channel();
 		virtual ~Channel();
 
-		virtual int init() { return 0; }
+		virtual int init();
 		const ServiceInfo& getServiceInfo() const;
 		void setServiceInfo(uint8_t type, uint32_t key);
 		void setServiceInfo(const ServiceInfo& s);
@@ -50,6 +53,10 @@ namespace oppvs
 		ServiceInfo m_service;
 		ServiceInfo *p_service;
 		uint8_t *m_message;
+
+		SignalingManager* mp_signalingManager;
+		IceManager* mp_iceManager;
+
 	};
 }
 

@@ -9,12 +9,31 @@ namespace oppvs
 		m_localAddress.setPort(0);
 		m_message = NULL;
 		p_service = NULL;
+
+		mp_signalingManager = NULL;
+		mp_iceManager = NULL;
 	}
 
 	Channel::~Channel()
 	{
 		if (m_message)
 			releaseMessage();
+
+		if (mp_signalingManager)
+		{
+			mp_signalingManager->signalForStop();
+			delete mp_signalingManager;
+		}
+		if (mp_iceManager)
+		{
+			mp_iceManager->release();
+			delete mp_iceManager;
+		}
+	}
+
+	int Channel::init()
+	{
+		return 0;
 	}
 
 	const ServiceInfo& Channel::getServiceInfo() const {

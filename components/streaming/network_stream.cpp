@@ -13,7 +13,7 @@ namespace oppvs
 
 	int NetworkStream::setup(uint32_t port)
 	{
-		IPAddress ipAddr;
+		/*IPAddress ipAddr;
 		SocketAddress socketAddr;
 		socketAddr.setIP(ipAddr);
 		socketAddr.setPort(port);
@@ -23,7 +23,13 @@ namespace oppvs
 		if (m_socket.Bind(socketAddr) < 0)
 			return -1;
 
-		m_socket.setPolicy(m_srtpKey);
+		m_socket.setPolicy(m_srtpKey);*/
+		return 0;
+	}
+
+	int NetworkStream::setup(IceStream* stream)
+	{
+		m_iceStream = stream;
 		return 0;
 	}
 
@@ -80,13 +86,15 @@ namespace oppvs
 			
 			m_messageHandler->getNextMessage(&data, &length, &ts);
 
-			if (m_socket.SendTo(data, length, ts) < 0)
+			/*if (m_socket.SendTo(data, length, ts) < 0)
 			{
 				printf("Failed to send message\n");
 				m_error = -1;
-			}
+			}*/
 			//else
 			//	printf("Sent message %d\n", length);
+
+			m_iceStream->send(length, (gchar*)data);
 			m_busy = !m_messageHandler->releaseMessage();
 			if (!m_busy)
 				m_error = 1;
@@ -136,6 +144,20 @@ namespace oppvs
 		}
 	}
 
+	void NetworkStream::onReceive(void* object, uint8_t* data, uint32_t len)
+	{
+		Message message;
+		uint32_t timestamp = 0;
+		NetworkStream* nstream = (NetworkStream*)object;
+		if (len > 0)
+		{
+			memcpy(message.getData(), data, len);
+			message.setLength(len);
+			message.setTimestamp(timestamp);
+			nstream->getParser()->updateMessage(message);
+		}
+	}
+
 	void NetworkStream::sendDone(int* error)
 	{
 
@@ -149,5 +171,10 @@ namespace oppvs
 	void NetworkStream::addSource(FrameInfo& inf)
 	{
 
+	}
+
+	MessageParsing* NetworkStream::getParser()
+	{
+		return m_messageParser;
 	}
 }

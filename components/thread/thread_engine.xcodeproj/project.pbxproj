@@ -14,6 +14,7 @@
 		664245FF2A7AAA4A0CEBDF7C /* thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread.cpp; sourceTree = "<group>"; };
 		85B29969623F068F9144E752 /* libthread_engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libthread_engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE004DD1378F0A438BFD5226 /* tsqueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = tsqueue.hpp; sourceTree = "<group>"; };
+		B5688B33306D04C73C068171 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
 		D93F42A8D93D134BAEEE5AA8 /* thread_engine.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = thread_engine.gyp; sourceTree = "<group>"; };
 		F2B3B2119DEE055A1E290919 /* thread.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = thread.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -44,7 +45,7 @@
 			children = (
 				09F3DC82C7E9C0394DBD3CB6 /* Source */,
 				2E5B295471092E289A95A5A3 /* Products */,
-				9A0F1C17D0F2D5919ED4BFBB /* Build */,
+				ABC5D748870E83CE29D9B32B /* Build */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,9 +57,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9A0F1C17D0F2D5919ED4BFBB /* Build */ = {
+		ABC5D748870E83CE29D9B32B /* Build */ = {
 			isa = PBXGroup;
 			children = (
+				B5688B33306D04C73C068171 /* common.gypi */,
 				D93F42A8D93D134BAEEE5AA8 /* thread_engine.gyp */,
 			);
 			name = Build;

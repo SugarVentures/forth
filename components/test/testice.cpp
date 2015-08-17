@@ -9,6 +9,7 @@
 #include <signal.h>
 
 bool interrupt;
+int opt = 0;
 
 void signalhandler(int param)
 {
@@ -54,8 +55,11 @@ void callbackCandidateGatheringDone(void* object, std::string username, std::str
 	std::cout << "call back " << std::endl;
 	std::cout << "Local credential: " << username << " " << password << std::endl;
 
-	oppvs::SignalingManager *sigManager = (oppvs::SignalingManager*)object;
-	sigManager->sendIceResponse(username, password, candidates);
+	if (opt == 1)
+	{
+		oppvs::SignalingManager *sigManager = (oppvs::SignalingManager*)object;
+		sigManager->sendStreamRequest(username, password, candidates);
+	}
 
 	for (int i = 0; i < candidates.size(); i++)
 	{
@@ -69,19 +73,34 @@ void callbackCandidateGatheringDone(void* object, std::string username, std::str
 	}
 }
 
-void callbackOnIceRequest(void* object)
+void callbackOnIceResponse(void* object, std::string& username, std::string& password, std::vector<oppvs::IceCandidate>& candidates)
 {
-	std::cout << "call back on ice request" << std::endl;
+	std::cout << "call back on ice response" << std::endl;
+	oppvs::IceManager* iceManager = (oppvs::IceManager*)object;
+	oppvs::IceStream* stream = iceManager->getStreamByID(1);
+	std::cout << "Username " << username << " password " << password << std::endl;
+	stream->setRemoteCredentials(username, password);
+	stream->setRemoteCandidates(candidates);
 
-	oppvs::IceManager *iceManager = (oppvs::IceManager*)object;
-	oppvs::IceStream* stream = iceManager->createStream();
-	stream->requestLocalCandidates();
+	//gchar msg[] = "hello world!";
+    //stream->send(sizeof(msg), msg, 1);
+	for (int i = 0; i < candidates.size(); i++)
+	{
+        std::cout << "Candidate: " << candidates[i].component << " "
+			  << candidates[i].foundation << " "
+			  << candidates[i].priority << " "
+			  << candidates[i].ip << " "
+			  << candidates[i].protocol << " "
+			  << candidates[i].port << " "
+			  << candidates[i].type << std::endl;
+	}
+	
 }
 
 int main(int argc, char* argv[])
 {
 	std::string address, username, password;
-	int opt = 0;
+	
 	signal(SIGPIPE, SIG_IGN);
     
     initAppExitListener();
@@ -114,7 +133,7 @@ int main(int argc, char* argv[])
 	oppvs::IceManager iceManager((void*)&sigManager);
 	iceManager.init(stunServer, turnServer);
 
-	sigManager.registerCallback(callbackOnIceRequest, (void*)&iceManager);
+	sigManager.registerCallback(callbackOnIceResponse, (void*)&iceManager);
 	iceManager.registerCallback(callbackCandidateGatheringDone);
 
 	std::cout << "Server: " << turnServer.serverAddress << " port: " << turnServer.port << " user: " << turnServer.username << " " << turnServer.password << std::endl;
@@ -122,12 +141,18 @@ int main(int argc, char* argv[])
 	if (opt == 0)
 	{
 		std::cout << "Broadcaster" << std::endl;
+		oppvs::IceStream* stream = iceManager.createStream();
+		stream->requestLocalCandidates();
+
 		sigManager.sendStreamRegister(streamKey);
 		sigManager.waitResponse();
 	}
 	else
 	{
 		std::cout << "Viewer" << std::endl;
+		sigManager.setStreamKey(streamKey);
+		oppvs::IceStream* stream = iceManager.createStream();
+		stream->requestLocalCandidates();
 	}	
 	
 	waitForAppExitSignal();

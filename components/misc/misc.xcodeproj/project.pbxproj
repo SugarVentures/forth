@@ -76,6 +76,7 @@
 		112F9C5F9E6866F9853D78BB /* fasthash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fasthash.h; sourceTree = "<group>"; };
 		216623FC9ADEE984538060C7 /* md5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
 		432C342B9B22736EADC67CFA /* random_unique32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = random_unique32.h; sourceTree = "<group>"; };
+		4E8015AF33C7C2A6E8DB91B3 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
 		4EC49AA1DA067A1C8DE82739 /* libmisc2.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libmisc2.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		556AA56588FC7602339CC94C /* atomic_helper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = atomic_helper.cpp; sourceTree = "<group>"; };
 		62735BE20608A489F566957C /* libmisc1.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libmisc1.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,7 +125,7 @@
 				B442F3CE148ED635E81300B5 /* Source */,
 				BAA4E7AA6B638B944AF2734E /* Frameworks */,
 				98D8E080063793C61CC0585B /* Products */,
-				B59A2666C8CEA34CB026B4B6 /* Build */,
+				E1287B00814B48E7490B3BE8 /* Build */,
 			);
 			sourceTree = "<group>";
 		};
@@ -156,20 +157,21 @@
 			name = Source;
 			sourceTree = "<group>";
 		};
-		B59A2666C8CEA34CB026B4B6 /* Build */ = {
-			isa = PBXGroup;
-			children = (
-				DA2D10FDB320BBC2736A4E25 /* misc.gyp */,
-			);
-			name = Build;
-			sourceTree = "<group>";
-		};
 		BAA4E7AA6B638B944AF2734E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				0656731A76338C515808BFA1 /* libsrtp.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E1287B00814B48E7490B3BE8 /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				4E8015AF33C7C2A6E8DB91B3 /* common.gypi */,
+				DA2D10FDB320BBC2736A4E25 /* misc.gyp */,
+			);
+			name = Build;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

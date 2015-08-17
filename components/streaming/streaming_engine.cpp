@@ -2,6 +2,7 @@
 
 namespace oppvs
 {
+	
 	StreamingEngine::StreamingEngine()
 	{
 		m_sendThread = NULL;
@@ -12,6 +13,8 @@ namespace oppvs
 
 		m_cacheBuffer = NULL;
 		m_messageParser = MessageParsing();
+
+		
 	}
 
 	void StreamingEngine::setup()
@@ -30,6 +33,7 @@ namespace oppvs
 		
 		SRTPSocket::initSRTPLib();
 
+		
 		if (pthread_mutex_init(&m_mutex, NULL) != 0)
 		{
 			printf("Cannot init mutex\n");
@@ -62,6 +66,8 @@ namespace oppvs
 
 		if (m_cacheBuffer)
 			delete m_cacheBuffer;
+
+		
 	}
 
 	void* runStreaming(void* p)
@@ -79,7 +85,7 @@ namespace oppvs
 	{
 		NetworkStream* stream = (NetworkStream*)p;
 		stream->waitStream();
-		stream->releaseReceiver();
+		//stream->releaseReceiver();
 		return NULL;
 	}
 
@@ -93,10 +99,10 @@ namespace oppvs
 		}
 	}
 
-	void onNewSubscriberEvent(void* owner, const SocketAddress& remoteaddr, SocketAddress& localaddr)
+	void onNewSubscriberEvent(void* owner, IceStream* stream)
 	{
 		StreamingEngine* engine = (StreamingEngine*)owner;
-		engine->initUploadStream(localaddr, remoteaddr);
+		engine->initUploadStream(stream);
 	}
 
 	void onSendDoneEvent(void* owner, int error)
@@ -126,21 +132,17 @@ namespace oppvs
 	}
 
 
-	int StreamingEngine::initUploadStream(SocketAddress& localaddr, const SocketAddress& remoteaddr)
+	int StreamingEngine::initUploadStream(IceStream* icestream)
 	{
 		NetworkStream *stream = new NetworkStream(SENDER_ROLE, m_publisher->getServiceKey());
-		//stream->registerCallback((void*)this, &m_sendingQueue, onSendDoneEvent);
 		stream->registerCallback((void*)this, &m_messageHandler, onSendDoneEvent);
-		if (stream->setup(0) < 0)
+		if (stream->setup(icestream) < 0)
 		{
-			printf("Cannot setup network stream for uploading data for %s\n", remoteaddr.toString().c_str());
+			printf("Cannot setup network stream for uploading data");
 			delete stream;
 			return -1;
 		}
 		
-		localaddr = stream->getLocalAddress();
-		printf("Setup upload stream at %s\n", localaddr.toString().c_str());
-		stream->setSender(remoteaddr);
 		m_subscribers.push_back(stream);
 
 		if (m_subscribers.size() == 1)
@@ -151,26 +153,22 @@ namespace oppvs
 		m_messageHandler.setNumClients(m_subscribers.size());
 		m_sendThread = new Thread(runStreaming, (void*)stream);
 		m_sendThread->create();
-		
 		return 0;
 	}
 
 	int StreamingEngine::initDownloadStream()
 	{
-		m_receiver = new NetworkStream(RECEIVER_ROLE, m_subscribe->getServiceKey());
-		m_messageParser.setCacheBuffer(m_cacheBuffer);
-		m_receiver->registerCallback((void*)this, &m_messageParser, onReceiveEvent);
-		if (m_receiver->setup(m_subscribe->getLocalAddress().getPort()) < 0)
+		/*if (m_receiver->setup(m_subscribe->getLocalAddress().getPort()) < 0)
 		{
 			printf("Cannot setup network stream for downloading data\n");
 			return -1;
 		}
 		m_receiver->setReceiver(m_subscribe->getRemoteAddress());
 		printf("Set a download stream (%s %s)\n", m_subscribe->getLocalAddress().toString().c_str(), 
-			m_subscribe->getRemoteAddress().toString().c_str());
+			m_subscribe->getRemoteAddress().toString().c_str());*/
 
-		m_receiveThread = new Thread(waitStreaming, (void*)m_receiver);
-		m_receiveThread->create();
+		/*m_receiveThread = new Thread(waitStreaming, (void*)m_receiver);
+		m_receiveThread->create();*/
 
 		m_renderThread = new Thread(rendering, (void*)this);
 		m_renderThread->create();
@@ -201,17 +199,22 @@ namespace oppvs
 
 		m_publisher->setServiceInfo(ST_VIDEO_STREAMING, generateSSRC());
 		m_publisher->setServiceInfo(&m_serviceInfo);
+
 		printServiceInfo();
+		m_encoder.init(m_serviceInfo.videoStreamInfo);
+
 		m_publisher->start();
 		printf("SSRC: %u\n", m_publisher->getServiceKey());
-		
-		m_encoder.init(m_serviceInfo.videoStreamInfo);
 		return 0;
 	}
 
 	int StreamingEngine::initSubscribeChannel(const std::string& publisher, uint16_t port, const ServiceInfo& service)
 	{
+		m_receiver = new NetworkStream(RECEIVER_ROLE, 1234);		
+		
 		m_subscribe = new SubscribeChannel(publisher, port, service);
+		m_subscribe->registerCallback(NetworkStream::onReceive, (void*)m_receiver);
+
 		int len;
 		uint8_t info[OPPVS_NETWORK_PACKET_LENGTH];
 		if (m_subscribe->registerInterest((uint8_t*)&info, OPPVS_NETWORK_PACKET_LENGTH, &len) < 0)
@@ -222,14 +225,16 @@ namespace oppvs
 		setStreamInfo(info + curPos, len);
 		//Setup cache
 		m_cacheBuffer = new CacheBuffer(m_serviceInfo.videoStreamInfo);
+		m_messageParser.setCacheBuffer(m_cacheBuffer);
+		m_receiver->registerCallback((void*)this, &m_messageParser, onReceiveEvent);
 
 		//Setup decoder
 		m_decoder.init(m_serviceInfo.videoStreamInfo);
 
 		printServiceInfo();
 		printf("SSRC: %u\n", m_subscribe->getServiceKey());
-		if (initDownloadStream() < 0)
-			return -1;
+
+		initDownloadStream();
 		return 0;
 	}
 
@@ -357,4 +362,6 @@ namespace oppvs
 			
 		}
 	}
+
+
 }

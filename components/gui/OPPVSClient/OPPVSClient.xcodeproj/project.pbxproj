@@ -365,6 +365,9 @@
 					../../encoding,
 					../../../libs/libvpx,
 					../../error,
+					"../../../libs/libnice/**",
+					../../network,
+					"/usr/local/include/glib-2.0",
 				);
 				INFOPLIST_FILE = OPPVSClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -398,6 +401,9 @@
 					../../encoding,
 					../../../libs/libvpx,
 					../../error,
+					"../../../libs/libnice/**",
+					../../network,
+					"/usr/local/include/glib-2.0",
 				);
 				INFOPLIST_FILE = OPPVSClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

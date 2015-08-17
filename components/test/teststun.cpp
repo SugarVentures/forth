@@ -63,10 +63,10 @@ int main(int argc, char* argv[])
 		config.addressPrimaryAdvertised.setIP(oppvs::IPAddress(hostname));
 		config.addressPrimaryAdvertised.setPort(oppvs::DEFAULT_STUN_PORT);
 
-		config.addressAlternateAdvertised.setIP(oppvs::IPAddress("192.168.0.107"));
+		config.addressAlternateAdvertised.setIP(oppvs::IPAddress("192.168.0.105"));
 		config.addressAlternateAdvertised.setPort(oppvs::DEFAULT_STUN_PORT + 1);
 
-		config.enabledPP = true;
+		config.enabledPP = false;
 		config.addressPP = config.addressPrimaryAdvertised;
 		config.addressPP.setPort(oppvs::DEFAULT_STUN_PORT);
 
@@ -105,6 +105,7 @@ int main(int argc, char* argv[])
 		oppvs::StunClient client;
 		oppvs::StunClientConfiguration config;
 		config.localAddress.setIP(oppvs::IPAddress("192.168.0.103"));
+		config.localAddress.setPort(20000);
 		config.serverAddress.setIP(oppvs::IPAddress(hostname));
 		config.serverAddress.setPort(port);
 		if (client.init(config) < 0)

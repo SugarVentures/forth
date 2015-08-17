@@ -13,6 +13,8 @@ INCDIR += -I$(rootDir)/../../libs/libnice -I$(rootDir)/../../libs/libnice/agent 
 		  -I/usr/local/include/glib-2.0 \
 		  -I$(rootDir)/../../libs/libnice/include
 
+NICELDFLAGS = -L$(rootDir)/../../libs
+NICELIBS = -lnetworkengine
 
 CFLAGS	= -Wall -g -fPIC -std=c++11
 
@@ -78,7 +80,7 @@ testdatastream.o: testdatastream.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
 
 testice: testice.o
-	$(CXX) $(INCDIR) $(CFLAGS) $< -o $@
+	$(CXX) $(INCDIR) $(CFLAGS) $(NICELDFLAGS) $< $(NICELIBS) -o $@
 
 testice.o: testice.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
@@ -94,7 +96,7 @@ proclib:
 	cp $(rootDir)/../encoding/*.so $(rootDir)
 	cp $(rootDir)/../server/*.so $(rootDir)
 	cp $(rootDir)/../client/*.so $(rootDir)
-	cp /Users/caominhtrang/Downloads/libvpx/libvpx.a $(rootDir)
+	
 clean:
 	$(RM) *.o
 

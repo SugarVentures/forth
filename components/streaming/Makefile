@@ -8,6 +8,9 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../erro
 		 -I$(rootDir)/../../libs/libyuv/include -I$(rootDir)/../encoding \
 		 -I$(rootDir)/../../libs/libvpx
 
+INCDIR += -I$(rootDir)/../network -I$(rootDir)/../../libs/libnice -I$(rootDir)/../../libs/libnice/agent \
+		  -I/usr/local/include/glib-2.0 \
+		  -I$(rootDir)/../../libs/libnice/include
 
 CFLAGS = -Wall -g -std=c++11
 

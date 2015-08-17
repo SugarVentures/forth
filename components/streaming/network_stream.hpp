@@ -8,6 +8,7 @@
 #include "network.hpp"
 #include "concurrent_queue.hpp"
 #include "message_handling.hpp"
+#include "ice_stream.hpp"
 
 
 namespace oppvs
@@ -91,6 +92,7 @@ namespace oppvs
 	public:
 		NetworkStream(NetworkRole role, uint32_t ssrc);
 		int setup(uint32_t port);
+		int setup(IceStream* stream);
 		void setSender(const SocketAddress& dest);
 		void setReceiver(const SocketAddress& dest);
 		void releaseSender();
@@ -107,7 +109,11 @@ namespace oppvs
 		void registerCallback(void* owner, MessageParsing* message_parsing, on_receive_event event);
 		SocketAddress& getLocalAddress();
 
+		static void onReceive(void* object, uint8_t* data, uint32_t len);
+
 		void unlock();
+
+		MessageParsing* getParser();
 	private:
 		NetworkRole m_role;
 		SRTPSocket m_socket;
@@ -130,8 +136,9 @@ namespace oppvs
 		PixelBuffer* m_buffer;
 
 		void sendDone(int* error);
-
 		void addSource(FrameInfo& inf);
+
+		IceStream* m_iceStream;
 	};
 }
 

@@ -18,6 +18,7 @@
 #include "video_capture.hpp"
 #include "video_decoding_vp.hpp"
 
+
 #include <vector>
 
 extern "C"
@@ -27,17 +28,26 @@ extern "C"
 
 namespace oppvs
 {	
-	
+	enum StreamingRole
+	{
+		ROLE_BROADCASTER,
+		ROLE_VIEWER
+	};
+
 	class StreamingEngine
 	{
 	public:
 		StreamingEngine();
-		void setup();
 		~StreamingEngine();
+
+		void init(StreamingRole role, const std::string& stun, const std::string& turn, 
+			const std::string& username, const std::string& password);
+
+		void setup();		
 
 		void setSSRC(uint32_t value) { m_ssrc = value; }
 		uint32_t getSSRC() { return m_ssrc;}
-		int initUploadStream(SocketAddress& localaddr, const SocketAddress& remoteaddr);
+		int initUploadStream(IceStream* stream);
 		int initDownloadStream();
 		int initPublishChannel();
 		int initSubscribeChannel(const std::string& publisher, uint16_t port, const ServiceInfo& service);
@@ -88,6 +98,7 @@ namespace oppvs
 		CacheBuffer *m_cacheBuffer;
 		VPVideoEncoder m_encoder;
 		VPVideoDecoder m_decoder;
+
 	};
 
 }
