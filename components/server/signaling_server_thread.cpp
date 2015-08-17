@@ -20,7 +20,7 @@ namespace oppvs {
 		m_threads.clear();
 	}
 
-	int SignalingServerThread::init(PhysicalSocket* socket)
+	int SignalingServerThread::init(PhysicalSocket* socket, std::string* streamkey, int* broadcaster)
 	{
 		if (!socket)
 		{
@@ -34,6 +34,9 @@ namespace oppvs {
 			m_listenSockets.push_back(&socket[0]);
 		}
 		m_exitThread = false;
+
+		m_streamKey = streamkey;
+		m_broadcaster = broadcaster;
 		return 0;
 	}
 
@@ -61,7 +64,8 @@ namespace oppvs {
 			std::cout << "Accept connection from client: " << remoteAddress.toString() << std::endl;
 			SignalingServerSubThread *thread = new SignalingServerSubThread();
 			thread->init(psocket, sockfd, remoteAddress);
-			//thread->start();
+			thread->setPointer(m_streamKey, m_broadcaster);
+			thread->start();
 			m_threads.push_back(thread);
 		}
 

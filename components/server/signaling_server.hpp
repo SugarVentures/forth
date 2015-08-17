@@ -10,7 +10,6 @@
 
 namespace oppvs {
 
-	
 	struct SignalingServerConfiguration
 	{
 		SocketAddress addressListen;
@@ -27,12 +26,18 @@ namespace oppvs {
 		int start();
 		int stop();
 		int shutdown();
+
+		void setStreamKey(const std::string& streamKey);
 	private:
 		SignalingServerConfiguration m_config;
 		PhysicalSocket m_socket;
 
 		std::vector<SignalingServerThread*> m_threads;
 		int addSocket(const SocketAddress& addressListen, const SocketAddress& addressAdvertised);
+
+		std::string m_streamKey;
+		int m_broadcaster;
+		std::vector<IceCandidate> m_candidates;
 	};
 } // oppvs
 

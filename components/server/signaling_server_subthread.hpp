@@ -17,9 +17,11 @@ namespace oppvs
 		~SignalingServerSubThread();
 
 		int init(PhysicalSocket* socket, int sockfd, const SocketAddress& remote);
+		void setPointer(std::string* streamKey, int* broadcaster);
 		void start();
 		void signalForStop();
 		void waitForStopAndClose();
+
 	private:
 		PhysicalSocket* m_socket;
 		int m_sockfd;
@@ -42,8 +44,12 @@ namespace oppvs
 
 		void handleMessage();
 		void sendResponse();
+		void sendResponse(int dest);
 		int buildIceRequest();
+		int buildIceResponse(std::string username, std::string password, std::vector<IceCandidate>& candidates);
 
+		std::string* m_streamKey;
+		int* m_broadcaster;
 	};
 }
 

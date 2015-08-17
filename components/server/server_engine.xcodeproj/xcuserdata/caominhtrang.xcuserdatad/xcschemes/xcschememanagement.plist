@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>All.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+		<key>libsignaling_server.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
 		<key>libstun_server.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -17,7 +27,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>69AF5A372FCB2ECE0D38AC7E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>A1EC8D78391AA981E3320200</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AD07FFD20C2BAE955CD67612</key>
 		<dict>
 			<key>primary</key>
 			<true/>

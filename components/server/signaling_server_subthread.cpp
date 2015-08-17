@@ -4,7 +4,8 @@
 namespace oppvs {
 	SignalingServerSubThread::SignalingServerSubThread(): Thread(threadExecuteFunction, this), m_socket(NULL), m_sockfd(-1), m_exitThread(false)
 	{
-
+		m_streamKey = NULL;
+		m_broadcaster = NULL;
 	}
 
 	SignalingServerSubThread::~SignalingServerSubThread()
@@ -102,11 +103,22 @@ namespace oppvs {
 		switch (m_messageReader.getMessageType())
 		{
 			case SignalingStreamRegister:
+			{
+				std::cout << "Receive Stream Register" << std::endl;
+				if (m_streamKey != NULL && m_broadcaster != NULL)
+				{
+					*m_streamKey = m_messageReader.getStreamKey();
+					*m_broadcaster = m_sockfd;
+				}
+				//Save stream key to database
+				/*usleep(10000000);
 				if (buildIceRequest() < 0)
 					return;
-				sendResponse();
+				sendResponse();*/
+			}
 				break;
 			case SignalingIceResponse:
+			{
 				std::cout << "Receive Ice Response" << std::endl;
 				std::vector<IceCandidate>& candidates = m_messageReader.getIceCandidates();
 
@@ -120,6 +132,16 @@ namespace oppvs {
 						  << candidates[i].port << " "
 						  << candidates[i].type << std::endl;
 				}
+			}
+				break;
+			case SignalingStreamRequest:
+			{
+				std::cout << "Receive Stream Request" << std::endl;
+				std::cout << "Current stream key: " << *m_streamKey << std::endl;
+				if (buildIceResponse(m_messageReader.getUsername(), m_messageReader.getPassword(), m_messageReader.getIceCandidates()) < 0)
+					return;
+				sendResponse(*m_broadcaster);
+			}
 				break;
 		}
 
@@ -138,6 +160,28 @@ namespace oppvs {
 		return 0;
 	}
 
+	int SignalingServerSubThread::buildIceResponse(std::string username, std::string password, std::vector<IceCandidate>& candidates)
+	{
+		m_messageBuilder.reset();
+
+		if (m_messageBuilder.addMessageType(SignalingIceResponse) < 0)
+			return -1;
+
+		if (m_messageBuilder.addStreamKey(*m_streamKey) < 0)
+			return -1;
+
+		if (m_messageBuilder.addIceUsername(username) < 0)
+			return -1;
+
+		if (m_messageBuilder.addIcePassword(password) < 0)
+			return -1;
+
+		if (m_messageBuilder.addIceCandidates(candidates) < 0)
+			return -1;
+
+		return 0;
+	}
+
 	void SignalingServerSubThread::sendResponse()
 	{
 		SharedDynamicBufferRef buffer;
@@ -146,9 +190,26 @@ namespace oppvs {
 			std::cout << "Can not build the message to send" << std::endl;
 			return;
 		}
-		
 		if (m_socket->Send(m_sockfd, buffer->data(), buffer->size()) >= 0)
 			printf("Sent response to %s\n", m_remote.toString().c_str());
+	}
+
+	void SignalingServerSubThread::sendResponse(int dest)
+	{
+		SharedDynamicBufferRef buffer;
+		if (m_messageBuilder.getResult(buffer) < 0)
+		{
+			std::cout << "Can not build the message to send" << std::endl;
+			return;
+		}
+		if (m_socket->Send(dest, buffer->data(), buffer->size()) >= 0)
+			printf("Sent response\n");
+	}
+
+	void SignalingServerSubThread::setPointer(std::string* streamKey, int* broadcaster)
+	{
+		m_streamKey = streamKey;
+		m_broadcaster = broadcaster;
 	}
 
 } // oppvs

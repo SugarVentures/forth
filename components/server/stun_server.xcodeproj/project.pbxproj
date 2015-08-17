@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		2B523371344C2E3DF6BEB553 /* libthread_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AA2B0BF30FBC5C47233878D /* libthread_engine.a */; };
 		75228511CBC63479A1941EB2 /* libnetwork_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0154F8FED9EE3AE9163924 /* libnetwork_engine.dylib */; };
-		877B21987465CFA2C1911FFD /* libstun_server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA4FAF6E43F8AF19EDE9E76 /* libstun_server.a */; };
 		CCF59B23C2581032586710C3 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 691ADB3C88304870221FC75D /* libsrtp.a */; };
 		E7B1981AB5B2C3B6BDFF5749 /* stun_server_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624084442C7E2E344BDA3608 /* stun_server_main.cpp */; };
+		F25BD446B277FDF8C0A5EBF3 /* libstun_server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA4FAF6E43F8AF19EDE9E76 /* libstun_server.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +35,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 19A7BE6AAB8E7AFA6731878E;
 			remoteInfo = thread_engine;
+		};
+		99225086456A86372132422A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F80D7FAB2A885B248474D7E0 /* server_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4093A2EABFD000710D125C0;
+			remoteInfo = libsignaling_server;
 		};
 		AE3DA1522C561C585F893E3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -66,6 +73,7 @@
 		691ADB3C88304870221FC75D /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsrtp.a; path = ../../libs/libsrtp.a; sourceTree = "<group>"; };
 		8F3C850B29DCEACB5F95768E /* thread_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = thread_engine.xcodeproj; path = ../thread/thread_engine.xcodeproj; sourceTree = SOURCE_ROOT; };
 		9A399DDACCFD921FFEB72DAD /* stun_server.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = stun_server.gyp; sourceTree = "<group>"; };
+		C5A8178697A8AE410C04D81C /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
 		F80D7FAB2A885B248474D7E0 /* server_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = server_engine.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -74,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				877B21987465CFA2C1911FFD /* libstun_server.a in Frameworks */,
+				F25BD446B277FDF8C0A5EBF3 /* libstun_server.a in Frameworks */,
 				2B523371344C2E3DF6BEB553 /* libthread_engine.a in Frameworks */,
 				75228511CBC63479A1941EB2 /* libnetwork_engine.dylib in Frameworks */,
 				CCF59B23C2581032586710C3 /* libsrtp.a in Frameworks */,
@@ -100,14 +108,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3CA0731C6296FAC5C6F12862 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1DA4FAF6E43F8AF19EDE9E76 /* libstun_server.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		5274737CCD01B944B1D525BF /* Projects */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,9 +118,10 @@
 			name = Projects;
 			sourceTree = "<group>";
 		};
-		62A8AD770E3C7BE86D3F325F /* Build */ = {
+		70DD4D113C39B32025093B14 /* Build */ = {
 			isa = PBXGroup;
 			children = (
+				C5A8178697A8AE410C04D81C /* common.gypi */,
 				9A399DDACCFD921FFEB72DAD /* stun_server.gyp */,
 			);
 			name = Build;
@@ -133,7 +134,7 @@
 				5274737CCD01B944B1D525BF /* Projects */,
 				9B045B9F93CE8C763F5C1E44 /* Frameworks */,
 				C7C0E7EA015164105E454EF4 /* Products */,
-				62A8AD770E3C7BE86D3F325F /* Build */,
+				70DD4D113C39B32025093B14 /* Build */,
 			);
 			sourceTree = "<group>";
 		};
@@ -143,6 +144,15 @@
 				691ADB3C88304870221FC75D /* libsrtp.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B774C76A9491C9E868BDF27D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1DA4FAF6E43F8AF19EDE9E76 /* libstun_server.a */,
+				DBDCDA16A84F16A314C89D13 /* libsignaling_server.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		C7C0E7EA015164105E454EF4 /* Products */ = {
@@ -202,7 +212,7 @@
 					ProjectRef = 112E8BA6740B11428826C7D4 /* network_engine.xcodeproj */;
 				},
 				{
-					ProductGroup = 3CA0731C6296FAC5C6F12862 /* Products */;
+					ProductGroup = B774C76A9491C9E868BDF27D /* Products */;
 					ProjectRef = F80D7FAB2A885B248474D7E0 /* server_engine.xcodeproj */;
 				},
 				{
@@ -230,6 +240,13 @@
 			fileType = archive.ar;
 			path = libthread_engine.a;
 			remoteRef = 5BF88DE457F99DED07B9F924 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DBDCDA16A84F16A314C89D13 /* libsignaling_server.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libsignaling_server.a;
+			remoteRef = 99225086456A86372132422A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		DF0154F8FED9EE3AE9163924 /* libnetwork_engine.dylib */ = {

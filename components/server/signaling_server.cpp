@@ -21,7 +21,7 @@ namespace oppvs {
 
 		SignalingServerThread* thread = new SignalingServerThread();
 		m_threads.push_back(thread);
-		thread->init(&m_socket);
+		thread->init(&m_socket, &m_streamKey, &m_broadcaster);
 	}
 
 	int SignalingServer::addSocket(const SocketAddress& addressListen, const SocketAddress& addressAdvertised)
@@ -53,7 +53,7 @@ namespace oppvs {
 
 	int SignalingServer::stop()
 	{
-		for(unsigned i = 0; i < m_threads.size(); ++i) {
+		for(unsigned int i = 0; i < m_threads.size(); ++i) {
 			SignalingServerThread* thread = m_threads[i];
 			if (thread != NULL)
 			{
@@ -61,7 +61,7 @@ namespace oppvs {
 			}
 		}
 
-		for(unsigned i = 0; i < m_threads.size(); ++i) {
+		for(unsigned int i = 0; i < m_threads.size(); ++i) {
 			SignalingServerThread* thread = m_threads[i];
 			if (thread != NULL)
 			{
@@ -85,4 +85,8 @@ namespace oppvs {
 		return 0;
 	}
 
+	void SignalingServer::setStreamKey(const std::string& streamKey)
+	{
+		m_streamKey = streamKey;
+	}
 } // oppvs

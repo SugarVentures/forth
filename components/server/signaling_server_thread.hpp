@@ -5,8 +5,8 @@
 #include "dynamic_buffer.hpp"
 #include "physical_socket.hpp"
 #include "signaling_common.hpp"
-
 #include "signaling_server_subthread.hpp"
+
 #include <vector>
 
 namespace oppvs {
@@ -18,12 +18,13 @@ namespace oppvs {
 		SignalingServerThread();
 		~SignalingServerThread();
 
-		int init(PhysicalSocket* sockets);
+		int init(PhysicalSocket* sockets, std::string* streamkey, int* bsock);
 		int run();
 		int start();
 
 		int signalForStop(bool postMessages);
 		int waitForStopAndClose();
+
 	private:
 		PhysicalSocket* m_sendSockets;
 		std::vector<PhysicalSocket*> m_listenSockets;
@@ -33,6 +34,8 @@ namespace oppvs {
 
 		bool m_exitThread;
 
+		std::string* m_streamKey;
+		int* m_broadcaster;
 	};
 	
 } // oppvs
