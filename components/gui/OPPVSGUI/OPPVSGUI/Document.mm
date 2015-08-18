@@ -152,7 +152,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     oppvs::StreamingEngine* streamer = (oppvs::StreamingEngine*)controller->streamer;
     if (streamer)
     {
-        if (streamer->isRunning())
+        //if (streamer->isRunning())
         {
             streamer->pushData(pf);
         }

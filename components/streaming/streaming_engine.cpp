@@ -202,10 +202,11 @@ namespace oppvs
 
 	void StreamingEngine::pushData(PixelBuffer& pf)
 	{
-		if (m_subscribers.size() > 0)
+		/*if (m_subscribers.size() > 0)
 		{
 			m_messageHandler.addMessage(pf);
-		}
+		}*/
+		m_packetHandler.pushFrame(pf);
 	}
 
 	void StreamingEngine::pullData(uint8_t source)

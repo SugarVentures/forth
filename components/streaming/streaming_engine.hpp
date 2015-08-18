@@ -19,7 +19,7 @@
 #include "video_decoding_vp.hpp"
 
 #include "signaling_handler.hpp"
-
+#include "packet_handler.hpp"
 
 #include <vector>
 
@@ -108,6 +108,7 @@ namespace oppvs
 
 		StreamingConfiguration 	m_configuration;
 		SignalingHandler 		m_signaler;
+		PacketHandler 			m_packetHandler;
 	};
 
 }

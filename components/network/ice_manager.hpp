@@ -33,7 +33,7 @@ namespace oppvs {
 		void attachCallbackEvent(callbackCandidateGatheringDone cb, void* object);
 
 		callbackCandidateGatheringDone cbCandidateGatheringDoneEvent;
-    	void*	cbCandidateGatheringDoneObject;
+    	void* cbCandidateGatheringDoneObject;
 
 
 	private:
