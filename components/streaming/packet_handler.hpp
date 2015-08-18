@@ -31,12 +31,19 @@ namespace oppvs {
 	private:
 		tsqueue<std::shared_ptr<PixelBuffer>> m_framePool;
 		const static uint16_t MAX_FRAMES_IN_POOL = 10;
+		Thread* p_thread;
+		bool m_isRunning;
+
 
 	public:
 		PacketHandler();
 		~PacketHandler();
 
 		void pushFrame(const PixelBuffer& pf);
+		void pullFrame();
+		static void* run(void* object);
+
+		bool isRunning();
 	};
 } // oppvs
 

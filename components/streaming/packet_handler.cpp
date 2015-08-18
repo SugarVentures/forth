@@ -51,19 +51,24 @@ namespace oppvs {
 	}
 
 
-	PacketHandler::PacketHandler()
+	PacketHandler::PacketHandler(): m_isRunning(true)
 	{
-
+		p_thread = new Thread(PacketHandler::run, this);
+		p_thread->create();		
 	}
 
 	PacketHandler::~PacketHandler()
 	{
+		delete p_thread;
+	}
 
+	bool PacketHandler::isRunning()
+	{
+		return m_isRunning;
 	}
 
 	void PacketHandler::pushFrame(const PixelBuffer& pf)
 	{
-		printf("Number of frames in pool %u\n", m_framePool.size());
 		if (m_framePool.size() >= MAX_FRAMES_IN_POOL)
 			return;
 		std::shared_ptr<PixelBuffer> pixelbuffer(new PixelBuffer);
@@ -77,5 +82,33 @@ namespace oppvs {
 
 		m_framePool.push(pixelbuffer);
 	}
+
+	void PacketHandler::pullFrame()
+	{
+		if (m_framePool.empty())
+			return;
+
+		std::shared_ptr<std::shared_ptr<PixelBuffer>> ptrFrame = m_framePool.pop();
+		if (ptrFrame.get() == NULL)
+		{
+			return;
+		}
+
+		std::shared_ptr<PixelBuffer> frame = *ptrFrame;
+		PixelBuffer pf = *frame;
+		delete [] pf.plane[0];
+	}
+
+	void* PacketHandler::run(void* object)
+	{
+		PacketHandler* handler = (PacketHandler*)object;
+		while (handler->isRunning())
+		{
+			handler->pullFrame();
+			usleep(1000);
+		}
+		return NULL;
+	}
+
 
 } // oppvs
