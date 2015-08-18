@@ -2223,7 +2223,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "210"
             endingLineNumber = "210"
-            landmarkName = "IceManager::registerCallback(callbackOnReceive cb, void* object)"
+            landmarkName = "IceManager::establishPeerConnection()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2239,7 +2239,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "164"
             endingLineNumber = "164"
-            landmarkName = "IceManager::cb_nice_recv(NiceAgent *agent, guint stream_id, guint component_id, guint len, gchar *buf, gpointer user_data)"
+            landmarkName = "IceManager::cb_component_state_changed(NiceAgent *agent, guint stream_id, guint component_id, guint state, gpointer data)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2255,7 +2255,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "166"
             endingLineNumber = "166"
-            landmarkName = "IceManager::cb_nice_recv(NiceAgent *agent, guint stream_id, guint component_id, guint len, gchar *buf, gpointer user_data)"
+            landmarkName = "IceManager::cb_component_state_changed(NiceAgent *agent, guint stream_id, guint component_id, guint state, gpointer data)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

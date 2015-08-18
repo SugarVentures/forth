@@ -2,12 +2,14 @@
 #include <iostream>
 
 namespace oppvs {
-	IceManager::IceManager() : m_agent(NULL), m_globalMainLoop(NULL), m_globalMainLoopThread(NULL), m_cbObject(NULL)
+	IceManager::IceManager() : m_agent(NULL), m_globalMainLoop(NULL), m_globalMainLoopThread(NULL)
 	{
 		cbCandidateGatheringDoneObject = NULL;
+		m_remoteUsername = "";
+		m_remotePassword = "";
 	}
 
-	IceManager::IceManager(void* object) : m_agent(NULL), m_globalMainLoop(NULL), m_globalMainLoopThread(NULL), m_cbObject(object)
+	IceManager::IceManager(void* object) : m_agent(NULL), m_globalMainLoop(NULL), m_globalMainLoopThread(NULL)
 	{
 
 	}
@@ -29,17 +31,7 @@ namespace oppvs {
 	    }
 	}
 
-	void IceManager::registerCallback(callbackCandidateGatheringDone cb)
-	{
-		cbCandidateGatheringDone = cb;
-	}
-
-	void* IceManager::getCallbackObject()
-	{
-		return m_cbObject;
-	}
-
-	int IceManager::init(const IceServerInfo& stun, const IceServerInfo& turn)
+	int IceManager::init(const IceServerInfo& stun, const IceServerInfo& turn, int mode)
 	{
 		m_stunServer = stun;
 		m_turnServer = turn;
@@ -60,6 +52,8 @@ namespace oppvs {
   			g_object_set(m_agent, "stun-server", m_stunServer.serverAddress.c_str(), NULL);
     		g_object_set(m_agent, "stun-server-port", m_stunServer.port, NULL);
   		}
+
+  		g_object_set(m_agent, "controlling-mode", mode, NULL);
 
   		// Connect to the signals
 		g_signal_connect(m_agent, "candidate-gathering-done", G_CALLBACK(cb_candidate_gathering_done), (gpointer)this);
@@ -145,7 +139,7 @@ namespace oppvs {
    			g_slist_free_full(cands, (GDestroyNotify)&nice_candidate_free);
 
    			if (manager->cbCandidateGatheringDoneObject != NULL)
-	   			manager->cbCandidateGatheringDoneEvent(manager->cbCandidateGatheringDoneObject, 
+	   			manager->cbCandidateGatheringDoneEvent(manager->cbCandidateGatheringDoneObject, (void*)manager,
 	   				stream->getLocalUsername(), stream->getLocalPassword(), candidates);
    		}
 
@@ -157,14 +151,13 @@ namespace oppvs {
     	printf("New selected pair\n");
     	IceManager* manager = (IceManager*)user_data;
 		IceStream* stream = manager->getStreamByID(stream_id);
-    	manager->cbNewSubscriber(manager->m_channel, stream);
+    	
     }
 
     void IceManager::cb_nice_recv(NiceAgent *agent, guint stream_id, guint component_id,
                               guint len, gchar *buf, gpointer user_data)
     {
 	   	IceStream* stream = (IceStream*)user_data;
-		//manager->cbOnReceive(manager->rcvObject, (uint8_t*)buf, len);
 		stream->receive(len, buf, component_id);
     }
 
@@ -201,21 +194,23 @@ namespace oppvs {
     	return NULL;
     }
 
-    void IceManager::registerChannelCallback(callbackNewSubscriber cb, void* channel)
-    {
-    	cbNewSubscriber = cb;
-    	m_channel = channel;
-    }
-
-    void IceManager::registerCallback(callbackOnReceive cb, void* object)
-    {
-    	cbOnReceive = cb;
-    	rcvObject = object;
-    }
-
     void IceManager::attachCallbackEvent(callbackCandidateGatheringDone cb, void* object)
     {
     	cbCandidateGatheringDoneEvent = cb;
     	cbCandidateGatheringDoneObject = object;
+    }
+
+    void IceManager::setPeerInfo(const std::string& username, const std::string& password, std::vector<IceCandidate>& candidates)
+    {
+    	m_remoteUsername = username;
+    	m_remotePassword = password;
+    	m_remoteCandidates = candidates;
+    }
+
+    void IceManager::establishPeerConnection()
+    {
+    	IceStream* stream = getStreamByID(1);
+		stream->setRemoteCredentials(m_remoteUsername, m_remotePassword);
+		stream->setRemoteCandidates(m_remoteCandidates);
     }
 } // oppvs

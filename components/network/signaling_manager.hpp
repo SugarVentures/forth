@@ -28,7 +28,7 @@ namespace oppvs {
 		void waitResponse();
 		void signalForStop();
 
-		void registerCallback(callbackOnReceiveIceResponse cb, void* object);
+		void attachCallbackEvent(callbackOnReceiveIceResponse cb, void* object);
 
 		void setStreamKey(const std::string& streamKey);
 		

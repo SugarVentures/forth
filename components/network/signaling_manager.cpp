@@ -45,7 +45,7 @@ namespace oppvs {
 	}
 
 
-	void SignalingManager::registerCallback(callbackOnReceiveIceResponse cb, void* object)
+	void SignalingManager::attachCallbackEvent(callbackOnReceiveIceResponse cb, void* object)
 	{
 		cbOnReceiveIceResponse = cb;
 		m_object = object;

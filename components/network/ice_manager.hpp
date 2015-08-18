@@ -11,7 +11,7 @@
 #include <vector>
 
 namespace oppvs {
-	typedef void (*callbackCandidateGatheringDone)(void* object, std::string username, std::string password, std::vector<IceCandidate>& candidates);
+	typedef void (*callbackCandidateGatheringDone)(void* object, void* icemgr, std::string username, std::string password, std::vector<IceCandidate>& candidates);
 	typedef void (*callbackNewSubscriber)(void* object, IceStream* stream);
 	
 
@@ -21,27 +21,20 @@ namespace oppvs {
 		IceManager(void* object);
 		~IceManager();
 
-		int init(const IceServerInfo& stun, const IceServerInfo& turn);
+		int init(const IceServerInfo& stun, const IceServerInfo& turn, int mode);
 		int release();
 		IceStream* createStream(guint ncomponents = 1);
 		IceStream* getStreamByID(guint streamid);
 		int removeStream(guint streamid);
-		void registerCallback(callbackCandidateGatheringDone cb);
-		void registerChannelCallback(callbackNewSubscriber cb, void* channel);
-		void registerCallback(callbackOnReceive cb, void* object);
-		void* getCallbackObject();
+
+		void setPeerInfo(const std::string& username, const std::string& password, std::vector<IceCandidate>& candidates);
+		void establishPeerConnection();
 
 		void attachCallbackEvent(callbackCandidateGatheringDone cb, void* object);
 
-		callbackCandidateGatheringDone cbCandidateGatheringDone;
-		callbackNewSubscriber cbNewSubscriber;
-		void* m_channel;
-
-		callbackOnReceive cbOnReceive;
-		void* rcvObject;
-
 		callbackCandidateGatheringDone cbCandidateGatheringDoneEvent;
     	void*	cbCandidateGatheringDoneObject;
+
 
 	private:
 		NiceAgent* m_agent;
@@ -51,7 +44,9 @@ namespace oppvs {
 		Thread* m_globalMainLoopThread;
 
 		std::vector<IceStream*> m_streams;
-		void* m_cbObject;
+		std::vector<IceCandidate> m_remoteCandidates;
+		std::string m_remoteUsername;
+		std::string m_remotePassword;
 
 		
 		static void cb_candidate_gathering_done( NiceAgent *agent, guint stream_id, gpointer user_data );

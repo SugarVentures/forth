@@ -5,10 +5,16 @@ namespace oppvs {
 	{
 		p_thread = new Thread(SignalingHandler::run, (void*)this);
 		p_manager = NULL;
+
 	}
 
 	SignalingHandler::~SignalingHandler()
 	{
+		for(unsigned i = 0; i < m_connectors.size(); ++i) {
+			delete m_connectors.back();
+			m_connectors.pop_back();
+		}
+
 		if (p_manager != NULL)
 			p_manager->signalForStop();
 
@@ -24,12 +30,16 @@ namespace oppvs {
 		return NULL;
 	}
 
-	int SignalingHandler::init(const SocketAddress& server, StreamingRole role)
+	int SignalingHandler::init(const IceServerInfo& stunServer, const IceServerInfo& turnServer, 
+			const SocketAddress& signalingServerAddress, StreamingRole role)
 	{
-		p_manager = new SignalingManager(server);
+		p_manager = new SignalingManager(signalingServerAddress);
 		if (p_manager->init() < 0)
 			return -1;
-		p_manager->registerCallback(SignalingHandler::callbackOnIceResponse, (void*)this);
+
+		m_stunServer = stunServer;
+		m_turnServer = turnServer;
+		p_manager->attachCallbackEvent(SignalingHandler::callbackOnIceResponse, (void*)this);
 		m_role = role;
 		return 0;
 	}
@@ -50,12 +60,21 @@ namespace oppvs {
 				break;
 			case ROLE_VIEWER:
 				p_manager->setStreamKey(streamKey);
+				{
+					IceManager* icemgr = new IceManager();
+					icemgr->init(m_stunServer, m_turnServer, 0);
+					icemgr->attachCallbackEvent(SignalingHandler::callbackCandidateGatheringDone, (void*)this);
+					IceStream* stream = icemgr->createStream();
+					stream->requestLocalCandidates();
+					m_connectors.push_back(icemgr);
+				}
 				break;
 		}
+
 		return 0;
 	}
 
-	void SignalingHandler::callbackCandidateGatheringDone(void* object, std::string username, std::string password, std::vector<oppvs::IceCandidate>& candidates)
+	void SignalingHandler::callbackCandidateGatheringDone(void* object, void* icemgr, std::string username, std::string password, std::vector<oppvs::IceCandidate>& candidates)
 	{
 		std::cout << "Local credential: " << username << " " << password << std::endl;
 		for (int i = 0; i < candidates.size(); i++)
@@ -68,12 +87,28 @@ namespace oppvs {
 				  << candidates[i].port << " "
 				  << candidates[i].type << std::endl;
 		}
+		if (object == NULL || icemgr == NULL)
+		{
+			std::cout << "Unknown error in callbackCandidateGatheringDone" << std::endl;
+			return;
+		}
+
 		SignalingHandler* handler = (SignalingHandler*)object;
-		handler->sendStreamRequest(username, password, candidates);
+		switch (handler->getRole())
+		{
+			case ROLE_VIEWER:
+				handler->sendStreamRequest(username, password, candidates);
+				break;
+			case ROLE_BROADCASTER:
+				((IceManager*)icemgr)->establishPeerConnection();
+				break;
+		}
+		
 	}
 
-	void SignalingHandler::callbackOnIceResponse(void* object, std::string& username, std::string& password, std::vector<oppvs::IceCandidate>& candidates)
+	void SignalingHandler::callbackOnIceResponse(void* object, std::string& username, std::string& password, std::vector<IceCandidate>& candidates)
 	{
+
 		for (int i = 0; i < candidates.size(); i++)
 		{
 	        std::cout << "Remote Candidate: " << candidates[i].component << " "
@@ -84,14 +119,29 @@ namespace oppvs {
 				  << candidates[i].port << " "
 				  << candidates[i].type << std::endl;
 		}
+		SignalingHandler* handler = (SignalingHandler*)object;
+		handler->prepareConnection(username, password, candidates);
 	}
 
-	int SignalingHandler::sendStreamRequest(std::string username, std::string password, std::vector<oppvs::IceCandidate>& candidates)
+	int SignalingHandler::sendStreamRequest(std::string username, std::string password, std::vector<IceCandidate>& candidates)
 	{
-		if (m_role == ROLE_VIEWER)
-			return p_manager->sendStreamRequest(username, password, candidates);
-		else
-			return 0;
+		return p_manager->sendStreamRequest(username, password, candidates);
+	}
+
+	void SignalingHandler::prepareConnection(std::string& username, std::string& password, std::vector<IceCandidate>& candidates)
+	{
+		IceManager* icemgr = new IceManager();
+		icemgr->init(m_stunServer, m_turnServer, 1);
+		icemgr->setPeerInfo(username, password, candidates);
+		icemgr->attachCallbackEvent(SignalingHandler::callbackCandidateGatheringDone, (void*)this);
+		IceStream* stream = icemgr->createStream();
+		stream->requestLocalCandidates();
+		m_connectors.push_back(icemgr);	
+	}
+
+	StreamingRole SignalingHandler::getRole()
+	{
+		return m_role;
 	}
 
 } // oppvs

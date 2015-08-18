@@ -108,7 +108,6 @@ namespace oppvs
 
 		StreamingConfiguration 	m_configuration;
 		SignalingHandler 		m_signaler;
-		IceManager				m_iceManager;
 	};
 
 }

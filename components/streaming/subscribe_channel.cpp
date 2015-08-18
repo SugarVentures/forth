@@ -12,7 +12,7 @@ namespace oppvs
 
 	int SubscribeChannel::registerInterest(uint8_t* info, int len, int* rcvLen)
 	{
-		oppvs::IceServerInfo stunServer("192.168.0.106", oppvs::DEFAULT_STUN_PORT, "", "");
+		/*oppvs::IceServerInfo stunServer("192.168.0.106", oppvs::DEFAULT_STUN_PORT, "", "");
 		oppvs::IceServerInfo turnServer("192.168.0.106", oppvs::DEFAULT_STUN_PORT, "turn", "password");
 
 		oppvs::SocketAddress signalingServerAddress;
@@ -25,14 +25,14 @@ namespace oppvs
 		mp_iceManager = new IceManager((void*)mp_signalingManager);
 		mp_iceManager->init(stunServer, turnServer);
 
-		mp_signalingManager->registerCallback(SubscribeChannel::callbackOnIceResponse, (void*)mp_iceManager);
-		mp_iceManager->registerCallback(SubscribeChannel::callbackCandidateGatheringDoneImpl);
+		mp_signalingManager->attachCallbackEvent(SubscribeChannel::callbackOnIceResponse, (void*)mp_iceManager);
+		//mp_iceManager->registerCallback(SubscribeChannel::callbackCandidateGatheringDoneImpl);
 
 		mp_signalingManager->setStreamKey("1234");
 		IceStream* stream = mp_iceManager->createStream();
 		stream->requestLocalCandidates();
 
-		stream->registerCallback(m_cbOnReceive, m_object);
+		stream->registerCallback(m_cbOnReceive, m_object);*/
 		return 0;
 	}
 

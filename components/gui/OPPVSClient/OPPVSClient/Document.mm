@@ -42,7 +42,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
 - (void)initReceiver: (NSString*)server withPort: (NSInteger)port
 {
     streamEngine = new oppvs::StreamingEngine();
-    if (streamEngine->init(oppvs::ROLE_VIEWER, "192.168.0.106", "192.168.0.106", "turn", "password",
+    if (streamEngine->init(oppvs::ROLE_VIEWER, "192.168.0.107", "192.168.0.107", "turn", "password",
                              "127.0.0.1", 33333) < 0)
     {
         NSLog(@"Failed to init streaming engine");
