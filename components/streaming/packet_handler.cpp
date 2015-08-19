@@ -67,16 +67,19 @@ namespace oppvs {
 	Packetizer::Packetizer(): m_isRunning(true)
 	{
 		p_thread = new Thread(Packetizer::run, this);
+		p_segmentPool = NULL;
 	}
 
 	Packetizer::~Packetizer()
 	{
 		delete p_thread;
+		p_segmentPool = NULL;
 	}
 
-	void Packetizer::init(VideoStreamInfo& info)
+	void Packetizer::init(VideoStreamInfo& info, tsqueue<SharedDynamicBufferRef>* queue)
 	{
 		m_encoder.init(info);
+		p_segmentPool = queue;
 	}
 
 	void Packetizer::start()
@@ -162,7 +165,7 @@ namespace oppvs {
 			curPos += sentLength;
 
 			printf("Sent length: %u\n", sentLength);
-			m_segmentPool.push(segment);
+			p_segmentPool->push(segment);
 		}
 		while (sendLength > 0);
 	}

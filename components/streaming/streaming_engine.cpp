@@ -5,15 +5,8 @@ namespace oppvs
 	
 	StreamingEngine::StreamingEngine()
 	{
-		m_sendThread = NULL;
-		m_receiveThread = NULL;
-
-		m_publisher = NULL;
-		m_subscribe = NULL;
-
-		m_cacheBuffer = NULL;
-		m_messageParser = MessageParsing();
-
+		m_exitMainThread = false;
+		m_mainThread = NULL;
 	}
 
 	void StreamingEngine::setup()
@@ -66,6 +59,23 @@ namespace oppvs
 		if (m_cacheBuffer)
 			delete m_cacheBuffer;
 
+
+		//Close and release sending threads
+		for (int i = 0; i < m_sendingThreads.size(); i++)
+		{
+			StreamingSendThread* thread = m_sendingThreads[i];
+			delete thread;
+			m_sendingThreads[i] = NULL;
+		}
+		m_sendingThreads.clear();
+
+		//Stop main thread
+		m_exitMainThread = true;
+		if (m_mainThread != NULL)
+		{
+			m_mainThread->waitUntilEnding();
+			delete m_mainThread;
+		}
 	}
 
 
@@ -83,7 +93,9 @@ namespace oppvs
 		if (m_signaler.init(m_configuration.stunServer, m_configuration.turnServer, m_configuration.signalingServerAddress, role) < 0)
 			return -1;
 
-		m_packetizer.init(m_serviceInfo.videoStreamInfo);
+		m_signaler.attachCallback(StreamingEngine::onNewSubscriber, this);
+		if (role == ROLE_BROADCASTER)
+			m_packetizer.init(m_serviceInfo.videoStreamInfo, &m_segmentPool);
 		return 0;
 	}
 
@@ -382,7 +394,6 @@ namespace oppvs
 		{
 			PixelBuffer pixelBuffer = *pf;
 			uint8_t* data = pixelBuffer.plane[0];
-			//decoder.convertI420ToBGRA(data, pixelBuffer);
 			if (m_decoder.decode(pixelBuffer, pixelBuffer.nbytes, data) != -1)
 				m_callback(pixelBuffer);
 			delete [] data;
@@ -390,5 +401,49 @@ namespace oppvs
 		}
 	}
 
+	void StreamingEngine::onNewSubscriber(void* object, IceStream* stream)
+	{
+		StreamingEngine* engine = (StreamingEngine*)object;
+		if (!engine->isRunning())
+		{
+			engine->setIsRunning(true);
+			engine->createMainThread();
+		}
+		engine->createSendingThread(stream);
+	}
 
+	void StreamingEngine::createSendingThread(IceStream* stream)
+	{
+		StreamingSendThread* thread = new StreamingSendThread(stream);
+		m_sendingThreads.push_back(thread);
+		thread->create();
+	}
+
+	void StreamingEngine::createMainThread()
+	{
+		m_mainThread = new Thread(runMainThreadFunction, this);
+		m_mainThread->create();
+	}
+
+	void* StreamingEngine::runMainThreadFunction(void* object)
+	{
+		StreamingEngine* engine = (StreamingEngine*)object;
+		engine->send();
+		return NULL;
+	}
+
+	void StreamingEngine::send()
+	{
+		while (!m_exitMainThread)
+		{
+			if (m_segmentPool.size() > 0)
+			{
+				SharedDynamicBufferRef segment = *m_segmentPool.pop();
+				for(unsigned i = 0; i < m_sendingThreads.size(); ++i) {
+					m_sendingThreads[i]->pushSegment(segment);
+				}
+			}
+			usleep(100);
+		}
+	}
 }

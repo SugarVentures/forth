@@ -38,7 +38,7 @@ namespace oppvs {
 	class Packetizer {
 	private:
 		tsqueue<std::shared_ptr<PixelBuffer>> m_framePool;
-		tsqueue<SharedDynamicBufferRef> m_segmentPool;
+		tsqueue<SharedDynamicBufferRef>* p_segmentPool;
 
 		const static uint16_t MAX_FRAMES_IN_POOL = 10;
 		Thread* p_thread;
@@ -50,7 +50,7 @@ namespace oppvs {
 		Packetizer();
 		~Packetizer();
 
-		void init(VideoStreamInfo&);
+		void init(VideoStreamInfo&, tsqueue<SharedDynamicBufferRef>*);
 		void start();
 		void pushFrame(const PixelBuffer& pf);
 		void pullFrame();

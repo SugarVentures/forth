@@ -16,6 +16,9 @@ namespace oppvs {
 		std::vector<IceManager*> m_connectors;
 		IceServerInfo		m_stunServer;
 		IceServerInfo		m_turnServer;
+
+		callbackNewSubscriber	callbackNewSubscriberEvent;
+		void* 	callbackNewSubscriberObject;
 	public:
 		SignalingHandler();
 		~SignalingHandler();
@@ -29,7 +32,10 @@ namespace oppvs {
 		static void* run(void* object);
 		static void callbackCandidateGatheringDone(void* object, void* icemgr, std::string username, std::string password, std::vector<IceCandidate>& candidates);
 		static void callbackOnIceResponse(void* object, std::string& username, std::string& password, std::vector<IceCandidate>& candidates);
+		static void callbackNewSubscriberImpl(void* object, IceStream* stream);
 		
+		void attachCallback(callbackNewSubscriber cb, void* object);
+
 		void waitingSignal();
 		StreamingRole getRole();
 	};

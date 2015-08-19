@@ -21,6 +21,8 @@
 #include "signaling_handler.hpp"
 #include "packet_handler.hpp"
 
+#include "streaming_send_thread.hpp"
+
 #include <vector>
 
 extern "C"
@@ -73,7 +75,10 @@ namespace oppvs
 		
 		void updateQueue();
 
-
+		static void onNewSubscriber(void* object, IceStream* stream);
+		void createSendingThread(IceStream* stream);
+		void createMainThread();
+		void send();
 	private:
 		uint32_t m_ssrc;
 		PublishChannel* m_publisher;
@@ -106,9 +111,15 @@ namespace oppvs
 		VPVideoEncoder m_encoder;
 		VPVideoDecoder m_decoder;
 
-		StreamingConfiguration 	m_configuration;
-		SignalingHandler 		m_signaler;
-		Packetizer 				m_packetizer;
+		StreamingConfiguration 				m_configuration;
+		SignalingHandler 					m_signaler;
+		Packetizer 							m_packetizer;
+		std::vector<StreamingSendThread*> 	m_sendingThreads;
+		Thread*								m_mainThread;	//Thread to distribute segments to all sending threads
+		bool								m_exitMainThread;
+		tsqueue<SharedDynamicBufferRef> 	m_segmentPool;
+
+		static void* runMainThreadFunction(void* object);
 	};
 
 }

@@ -84,9 +84,7 @@ namespace oppvs {
 		// Attach to the component to receive the data
 	    for (guint component_id = 1; component_id <= ncomponents; component_id++ )
 	        nice_agent_attach_recv(m_agent, stream_id, component_id, g_main_loop_get_context(m_globalMainLoop), 
-	        	cb_nice_recv, (gpointer)stream);
-
-	    
+	        	cb_nice_recv, (gpointer)this);
 
 	    // Setting turn server properties
 	    if (m_turnServer.serverAddress != "")
@@ -148,17 +146,17 @@ namespace oppvs {
     void IceManager::cb_new_selected_pair(NiceAgent *agent, guint stream_id, guint component_id,
                                       gchar *lfoundation, gchar *rfoundation, gpointer user_data)
     {
-    	printf("New selected pair\n");
     	IceManager* manager = (IceManager*)user_data;
-		IceStream* stream = manager->getStreamByID(stream_id);
-    	
+    	IceStream* stream = manager->getStreamByID(stream_id);
+    	if (stream != NULL)
+    		manager->cbNewSubscriberEvent(manager->cbNewSubscriberObject, stream);
     }
 
     void IceManager::cb_nice_recv(NiceAgent *agent, guint stream_id, guint component_id,
                               guint len, gchar *buf, gpointer user_data)
     {
-	   	IceStream* stream = (IceStream*)user_data;
-		stream->receive(len, buf, component_id);
+	   	//IceStream* stream = (IceStream*)user_data;
+		//stream->receive(len, buf, component_id);
     }
 
     void IceManager::cb_component_state_changed(NiceAgent *agent, guint stream_id, 
@@ -200,6 +198,12 @@ namespace oppvs {
     	cbCandidateGatheringDoneObject = object;
     }
 
+    void IceManager::attachCallbackEvent(callbackNewSubscriber cb, void* object)
+    {
+    	cbNewSubscriberEvent = cb;
+    	cbNewSubscriberObject = object;
+    }
+
     void IceManager::setPeerInfo(const std::string& username, const std::string& password, std::vector<IceCandidate>& candidates)
     {
     	m_remoteUsername = username;
@@ -213,4 +217,5 @@ namespace oppvs {
 		stream->setRemoteCredentials(m_remoteUsername, m_remotePassword);
 		stream->setRemoteCandidates(m_remoteCandidates);
     }
+
 } // oppvs

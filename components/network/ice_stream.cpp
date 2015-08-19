@@ -184,9 +184,9 @@ namespace oppvs {
 	    return candidates;
 	}
 
-	void IceStream::send(guint size, gchar* data, guint component_id)
+	void IceStream::send(uint16_t size, uint8_t* data, guint component_id)
 	{
-		nice_agent_send(m_agent, m_streamID, component_id, size, data);
+		nice_agent_send(m_agent, m_streamID, component_id, size, (gchar*)data);
 	}
 
     void IceStream::receive(guint size, gchar* data, guint component_id)

@@ -94,7 +94,7 @@ namespace oppvs
 			//else
 			//	printf("Sent message %d\n", length);
 
-			m_iceStream->send(length, (gchar*)data);
+			m_iceStream->send(length, data);
 			m_busy = !m_messageHandler->releaseMessage();
 			if (!m_busy)
 				m_error = 1;

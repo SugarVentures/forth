@@ -31,10 +31,7 @@ namespace oppvs {
 		void establishPeerConnection();
 
 		void attachCallbackEvent(callbackCandidateGatheringDone cb, void* object);
-
-		callbackCandidateGatheringDone cbCandidateGatheringDoneEvent;
-    	void* cbCandidateGatheringDoneObject;
-
+		void attachCallbackEvent(callbackNewSubscriber cb, void* object);
 
 	private:
 		NiceAgent* m_agent;
@@ -59,7 +56,12 @@ namespace oppvs {
 
     	static void *runGlobalMainloop(void* arg);
 
-    	
+    	callbackCandidateGatheringDone cbCandidateGatheringDoneEvent;
+    	void* cbCandidateGatheringDoneObject;
+
+    	callbackNewSubscriber cbNewSubscriberEvent;
+    	void* cbNewSubscriberObject;
+
 	};
 } // oppvs
 
