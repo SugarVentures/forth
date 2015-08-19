@@ -108,7 +108,7 @@ namespace oppvs
 
 		StreamingConfiguration 	m_configuration;
 		SignalingHandler 		m_signaler;
-		PacketHandler 			m_packetHandler;
+		Packetizer 				m_packetizer;
 	};
 
 }

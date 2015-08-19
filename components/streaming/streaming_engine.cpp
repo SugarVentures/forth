@@ -83,6 +83,7 @@ namespace oppvs
 		if (m_signaler.init(m_configuration.stunServer, m_configuration.turnServer, m_configuration.signalingServerAddress, role) < 0)
 			return -1;
 
+		m_packetizer.init(m_serviceInfo.videoStreamInfo);
 		return 0;
 	}
 
@@ -91,7 +92,7 @@ namespace oppvs
 		if (m_signaler.start(streamkey) < 0)
 			return -1;
 		
-		
+		m_packetizer.start();
 		return 0;
 	}
 
@@ -206,7 +207,7 @@ namespace oppvs
 		{
 			m_messageHandler.addMessage(pf);
 		}*/
-		m_packetHandler.pushFrame(pf);
+		m_packetizer.pushFrame(pf);
 	}
 
 	void StreamingEngine::pullData(uint8_t source)

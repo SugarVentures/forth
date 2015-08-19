@@ -5,8 +5,13 @@
 #include "tsqueue.hpp"
 #include "data_stream.hpp"
 #include "thread.hpp"
+#include "video_encoding_vp.hpp"
 
 namespace oppvs {
+	const int VP8_PAYLOAD_HEADER_SIZE = 3;
+	const int VP8_COMMON_HEADER_SIZE = 3;
+	const int VP8_MAX_HEADER_SIZE = VP8_COMMON_HEADER_SIZE + VP8_PAYLOAD_HEADER_SIZE;
+
 	class SegmentBuilder {
 	private:
 		DataStream m_dataStream;
@@ -23,22 +28,30 @@ namespace oppvs {
 		~SegmentBuilder();
 
 		void reset();
+		DataStream& getStream();
 
-		int addBytes(uint8_t* data, uint16_t size, bool flag, bool isKeyFrame, int picID);	//Flag is true in case of first segment
+		int addCommonHeader(bool flag, int picID);
+		int addPayloadHeader(bool isKeyFrame, uint32_t length);
+		int addPayload(uint8_t* data, uint32_t size);
 	};
 
-	class PacketHandler {
+	class Packetizer {
 	private:
 		tsqueue<std::shared_ptr<PixelBuffer>> m_framePool;
+		tsqueue<SharedDynamicBufferRef> m_segmentPool;
+
 		const static uint16_t MAX_FRAMES_IN_POOL = 10;
 		Thread* p_thread;
 		bool m_isRunning;
-
+		VPVideoEncoder m_encoder;
+		SegmentBuilder m_builder;
 
 	public:
-		PacketHandler();
-		~PacketHandler();
+		Packetizer();
+		~Packetizer();
 
+		void init(VideoStreamInfo&);
+		void start();
 		void pushFrame(const PixelBuffer& pf);
 		void pullFrame();
 		static void* run(void* object);

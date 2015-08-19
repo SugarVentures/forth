@@ -16,9 +16,13 @@ namespace oppvs {
 		m_dataStream.reset();
 	}
 
-	int SegmentBuilder::addBytes(uint8_t* data, uint16_t size, bool flag, bool isKeyFrame, int picID)
+	int SegmentBuilder::addPayload(uint8_t* data, uint32_t size)
 	{
-		m_dataStream.grow(100);
+		return m_dataStream.write(data, size);
+	}
+
+	int SegmentBuilder::addCommonHeader(bool flag, int picID)
+	{
 		uint8_t req = XBit;
 		if (flag)
 			req |= SBit;
@@ -32,42 +36,60 @@ namespace oppvs {
 			return -1;
 		if (m_dataStream.writeUInt8(optI) < 0)
 			return -1;
-
-		if (flag)
-		{
-			//VP8 Payload Header
-			uint8_t o1 = (size & Size0BitMask) << Size0BitShift; // Size0
-			o1 |= HBit; // H (show frame)
-			if (!isKeyFrame)
-			{
-				o1 |= 1; //P (Inverse frame)
-			}
-
-			m_dataStream.writeUInt8(o1);
-			m_dataStream.writeUInt8(static_cast<uint8_t>(size >> 3));	//Size 1
-			m_dataStream.writeUInt8(static_cast<uint8_t>(size >> 11));	//Size 2
-		}
 		return 0;
 	}
 
-
-	PacketHandler::PacketHandler(): m_isRunning(true)
+	int SegmentBuilder::addPayloadHeader(bool isKeyFrame, uint32_t size)
 	{
-		p_thread = new Thread(PacketHandler::run, this);
-		p_thread->create();		
+		//VP8 Payload Header
+		uint8_t o1 = (size & Size0BitMask) << Size0BitShift; // Size0
+		o1 |= HBit; // H (show frame)
+		if (!isKeyFrame)
+		{
+			o1 |= 1; //P (Inverse frame)
+		}
+
+		if (m_dataStream.writeUInt8(o1) < 0)
+			return -1;
+		if (m_dataStream.writeUInt8(static_cast<uint8_t>(size >> 3)) < 0)	//Size 1
+			return -1;
+
+		if (m_dataStream.writeUInt8(static_cast<uint8_t>(size >> 11)) < 0) //Size 2
+			return -1;
+		return 0;
 	}
 
-	PacketHandler::~PacketHandler()
+	DataStream& SegmentBuilder::getStream()
+	{
+		return m_dataStream;
+	}
+
+	Packetizer::Packetizer(): m_isRunning(true)
+	{
+		p_thread = new Thread(Packetizer::run, this);
+	}
+
+	Packetizer::~Packetizer()
 	{
 		delete p_thread;
 	}
 
-	bool PacketHandler::isRunning()
+	void Packetizer::init(VideoStreamInfo& info)
+	{
+		m_encoder.init(info);
+	}
+
+	void Packetizer::start()
+	{
+		p_thread->create();
+	}
+
+	bool Packetizer::isRunning()
 	{
 		return m_isRunning;
 	}
 
-	void PacketHandler::pushFrame(const PixelBuffer& pf)
+	void Packetizer::pushFrame(const PixelBuffer& pf)
 	{
 		if (m_framePool.size() >= MAX_FRAMES_IN_POOL)
 			return;
@@ -83,8 +105,13 @@ namespace oppvs {
 		m_framePool.push(pixelbuffer);
 	}
 
-	void PacketHandler::pullFrame()
+	void Packetizer::pullFrame()
 	{
+		uint8_t* data = NULL;
+		uint32_t encodingLength, sendLength, sentLength = 0;
+		bool isKey = false;
+		int picID = -1;
+
 		if (m_framePool.empty())
 			return;
 
@@ -96,16 +123,57 @@ namespace oppvs {
 
 		std::shared_ptr<PixelBuffer> frame = *ptrFrame;
 		PixelBuffer pf = *frame;
+		
+		//Encoding		
+		if (m_encoder.encode(pf, &encodingLength, &data, &picID, &isKey) < 0)
+		{
+			delete [] pf.plane[0];
+			return;
+		}
 		delete [] pf.plane[0];
+
+		printf("Encoding Length %u Key: %d\n", encodingLength, isKey);
+		sendLength = encodingLength;
+		uint8_t* curPos = data;
+		do
+		{
+			bool flag = (sendLength == encodingLength);
+			SharedDynamicBufferRef segment = SharedDynamicBufferRef(new DynamicBuffer());
+			segment->setSize(100);
+			m_builder.reset();
+			m_builder.getStream().attach(segment, true);
+
+			if (m_builder.addCommonHeader(flag, picID) < 0)
+				return;
+			
+			if (flag)
+			{
+				if (m_builder.addPayloadHeader(isKey, encodingLength) < 0)
+					return;
+				sentLength = sendLength > (OPPVS_NETWORK_PACKET_LENGTH - VP8_MAX_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - VP8_MAX_HEADER_SIZE) : sendLength;
+			}
+			else
+			{
+				sentLength = sendLength > (OPPVS_NETWORK_PACKET_LENGTH - VP8_COMMON_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - VP8_COMMON_HEADER_SIZE) : sendLength;
+			}
+			if (m_builder.addPayload(curPos, sentLength) < 0)
+				return;
+			sendLength -= sentLength;
+			curPos += sentLength;
+
+			printf("Sent length: %u\n", sentLength);
+			m_segmentPool.push(segment);
+		}
+		while (sendLength > 0);
 	}
 
-	void* PacketHandler::run(void* object)
+	void* Packetizer::run(void* object)
 	{
-		PacketHandler* handler = (PacketHandler*)object;
+		Packetizer* handler = (Packetizer*)object;
 		while (handler->isRunning())
 		{
 			handler->pullFrame();
-			usleep(1000);
+			usleep(30000);
 		}
 		return NULL;
 	}
