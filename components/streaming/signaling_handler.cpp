@@ -64,6 +64,7 @@ namespace oppvs {
 					IceManager* icemgr = new IceManager();
 					icemgr->init(m_stunServer, m_turnServer, 0);
 					icemgr->attachCallbackEvent(SignalingHandler::callbackCandidateGatheringDone, (void*)this);
+					icemgr->attachCallbackEvent(SignalingHandler::callbackOnReceiveImpl, (void*)this);
 					IceStream* stream = icemgr->createStream();
 					stream->requestLocalCandidates();
 					m_connectors.push_back(icemgr);
@@ -125,9 +126,14 @@ namespace oppvs {
 
 	void SignalingHandler::callbackNewSubscriberImpl(void* object, IceStream* stream)
 	{
-		std::cout << "SignalingHandler: callback new subscriber" << std::endl;
 		SignalingHandler* handler = (SignalingHandler*)object;
 		handler->callbackNewSubscriberEvent(handler->callbackNewSubscriberObject, stream);
+	}
+
+	void SignalingHandler::callbackOnReceiveImpl(void* object, uint8_t* data, uint32_t len)
+	{
+		SignalingHandler* handler = (SignalingHandler*)object;
+		handler->callbackOnReceiveEvent(handler->callbackOnReceiveObject, data, len);
 	}
 
 	int SignalingHandler::sendStreamRequest(std::string username, std::string password, std::vector<IceCandidate>& candidates)
@@ -142,6 +148,7 @@ namespace oppvs {
 		icemgr->setPeerInfo(username, password, candidates);
 		icemgr->attachCallbackEvent(SignalingHandler::callbackCandidateGatheringDone, (void*)this);
 		icemgr->attachCallbackEvent(SignalingHandler::callbackNewSubscriberImpl, (void*)this);
+		icemgr->attachCallbackEvent(SignalingHandler::callbackOnReceiveImpl, (void*)this);
 		IceStream* stream = icemgr->createStream();
 		stream->requestLocalCandidates();
 		m_connectors.push_back(icemgr);	
@@ -156,6 +163,12 @@ namespace oppvs {
 	{
 		callbackNewSubscriberEvent = cb;
 		callbackNewSubscriberObject = object;
+	}
+
+	void SignalingHandler::attachCallback(callbackOnReceive cb, void* object)
+	{
+		callbackOnReceiveEvent = cb;
+		callbackOnReceiveObject = object;
 	}
 
 } // oppvs

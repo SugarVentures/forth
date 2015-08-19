@@ -13,8 +13,8 @@
 namespace oppvs {
 	typedef void (*callbackCandidateGatheringDone)(void* object, void* icemgr, std::string username, std::string password, std::vector<IceCandidate>& candidates);
 	typedef void (*callbackNewSubscriber)(void* object, IceStream* stream);
+	typedef void (*callbackOnReceive)(void* object, uint8_t* data, uint32_t len);
 	
-
 	class IceManager {
 	public:
 		IceManager();
@@ -32,6 +32,7 @@ namespace oppvs {
 
 		void attachCallbackEvent(callbackCandidateGatheringDone cb, void* object);
 		void attachCallbackEvent(callbackNewSubscriber cb, void* object);
+		void attachCallbackEvent(callbackOnReceive cb, void* object);
 
 	private:
 		NiceAgent* m_agent;
@@ -61,6 +62,9 @@ namespace oppvs {
 
     	callbackNewSubscriber cbNewSubscriberEvent;
     	void* cbNewSubscriberObject;
+
+    	callbackOnReceive cbOnReceiveEvent;
+    	void* cbOnReceiveObject;
 
 	};
 } // oppvs

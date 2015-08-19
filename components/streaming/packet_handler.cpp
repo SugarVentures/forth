@@ -181,5 +181,55 @@ namespace oppvs {
 		return NULL;
 	}
 
+	SegmentReader::SegmentReader()
+	{
+		reset();
+	}
+
+	SegmentReader::~SegmentReader()
+	{
+		reset();
+	}
+
+	void SegmentReader::reset()
+	{
+		m_dataStream.reset();
+	}
+
+	int SegmentReader::addBytes(uint8_t* data, uint32_t len)
+	{
+		uint8_t req = 0;
+		uint8_t optx = 0;
+		uint8_t opti = 0;
+		int picID = -1;
+		uint32_t curPos = 0;
+		req = data[curPos];
+		if (req & XBit)
+		{
+			optx = data[curPos + 1];
+			if (optx & IBit)
+			{
+				opti = data[curPos + 2];
+				picID = opti >> 1;
+			}
+		}
+		if (req & SBit)
+			printf("First segment\n");
+		else
+			printf("segment\n");
+
+
+		return 0;
+	}
+
+	Depacketizer::Depacketizer()
+	{
+
+	}
+
+	Depacketizer::~Depacketizer()
+	{
+
+	}
 
 } // oppvs

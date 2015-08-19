@@ -8,7 +8,6 @@
 
 namespace oppvs
 {
-	typedef void (*callbackOnReceive)(void* object, uint8_t* data, uint32_t len);
 
 	class IceStream
 	{
@@ -32,10 +31,6 @@ namespace oppvs
 		void send(uint16_t size, uint8_t* data, guint component_id = 1);
     	void receive(guint size, gchar* data, guint component_id);
 
-    	callbackOnReceive cbOnReceive;
-		void* rcvObject;
-
-		void registerCallback(callbackOnReceive cb, void* object);
     
 	private:
 		guint m_streamID;
@@ -46,6 +41,7 @@ namespace oppvs
 		std::string m_localPassword;
 		std::string m_remoteUsername;
 		std::string m_remotePassword;
+
 	};
 }
 

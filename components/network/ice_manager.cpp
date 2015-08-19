@@ -5,6 +5,7 @@ namespace oppvs {
 	IceManager::IceManager() : m_agent(NULL), m_globalMainLoop(NULL), m_globalMainLoopThread(NULL)
 	{
 		cbCandidateGatheringDoneObject = NULL;
+		cbOnReceiveObject = NULL;
 		m_remoteUsername = "";
 		m_remotePassword = "";
 	}
@@ -155,8 +156,8 @@ namespace oppvs {
     void IceManager::cb_nice_recv(NiceAgent *agent, guint stream_id, guint component_id,
                               guint len, gchar *buf, gpointer user_data)
     {
-	   	//IceStream* stream = (IceStream*)user_data;
-		//stream->receive(len, buf, component_id);
+	   	IceManager* manager = (IceManager*)user_data;
+		manager->cbOnReceiveEvent(manager->cbOnReceiveObject, (uint8_t*)buf, len);
     }
 
     void IceManager::cb_component_state_changed(NiceAgent *agent, guint stream_id, 
@@ -202,6 +203,12 @@ namespace oppvs {
     {
     	cbNewSubscriberEvent = cb;
     	cbNewSubscriberObject = object;
+    }
+
+    void IceManager::attachCallbackEvent(callbackOnReceive cb, void* object)
+    {
+    	cbOnReceiveObject = object;
+    	cbOnReceiveEvent = cb;
     }
 
     void IceManager::setPeerInfo(const std::string& username, const std::string& password, std::vector<IceCandidate>& candidates)

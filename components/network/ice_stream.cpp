@@ -21,7 +21,6 @@ namespace oppvs {
 			m_localPassword = "";
 		}
 
-		rcvObject = NULL;
 	}
 
 	IceStream::~IceStream()
@@ -191,15 +190,8 @@ namespace oppvs {
 
     void IceStream::receive(guint size, gchar* data, guint component_id)
     {
-    	printf("Receive data size %u\n", size);
-    	if (rcvObject != NULL)
-    		cbOnReceive(rcvObject, (uint8_t*)data, size);
+    	printf("Receive data size %u\n", size);    	
     }
 
-    void IceStream::registerCallback(callbackOnReceive cb, void* object)
-    {
-    	cbOnReceive = cb;
-    	rcvObject = object;
-    }
     
 } // oppvs

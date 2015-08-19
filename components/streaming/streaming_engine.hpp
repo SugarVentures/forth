@@ -75,10 +75,10 @@ namespace oppvs
 		
 		void updateQueue();
 
-		static void onNewSubscriber(void* object, IceStream* stream);
 		void createSendingThread(IceStream* stream);
 		void createMainThread();
 		void send();
+		void receive(uint8_t* data, uint32_t len);
 	private:
 		uint32_t m_ssrc;
 		PublishChannel* m_publisher;
@@ -118,8 +118,13 @@ namespace oppvs
 		Thread*								m_mainThread;	//Thread to distribute segments to all sending threads
 		bool								m_exitMainThread;
 		tsqueue<SharedDynamicBufferRef> 	m_segmentPool;
+		Depacketizer						m_depacketizer;
 
 		static void* runMainThreadFunction(void* object);
+		static void onNewSubscriber(void* object, IceStream* stream);
+		static void onReceiveSegment(void* object, uint8_t* data, uint32_t len);
+
+		StreamingRole getRole();
 	};
 
 }

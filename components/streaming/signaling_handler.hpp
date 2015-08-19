@@ -19,6 +19,9 @@ namespace oppvs {
 
 		callbackNewSubscriber	callbackNewSubscriberEvent;
 		void* 	callbackNewSubscriberObject;
+
+		callbackOnReceive 		callbackOnReceiveEvent;
+		void* 					callbackOnReceiveObject;
 	public:
 		SignalingHandler();
 		~SignalingHandler();
@@ -33,8 +36,10 @@ namespace oppvs {
 		static void callbackCandidateGatheringDone(void* object, void* icemgr, std::string username, std::string password, std::vector<IceCandidate>& candidates);
 		static void callbackOnIceResponse(void* object, std::string& username, std::string& password, std::vector<IceCandidate>& candidates);
 		static void callbackNewSubscriberImpl(void* object, IceStream* stream);
+		static void callbackOnReceiveImpl(void* object, uint8_t* data, uint32_t);
 		
 		void attachCallback(callbackNewSubscriber cb, void* object);
+		void attachCallback(callbackOnReceive cb, void* object);
 
 		void waitingSignal();
 		StreamingRole getRole();

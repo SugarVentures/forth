@@ -94,6 +94,7 @@ namespace oppvs
 			return -1;
 
 		m_signaler.attachCallback(StreamingEngine::onNewSubscriber, this);
+		m_signaler.attachCallback(StreamingEngine::onReceiveSegment, this);
 		if (role == ROLE_BROADCASTER)
 			m_packetizer.init(m_serviceInfo.videoStreamInfo, &m_segmentPool);
 		return 0;
@@ -428,7 +429,8 @@ namespace oppvs
 	void* StreamingEngine::runMainThreadFunction(void* object)
 	{
 		StreamingEngine* engine = (StreamingEngine*)object;
-		engine->send();
+		if (engine->getRole() == ROLE_BROADCASTER)
+			engine->send();
 		return NULL;
 	}
 
@@ -445,5 +447,21 @@ namespace oppvs
 			}
 			usleep(100);
 		}
+	}
+
+	void StreamingEngine::onReceiveSegment(void* object, uint8_t* data, uint32_t len)
+	{
+		StreamingEngine* engine = (StreamingEngine*)object;
+		engine->receive(data, len);
+	}
+
+	StreamingRole StreamingEngine::getRole()
+	{
+		return m_configuration.role;
+	}
+
+	void StreamingEngine::receive(uint8_t* data, uint32_t len)
+	{
+		
 	}
 }

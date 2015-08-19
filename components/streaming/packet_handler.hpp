@@ -6,6 +6,7 @@
 #include "data_stream.hpp"
 #include "thread.hpp"
 #include "video_encoding_vp.hpp"
+#include "video_decoding_vp.hpp"
 
 namespace oppvs {
 	const int VP8_PAYLOAD_HEADER_SIZE = 3;
@@ -57,6 +58,37 @@ namespace oppvs {
 		static void* run(void* object);
 
 		bool isRunning();
+	};
+
+	class SegmentReader
+	{
+	private:
+		DataStream m_dataStream;
+		uint8_t SBit = 1 << 4;
+		uint8_t XBit = 1 << 7;
+		uint8_t IBit = 1 << 7;
+		uint8_t HBit = 1 << 4;
+		uint8_t Size0BitMask = 7;
+		uint8_t Size0BitShift = 5;
+
+	public:
+		SegmentReader();
+		~SegmentReader();
+
+		void reset();
+		DataStream& getStream();
+
+		int addBytes(uint8_t* data, uint32_t len);
+	};
+
+	class Depacketizer {
+	private:
+		VPVideoDecoder m_decoder;
+	public:
+		Depacketizer();
+		~Depacketizer();
+
+		void pushSegment(uint8_t* data, uint32_t len);
 	};
 } // oppvs
 
