@@ -7,6 +7,7 @@ namespace oppvs
 	{
 		m_exitMainThread = false;
 		m_mainThread = NULL;
+		m_isRunning = false;
 	}
 
 	void StreamingEngine::setup()
@@ -81,11 +82,11 @@ namespace oppvs
 		{
 			m_serviceInfo.videoStreamInfo.noSources = 1;
 			m_serviceInfo.videoStreamInfo.sources = new VideoSourceInfo[1];
-			m_serviceInfo.videoStreamInfo.sources[0].width = 1080;
-			m_serviceInfo.videoStreamInfo.sources[0].height = 780;
+			m_serviceInfo.videoStreamInfo.sources[0].width = DEFAULT_VIDEO_FRAME_WIDTH;
+			m_serviceInfo.videoStreamInfo.sources[0].height = DEFAULT_VIDEO_FRAME_HEIGHT;
 			m_serviceInfo.videoStreamInfo.sources[0].source = 0;
 			m_serviceInfo.videoStreamInfo.sources[0].order = 0;
-			m_serviceInfo.videoStreamInfo.sources[0].stride = 4*1080;
+			m_serviceInfo.videoStreamInfo.sources[0].stride = 4 * DEFAULT_VIDEO_FRAME_WIDTH;
 			m_depacketizer.init(m_serviceInfo.videoStreamInfo, &m_recvPool);
 		}
 		return 0;
@@ -438,7 +439,7 @@ namespace oppvs
 					m_sendingThreads[i]->pushSegment(segment);
 				}
 			}
-			usleep(100);
+			usleep(1000);
 		}
 	}
 
@@ -469,9 +470,9 @@ namespace oppvs
 	void StreamingEngine::receive()
 	{
 		PixelBuffer pf;
-		pf.width[0] = 1080;
-		pf.height[0] = 780;
-		pf.stride[0] = 1080*4;
+		pf.width[0] = DEFAULT_VIDEO_FRAME_WIDTH;
+		pf.height[0] = DEFAULT_VIDEO_FRAME_HEIGHT;
+		pf.stride[0] = DEFAULT_VIDEO_FRAME_WIDTH * 4;
 		pf.nbytes = pf.height[0] * pf.stride[0];
 
 		while (!m_exitMainThread)
@@ -482,7 +483,7 @@ namespace oppvs
 				if (m_depacketizer.pullFrame(pf, segment) == 0)
 					m_callback(pf);
 			}
-			usleep(100);
+			usleep(5000);
 		}
 	}
 }

@@ -241,6 +241,14 @@ namespace oppvs {
 		}
 		else
 		{
+			if (m_dataStream.capacity() == 0)
+				return -1;
+			if (m_dataStream.size() + len - VP8_COMMON_HEADER_SIZE > m_dataStream.capacity())
+			{
+				printf("Wrong segment\n");
+				m_dataStream.reset();
+				return -1;
+			}
 			if (m_dataStream.write(data + VP8_COMMON_HEADER_SIZE, len - VP8_COMMON_HEADER_SIZE) < 0)
 				return -1;
 			if (m_dataStream.size() == m_dataStream.capacity())

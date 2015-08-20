@@ -95,7 +95,7 @@ namespace oppvs {
 	typedef void (*frame_callback)(PixelBuffer& pf);	//Pointer to function that handles pixel buffer
 
 	const int DEFAULT_VIDEO_FRAME_WIDTH = 1280;
-	const int DEFAULT_VIDEO_FRAME_HEIGHT = 	780;
+	const int DEFAULT_VIDEO_FRAME_HEIGHT = 	720;
 
 	struct VideoSourceInfo
 	{
