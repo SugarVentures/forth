@@ -74,6 +74,7 @@ namespace oppvs {
 	{
 		delete p_thread;
 		p_segmentPool = NULL;
+		m_encoder.release();
 	}
 
 	void Packetizer::init(VideoStreamInfo& info, tsqueue<SharedDynamicBufferRef>* queue)
@@ -181,7 +182,7 @@ namespace oppvs {
 		return NULL;
 	}
 
-	SegmentReader::SegmentReader()
+	SegmentReader::SegmentReader(): m_keyFrame(false)
 	{
 		reset();
 	}
@@ -196,6 +197,11 @@ namespace oppvs {
 		m_dataStream.reset();
 	}
 
+	SharedDynamicBufferRef SegmentReader::getBuffer()
+	{
+		return m_dataStream.getBuffer();
+	}
+
 	int SegmentReader::addBytes(uint8_t* data, uint32_t len)
 	{
 		uint8_t req = 0;
@@ -203,6 +209,8 @@ namespace oppvs {
 		uint8_t opti = 0;
 		int picID = -1;
 		uint32_t curPos = 0;
+		bool showFrame = false;
+
 		req = data[curPos];
 		if (req & XBit)
 		{
@@ -214,22 +222,70 @@ namespace oppvs {
 			}
 		}
 		if (req & SBit)
-			printf("First segment\n");
+		{
+			//First segment => Read payload header
+			curPos += VP8_COMMON_HEADER_SIZE;
+			uint8_t o1 = data[curPos];
+			showFrame = o1 & HBit;
+			m_keyFrame = !(o1 & 1);
+			o1 >>= Size0BitShift;
+			uint32_t frameSize = o1 + 8 * data[curPos + 1] + 2048 * data[curPos + 2];
+			printf("Size: %u \n", frameSize);
+			//Create buffer for new frame
+			m_dataStream.reset();
+			SharedDynamicBufferRef buffer = SharedDynamicBufferRef(new DynamicBuffer());
+			buffer->setCapacity(frameSize);
+			m_dataStream.attach(buffer, true);
+			if (m_dataStream.write(data + VP8_MAX_HEADER_SIZE, len - VP8_MAX_HEADER_SIZE) < 0)
+				return -1;
+		}
 		else
-			printf("segment\n");
+		{
+			if (m_dataStream.write(data + VP8_COMMON_HEADER_SIZE, len - VP8_COMMON_HEADER_SIZE) < 0)
+				return -1;
+			if (m_dataStream.size() == m_dataStream.capacity())
+			{
+				return 1;
+			}
+		}
 
 
 		return 0;
 	}
 
-	Depacketizer::Depacketizer()
+	Depacketizer::Depacketizer(): p_recvPool(NULL)
 	{
 
 	}
 
 	Depacketizer::~Depacketizer()
 	{
+		m_decoder.release();
+	}
 
+	void Depacketizer::init(VideoStreamInfo& info, tsqueue<SharedDynamicBufferRef>* p)
+	{
+		m_decoder.init(info);
+		p_recvPool = p;
+	}
+
+	void Depacketizer::pushSegment(uint8_t* data, uint32_t len)
+	{
+		int ret = m_reader.addBytes(data, len);
+		if (ret < 0)
+			return;
+		else if (ret == 1)
+		{
+			p_recvPool->push(m_reader.getBuffer());
+		}
+	}
+
+	int Depacketizer::pullFrame(PixelBuffer& pf, SharedDynamicBufferRef frame)
+	{
+		if (m_decoder.decode(pf, frame->size(), frame->data()) < 0)
+			return -1;
+
+		return 0;
 	}
 
 } // oppvs

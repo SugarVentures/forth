@@ -103,7 +103,9 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 
 - (void) startStreaming
 {
-    if (streamingEngine.init(oppvs::ROLE_BROADCASTER, "192.168.0.107", "192.168.0.107", "turn", "password",
+    streamingEngine.setStreamInfo(videoEngine->getVideoActiveSources());
+    
+    if (streamingEngine.init(oppvs::ROLE_BROADCASTER, "192.168.0.101", "192.168.0.101", "turn", "password",
                              "127.0.0.1", 33333) < 0)
     {
         NSLog(@"Failed to init streaming engine");
@@ -115,6 +117,8 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
         NSLog(@"Failed to start streaming engine");
         return;
     }
+
+    
     /*streamingEngine.setup();
     streamingEngine.setStreamInfo(videoEngine->getVideoActiveSources());
     streamingEngine.initPublishChannel();
@@ -152,7 +156,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     oppvs::StreamingEngine* streamer = (oppvs::StreamingEngine*)controller->streamer;
     if (streamer)
     {
-        //if (streamer->isRunning())
+        if (streamer->isRunning())
         {
             streamer->pushData(pf);
         }

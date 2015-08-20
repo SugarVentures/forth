@@ -79,6 +79,7 @@ namespace oppvs
 		void createMainThread();
 		void send();
 		void receive(uint8_t* data, uint32_t len);
+		void receive();
 	private:
 		uint32_t m_ssrc;
 		PublishChannel* m_publisher;
@@ -117,8 +118,9 @@ namespace oppvs
 		std::vector<StreamingSendThread*> 	m_sendingThreads;
 		Thread*								m_mainThread;	//Thread to distribute segments to all sending threads
 		bool								m_exitMainThread;
-		tsqueue<SharedDynamicBufferRef> 	m_segmentPool;
+		tsqueue<SharedDynamicBufferRef> 	m_sendPool;
 		Depacketizer						m_depacketizer;
+		tsqueue<SharedDynamicBufferRef>		m_recvPool;
 
 		static void* runMainThreadFunction(void* object);
 		static void onNewSubscriber(void* object, IceStream* stream);

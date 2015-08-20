@@ -71,12 +71,14 @@ namespace oppvs {
 		uint8_t Size0BitMask = 7;
 		uint8_t Size0BitShift = 5;
 
+		bool m_keyFrame;
+
 	public:
 		SegmentReader();
 		~SegmentReader();
 
 		void reset();
-		DataStream& getStream();
+		SharedDynamicBufferRef getBuffer();
 
 		int addBytes(uint8_t* data, uint32_t len);
 	};
@@ -84,11 +86,15 @@ namespace oppvs {
 	class Depacketizer {
 	private:
 		VPVideoDecoder m_decoder;
+		SegmentReader m_reader;
+		tsqueue<SharedDynamicBufferRef>* p_recvPool;
 	public:
 		Depacketizer();
 		~Depacketizer();
 
+		void init(VideoStreamInfo&, tsqueue<SharedDynamicBufferRef>*);
 		void pushSegment(uint8_t* data, uint32_t len);
+		int pullFrame(PixelBuffer&, SharedDynamicBufferRef);
 	};
 } // oppvs
 

@@ -35,30 +35,10 @@ namespace oppvs
 
 	StreamingEngine::~StreamingEngine()
 	{
-		delete m_sendThread;
-		delete m_receiveThread;
-		delete m_renderThread;
-
-		if (m_publisher)
-		{
-			delete m_publisher;
-			m_encoder.release();
-		}
-
-		if (m_subscribe)
-		{
-			delete m_subscribe;
-			m_decoder.release();
-		}		
-
 		if (m_serviceInfo.videoStreamInfo.noSources > 0)
 		{			
 			delete [] m_serviceInfo.videoStreamInfo.sources;			
 		}
-
-		if (m_cacheBuffer)
-			delete m_cacheBuffer;
-
 
 		//Close and release sending threads
 		for (int i = 0; i < m_sendingThreads.size(); i++)
@@ -96,7 +76,18 @@ namespace oppvs
 		m_signaler.attachCallback(StreamingEngine::onNewSubscriber, this);
 		m_signaler.attachCallback(StreamingEngine::onReceiveSegment, this);
 		if (role == ROLE_BROADCASTER)
-			m_packetizer.init(m_serviceInfo.videoStreamInfo, &m_segmentPool);
+			m_packetizer.init(m_serviceInfo.videoStreamInfo, &m_sendPool);
+		else if (role == ROLE_VIEWER)
+		{
+			m_serviceInfo.videoStreamInfo.noSources = 1;
+			m_serviceInfo.videoStreamInfo.sources = new VideoSourceInfo[1];
+			m_serviceInfo.videoStreamInfo.sources[0].width = 1080;
+			m_serviceInfo.videoStreamInfo.sources[0].height = 780;
+			m_serviceInfo.videoStreamInfo.sources[0].source = 0;
+			m_serviceInfo.videoStreamInfo.sources[0].order = 0;
+			m_serviceInfo.videoStreamInfo.sources[0].stride = 4*1080;
+			m_depacketizer.init(m_serviceInfo.videoStreamInfo, &m_recvPool);
+		}
 		return 0;
 	}
 
@@ -431,6 +422,8 @@ namespace oppvs
 		StreamingEngine* engine = (StreamingEngine*)object;
 		if (engine->getRole() == ROLE_BROADCASTER)
 			engine->send();
+		else
+			engine->receive();
 		return NULL;
 	}
 
@@ -438,9 +431,9 @@ namespace oppvs
 	{
 		while (!m_exitMainThread)
 		{
-			if (m_segmentPool.size() > 0)
+			if (m_sendPool.size() > 0)
 			{
-				SharedDynamicBufferRef segment = *m_segmentPool.pop();
+				SharedDynamicBufferRef segment = *m_sendPool.pop();
 				for(unsigned i = 0; i < m_sendingThreads.size(); ++i) {
 					m_sendingThreads[i]->pushSegment(segment);
 				}
@@ -452,7 +445,15 @@ namespace oppvs
 	void StreamingEngine::onReceiveSegment(void* object, uint8_t* data, uint32_t len)
 	{
 		StreamingEngine* engine = (StreamingEngine*)object;
-		engine->receive(data, len);
+		if (engine->getRole() == ROLE_VIEWER)
+		{
+			if (!engine->isRunning())
+			{
+				engine->setIsRunning(true);
+				engine->createMainThread();
+			}
+			engine->receive(data, len);
+		}
 	}
 
 	StreamingRole StreamingEngine::getRole()
@@ -462,6 +463,26 @@ namespace oppvs
 
 	void StreamingEngine::receive(uint8_t* data, uint32_t len)
 	{
-		
+		m_depacketizer.pushSegment(data, len);
+	}
+
+	void StreamingEngine::receive()
+	{
+		PixelBuffer pf;
+		pf.width[0] = 1080;
+		pf.height[0] = 780;
+		pf.stride[0] = 1080*4;
+		pf.nbytes = pf.height[0] * pf.stride[0];
+
+		while (!m_exitMainThread)
+		{
+			if (m_recvPool.size() > 0)
+			{
+				SharedDynamicBufferRef segment = *m_recvPool.pop();
+				if (m_depacketizer.pullFrame(pf, segment) == 0)
+					m_callback(pf);
+			}
+			usleep(100);
+		}
 	}
 }
