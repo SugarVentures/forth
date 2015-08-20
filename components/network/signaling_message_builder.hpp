@@ -4,6 +4,7 @@
 #include "data_stream.hpp"
 #include "signaling_common.hpp"
 #include "ice_common.hpp"
+#include "arpa/inet.h"
 #include <vector>
 
 namespace oppvs {
