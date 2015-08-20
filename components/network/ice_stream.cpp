@@ -188,10 +188,5 @@ namespace oppvs {
 		nice_agent_send(m_agent, m_streamID, component_id, size, (gchar*)data);
 	}
 
-    void IceStream::receive(guint size, gchar* data, guint component_id)
-    {
-    	printf("Receive data size %u\n", size);    	
-    }
-
     
 } // oppvs

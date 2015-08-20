@@ -29,7 +29,6 @@ namespace oppvs
 		std::string getLocalPassword() const;
 
 		void send(uint16_t size, uint8_t* data, guint component_id = 1);
-    	void receive(guint size, gchar* data, guint component_id);
 
     
 	private:

@@ -105,8 +105,8 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 {
     streamingEngine.setStreamInfo(videoEngine->getVideoActiveSources());
     
-    if (streamingEngine.init(oppvs::ROLE_BROADCASTER, "54.169.227.237", "54.169.227.237", "turn", "password",
-                             "54.169.227.237", 33333) < 0)
+    if (streamingEngine.init(oppvs::ROLE_BROADCASTER, "192.168.0.101", "192.168.0.101", "turn", "password",
+                             "192.168.0.101", 33333) < 0)
     {
         NSLog(@"Failed to init streaming engine");
         return;

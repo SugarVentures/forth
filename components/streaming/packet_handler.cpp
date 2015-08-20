@@ -59,6 +59,13 @@ namespace oppvs {
 		return 0;
 	}
 
+	int SegmentBuilder::addRTPHeader(uint32_t timestamp)
+	{
+		if (m_dataStream.writeUInt32(htonl(timestamp)) < 0)
+			return -1;
+		return 0;
+	}
+
 	DataStream& SegmentBuilder::getStream()
 	{
 		return m_dataStream;
@@ -68,6 +75,7 @@ namespace oppvs {
 	{
 		p_thread = new Thread(Packetizer::run, this);
 		p_segmentPool = NULL;
+		m_timestamp = 0;
 	}
 
 	Packetizer::~Packetizer()
@@ -136,7 +144,7 @@ namespace oppvs {
 		}
 		delete [] pf.plane[0];
 
-		printf("Encoding Length %u Key: %d\n", encodingLength, isKey);
+		printf("Encoding Length %u Key: %d timestamp: %u\n", encodingLength, isKey, m_timestamp);
 		sendLength = encodingLength;
 		uint8_t* curPos = data;
 		do
@@ -146,6 +154,9 @@ namespace oppvs {
 			segment->setSize(100);
 			m_builder.reset();
 			m_builder.getStream().attach(segment, true);
+
+			if (m_builder.addRTPHeader(m_timestamp) < 0)
+				return;
 
 			if (m_builder.addCommonHeader(flag, picID) < 0)
 				return;
@@ -158,7 +169,8 @@ namespace oppvs {
 			}
 			else
 			{
-				sentLength = sendLength > (OPPVS_NETWORK_PACKET_LENGTH - VP8_COMMON_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - VP8_COMMON_HEADER_SIZE) : sendLength;
+				sentLength = sendLength > (OPPVS_NETWORK_PACKET_LENGTH - VP8_COMMON_HEADER_SIZE - RTP_HEADER_SIZE) ? 
+				(OPPVS_NETWORK_PACKET_LENGTH - VP8_COMMON_HEADER_SIZE - RTP_HEADER_SIZE) : sendLength;
 			}
 			if (m_builder.addPayload(curPos, sentLength) < 0)
 				return;
@@ -169,6 +181,7 @@ namespace oppvs {
 			p_segmentPool->push(segment);
 		}
 		while (sendLength > 0);
+		m_timestamp++;
 	}
 
 	void* Packetizer::run(void* object)
@@ -210,7 +223,15 @@ namespace oppvs {
 		int picID = -1;
 		uint32_t curPos = 0;
 		bool showFrame = false;
+		uint32_t timestamp = 0;
 
+		if (len < RTP_HEADER_SIZE)
+			return -1;
+		memcpy(&timestamp, data, 4);
+		timestamp = ntohl(timestamp);
+		printf("timestamp %u len: %u\n", timestamp, len);
+
+		curPos = RTP_HEADER_SIZE;
 		req = data[curPos];
 		if (req & XBit)
 		{
@@ -230,7 +251,7 @@ namespace oppvs {
 			m_keyFrame = !(o1 & 1);
 			o1 >>= Size0BitShift;
 			uint32_t frameSize = o1 + 8 * data[curPos + 1] + 2048 * data[curPos + 2];
-			printf("Size: %u \n", frameSize);
+			printf("Size: %u key: %d\n", frameSize, m_keyFrame);
 			//Create buffer for new frame
 			m_dataStream.reset();
 			SharedDynamicBufferRef buffer = SharedDynamicBufferRef(new DynamicBuffer());
@@ -243,20 +264,21 @@ namespace oppvs {
 		{
 			if (m_dataStream.capacity() == 0)
 				return -1;
-			if (m_dataStream.size() + len - VP8_COMMON_HEADER_SIZE > m_dataStream.capacity())
+			if (m_dataStream.size() + len - VP8_COMMON_HEADER_SIZE - RTP_HEADER_SIZE > m_dataStream.capacity())
 			{
 				printf("Wrong segment\n");
 				m_dataStream.reset();
 				return -1;
 			}
-			if (m_dataStream.write(data + VP8_COMMON_HEADER_SIZE, len - VP8_COMMON_HEADER_SIZE) < 0)
+			if (m_dataStream.write(data + VP8_COMMON_HEADER_SIZE + RTP_HEADER_SIZE, len - VP8_COMMON_HEADER_SIZE - RTP_HEADER_SIZE) < 0)
 				return -1;
-			if (m_dataStream.size() == m_dataStream.capacity())
-			{
-				return 1;
-			}
+			//printf("Current size: %u cap: %u\n", m_dataStream.size(), m_dataStream.capacity());
 		}
-
+		if (m_dataStream.size() == m_dataStream.capacity())
+		{
+			//printf("Frame size: %u\n", m_dataStream.size());
+			return 1;
+		}
 
 		return 0;
 	}

@@ -33,7 +33,7 @@ namespace oppvs {
 				SharedDynamicBufferRef segment = *m_queue.pop();
 				m_stream->send(segment->size(), segment->data());
 			}
-			usleep(1000);
+			usleep(10000);
 		}
 	}
 } // oppvs
