@@ -71,8 +71,8 @@ namespace oppvs
 	    	vpx_codec_control(codec, VP8D_GET_FRAME_CORRUPTED, &corrupted);
 			if (corrupted) {
 				printf("corrupted\n");
-				//error = -1;
-				//return error;
+				error = -1;
+				return error;
 			}
 
 			//printf("%d %d %d %d\n", img->w, img->d_w, img->stride[1], img->stride[2]);
