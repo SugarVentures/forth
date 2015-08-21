@@ -210,7 +210,7 @@
         return oppvs::ERR_VIDEO_CAPTURE_INPUT_DEVICE_FAILED;
     }
     screen_input.removesDuplicateFrames = 1;
-    
+    screen_input.scaleFactor = 0.5;
     if (isDrop)
     {        
         [screen_input setCropRect: rect];
@@ -492,7 +492,7 @@
     {
         pixel_buffer.plane[0] = (uint8_t*)CVPixelBufferGetBaseAddress(imageBuffer);
     }
-    else if (oppvs::PF_YUVJ420BP == pixel_format    /* kCVPixelFormatType_420YpCbCr8BiPlanarFullRange */
+    else if (oppvs::PF_YUVJ420BP == pixel_format     /* kCVPixelFormatType_420YpCbCr8BiPlanarFullRange */
              || oppvs::PF_YUV420BP == pixel_format) /* kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange */
     {
         pixel_buffer.plane[0] = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0);
