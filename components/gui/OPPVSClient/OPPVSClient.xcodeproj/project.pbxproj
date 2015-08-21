@@ -17,6 +17,37 @@
 		D93A2C911B099FC800587EB4 /* libOPPVSRendering.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */; };
 		D970FAD81B00B82D005AF09E /* libstreaming.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D970FAD71B00B82D005AF09E /* libstreaming.so */; };
 		D970FADA1B00BD40005AF09E /* libnetworkengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D970FAD91B00BD40005AF09E /* libnetworkengine.so */; };
+		D9FD72F51B86F92500AF2E71 /* libOPPVSRendering.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD72F71B86FA5200AF2E71 /* libnetworkengine.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D970FAD91B00BD40005AF09E /* libnetworkengine.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD72F81B86FA5200AF2E71 /* libstreaming.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D970FAD71B00B82D005AF09E /* libstreaming.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD72FA1B86FBEC00AF2E71 /* libmisc.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD72F91B86FBEC00AF2E71 /* libmisc.so */; };
+		D9FD72FC1B86FEBA00AF2E71 /* libmisc.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD72F91B86FBEC00AF2E71 /* libmisc.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD72FE1B86FF9E00AF2E71 /* libmisccpp.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */; };
+		D9FD72FF1B86FFA400AF2E71 /* libmisccpp.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD73011B87005C00AF2E71 /* libthreadengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73001B87005C00AF2E71 /* libthreadengine.so */; };
+		D9FD73021B87006100AF2E71 /* libthreadengine.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73001B87005C00AF2E71 /* libthreadengine.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD73041B87011800AF2E71 /* libnice.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73031B87011800AF2E71 /* libnice.10.dylib */; };
+		D9FD73051B87011E00AF2E71 /* libnice.10.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73031B87011800AF2E71 /* libnice.10.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD73071B87024700AF2E71 /* libencodingengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73061B87024700AF2E71 /* libencodingengine.so */; };
+		D9FD73081B87024D00AF2E71 /* libencodingengine.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73061B87024700AF2E71 /* libencodingengine.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD730B1B8702A600AF2E71 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73091B8702A600AF2E71 /* libvpx.a */; };
+		D9FD730C1B8702A600AF2E71 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD730A1B8702A600AF2E71 /* libyuv.a */; };
+		D9FD730D1B8702AD00AF2E71 /* libvpx.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73091B8702A600AF2E71 /* libvpx.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD730E1B8702AD00AF2E71 /* libyuv.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD730A1B8702A600AF2E71 /* libyuv.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD73111B870CE100AF2E71 /* libgio-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD730F1B870CE100AF2E71 /* libgio-2.0.0.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D9FD73121B870CE100AF2E71 /* libglib-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73101B870CE100AF2E71 /* libglib-2.0.0.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D9FD73161B870D1600AF2E71 /* libgobject-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73131B870D1600AF2E71 /* libgobject-2.0.0.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D9FD73171B870D1600AF2E71 /* libgthread-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73141B870D1600AF2E71 /* libgthread-2.0.0.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D9FD73181B870D1600AF2E71 /* libintl.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73151B870D1600AF2E71 /* libintl.8.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D9FD73191B870D2D00AF2E71 /* libgobject-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73131B870D1600AF2E71 /* libgobject-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD731A1B870D2D00AF2E71 /* libgthread-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73141B870D1600AF2E71 /* libgthread-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD731B1B870D2D00AF2E71 /* libintl.8.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73151B870D1600AF2E71 /* libintl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD731C1B870D2D00AF2E71 /* libgio-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD730F1B870CE100AF2E71 /* libgio-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD731D1B870D2D00AF2E71 /* libglib-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73101B870CE100AF2E71 /* libglib-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD731F1B8711E100AF2E71 /* libgmodule-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD731E1B8711E100AF2E71 /* libgmodule-2.0.0.dylib */; };
+		D9FD73211B87126900AF2E71 /* libffi.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73201B87126900AF2E71 /* libffi.6.dylib */; };
+		D9FD73221B8712AF00AF2E71 /* libffi.6.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73201B87126900AF2E71 /* libffi.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D9FD73231B8712AF00AF2E71 /* libgmodule-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD731E1B8711E100AF2E71 /* libgmodule-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +59,35 @@
 			remoteInfo = OPPVSClient;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D9FD72F41B86F91700AF2E71 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D9FD73221B8712AF00AF2E71 /* libffi.6.dylib in CopyFiles */,
+				D9FD73231B8712AF00AF2E71 /* libgmodule-2.0.0.dylib in CopyFiles */,
+				D9FD73191B870D2D00AF2E71 /* libgobject-2.0.0.dylib in CopyFiles */,
+				D9FD731A1B870D2D00AF2E71 /* libgthread-2.0.0.dylib in CopyFiles */,
+				D9FD731B1B870D2D00AF2E71 /* libintl.8.dylib in CopyFiles */,
+				D9FD731C1B870D2D00AF2E71 /* libgio-2.0.0.dylib in CopyFiles */,
+				D9FD731D1B870D2D00AF2E71 /* libglib-2.0.0.dylib in CopyFiles */,
+				D9FD730D1B8702AD00AF2E71 /* libvpx.a in CopyFiles */,
+				D9FD730E1B8702AD00AF2E71 /* libyuv.a in CopyFiles */,
+				D9FD73081B87024D00AF2E71 /* libencodingengine.so in CopyFiles */,
+				D9FD73051B87011E00AF2E71 /* libnice.10.dylib in CopyFiles */,
+				D9FD73021B87006100AF2E71 /* libthreadengine.so in CopyFiles */,
+				D9FD72FF1B86FFA400AF2E71 /* libmisccpp.so in CopyFiles */,
+				D9FD72FC1B86FEBA00AF2E71 /* libmisc.so in CopyFiles */,
+				D9FD72F71B86FA5200AF2E71 /* libnetworkengine.so in CopyFiles */,
+				D9FD72F81B86FA5200AF2E71 /* libstreaming.so in CopyFiles */,
+				D9FD72F51B86F92500AF2E71 /* libOPPVSRendering.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D9250F311AC558DB00858FF5 /* OPPVSClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPPVSClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +107,20 @@
 		D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOPPVSRendering.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libOPPVSRendering.dylib"; sourceTree = "<group>"; };
 		D970FAD71B00B82D005AF09E /* libstreaming.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming.so; path = ../../../libs/libstreaming.so; sourceTree = "<group>"; };
 		D970FAD91B00BD40005AF09E /* libnetworkengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetworkengine.so; path = ../../../libs/libnetworkengine.so; sourceTree = "<group>"; };
+		D9FD72F91B86FBEC00AF2E71 /* libmisc.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisc.so; path = ../../../libs/libmisc.so; sourceTree = "<group>"; };
+		D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisccpp.so; path = ../../../libs/libmisccpp.so; sourceTree = "<group>"; };
+		D9FD73001B87005C00AF2E71 /* libthreadengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libthreadengine.so; path = ../../../libs/libthreadengine.so; sourceTree = "<group>"; };
+		D9FD73031B87011800AF2E71 /* libnice.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnice.10.dylib; path = ../../../libs/libnice.10.dylib; sourceTree = "<group>"; };
+		D9FD73061B87024700AF2E71 /* libencodingengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libencodingengine.so; path = ../../../libs/libencodingengine.so; sourceTree = "<group>"; };
+		D9FD73091B8702A600AF2E71 /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvpx.a; path = ../../../libs/libvpx.a; sourceTree = "<group>"; };
+		D9FD730A1B8702A600AF2E71 /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyuv.a; path = ../../../libs/libyuv.a; sourceTree = "<group>"; };
+		D9FD730F1B870CE100AF2E71 /* libgio-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgio-2.0.0.dylib"; path = "../../../../../../../../usr/local/lib/libgio-2.0.0.dylib"; sourceTree = "<group>"; };
+		D9FD73101B870CE100AF2E71 /* libglib-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libglib-2.0.0.dylib"; path = "../../../../../../../../usr/local/lib/libglib-2.0.0.dylib"; sourceTree = "<group>"; };
+		D9FD73131B870D1600AF2E71 /* libgobject-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgobject-2.0.0.dylib"; path = "../../../../../../../../usr/local/lib/libgobject-2.0.0.dylib"; sourceTree = "<group>"; };
+		D9FD73141B870D1600AF2E71 /* libgthread-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgthread-2.0.0.dylib"; path = "../../../../../../../../usr/local/lib/libgthread-2.0.0.dylib"; sourceTree = "<group>"; };
+		D9FD73151B870D1600AF2E71 /* libintl.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libintl.8.dylib; path = ../../../../../../../../usr/local/lib/libintl.8.dylib; sourceTree = "<group>"; };
+		D9FD731E1B8711E100AF2E71 /* libgmodule-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgmodule-2.0.0.dylib"; path = "../../../../../../../../usr/local/lib/libgmodule-2.0.0.dylib"; sourceTree = "<group>"; };
+		D9FD73201B87126900AF2E71 /* libffi.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libffi.6.dylib; path = ../../../../../../../../usr/local/lib/libffi.6.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +128,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9FD73211B87126900AF2E71 /* libffi.6.dylib in Frameworks */,
+				D9FD731F1B8711E100AF2E71 /* libgmodule-2.0.0.dylib in Frameworks */,
+				D9FD73161B870D1600AF2E71 /* libgobject-2.0.0.dylib in Frameworks */,
+				D9FD73171B870D1600AF2E71 /* libgthread-2.0.0.dylib in Frameworks */,
+				D9FD73181B870D1600AF2E71 /* libintl.8.dylib in Frameworks */,
+				D9FD73111B870CE100AF2E71 /* libgio-2.0.0.dylib in Frameworks */,
+				D9FD73121B870CE100AF2E71 /* libglib-2.0.0.dylib in Frameworks */,
+				D9FD73071B87024700AF2E71 /* libencodingengine.so in Frameworks */,
+				D9FD72FE1B86FF9E00AF2E71 /* libmisccpp.so in Frameworks */,
+				D9FD730C1B8702A600AF2E71 /* libyuv.a in Frameworks */,
 				D93A2C911B099FC800587EB4 /* libOPPVSRendering.dylib in Frameworks */,
+				D9FD73041B87011800AF2E71 /* libnice.10.dylib in Frameworks */,
+				D9FD72FA1B86FBEC00AF2E71 /* libmisc.so in Frameworks */,
+				D9FD730B1B8702A600AF2E71 /* libvpx.a in Frameworks */,
+				D9FD73011B87005C00AF2E71 /* libthreadengine.so in Frameworks */,
 				D970FADA1B00BD40005AF09E /* libnetworkengine.so in Frameworks */,
 				D970FAD81B00B82D005AF09E /* libstreaming.so in Frameworks */,
 			);
@@ -73,6 +161,20 @@
 		D9250F281AC558DB00858FF5 = {
 			isa = PBXGroup;
 			children = (
+				D9FD73201B87126900AF2E71 /* libffi.6.dylib */,
+				D9FD731E1B8711E100AF2E71 /* libgmodule-2.0.0.dylib */,
+				D9FD73131B870D1600AF2E71 /* libgobject-2.0.0.dylib */,
+				D9FD73141B870D1600AF2E71 /* libgthread-2.0.0.dylib */,
+				D9FD73151B870D1600AF2E71 /* libintl.8.dylib */,
+				D9FD730F1B870CE100AF2E71 /* libgio-2.0.0.dylib */,
+				D9FD73101B870CE100AF2E71 /* libglib-2.0.0.dylib */,
+				D9FD73091B8702A600AF2E71 /* libvpx.a */,
+				D9FD730A1B8702A600AF2E71 /* libyuv.a */,
+				D9FD73061B87024700AF2E71 /* libencodingengine.so */,
+				D9FD73031B87011800AF2E71 /* libnice.10.dylib */,
+				D9FD73001B87005C00AF2E71 /* libthreadengine.so */,
+				D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */,
+				D9FD72F91B86FBEC00AF2E71 /* libmisc.so */,
 				D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */,
 				D970FAD91B00BD40005AF09E /* libnetworkengine.so */,
 				D970FAD71B00B82D005AF09E /* libstreaming.so */,
@@ -143,6 +245,8 @@
 				D9250F2D1AC558DB00858FF5 /* Sources */,
 				D9250F2E1AC558DB00858FF5 /* Frameworks */,
 				D9250F2F1AC558DB00858FF5 /* Resources */,
+				D9FD72F41B86F91700AF2E71 /* CopyFiles */,
+				D9FD72F61B86F94600AF2E71 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -226,6 +330,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D9FD72F61B86F94600AF2E71 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "install_name_tool -change /usr/local/lib/libgio-2.0.0.dylib @loader_path/../Frameworks/libgio-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnice.10.dylib\"\ninstall_name_tool -change /usr/local/lib/libgobject-2.0.0.dylib @loader_path/../Frameworks/libgobject-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnice.10.dylib\"\ninstall_name_tool -change /usr/local/lib/libgthread-2.0.0.dylib @loader_path/../Frameworks/libgthread-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnice.10.dylib\"\ninstall_name_tool -change /usr/local/lib/libglib-2.0.0.dylib @loader_path/../Frameworks/libglib-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnice.10.dylib\"\ninstall_name_tool -change /usr/local/lib/libintl.8.dylib @loader_path/../Frameworks/libintl.8.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnice.10.dylib\"\ninstall_name_tool -change /usr/local/lib/libgmodule-2.0.0.dylib @loader_path/../Frameworks/libgmodule-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnice.10.dylib\"\ninstall_name_tool -change /usr/local/lib/libffi.6.dylib @loader_path/../Frameworks/libffi.6.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnice.10.dylib\"\n\ninstall_name_tool -change /usr/local/lib/libgio-2.0.0.dylib @loader_path/../Frameworks/libgio-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnetworkengine.so\"\ninstall_name_tool -change /usr/local/lib/libgobject-2.0.0.dylib @loader_path/../Frameworks/libgobject-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnetworkengine.so\"\ninstall_name_tool -change /usr/local/lib/libgthread-2.0.0.dylib @loader_path/../Frameworks/libgthread-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnetworkengine.so\"\ninstall_name_tool -change /usr/local/lib/libglib-2.0.0.dylib @loader_path/../Frameworks/libglib-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnetworkengine.so\"\ninstall_name_tool -change /usr/local/lib/libintl.8.dylib @loader_path/../Frameworks/libintl.8.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnetworkengine.so\"\n\ninstall_name_tool -change /usr/local/lib/libgio-2.0.0.dylib @loader_path/../Frameworks/libgio-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change /usr/local/lib/libgobject-2.0.0.dylib @loader_path/../Frameworks/libgobject-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change /usr/local/lib/libgthread-2.0.0.dylib @loader_path/../Frameworks/libgthread-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change /usr/local/lib/libglib-2.0.0.dylib @loader_path/../Frameworks/libglib-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change /usr/local/lib/libintl.8.dylib @loader_path/../Frameworks/libintl.8.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change /usr/local/lib/libgmodule-2.0.0.dylib @loader_path/../Frameworks/libgmodule-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change /usr/local/lib/libffi.6.dylib @loader_path/../Frameworks/libffi.6.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\n\ninstall_name_tool -change /usr/local/lib/libglib-2.0.0.dylib @loader_path/../Frameworks/libglib-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libgmodule-2.0.0.dylib\"\ninstall_name_tool -change /usr/local/lib/libintl.8.dylib @loader_path/../Frameworks/libintl.8.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libgmodule-2.0.0.dylib\"\n\ninstall_name_tool -change /usr/local/lib/libgobject-2.0.0.dylib @loader_path/../Frameworks/libgobject-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libgio-2.0.0.dylib\"\ninstall_name_tool -change /usr/local/lib/libglib-2.0.0.dylib @loader_path/../Frameworks/libglib-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libgio-2.0.0.dylib\"\ninstall_name_tool -change /usr/local/lib/libintl.8.dylib @loader_path/../Frameworks/libintl.8.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libgio-2.0.0.dylib\"\ninstall_name_tool -change /usr/local/lib/libgmodule-2.0.0.dylib @loader_path/../Frameworks/libgmodule-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libgio-2.0.0.dylib\"\ninstall_name_tool -change /usr/local/lib/libffi.6.dylib @loader_path/../Frameworks/libffi.6.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libgio-2.0.0.dylib\"\n\ninstall_name_tool -change /usr/local/lib/libintl.8.dylib @loader_path/../Frameworks/libintl.8.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libglib-2.0.0.dylib\"\n\ninstall_name_tool -change /usr/local/lib/libglib-2.0.0.dylib @loader_path/../Frameworks/libglib-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libgobject-2.0.0.dylib\"\ninstall_name_tool -change /usr/local/lib/libintl.8.dylib @loader_path/../Frameworks/libintl.8.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libgobject-2.0.0.dylib\"\ninstall_name_tool -change /usr/local/lib/libffi.6.dylib @loader_path/../Frameworks/libffi.6.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libgobject-2.0.0.dylib\"\n\ninstall_name_tool -change /usr/local/lib/libglib-2.0.0.dylib @loader_path/../Frameworks/libglib-2.0.0.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libgthread-2.0.0.dylib\"\ninstall_name_tool -change /usr/local/lib/libintl.8.dylib @loader_path/../Frameworks/libintl.8.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libgthread-2.0.0.dylib\"\n\n\ninstall_name_tool -change /usr/local/lib/libOPPVSRendering.dylib @loader_path/../Frameworks/libOPPVSRendering.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change libnetworkengine.so @loader_path/../Frameworks/libnetworkengine.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change libstreaming.so @loader_path/../Frameworks/libstreaming.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change libmisccpp.so @loader_path/../Frameworks/libmisccpp.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change libmisc.so @loader_path/../Frameworks/libmisc.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change libthreadengine.so @loader_path/../Frameworks/libthreadengine.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change libthreadengine.so @loader_path/../Frameworks/libthreadengine.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnetworkengine.so\"\ninstall_name_tool -change /usr/local/lib/libnice.10.dylib @loader_path/../Frameworks/libnice.10.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnetworkengine.so\"\ninstall_name_tool -change /usr/local/lib/libnice.10.dylib @loader_path/../Frameworks/libnice.10.dylib \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change libnetworkengine.so @loader_path/../Frameworks/libnetworkengine.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libstreaming.so\"\ninstall_name_tool -change libthreadengine.so @loader_path/../Frameworks/libthreadengine.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libstreaming.so\"\ninstall_name_tool -change libmisc.so @loader_path/../Frameworks/libmisc.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libstreaming.so\"\ninstall_name_tool -change libencodingengine.so @loader_path/../Frameworks/libencodingengine.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change libyuv.a @loader_path/../Frameworks/libyuv.a \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libencodingengine.so\"\ninstall_name_tool -change libyuv.a @loader_path/../Frameworks/libyuv.a \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change libmisc.so @loader_path/../Frameworks/libmisc.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libencodingengine.so\"\ninstall_name_tool -change libmisc.so @loader_path/../Frameworks/libmisc.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnetworkengine.so\"\ninstall_name_tool -change libmisccpp.so @loader_path/../Frameworks/libmisccpp.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libnetworkengine.so\"\ninstall_name_tool -change libencodingengine.so @loader_path/../Frameworks/libencodingengine.so \"$TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/libstreaming.so\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D9250F2D1AC558DB00858FF5 /* Sources */ = {
@@ -376,6 +496,7 @@
 					../../../libs,
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug",
+					/usr/local/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -412,6 +533,7 @@
 					../../../libs,
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug",
+					/usr/local/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
