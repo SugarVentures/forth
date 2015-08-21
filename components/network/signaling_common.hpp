@@ -3,7 +3,7 @@
 
 namespace oppvs {
 	const static int DEFAULT_SIGNALING_PORT = 33333;
-	const static int MAX_SIGNALING_MESSAGE_SIZE = 1000;
+	const static int MAX_SIGNALING_MESSAGE_SIZE = 2000;
 	const static int STREAM_KEY_SIZE = 4;
 	const static int SIGNALING_HEADER_SIZE = STREAM_KEY_SIZE + 4;
 

@@ -4,7 +4,7 @@
 #include <cstring>
 
 #include "ice_manager.hpp"
-#include "signaling_manager.hpp"
+#include "signaling_handler.hpp"
 
 #include <signal.h>
 
@@ -97,6 +97,16 @@ void callbackOnIceResponse(void* object, std::string& username, std::string& pas
 	
 }
 
+void onNewSubscriber(void* object, oppvs::IceStream* stream)
+{
+	printf("New subscriber\n");
+}
+
+void onReceiveSegment(void* object, uint8_t* data, uint32_t len)
+{
+	
+}
+
 int main(int argc, char* argv[])
 {
 	std::string address, username, password;
@@ -126,37 +136,19 @@ int main(int argc, char* argv[])
 	signalingServerAddress.setIP(oppvs::IPAddress("127.0.0.1"));
 	signalingServerAddress.setPort(33333);
 
-	oppvs::SignalingManager sigManager(signalingServerAddress);
-	sigManager.init();
-	
+	oppvs::SignalingHandler sigManager;
 
-	oppvs::IceManager iceManager((void*)&sigManager);
-	iceManager.init(stunServer, turnServer);
+	if (sigManager.init(stunServer, turnServer, signalingServerAddress, (oppvs::StreamingRole)opt) < 0)
+			return -1;
 
-	sigManager.registerCallback(callbackOnIceResponse, (void*)&iceManager);
-	iceManager.registerCallback(callbackCandidateGatheringDone);
+	sigManager.attachCallback(onNewSubscriber, NULL);
+	sigManager.attachCallback(onReceiveSegment, NULL);	
 
 	std::cout << "Server: " << turnServer.serverAddress << " port: " << turnServer.port << " user: " << turnServer.username << " " << turnServer.password << std::endl;
 	std::string streamKey = std::string("1234", oppvs::STREAM_KEY_SIZE);
-	if (opt == 0)
-	{
-		std::cout << "Broadcaster" << std::endl;
-		oppvs::IceStream* stream = iceManager.createStream();
-		stream->requestLocalCandidates();
-
-		sigManager.sendStreamRegister(streamKey);
-		sigManager.waitResponse();
-	}
-	else
-	{
-		std::cout << "Viewer" << std::endl;
-		sigManager.setStreamKey(streamKey);
-		oppvs::IceStream* stream = iceManager.createStream();
-		stream->requestLocalCandidates();
-	}	
+	sigManager.start(streamKey);	
 	
 	waitForAppExitSignal();
-	sigManager.signalForStop();
-	iceManager.release();
+	
 	return 0;
 }
