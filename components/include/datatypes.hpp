@@ -96,6 +96,7 @@ namespace oppvs {
 
 	const int DEFAULT_VIDEO_FRAME_WIDTH = 1280;
 	const int DEFAULT_VIDEO_FRAME_HEIGHT = 	720;
+	const int ST_VIDEO_STREAMING = 1;
 
 	struct VideoSourceInfo
 	{

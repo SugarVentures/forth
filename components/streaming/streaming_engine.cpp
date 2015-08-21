@@ -10,30 +10,6 @@ namespace oppvs
 		m_isRunning = false;
 	}
 
-	void StreamingEngine::setup()
-	{
-		m_ssrc = 0;
-		m_isRunning = false;
-
-		m_broadcaster = NULL;
-		m_receiver = NULL;
-
-		m_sendThread = NULL;
-		m_receiveThread = NULL;
-		m_renderThread = NULL;
-
-		m_subscribe = NULL;
-		
-		SRTPSocket::initSRTPLib();
-
-		
-		if (pthread_mutex_init(&m_mutex, NULL) != 0)
-		{
-			printf("Cannot init mutex\n");
-		}
-	}
-
-
 	StreamingEngine::~StreamingEngine()
 	{
 		if (m_serviceInfo.videoStreamInfo.noSources > 0)
@@ -101,173 +77,10 @@ namespace oppvs
 		return 0;
 	}
 
-	void* runStreaming(void* p)
-	{
-		NetworkStream* stream = (NetworkStream*)p;
-		while (1)
-		{
-			stream->sendStream();
-			usleep(5000);
-		}
-		return NULL;
-	}
-
-	void* waitStreaming(void* p)
-	{
-		NetworkStream* stream = (NetworkStream*)p;
-		stream->waitStream();
-		//stream->releaseReceiver();
-		return NULL;
-	}
-
-	void* rendering(void* p)
-	{
-		StreamingEngine* engine = (StreamingEngine*)p;
-		while (1)
-		{
-			engine->pullData();
-			usleep(2000);
-		}
-	}
-
-	void onNewSubscriberEvent(void* owner, IceStream* stream)
-	{
-		StreamingEngine* engine = (StreamingEngine*)owner;
-		engine->initUploadStream(stream);
-	}
-
-	void onSendDoneEvent(void* owner, int error)
-	{
-		//printf("SendDone Event Error: %d\n", error);
-		StreamingEngine* engine = (StreamingEngine*)owner;
-		//Unlock streams
-		if (error == 1)
-			engine->updateQueue();
-	}
-
-	void onReceiveEvent(void* owner, uint8_t source, int error)
-	{
-		//printf("Receive pkt\n");
-		StreamingEngine* engine = (StreamingEngine*)owner;
-		engine->pullData(source);
-	}
-
-	void StreamingEngine::updateQueue()
-	{
-		std::vector<NetworkStream*>::const_iterator it;
-		for (it = m_subscribers.begin(); it != m_subscribers.end(); ++it)
-		{
-			NetworkStream* stream = (NetworkStream*)*it;
-			stream->unlock();
-		}
-	}
-
-
-	int StreamingEngine::initUploadStream(IceStream* icestream)
-	{
-		NetworkStream *stream = new NetworkStream(SENDER_ROLE, m_publisher->getServiceKey());
-		stream->registerCallback((void*)this, &m_messageHandler, onSendDoneEvent);
-		if (stream->setup(icestream) < 0)
-		{
-			printf("Cannot setup network stream for uploading data");
-			delete stream;
-			return -1;
-		}
-		
-		m_subscribers.push_back(stream);
-
-		if (m_subscribers.size() == 1)
-		{
-			m_messageHandler.setEncoder(&m_encoder);
-			setIsRunning(true);
-		}
-		m_messageHandler.setNumClients(m_subscribers.size());
-		m_sendThread = new Thread(runStreaming, (void*)stream);
-		m_sendThread->create();
-		return 0;
-	}
-
-	int StreamingEngine::initDownloadStream()
-	{
-		/*if (m_receiver->setup(m_subscribe->getLocalAddress().getPort()) < 0)
-		{
-			printf("Cannot setup network stream for downloading data\n");
-			return -1;
-		}
-		m_receiver->setReceiver(m_subscribe->getRemoteAddress());
-		printf("Set a download stream (%s %s)\n", m_subscribe->getLocalAddress().toString().c_str(), 
-			m_subscribe->getRemoteAddress().toString().c_str());*/
-
-		/*m_receiveThread = new Thread(waitStreaming, (void*)m_receiver);
-		m_receiveThread->create();*/
-
-		m_renderThread = new Thread(rendering, (void*)this);
-		m_renderThread->create();
-		return 0;
-	}
 
 	void StreamingEngine::pushData(PixelBuffer& pf)
 	{
-		/*if (m_subscribers.size() > 0)
-		{
-			m_messageHandler.addMessage(pf);
-		}*/
 		m_packetizer.pushFrame(pf);
-	}
-
-	void StreamingEngine::pullData(uint8_t source)
-	{
-		PixelBuffer* pf = m_cacheBuffer->getBuffer(source);
-		if (pf)
-		{
-			//pf->user = pixelBuffer->user;
-			m_callback(*pf);
-		}
-	}
-
-	int StreamingEngine::initPublishChannel()
-	{
-		m_publisher = new PublishChannel((void*)this, onNewSubscriberEvent);
-
-		m_publisher->setServiceInfo(ST_VIDEO_STREAMING, generateSSRC());
-		m_publisher->setServiceInfo(&m_serviceInfo);
-
-		printServiceInfo();
-		m_encoder.init(m_serviceInfo.videoStreamInfo);
-
-		m_publisher->start();
-		printf("SSRC: %u\n", m_publisher->getServiceKey());
-		return 0;
-	}
-
-	int StreamingEngine::initSubscribeChannel(const std::string& publisher, uint16_t port, const ServiceInfo& service)
-	{
-		m_receiver = new NetworkStream(RECEIVER_ROLE, 1234);		
-		
-		m_subscribe = new SubscribeChannel(publisher, port, service);
-		m_subscribe->registerCallback(NetworkStream::onReceive, (void*)m_receiver);
-
-		int len;
-		uint8_t info[OPPVS_NETWORK_PACKET_LENGTH];
-		if (m_subscribe->registerInterest((uint8_t*)&info, OPPVS_NETWORK_PACKET_LENGTH, &len) < 0)
-			return -1;
-
-		int curPos = sizeof(sockaddr); //Skip the destination address
-		len -= curPos;
-		setStreamInfo(info + curPos, len);
-		//Setup cache
-		m_cacheBuffer = new CacheBuffer(m_serviceInfo.videoStreamInfo);
-		m_messageParser.setCacheBuffer(m_cacheBuffer);
-		m_receiver->registerCallback((void*)this, &m_messageParser, onReceiveEvent);
-
-		//Setup decoder
-		m_decoder.init(m_serviceInfo.videoStreamInfo);
-
-		printServiceInfo();
-		printf("SSRC: %u\n", m_subscribe->getServiceKey());
-
-		initDownloadStream();
-		return 0;
 	}
 
 	uint32_t StreamingEngine::generateSSRC()
@@ -290,17 +103,6 @@ namespace oppvs
 		m_callback = cb;
 	}
 
-	void StreamingEngine::initBitsStream()
-	{
-		//m_bitsstream = new BitsStream();
-	}
-
-	std::string StreamingEngine::getStreamInfo() const
-	{
-		if (!m_publisher)
-			return std::string();
-		return m_publisher->getLocalAddress().toString();
-	}
 
 	void StreamingEngine::setStreamInfo(const std::vector<VideoActiveSource>& sources)
 	{
@@ -379,20 +181,6 @@ namespace oppvs
 
 	}
 
-	void StreamingEngine::pullData()
-	{
-
-		std::shared_ptr<PixelBuffer> pf = m_cacheBuffer->pop();
-		if (pf.get() != NULL)
-		{
-			PixelBuffer pixelBuffer = *pf;
-			uint8_t* data = pixelBuffer.plane[0];
-			if (m_decoder.decode(pixelBuffer, pixelBuffer.nbytes, data) != -1)
-				m_callback(pixelBuffer);
-			delete [] data;
-			
-		}
-	}
 
 	void StreamingEngine::onNewSubscriber(void* object, IceStream* stream)
 	{
