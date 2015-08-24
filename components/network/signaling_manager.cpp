@@ -73,7 +73,7 @@ namespace oppvs {
 		return sendSignal();
 	}
 
-	int SignalingManager::sendStreamRegister(const std::string& streamKey)
+	int SignalingManager::sendStreamRegister(const std::string& streamKey, const VideoStreamInfo& info)
 	{
 		if (streamKey == "")
 			return -1;
@@ -84,6 +84,8 @@ namespace oppvs {
 		if (m_messageBuilder.addStreamKey(streamKey) < 0)
 			return -1;
 
+		if (m_messageBuilder.addVideoSources(info) < 0)
+			return -1;
 		return sendSignal();
 	}
 

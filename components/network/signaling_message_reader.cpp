@@ -3,17 +3,20 @@
 namespace oppvs {
 	SignalingMessageReader::SignalingMessageReader()
 	{
+		m_videoStreamInfo.sources = NULL;
+		m_videoStreamInfo.noSources = 0;
 		reset();	
 	}
 
 	SignalingMessageReader::~SignalingMessageReader()
 	{
-			
+		reset();
 	}
 
 	void SignalingMessageReader::reset()
 	{
 		m_dataStream.reset();
+		delete [] m_videoStreamInfo.sources;
 	}
 
 	DataStream& SignalingMessageReader::getStream()
@@ -72,9 +75,6 @@ namespace oppvs {
 
 	int SignalingMessageReader::readBody()
 	{
-		size_t currentSize = m_dataStream.size();
-    	size_t bytesConsumed = SIGNALING_HEADER_SIZE;
-
     	if (m_dataStream.setAbsolutePosition(SIGNALING_HEADER_SIZE) < 0)
     		return -1;
     	
@@ -128,6 +128,30 @@ namespace oppvs {
     			m_candidates.push_back(candidate);
     		}
     	}
+    	else if (m_messageType == SignalingStreamRegister)
+    	{
+    		uint8_t noVideoSources = 0;
+    		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_VIDEO_NOSOURCES, & noVideoSources) <  0)
+    		{
+    			return -1;
+    		}
+
+    		m_videoStreamInfo.noSources = noVideoSources;
+    		m_videoStreamInfo.sources = new VideoSourceInfo[noVideoSources];
+    		for (uint8_t i = 0; i < noVideoSources; ++i)
+    		{
+    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH, &m_videoStreamInfo.sources[i].width) < 0)
+    			{
+    				return -1;
+    			}
+    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_HEIGHT, &m_videoStreamInfo.sources[i].height) < 0)
+    			{
+    				return -1;
+    			}
+    			std::cout << "Source " << i << " width: " << m_videoStreamInfo.sources[i].width
+    										<< " height: " << m_videoStreamInfo.sources[i].height << std::endl;
+    		}
+    	}
     	return 0;
 	}
 
@@ -151,6 +175,25 @@ namespace oppvs {
 		}
 		s = std::string(localbuf, attributeLength);
 		m_dataStream.setRelativePosition(paddingLength);
+		return 0;
+	}
+
+	int SignalingMessageReader::readUInt8Attribute(uint16_t type, uint8_t* attr)
+	{
+		uint16_t attributeLength = 0;
+		if (readAttributeLength(type, &attributeLength) < 0)
+			return -1;
+
+		attributeLength = ntohs(attributeLength);
+		if (attributeLength != 1)
+			return -1;
+
+		if (m_dataStream.read((void*)attr, attributeLength) < 0)
+		{
+			return -1;
+		}
+
+		m_dataStream.setRelativePosition(3); //Move 3 bytes padding
 		return 0;
 	}
 

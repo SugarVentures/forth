@@ -22,7 +22,7 @@ namespace oppvs {
 
 		int init();
 		int sendIceResponse(std::string username, std::string password, std::vector<IceCandidate>& candidates);
-		int sendStreamRegister(const std::string& streamKey);
+		int sendStreamRegister(const std::string& streamKey, const VideoStreamInfo& info);
 		int sendStreamRequest(const std::string& username, const std::string& password, 
 			const std::vector<IceCandidate>& candidates);
 		void waitResponse();

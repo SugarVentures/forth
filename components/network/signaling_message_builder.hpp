@@ -28,6 +28,9 @@ namespace oppvs {
 		int addIceUsername(const std::string& username);
 		int addIcePassword(const std::string& password);
 		int addIceCandidates(const std::vector<IceCandidate>& candidates);
+
+		int addVideoSources(const VideoStreamInfo&);
+
 	private:
 		DataStream m_dataStream;
 

@@ -32,6 +32,10 @@ namespace oppvs {
 	const static uint16_t SIGNALING_ATTRIBUTE_ICE_PORT = 0x0007;
 	const static uint16_t SIGNALING_ATTRIBUTE_ICE_TYPE = 0x0008;
 
+	const static uint16_t SIGNALING_ATTRIBUTE_VIDEO_NOSOURCES = 0x0009;
+	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH = 0x000A;
+	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_VIDEO_HEIGHT = 0x000B;
+
 	inline SignalingMessageType convertToSignalingMessageType(uint16_t value)
 	{
 		switch (value)

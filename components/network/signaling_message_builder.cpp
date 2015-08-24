@@ -169,4 +169,27 @@ namespace oppvs {
 		}
 		return 0;
 	}
+
+	int SignalingMessageBuilder::addVideoSources(const VideoStreamInfo& info)
+	{
+		uint8_t noSources = info.noSources;
+		uint16_t width, height;
+		if (noSources == 0)
+			return -1;
+
+		if (addAttribute(SIGNALING_ATTRIBUTE_VIDEO_NOSOURCES, &noSources, 1) < 0)
+			return -1;
+
+		for (uint8_t i = 0; i < noSources; i++)
+		{
+			width = htons(info.sources[i].width);
+			height = htons(info.sources[i].height);
+			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH, &width, 2) < 0)
+				return -1;
+			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_HEIGHT, &height, 2) < 0)
+				return -1;
+				
+		}
+		return 0;
+	}
 } // oppvs

@@ -5,7 +5,7 @@ namespace oppvs {
 	{
 		p_thread = new Thread(SignalingHandler::run, (void*)this);
 		p_manager = NULL;
-
+		p_streamInfo = NULL;
 	}
 
 	SignalingHandler::~SignalingHandler()
@@ -31,7 +31,7 @@ namespace oppvs {
 	}
 
 	int SignalingHandler::init(const IceServerInfo& stunServer, const IceServerInfo& turnServer, 
-			const SocketAddress& signalingServerAddress, StreamingRole role)
+			const SocketAddress& signalingServerAddress, StreamingRole role, VideoStreamInfo* pinfo)
 	{
 		p_manager = new SignalingManager(signalingServerAddress);
 		if (p_manager->init() < 0)
@@ -41,6 +41,7 @@ namespace oppvs {
 		m_turnServer = turnServer;
 		p_manager->attachCallbackEvent(SignalingHandler::callbackOnIceResponse, (void*)this);
 		m_role = role;
+		p_streamInfo = pinfo;
 		return 0;
 	}
 
@@ -54,7 +55,9 @@ namespace oppvs {
 		switch (m_role)
 		{
 			case ROLE_BROADCASTER:
-				if (p_manager->sendStreamRegister(streamKey) < 0)
+				if (p_streamInfo == NULL)
+					return -1;
+				if (p_manager->sendStreamRegister(streamKey, *p_streamInfo) < 0)
 					return -1;
 				p_thread->create();
 				break;
