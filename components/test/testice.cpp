@@ -133,12 +133,17 @@ int main(int argc, char* argv[])
 	oppvs::IceServerInfo turnServer(address, oppvs::DEFAULT_STUN_PORT, username, password);
 
 	oppvs::SocketAddress signalingServerAddress;
-	signalingServerAddress.setIP(oppvs::IPAddress("127.0.0.1"));
+	signalingServerAddress.setIP(address);
 	signalingServerAddress.setPort(33333);
 
 	oppvs::SignalingHandler sigManager;
+	oppvs::VideoStreamInfo info;
+	info.noSources = 1;
+	info.sources = new oppvs::VideoSourceInfo[1];
+	info.sources[0].width = 1280;
+	info.sources[0].height = 780;
 
-	if (sigManager.init(stunServer, turnServer, signalingServerAddress, (oppvs::StreamingRole)opt) < 0)
+	if (sigManager.init(stunServer, turnServer, signalingServerAddress, (oppvs::StreamingRole)opt, &info) < 0)
 			return -1;
 
 	sigManager.attachCallback(onNewSubscriber, NULL);

@@ -6,6 +6,7 @@
 #include "physical_socket.hpp"
 #include "signaling_common.hpp"
 #include "signaling_server_subthread.hpp"
+#include "event_handler.hpp"
 
 #include <vector>
 
@@ -24,6 +25,8 @@ namespace oppvs {
 
 		int signalForStop(bool postMessages);
 		int waitForStopAndClose();
+		void attachCallback(callbackStreamRegister cb);
+		void attachCallback(callbackStreamRequest cb);
 
 	private:
 		PhysicalSocket* m_sendSockets;
@@ -36,6 +39,9 @@ namespace oppvs {
 
 		std::string* m_streamKey;
 		int* m_broadcaster;
+
+		callbackStreamRegister m_cbStreamRegister;
+		callbackStreamRequest m_cbStreamRequest;
 	};
 	
 } // oppvs

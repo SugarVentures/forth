@@ -279,4 +279,9 @@ namespace oppvs {
 	{
 		return m_password;
 	}
+
+	VideoStreamInfo& SignalingMessageReader::getVideoStreamInfo()
+	{
+		return m_videoStreamInfo;
+	}
 } // oppvs

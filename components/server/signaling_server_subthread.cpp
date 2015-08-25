@@ -4,8 +4,6 @@
 namespace oppvs {
 	SignalingServerSubThread::SignalingServerSubThread(): Thread(threadExecuteFunction, this), m_socket(NULL), m_sockfd(-1), m_exitThread(false)
 	{
-		m_streamKey = NULL;
-		m_broadcaster = NULL;
 	}
 
 	SignalingServerSubThread::~SignalingServerSubThread()
@@ -105,16 +103,7 @@ namespace oppvs {
 			case SignalingStreamRegister:
 			{
 				std::cout << "Receive Stream Register" << std::endl;
-				if (m_streamKey != NULL && m_broadcaster != NULL)
-				{
-					*m_streamKey = m_messageReader.getStreamKey();
-					*m_broadcaster = m_sockfd;
-				}
-				//Save stream key to database
-				/*usleep(10000000);
-				if (buildIceRequest() < 0)
-					return;
-				sendResponse();*/
+				m_cbStreamRegister(m_messageReader.getStreamKey(), m_sockfd, m_messageReader.getVideoStreamInfo());
 			}
 				break;
 			case SignalingIceResponse:
@@ -137,10 +126,22 @@ namespace oppvs {
 			case SignalingStreamRequest:
 			{
 				std::cout << "Receive Stream Request" << std::endl;
-				std::cout << "Current stream key: " << *m_streamKey << std::endl;
-				if (buildIceResponse(m_messageReader.getUsername(), m_messageReader.getPassword(), m_messageReader.getIceCandidates()) < 0)
+				std::cout << "Requested stream key: " << m_messageReader.getStreamKey() << std::endl;
+				VideoStreamInfo info;
+				int broadcasterfd = -1;
+				if (m_cbStreamRequest(m_messageReader.getStreamKey(), &broadcasterfd, info) < 0)
+				{
 					return;
-				sendResponse(*m_broadcaster);
+				}
+				if (buildStreamResponse(m_messageReader.getStreamKey(), m_messageReader.getVideoStreamInfo()) < 0)
+					return;
+
+				sendResponse(m_sockfd);
+
+				if (buildIceResponse(m_messageReader.getStreamKey(), m_messageReader.getUsername(), m_messageReader.getPassword(), m_messageReader.getIceCandidates()) < 0)
+					return;
+
+				sendResponse(broadcasterfd);
 			}
 				break;
 		}
@@ -160,14 +161,14 @@ namespace oppvs {
 		return 0;
 	}
 
-	int SignalingServerSubThread::buildIceResponse(std::string username, std::string password, std::vector<IceCandidate>& candidates)
+	int SignalingServerSubThread::buildIceResponse(const std::string& streamKey, const std::string& username, const std::string& password, const std::vector<IceCandidate>& candidates)
 	{
 		m_messageBuilder.reset();
 
 		if (m_messageBuilder.addMessageType(SignalingIceResponse) < 0)
 			return -1;
 
-		if (m_messageBuilder.addStreamKey(*m_streamKey) < 0)
+		if (m_messageBuilder.addStreamKey(streamKey) < 0)
 			return -1;
 
 		if (m_messageBuilder.addIceUsername(username) < 0)
@@ -179,6 +180,21 @@ namespace oppvs {
 		if (m_messageBuilder.addIceCandidates(candidates) < 0)
 			return -1;
 
+		return 0;
+	}
+
+	int SignalingServerSubThread::buildStreamResponse(const std::string& streamKey, const VideoStreamInfo& videoInfo)
+	{
+		m_messageBuilder.reset();
+
+		if (m_messageBuilder.addMessageType(SignalingStreamResponse) < 0)
+			return -1;
+
+		if (m_messageBuilder.addStreamKey(streamKey) < 0)
+			return -1;
+
+		if (m_messageBuilder.addVideoSources(videoInfo) < 0)
+			return -1;
 		return 0;
 	}
 
@@ -206,10 +222,14 @@ namespace oppvs {
 			printf("Sent response\n");
 	}
 
-	void SignalingServerSubThread::setPointer(std::string* streamKey, int* broadcaster)
+	void SignalingServerSubThread::attachCallback(callbackStreamRegister cb)
 	{
-		m_streamKey = streamKey;
-		m_broadcaster = broadcaster;
+		m_cbStreamRegister = cb;
 	}
+
+	void SignalingServerSubThread::attachCallback(callbackStreamRequest cb)
+	{
+		m_cbStreamRequest = cb;
+	}	
 
 } // oppvs

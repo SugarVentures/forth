@@ -16,6 +16,31 @@ namespace oppvs {
 		SocketAddress addressAdvertised;
 	};
 
+	struct SignalingStreamInfo
+	{
+		std::string streamKey;
+		int sockFD;
+		std::vector<IceCandidate> iceCandidates;
+		VideoStreamInfo videoStreamInfo;
+
+		bool operator == (const SignalingStreamInfo& m) const {
+			return (m.streamKey.compare(streamKey) == 0);
+		}
+
+		bool operator != (const SignalingStreamInfo& m) const {
+			return (m.streamKey.compare(streamKey) != 0);
+		}
+	};
+
+	struct findStreamOp {
+		std::string streamKey;
+		findStreamOp(std::string key) : streamKey(key) {}
+		
+		bool operator() (const SignalingStreamInfo& m) const {
+			return (m.streamKey.compare(streamKey) == 0);
+		}
+	};
+
 	class SignalingServer 
 	{
 	public:
@@ -28,6 +53,10 @@ namespace oppvs {
 		int shutdown();
 
 		void setStreamKey(const std::string& streamKey);
+
+		int updateStream(const std::string& streamKey, int sockfd, const VideoStreamInfo& info);
+		int getStreamInfo(const std::string& streamKey, int* psockfd, VideoStreamInfo& info);
+
 	private:
 		SignalingServerConfiguration m_config;
 		PhysicalSocket m_socket;
@@ -38,6 +67,10 @@ namespace oppvs {
 		std::string m_streamKey;
 		int m_broadcaster;
 		std::vector<IceCandidate> m_candidates;
+		std::vector<SignalingStreamInfo> m_streams;
+
+		SignalingStreamInfo* findStream(const std::string& streamKey);
+
 	};
 } // oppvs
 

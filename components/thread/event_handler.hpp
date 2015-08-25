@@ -19,7 +19,13 @@ namespace oppvs {
 		template<typename T, typename... Params>
 		void addHandler(std::function<T(Params...)> callback, Params... args)
 		{
-			callback(args...);
+			callback(std::forward<Params>(args)...);
+		}
+
+		template<typename T, typename... Params>
+		void addHandler(std::function<T(Params&...)> callback, Params&... args)
+		{
+			callback(std::forward<Params>(args)...);
 		}
 
 		using fp = void (*)(void);

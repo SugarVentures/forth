@@ -1,6 +1,10 @@
 #ifndef OPPVS_SIGNALING_COMMON_HPP
 #define OPPVS_SIGNALING_COMMON_HPP
 
+#include <functional>
+#include "datatypes.hpp"
+#include "ice_common.hpp"
+
 namespace oppvs {
 	const static int DEFAULT_SIGNALING_PORT = 33333;
 	const static int MAX_SIGNALING_MESSAGE_SIZE = 2000;
@@ -54,6 +58,10 @@ namespace oppvs {
 				return SignalingInvalid;
 		}
 	}
+
+	//Callback functions types
+	typedef std::function<int(const std::string&, int, const VideoStreamInfo&)> callbackStreamRegister;
+	typedef std::function<int(const std::string&, int*, VideoStreamInfo&)> callbackStreamRequest;
 } // oppvs
 
 #endif // OPPVS_SIGNALING_COMMON_HPP

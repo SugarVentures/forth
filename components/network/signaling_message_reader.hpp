@@ -21,6 +21,7 @@ namespace oppvs {
 		std::string& getStreamKey();
 		std::string& getUsername();
 		std::string& getPassword();
+		VideoStreamInfo& getVideoStreamInfo();
 	private:
 		DataStream m_dataStream;
 		SignalingMessageType m_messageType;

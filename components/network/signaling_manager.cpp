@@ -29,7 +29,7 @@ namespace oppvs {
 
 		if (m_socket.Connect(m_serverAddress) < 0)
 		{
-			std::cout << "Cannot connect to signaling server" << std::endl;
+			std::cout << "Cannot connect to signaling server:" << strerror(errno) << std::endl;
 			return -1;
 		}
 		std::cout << "Address for signaling: " << m_socket.getLocalAddress().toString() << std::endl;

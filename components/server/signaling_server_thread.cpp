@@ -64,7 +64,8 @@ namespace oppvs {
 			std::cout << "Accept connection from client: " << remoteAddress.toString() << std::endl;
 			SignalingServerSubThread *thread = new SignalingServerSubThread();
 			thread->init(psocket, sockfd, remoteAddress);
-			thread->setPointer(m_streamKey, m_broadcaster);
+			thread->attachCallback(m_cbStreamRegister);
+			thread->attachCallback(m_cbStreamRequest);
 			thread->start();
 			m_threads.push_back(thread);
 		}
@@ -109,5 +110,13 @@ namespace oppvs {
 		return 0;
 	}
 
-	
+	void SignalingServerThread::attachCallback(callbackStreamRegister cb)
+	{
+		m_cbStreamRegister = cb;
+	}
+
+	void SignalingServerThread::attachCallback(callbackStreamRequest cb)
+	{
+		m_cbStreamRequest = cb;
+	}	
 } // oppvs

@@ -72,6 +72,7 @@ namespace oppvs {
 					stream->requestLocalCandidates();
 					m_connectors.push_back(icemgr);
 				}
+				p_thread->create();
 				break;
 		}
 
