@@ -105,8 +105,8 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 {
     streamingEngine.setStreamInfo(videoEngine->getVideoActiveSources());
     
-    if (streamingEngine.init(oppvs::ROLE_BROADCASTER, "192.168.0.101", "192.168.0.101", "turn", "password",
-                             "192.168.0.101", 33333) < 0)
+    if (streamingEngine.init(oppvs::ROLE_BROADCASTER, "192.168.0.102", "192.168.0.102", "turn", "password",
+                             "192.168.0.102", 33333) < 0)
     {
         NSLog(@"Failed to init streaming engine");
         return;
@@ -117,17 +117,6 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
         NSLog(@"Failed to start streaming engine");
         return;
     }
-
-    
-    /*streamingEngine.setup();
-    streamingEngine.setStreamInfo(videoEngine->getVideoActiveSources());
-    streamingEngine.initPublishChannel();
-    std::string info = streamingEngine.getStreamInfo();
-    
-    ViewController* view = (ViewController*)viewController;
-    NSString *streaminfo = [NSString stringWithCString:info.c_str()
-                                               encoding:[NSString defaultCStringEncoding]];
-    [view setStreamInfo:streaminfo];*/
 }
 
 - (void) stopStreaming
@@ -256,15 +245,15 @@ NSString* screenNameForDisplay(CGDirectDisplayID displayID)
     CFDictionaryRef deviceInfo = IODisplayCreateInfoDictionary(serv, kIODisplayOnlyPreferredName);
     IOObjectRelease(serv);
     
-    char* name = (char*)CFDictionaryGetValue(deviceInfo, CFSTR(kDisplayProductName));
-    if (!name || !CFDictionaryGetValueIfPresent(deviceInfo, CFSTR("en_US"), (const void**) &value))
+    CFTypeRef name = CFDictionaryGetValue(deviceInfo, CFSTR(kDisplayProductName));
+    if (!name || !CFDictionaryGetValueIfPresent((CFDictionaryRef)name, CFSTR("en_US"), (const void**) &value))
     {
-        CFRelease(deviceInfo);
-        return @"Built-In Display";
+        screenName = @"Built-In Display";
     }
-    
-    [NSString stringWithCString:name encoding:[NSString defaultCStringEncoding]];
-    
+    else
+    {
+        screenName = (__bridge NSString*)value;
+    }
     CFRelease(deviceInfo);
     return screenName;
 }
@@ -379,7 +368,7 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     oppvs::ControllerLinker *controller = new oppvs::ControllerLinker();
     controller->streamer = &streamingEngine;
     controller->render = (__bridge void*)viewid;
-    activeSource = videoEngine->addSource(type, source, 30, sourceRect, renderRect, (void*)controller, (int)index);
+    activeSource = videoEngine->addSource(type, source, 24, sourceRect, renderRect, (void*)controller, (int)index);
     if (activeSource)
     {
         videoEngine->setupCaptureSession(activeSource);
