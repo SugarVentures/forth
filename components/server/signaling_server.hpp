@@ -7,6 +7,7 @@
 #include "signaling_server_thread.hpp"
 
 #include <vector>
+#include <algorithm>
 
 namespace oppvs {
 
