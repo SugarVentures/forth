@@ -44,7 +44,7 @@
  - (id) init;
  - (void) dealloc;
  - (oppvs::error_video_capture_t) openCaptureDevice: (CGRect) rect : (int) pixelformat : (int) fps;
- - (oppvs::error_video_capture_t) openScreenDevice: (CGRect) rect : (bool)isDrop : (int) pixelformat : (int) fps;
+ - (oppvs::error_video_capture_t) openScreenDevice: (CGDirectDisplayID) did : (CGRect) rect : (bool)isDrop : (int) pixelformat : (int) fps;
  - (oppvs::error_video_capture_t) captureWindow: (int) wid for: (CGRect) rect;
  - (void) closeDevice;
  - (void) startRecording;
@@ -156,8 +156,8 @@
         [output setAlwaysDiscardsLateVideoFrames: YES];
 
         pixelBufferOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-                              @(CGRectGetWidth(rect)), (id)kCVPixelBufferWidthKey,
-                              @(CGRectGetHeight(rect)), (id)kCVPixelBufferHeightKey,
+                              //@(CGRectGetWidth(rect)), (id)kCVPixelBufferWidthKey,
+                              //@(CGRectGetHeight(rect)), (id)kCVPixelBufferHeightKey,
                               [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA], (id)kCVPixelBufferPixelFormatTypeKey,
                               nil];
 
@@ -189,7 +189,7 @@
     return oppvs::ERR_VIDEO_CAPTURE_NONE;
  }
 
- - (oppvs::error_video_capture_t) openScreenDevice: (CGRect) rect : (bool) isDrop : (int) pixelformat : (int) fps
+ - (oppvs::error_video_capture_t) openScreenDevice: (CGDirectDisplayID) did : (CGRect) rect : (bool) isDrop : (int) pixelformat : (int) fps
  {
     //Set flip
     pixel_buffer.flip = 0;
@@ -201,7 +201,7 @@
     }
     
     [session beginConfiguration];
-    CGDirectDisplayID screen_id = CGMainDisplayID();
+    CGDirectDisplayID screen_id = did;
 
     AVCaptureScreenInput *screen_input = [[AVCaptureScreenInput alloc] initWithDisplayID: screen_id];
     if ([session canAddInput: screen_input] == NO)
@@ -762,14 +762,15 @@
         source->rect.right - source->rect.left, source->rect.top - source->rect.bottom);
     [(id)cap setSource: source];
 
+    CGDirectDisplayID did = atoi(source->video_source_id.c_str());
     switch (source->video_source_type)
     {
         case oppvs::VST_WEBCAM:
             return [(id)cap openCaptureDevice: rect : source->pixel_format : source->fps];
         case oppvs::VST_WINDOW:
-            return [(id)cap openScreenDevice: rect : false: source->pixel_format : source->fps];
+            return [(id)cap openScreenDevice: did : rect : false: source->pixel_format : source->fps];
         case oppvs::VST_CUSTOM:
-            return [(id)cap openScreenDevice: rect : true: source->pixel_format : source->fps];
+            return [(id)cap openScreenDevice: did : rect : true: source->pixel_format : source->fps];
         default:
             return oppvs::ERR_VIDEO_CAPTURE_SESSION_INIT_FAILED;
     }
