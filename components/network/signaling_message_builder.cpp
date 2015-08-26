@@ -173,7 +173,8 @@ namespace oppvs {
 	int SignalingMessageBuilder::addVideoSources(const VideoStreamInfo& info)
 	{
 		uint8_t noSources = info.noSources;
-		uint16_t width, height;
+		uint16_t width, height, stride;
+		uint8_t sid, order;
 		if (noSources == 0)
 			return -1;
 
@@ -182,11 +183,20 @@ namespace oppvs {
 
 		for (uint8_t i = 0; i < noSources; i++)
 		{
+			sid = info.sources[i].source;
+			order = info.sources[i].order;
 			width = htons(info.sources[i].width);
 			height = htons(info.sources[i].height);
+			stride = htons(info.sources[i].stride);
+			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ID, &sid, 1) < 0)
+				return -1;
+			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ORDER, &order, 1) < 0)
+				return -1;
 			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH, &width, 2) < 0)
 				return -1;
 			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_HEIGHT, &height, 2) < 0)
+				return -1;
+			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_STRIDE, &stride, 2) < 0)
 				return -1;
 				
 		}

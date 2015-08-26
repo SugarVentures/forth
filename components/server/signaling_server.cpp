@@ -112,6 +112,7 @@ namespace oppvs {
 		{
 			printf("Found the stream. Update %d %d\n", pstream->videoStreamInfo.sources[0].width, pstream->videoStreamInfo.sources[0].height);
 			pstream->sockFD = sockfd;
+			pstream->videoStreamInfo = videoInfo;
 		}
 		return 0;
 	}
@@ -132,6 +133,7 @@ namespace oppvs {
 		if (!pstream)
 			return -1;
 		*psockfd = pstream->sockFD;
+		info = pstream->videoStreamInfo;
 		return 0;
 	}
 } // oppvs

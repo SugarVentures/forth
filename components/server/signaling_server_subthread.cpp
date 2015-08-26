@@ -133,12 +133,13 @@ namespace oppvs {
 				{
 					return;
 				}
-				if (buildStreamResponse(m_messageReader.getStreamKey(), m_messageReader.getVideoStreamInfo()) < 0)
+				if (buildStreamResponse(m_messageReader.getStreamKey(), info) < 0)
 					return;
 
 				sendResponse(m_sockfd);
 
-				if (buildIceResponse(m_messageReader.getStreamKey(), m_messageReader.getUsername(), m_messageReader.getPassword(), m_messageReader.getIceCandidates()) < 0)
+				if (buildIceResponse(m_messageReader.getStreamKey(), m_messageReader.getUsername(), 
+					m_messageReader.getPassword(), m_messageReader.getIceCandidates()) < 0)
 					return;
 
 				sendResponse(broadcasterfd);

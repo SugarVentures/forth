@@ -23,6 +23,8 @@ namespace oppvs {
 
 		callbackOnReceive 		callbackOnReceiveEvent;
 		void* 					callbackOnReceiveObject;
+
+		callbackStreamResponse	m_cbStreamResponse;
 	public:
 		SignalingHandler();
 		~SignalingHandler();
@@ -41,6 +43,8 @@ namespace oppvs {
 		
 		void attachCallback(callbackNewSubscriber cb, void* object);
 		void attachCallback(callbackOnReceive cb, void* object);
+		void attachCallback(callbackStreamResponse cb);
+
 
 		void waitingSignal();
 		StreamingRole getRole();

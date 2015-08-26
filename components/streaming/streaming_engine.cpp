@@ -53,6 +53,7 @@ namespace oppvs
 
 		m_signaler.attachCallback(StreamingEngine::onNewSubscriber, this);
 		m_signaler.attachCallback(StreamingEngine::onReceiveSegment, this);
+		m_signaler.attachCallback([this](const VideoStreamInfo& info) { return updateStreamInfo(info); });
 		if (role == ROLE_BROADCASTER)
 			m_packetizer.init(m_serviceInfo.videoStreamInfo, &m_sendPool);
 		else if (role == ROLE_VIEWER)
@@ -64,7 +65,7 @@ namespace oppvs
 			m_serviceInfo.videoStreamInfo.sources[0].source = 0;
 			m_serviceInfo.videoStreamInfo.sources[0].order = 0;
 			m_serviceInfo.videoStreamInfo.sources[0].stride = 4 * DEFAULT_VIDEO_FRAME_WIDTH;
-			m_depacketizer.init(m_serviceInfo.videoStreamInfo, &m_recvPool);
+			//m_depacketizer.init(m_serviceInfo.videoStreamInfo, &m_recvPool);
 		}
 		return 0;
 	}
@@ -127,45 +128,6 @@ namespace oppvs
 			vsi->sources[i].height = it->rect.top - it->rect.bottom;
 			vsi->sources[i].stride = it->stride;
 			i++;
-		}
-	}
-
-	void StreamingEngine::setStreamInfo(uint8_t *info, int len)
-	{
-		int curPos = 0;
-		m_serviceInfo.type = ST_VIDEO_STREAMING;
-		m_serviceInfo.key = m_ssrc;
-		VideoStreamInfo* vsi = &m_serviceInfo.videoStreamInfo;
-		if (len < sizeof(uint16_t))
-			return;
-		memcpy(&vsi->videoWidth, info + curPos, sizeof(uint16_t));
-		curPos += sizeof(uint16_t);
-		if (len < curPos + sizeof(uint16_t))
-			return;
-		memcpy(&vsi->videoHeight, info + curPos, sizeof(uint16_t));
-		curPos += sizeof(uint16_t);
-		if (len < curPos + sizeof(uint8_t))
-			return;
-		memcpy(&vsi->noSources, info + curPos, sizeof(uint8_t));
-		curPos += sizeof(uint8_t);
-		VideoSourceInfo vsinfo;
-		if (len - curPos != vsi->noSources * vsinfo.size())
-			return;
-		vsi->sources = new VideoSourceInfo[vsi->noSources];
-
-
-		for (int i = 0; i < vsi->noSources; i++)
-		{
-			memcpy(&vsi->sources[i].source, info + curPos, sizeof(uint8_t));
-			curPos += sizeof(uint8_t);
-			memcpy(&vsi->sources[i].order, info + curPos, sizeof(uint8_t));
-			curPos += sizeof(uint8_t);
-			memcpy(&vsi->sources[i].width, info + curPos, sizeof(uint16_t));
-			curPos += sizeof(uint16_t);
-			memcpy(&vsi->sources[i].height, info + curPos, sizeof(uint16_t));
-			curPos += sizeof(uint16_t);
-			memcpy(&vsi->sources[i].stride, info + curPos, sizeof(uint16_t));
-			curPos += sizeof(uint16_t);
 		}
 	}
 
@@ -259,9 +221,9 @@ namespace oppvs
 	void StreamingEngine::receive()
 	{
 		PixelBuffer pf;
-		pf.width[0] = DEFAULT_VIDEO_FRAME_WIDTH;
-		pf.height[0] = DEFAULT_VIDEO_FRAME_HEIGHT;
-		pf.stride[0] = DEFAULT_VIDEO_FRAME_WIDTH * 4;
+		pf.width[0] = m_serviceInfo.videoStreamInfo.sources[0].width;
+		pf.height[0] = m_serviceInfo.videoStreamInfo.sources[0].height;
+		pf.stride[0] = pf.width[0] * 4;
 		pf.nbytes = pf.height[0] * pf.stride[0];
 
 		while (!m_exitMainThread)
@@ -274,5 +236,13 @@ namespace oppvs
 			}
 			usleep(5000);
 		}
+	}
+
+	int StreamingEngine::updateStreamInfo(const VideoStreamInfo& info)
+	{
+		std::cout << "Update stream info " << std::endl;
+		m_serviceInfo.videoStreamInfo = info;
+		m_depacketizer.init(m_serviceInfo.videoStreamInfo, &m_recvPool);
+		return 0;
 	}
 }

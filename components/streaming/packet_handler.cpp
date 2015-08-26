@@ -59,10 +59,12 @@ namespace oppvs {
 		return 0;
 	}
 
-	int SegmentBuilder::addRTPHeader(uint32_t timestamp)
+	int SegmentBuilder::addRTPHeader(uint32_t timestamp, uint8_t sourceid)
 	{
 		if (m_dataStream.writeUInt32(htonl(timestamp)) < 0)
 			return -1;
+		if (m_dataStream.writeUInt8(sourceid) < 0)
+			return -1;	
 		return 0;
 	}
 
@@ -107,6 +109,7 @@ namespace oppvs {
 			return;
 		std::shared_ptr<PixelBuffer> pixelbuffer(new PixelBuffer);
 		pixelbuffer->source = pf.source;
+		pixelbuffer->order = pf.order;
 		pixelbuffer->plane[0] = new uint8_t[pf.nbytes];
 		memcpy(pixelbuffer->plane[0], pf.plane[0], pf.nbytes);
 		pixelbuffer->nbytes = pf.nbytes;
@@ -155,7 +158,7 @@ namespace oppvs {
 			m_builder.reset();
 			m_builder.getStream().attach(segment, true);
 
-			if (m_builder.addRTPHeader(m_timestamp) < 0)
+			if (m_builder.addRTPHeader(m_timestamp, pf.source) < 0)
 				return;
 
 			if (m_builder.addCommonHeader(flag, picID) < 0)
@@ -207,6 +210,7 @@ namespace oppvs {
 
 	void SegmentReader::reset()
 	{
+		m_sourceId = -1;
 		m_dataStream.reset();
 	}
 
@@ -224,12 +228,14 @@ namespace oppvs {
 		uint32_t curPos = 0;
 		bool showFrame = false;
 		uint32_t timestamp = 0;
+		uint8_t sourceid = 0;
 
 		if (len < RTP_HEADER_SIZE)
 			return -1;
 		memcpy(&timestamp, data, 4);
 		timestamp = ntohl(timestamp);
-		printf("timestamp %u len: %u\n", timestamp, len);
+		memcpy(&sourceid, data + 4, 1);
+		printf("timestamp %u len: %u source: %d\n", timestamp, len, sourceid);
 
 		curPos = RTP_HEADER_SIZE;
 		req = data[curPos];

@@ -39,6 +39,9 @@ namespace oppvs {
 	const static uint16_t SIGNALING_ATTRIBUTE_VIDEO_NOSOURCES = 0x0009;
 	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH = 0x000A;
 	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_VIDEO_HEIGHT = 0x000B;
+	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_VIDEO_STRIDE = 0x000C;
+	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ID = 0x000D;
+	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ORDER = 0x000E;
 
 	inline SignalingMessageType convertToSignalingMessageType(uint16_t value)
 	{
@@ -62,6 +65,7 @@ namespace oppvs {
 	//Callback functions types
 	typedef std::function<int(const std::string&, int, const VideoStreamInfo&)> callbackStreamRegister;
 	typedef std::function<int(const std::string&, int*, VideoStreamInfo&)> callbackStreamRequest;
+	typedef std::function<int(const VideoStreamInfo&)> callbackStreamResponse;
 } // oppvs
 
 #endif // OPPVS_SIGNALING_COMMON_HPP

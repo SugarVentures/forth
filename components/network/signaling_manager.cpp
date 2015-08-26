@@ -189,9 +189,12 @@ namespace oppvs {
 				std::cout << "Receive Ice Response" << std::endl;
 				std::vector<IceCandidate>& candidates = m_messageReader.getIceCandidates();
 				cbOnReceiveIceResponse(m_object, m_messageReader.getUsername(), m_messageReader.getPassword(), candidates);
-
+				break;
 			}
-
+			case SignalingStreamResponse:
+				std::cout << "Receive stream response" << std::endl;
+				m_cbStreamResponse(m_messageReader.getVideoStreamInfo());
+				break;
 			default:
 				break;
 		}
@@ -200,5 +203,10 @@ namespace oppvs {
 	void SignalingManager::setStreamKey(const std::string& streamkey)
 	{
 		m_streamKey = streamkey;
+	}
+
+	void SignalingManager::attachCallback(callbackStreamResponse cb)
+	{
+		m_cbStreamResponse = cb;
 	}
 } // oppvs

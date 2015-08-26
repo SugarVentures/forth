@@ -11,7 +11,7 @@
 namespace oppvs {
 	const int VP8_PAYLOAD_HEADER_SIZE = 3;
 	const int VP8_COMMON_HEADER_SIZE = 3;
-	const int RTP_HEADER_SIZE = 4;
+	const int RTP_HEADER_SIZE = 5;
 	const int VP8_MAX_HEADER_SIZE = VP8_COMMON_HEADER_SIZE + VP8_PAYLOAD_HEADER_SIZE + RTP_HEADER_SIZE;
 
 	class SegmentBuilder {
@@ -36,7 +36,7 @@ namespace oppvs {
 		int addPayloadHeader(bool isKeyFrame, uint32_t length);
 		int addPayload(uint8_t* data, uint32_t size);
 
-		int addRTPHeader(uint32_t timestamp);
+		int addRTPHeader(uint32_t timestamp, uint8_t sourceid);
 	};
 
 	class Packetizer {
@@ -76,6 +76,7 @@ namespace oppvs {
 		uint8_t Size0BitShift = 5;
 
 		bool m_keyFrame;
+		int m_sourceId;
 
 	public:
 		SegmentReader();

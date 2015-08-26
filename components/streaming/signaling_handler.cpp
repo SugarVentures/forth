@@ -71,6 +71,7 @@ namespace oppvs {
 					IceStream* stream = icemgr->createStream();
 					stream->requestLocalCandidates();
 					m_connectors.push_back(icemgr);
+					p_manager->attachCallback(m_cbStreamResponse);
 				}
 				p_thread->create();
 				break;
@@ -173,6 +174,11 @@ namespace oppvs {
 	{
 		callbackOnReceiveEvent = cb;
 		callbackOnReceiveObject = object;
+	}
+
+	void SignalingHandler::attachCallback(callbackStreamResponse cb)
+	{
+		m_cbStreamResponse = cb;
 	}
 
 } // oppvs

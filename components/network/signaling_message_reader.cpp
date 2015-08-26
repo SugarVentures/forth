@@ -128,10 +128,10 @@ namespace oppvs {
     			m_candidates.push_back(candidate);
     		}
     	}
-    	else if (m_messageType == SignalingStreamRegister)
+    	else if (m_messageType == SignalingStreamRegister || SignalingStreamResponse)
     	{
     		uint8_t noVideoSources = 0;
-    		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_VIDEO_NOSOURCES, & noVideoSources) <  0)
+    		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_VIDEO_NOSOURCES, &noVideoSources) <  0)
     		{
     			return -1;
     		}
@@ -140,6 +140,14 @@ namespace oppvs {
     		m_videoStreamInfo.sources = new VideoSourceInfo[noVideoSources];
     		for (uint8_t i = 0; i < noVideoSources; ++i)
     		{
+    			if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ID, &m_videoStreamInfo.sources[i].source) <  0)
+	    		{
+	    			return -1;
+	    		}
+	    		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ORDER, &m_videoStreamInfo.sources[i].order) <  0)
+	    		{
+	    			return -1;
+	    		}
     			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH, &m_videoStreamInfo.sources[i].width) < 0)
     			{
     				return -1;
@@ -148,8 +156,15 @@ namespace oppvs {
     			{
     				return -1;
     			}
-    			std::cout << "Source " << i << " width: " << m_videoStreamInfo.sources[i].width
-    										<< " height: " << m_videoStreamInfo.sources[i].height << std::endl;
+    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_STRIDE, &m_videoStreamInfo.sources[i].stride) < 0)
+    			{
+    				return -1;
+    			}
+    			printf("Source: %d order: %d width: %d height: %d stride: %d\n", m_videoStreamInfo.sources[i].source,
+    				m_videoStreamInfo.sources[i].order,
+    				m_videoStreamInfo.sources[i].width,
+    				m_videoStreamInfo.sources[i].height,
+    				m_videoStreamInfo.sources[i].stride);
     		}
     	}
     	return 0;

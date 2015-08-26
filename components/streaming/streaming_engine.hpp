@@ -49,7 +49,6 @@ namespace oppvs
 
 		void setStreamInfo(PixelBuffer& pf);
 		void setStreamInfo(const std::vector<VideoActiveSource>& sources);
-		void setStreamInfo(uint8_t *info, int len);
 
 		bool isRunning();
 		void setIsRunning(bool value);
@@ -62,6 +61,8 @@ namespace oppvs
 		void receive();
 
 		void pushData(PixelBuffer& pf);
+
+		int updateStreamInfo(const VideoStreamInfo& info);
 	private:
 		uint32_t m_ssrc;
 		bool m_isRunning;

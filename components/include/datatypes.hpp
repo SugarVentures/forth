@@ -124,6 +124,11 @@ namespace oppvs {
 		uint16_t videoHeight;
 		uint8_t noSources;
 		VideoSourceInfo *sources;
+
+		VideoStreamInfo()
+		{
+			noSources = 0;
+		}
 	};
 
 	struct ServiceInfo
