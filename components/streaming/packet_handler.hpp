@@ -88,16 +88,30 @@ namespace oppvs {
 		int addBytes(uint8_t* data, uint32_t len);
 	};
 
+	struct IncomingStreamingMessage
+	{
+		uint8_t sourceid;
+		SegmentReader reader;
+	};
+
+	struct IncomingStreamingFrame
+	{
+		uint8_t sourceid;
+		SharedDynamicBufferRef data;
+	};
+
 	class Depacketizer {
 	private:
 		VPVideoDecoder m_decoder;
-		SegmentReader m_reader;
-		tsqueue<SharedDynamicBufferRef>* p_recvPool;
+		std::vector<IncomingStreamingMessage*> m_readers;
+		tsqueue<IncomingStreamingFrame*>* p_recvPool;
+
+		SegmentReader* getReader(uint8_t sourceid);
 	public:
 		Depacketizer();
 		~Depacketizer();
 
-		void init(VideoStreamInfo&, tsqueue<SharedDynamicBufferRef>*);
+		void init(VideoStreamInfo&, tsqueue<IncomingStreamingFrame*>*);
 		void pushSegment(uint8_t* data, uint32_t len);
 		int pullFrame(PixelBuffer&, SharedDynamicBufferRef);
 	};

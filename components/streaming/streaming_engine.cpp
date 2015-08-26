@@ -230,9 +230,27 @@ namespace oppvs
 		{
 			if (m_recvPool.size() > 0)
 			{
-				SharedDynamicBufferRef segment = *m_recvPool.pop();
+				IncomingStreamingFrame* frame = *m_recvPool.pop();
+				if (frame == NULL)
+					continue;
+				for (int i = 0; i < m_serviceInfo.videoStreamInfo.noSources; i++)
+				{
+					if (m_serviceInfo.videoStreamInfo.sources[i].source == frame->sourceid)
+					{
+						PixelBuffer pf;
+						pf.width[0] = m_serviceInfo.videoStreamInfo.sources[i].width;
+						pf.height[0] = m_serviceInfo.videoStreamInfo.sources[i].height;
+						pf.stride[0] = m_serviceInfo.videoStreamInfo.sources[i].stride;
+						pf.order = m_serviceInfo.videoStreamInfo.sources[i].order;
+						pf.source = m_serviceInfo.videoStreamInfo.sources[i].source;
+						if (m_depacketizer.pullFrame(pf, frame->data) == 0)
+							m_callback(pf);
+						break;
+					}
+				}
+				/*SharedDynamicBufferRef segment = *m_recvPool.pop();
 				if (m_depacketizer.pullFrame(pf, segment) == 0)
-					m_callback(pf);
+					m_callback(pf);*/
 			}
 			usleep(5000);
 		}

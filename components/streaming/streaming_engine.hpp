@@ -82,7 +82,7 @@ namespace oppvs
 		bool								m_exitMainThread;
 		tsqueue<SharedDynamicBufferRef> 	m_sendPool;
 		Depacketizer						m_depacketizer;
-		tsqueue<SharedDynamicBufferRef>		m_recvPool;
+		tsqueue<IncomingStreamingFrame*>	m_recvPool;
 
 		static void* runMainThreadFunction(void* object);
 		static void onNewSubscriber(void* object, IceStream* stream);
