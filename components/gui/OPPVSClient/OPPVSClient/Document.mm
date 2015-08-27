@@ -44,29 +44,23 @@ void frameCallback(oppvs::PixelBuffer& pf)
     streamEngine = new oppvs::StreamingEngine();
     streamEngine->registerCallback(frameCallback);
     
-    if (streamEngine->init(oppvs::ROLE_VIEWER, "192.168.0.102", "192.168.0.102", "turn", "password",
-                             "192.168.0.102", 33333) < 0)
-    {
-        NSLog(@"Failed to init streaming engine");
-        return;
-    }
-    
-    std::string strStreamKey([streamKey UTF8String]);
-    if (streamEngine->start(strStreamKey) < 0)
-    {
-        NSLog(@"Failed to start streaming engine");
-        return;
-    }
-    
+    dispatch_queue_t queue = dispatch_queue_create("oppvs.streaming.queue", DISPATCH_QUEUE_SERIAL);
+    dispatch_async(queue, ^{
+        if (streamEngine->init(oppvs::ROLE_VIEWER, "54.169.227.237", "54.169.227.237", "turn", "password",
+                                 "54.169.227.237", 33333) < 0)
+        {
+            NSLog(@"Failed to init streaming engine");
+            return;
+        }
+        
+        std::string strStreamKey([streamKey UTF8String]);
+        if (streamEngine->start(strStreamKey) < 0)
+        {
+            NSLog(@"Failed to start streaming engine");
+            return;
+        }
+    });
     render = (ViewController*)viewController;
-    /*streamEngine = new oppvs::StreamingEngine();
-    streamEngine->setup();
-    streamEngine->registerCallback(frameCallback);
-    oppvs::ServiceInfo service;
-    service.type = oppvs::ST_VIDEO_STREAMING;
-    service.key = 123;
-    std::string serverAddr([server UTF8String]);
-    streamEngine->initSubscribeChannel(serverAddr, port, service);*/
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
