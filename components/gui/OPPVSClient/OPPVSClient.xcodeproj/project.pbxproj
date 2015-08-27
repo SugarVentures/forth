@@ -114,13 +114,13 @@
 		D9FD73061B87024700AF2E71 /* libencodingengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libencodingengine.so; path = ../../../libs/libencodingengine.so; sourceTree = "<group>"; };
 		D9FD73091B8702A600AF2E71 /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvpx.a; path = ../../../libs/libvpx.a; sourceTree = "<group>"; };
 		D9FD730A1B8702A600AF2E71 /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyuv.a; path = ../../../libs/libyuv.a; sourceTree = "<group>"; };
-		D9FD730F1B870CE100AF2E71 /* libgio-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgio-2.0.0.dylib"; path = "../../../../../../../../usr/local/lib/libgio-2.0.0.dylib"; sourceTree = "<group>"; };
-		D9FD73101B870CE100AF2E71 /* libglib-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libglib-2.0.0.dylib"; path = "../../../../../../../../usr/local/lib/libglib-2.0.0.dylib"; sourceTree = "<group>"; };
-		D9FD73131B870D1600AF2E71 /* libgobject-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgobject-2.0.0.dylib"; path = "../../../../../../../../usr/local/lib/libgobject-2.0.0.dylib"; sourceTree = "<group>"; };
-		D9FD73141B870D1600AF2E71 /* libgthread-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgthread-2.0.0.dylib"; path = "../../../../../../../../usr/local/lib/libgthread-2.0.0.dylib"; sourceTree = "<group>"; };
-		D9FD73151B870D1600AF2E71 /* libintl.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libintl.8.dylib; path = ../../../../../../../../usr/local/lib/libintl.8.dylib; sourceTree = "<group>"; };
-		D9FD731E1B8711E100AF2E71 /* libgmodule-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgmodule-2.0.0.dylib"; path = "../../../../../../../../usr/local/lib/libgmodule-2.0.0.dylib"; sourceTree = "<group>"; };
-		D9FD73201B87126900AF2E71 /* libffi.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libffi.6.dylib; path = ../../../../../../../../usr/local/lib/libffi.6.dylib; sourceTree = "<group>"; };
+		D9FD730F1B870CE100AF2E71 /* libgio-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgio-2.0.0.dylib"; path = "/usr/local/lib/libgio-2.0.0.dylib"; sourceTree = "<absolute>"; };
+		D9FD73101B870CE100AF2E71 /* libglib-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libglib-2.0.0.dylib"; path = "/usr/local/lib/libglib-2.0.0.dylib"; sourceTree = "<absolute>"; };
+		D9FD73131B870D1600AF2E71 /* libgobject-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgobject-2.0.0.dylib"; path = "/usr/local/lib/libgobject-2.0.0.dylib"; sourceTree = "<absolute>"; };
+		D9FD73141B870D1600AF2E71 /* libgthread-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgthread-2.0.0.dylib"; path = "/usr/local/lib/libgthread-2.0.0.dylib"; sourceTree = "<absolute>"; };
+		D9FD73151B870D1600AF2E71 /* libintl.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libintl.8.dylib; path = /usr/local/lib/libintl.8.dylib; sourceTree = "<absolute>"; };
+		D9FD731E1B8711E100AF2E71 /* libgmodule-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgmodule-2.0.0.dylib"; path = "/usr/local/lib/libgmodule-2.0.0.dylib"; sourceTree = "<absolute>"; };
+		D9FD73201B87126900AF2E71 /* libffi.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libffi.6.dylib; path = /usr/local/lib/libffi.6.dylib; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,23 +161,7 @@
 		D9250F281AC558DB00858FF5 = {
 			isa = PBXGroup;
 			children = (
-				D9FD73201B87126900AF2E71 /* libffi.6.dylib */,
-				D9FD731E1B8711E100AF2E71 /* libgmodule-2.0.0.dylib */,
-				D9FD73131B870D1600AF2E71 /* libgobject-2.0.0.dylib */,
-				D9FD73141B870D1600AF2E71 /* libgthread-2.0.0.dylib */,
-				D9FD73151B870D1600AF2E71 /* libintl.8.dylib */,
-				D9FD730F1B870CE100AF2E71 /* libgio-2.0.0.dylib */,
-				D9FD73101B870CE100AF2E71 /* libglib-2.0.0.dylib */,
-				D9FD73091B8702A600AF2E71 /* libvpx.a */,
-				D9FD730A1B8702A600AF2E71 /* libyuv.a */,
-				D9FD73061B87024700AF2E71 /* libencodingengine.so */,
-				D9FD73031B87011800AF2E71 /* libnice.10.dylib */,
-				D9FD73001B87005C00AF2E71 /* libthreadengine.so */,
-				D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */,
-				D9FD72F91B86FBEC00AF2E71 /* libmisc.so */,
-				D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */,
-				D970FAD91B00BD40005AF09E /* libnetworkengine.so */,
-				D970FAD71B00B82D005AF09E /* libstreaming.so */,
+				D9FD73241B8ABEC800AF2E71 /* Frameworks */,
 				D9250F331AC558DB00858FF5 /* OPPVSClient */,
 				D9250F4D1AC558DB00858FF5 /* OPPVSClientTests */,
 				D9250F321AC558DB00858FF5 /* Products */,
@@ -233,6 +217,30 @@
 				D9250F4F1AC558DB00858FF5 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D9FD73241B8ABEC800AF2E71 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9FD73201B87126900AF2E71 /* libffi.6.dylib */,
+				D9FD731E1B8711E100AF2E71 /* libgmodule-2.0.0.dylib */,
+				D9FD73131B870D1600AF2E71 /* libgobject-2.0.0.dylib */,
+				D9FD73141B870D1600AF2E71 /* libgthread-2.0.0.dylib */,
+				D9FD73151B870D1600AF2E71 /* libintl.8.dylib */,
+				D9FD730F1B870CE100AF2E71 /* libgio-2.0.0.dylib */,
+				D9FD73101B870CE100AF2E71 /* libglib-2.0.0.dylib */,
+				D9FD73091B8702A600AF2E71 /* libvpx.a */,
+				D9FD730A1B8702A600AF2E71 /* libyuv.a */,
+				D9FD73061B87024700AF2E71 /* libencodingengine.so */,
+				D9FD73031B87011800AF2E71 /* libnice.10.dylib */,
+				D9FD73001B87005C00AF2E71 /* libthreadengine.so */,
+				D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */,
+				D9FD72F91B86FBEC00AF2E71 /* libmisc.so */,
+				D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */,
+				D970FAD91B00BD40005AF09E /* libnetworkengine.so */,
+				D970FAD71B00B82D005AF09E /* libstreaming.so */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

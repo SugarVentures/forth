@@ -16,7 +16,7 @@
 
 @interface Document : NSDocument
 
-- (void) initReceiver: (NSString*)server withPort: (NSInteger)port;
+- (void) initReceiver: (NSString*)streamKey;
 
 @end
 

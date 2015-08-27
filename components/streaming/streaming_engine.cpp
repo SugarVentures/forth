@@ -248,9 +248,6 @@ namespace oppvs
 						break;
 					}
 				}
-				/*SharedDynamicBufferRef segment = *m_recvPool.pop();
-				if (m_depacketizer.pullFrame(pf, segment) == 0)
-					m_callback(pf);*/
 			}
 			usleep(5000);
 		}

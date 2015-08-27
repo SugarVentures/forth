@@ -27,6 +27,7 @@ namespace oppvs {
 		int waitForStopAndClose();
 		void attachCallback(callbackStreamRegister cb);
 		void attachCallback(callbackStreamRequest cb);
+		void attachCallback(callbackDisconnect cb);
 
 	private:
 		PhysicalSocket* m_sendSockets;
@@ -42,6 +43,7 @@ namespace oppvs {
 
 		callbackStreamRegister m_cbStreamRegister;
 		callbackStreamRequest m_cbStreamRequest;
+		callbackDisconnect m_cbDisconnect;
 	};
 	
 } // oppvs

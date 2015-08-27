@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0C36067F98F210BBCC9DEB8E /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7551F2B5BC3146399DA8414C /* libsrtp.a */; };
 		3C8B1B3EE9AD82825E153AA2 /* libsignaling_server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B82FBAC7B9F1DDB411B97F /* libsignaling_server.a */; };
-		502DFE374CFB5B2D6EAE2FEB /* libnetwork_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 93C1EFE60FD50291EF19C4BB /* libnetwork_engine.dylib */; };
 		8D0C57B6D4FED7DB314CB86C /* signaling_server_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071C9246A405965211BFC8B /* signaling_server_main.cpp */; };
 		EFDBE659EF91648671054D3D /* libthread_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B9D84C718FC2DF4721E223 /* libthread_engine.a */; };
 /* End PBXBuildFile section */
@@ -50,20 +49,6 @@
 			remoteGlobalIDString = 19A7BE6AAB8E7AFA6731878E;
 			remoteInfo = thread_engine;
 		};
-		EAF1E7F9A599B23916AC5E95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A9D0878C57DD83C8B34D1736 /* network_engine.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 6A03BA77C2A08309394D31E0;
-			remoteInfo = network_engine;
-		};
-		F9DE9C3F1FFE2B464B7B9E64 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A9D0878C57DD83C8B34D1736 /* network_engine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A7F6871F862C7E97C58BFF4C;
-			remoteInfo = network_engine;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -74,7 +59,6 @@
 		533CB11529C4D2222072C09E /* signaling_server */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = signaling_server; sourceTree = BUILT_PRODUCTS_DIR; };
 		7323AD40851A639E1112B067 /* signaling_server.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = signaling_server.gyp; sourceTree = "<group>"; };
 		7551F2B5BC3146399DA8414C /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsrtp.a; path = ../../libs/libsrtp.a; sourceTree = "<group>"; };
-		A9D0878C57DD83C8B34D1736 /* network_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = network_engine.xcodeproj; path = ../network/network_engine.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +68,6 @@
 			files = (
 				3C8B1B3EE9AD82825E153AA2 /* libsignaling_server.a in Frameworks */,
 				EFDBE659EF91648671054D3D /* libthread_engine.a in Frameworks */,
-				502DFE374CFB5B2D6EAE2FEB /* libnetwork_engine.dylib in Frameworks */,
 				0C36067F98F210BBCC9DEB8E /* libsrtp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,19 +84,20 @@
 			name = Build;
 			sourceTree = "<group>";
 		};
+		2836EF1F497E0F37FCFDF785 /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				51968890B340A97917A1CAB8 /* server_engine.xcodeproj */,
+				2E9A061738027B4FBEA40F99 /* thread_engine.xcodeproj */,
+			);
+			name = Projects;
+			sourceTree = "<group>";
+		};
 		35D76F8F47D24BDECE712B2D /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				785CE195AD7D307731EC97E7 /* libstun_server.a */,
 				94B82FBAC7B9F1DDB411B97F /* libsignaling_server.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		553B2C6D1E2EA5638695DB14 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				93C1EFE60FD50291EF19C4BB /* libnetwork_engine.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -126,21 +110,11 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8297877F3EF1DDE7A782AB96 /* Projects */ = {
-			isa = PBXGroup;
-			children = (
-				A9D0878C57DD83C8B34D1736 /* network_engine.xcodeproj */,
-				51968890B340A97917A1CAB8 /* server_engine.xcodeproj */,
-				2E9A061738027B4FBEA40F99 /* thread_engine.xcodeproj */,
-			);
-			name = Projects;
-			sourceTree = "<group>";
-		};
 		8842B3F2FB5910267199DCE9 = {
 			isa = PBXGroup;
 			children = (
 				9FF5F4C632F1222B1B9876DC /* Source */,
-				8297877F3EF1DDE7A782AB96 /* Projects */,
+				2836EF1F497E0F37FCFDF785 /* Projects */,
 				9227A425682800EFBE923E63 /* Frameworks */,
 				9F8EB2779623BE0F514B0BE2 /* Products */,
 				262A5F28BCD44CE0B6C04313 /* Build */,
@@ -186,7 +160,6 @@
 			dependencies = (
 				E78E7F351F0759E09AA15190 /* PBXTargetDependency */,
 				FE3AB3EC2E29DA178BEE6857 /* PBXTargetDependency */,
-				0E019752DE92AF01937C650B /* PBXTargetDependency */,
 			);
 			name = signaling_server;
 			productName = signaling_server;
@@ -207,10 +180,6 @@
 			mainGroup = 8842B3F2FB5910267199DCE9;
 			projectDirPath = "";
 			projectReferences = (
-				{
-					ProductGroup = 553B2C6D1E2EA5638695DB14 /* Products */;
-					ProjectRef = A9D0878C57DD83C8B34D1736 /* network_engine.xcodeproj */;
-				},
 				{
 					ProductGroup = 35D76F8F47D24BDECE712B2D /* Products */;
 					ProjectRef = 51968890B340A97917A1CAB8 /* server_engine.xcodeproj */;
@@ -242,13 +211,6 @@
 			remoteRef = 2E2AAF849105BEE30C0A2E92 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		93C1EFE60FD50291EF19C4BB /* libnetwork_engine.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libnetwork_engine.dylib;
-			remoteRef = F9DE9C3F1FFE2B464B7B9E64 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		94B82FBAC7B9F1DDB411B97F /* libsignaling_server.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -270,11 +232,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0E019752DE92AF01937C650B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = network_engine;
-			targetProxy = EAF1E7F9A599B23916AC5E95 /* PBXContainerItemProxy */;
-		};
 		E78E7F351F0759E09AA15190 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = libsignaling_server;

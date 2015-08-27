@@ -7,6 +7,7 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../threa
 		-I$(rootDir)/../../libs/libyuv/include -I$(rootDir)/../encoding \
 		-I$(rootDir)/../../libs/libvpx -I$(rootDir)/../error \
 		-I$(rootDir)/../network \
+		-I$(rootDir)/../streaming \
 		-I$(rootDir)/../server -I$(rootDir)/../client 
 
 INCDIR += -I$(rootDir)/../../libs/libnice -I$(rootDir)/../../libs/libnice/agent \
@@ -14,7 +15,7 @@ INCDIR += -I$(rootDir)/../../libs/libnice -I$(rootDir)/../../libs/libnice/agent 
 		  -I$(rootDir)/../../libs/libnice/include
 
 NICELDFLAGS = -L$(rootDir)/../../libs
-NICELIBS = -lnetworkengine
+NICELIBS = -lnetworkengine -lstreaming
 
 CFLAGS	= -Wall -g -fPIC -std=c++11
 

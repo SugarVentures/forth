@@ -101,7 +101,7 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 
 }
 
-- (void) startStreaming
+- (void) startStreaming: (NSString*) streamKey
 {
     streamingEngine.setStreamInfo(videoEngine->getVideoActiveSources());
     
@@ -112,7 +112,8 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
         return;
     }
     
-    if (streamingEngine.start("1234") < 0)
+    std::string strStreamKey([streamKey UTF8String]);
+    if (streamingEngine.start(strStreamKey) < 0)
     {
         NSLog(@"Failed to start streaming engine");
         return;
@@ -138,7 +139,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     [renderingView setIndexTexture:pf.source];
 
     pf.order = (uint8_t)renderingView.order;
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         [renderingView setNeedsDisplay];
     });
     

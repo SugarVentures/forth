@@ -37,7 +37,6 @@
     [previewView setNeedsDisplay];
     [hostPreviewLayer setLayer:previewView];*/
     
-    [serverIP setStringValue:@"127.0.0.1"];
     listSources = [[NSMutableArray alloc] init];
 }
 
@@ -103,9 +102,11 @@
 
 
 - (IBAction)Play:(id)sender {
-    NSString* ip = [serverIP stringValue];
-    NSInteger port = [serverPort integerValue];
-    [document initReceiver:ip withPort:port];
+    NSString* sk = [streamKey stringValue];
+    if (sk)
+        [document initReceiver:sk];
+    else
+        NSLog(@"Please enter stream key");
 }
 
 - (id)addSubView: (NSRect)frame atIndex: (NSInteger)index

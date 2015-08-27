@@ -14,9 +14,7 @@
 @interface ViewController : NSViewController
 {
     Document* document;
-
-    IBOutlet NSTextField *serverPort;
-    IBOutlet NSTextField *serverIP;
+    IBOutlet NSTextField *streamKey;
     IBOutlet NSView *hostPreviewLayer;
     
 }

@@ -85,12 +85,12 @@
 			isa = PBXGroup;
 			children = (
 				D9C89FD41B03009A008A6E48 /* OpenGLFrame.h */,
+				D9C89FD21B030087008A6E48 /* OpenGLFrame.m */,
 				D9390B2A1B16C35200DF3EAE /* vectorUtil.c */,
 				D9390B2B1B16C35200DF3EAE /* vectorUtil.h */,
 				D9390B261B16C34800DF3EAE /* matrixUtil.c */,
 				D9390B271B16C34800DF3EAE /* matrixUtil.h */,
 				D9390B241B16C11E00DF3EAE /* glUtil.h */,
-				D9C89FD21B030087008A6E48 /* OpenGLFrame.m */,
 				D9C89FD61B030A8F008A6E48 /* FrameView.h */,
 				D9C89FD71B030A8F008A6E48 /* FrameView.m */,
 			);

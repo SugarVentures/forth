@@ -24,7 +24,7 @@
     NSString *selectedWindowInput;
     Document* document;
     
-    IBOutlet NSTextField *serverPort;
+    IBOutlet NSTextField *streamKey;
     
     IBOutlet NSView *hostPreviewLayer;
     
@@ -57,7 +57,6 @@
 - (IBAction)stopStreaming:(id)sender;
 - (void) reset;
 - (void) setRegion;
-- (void) setStreamInfo: (NSString*) info;
 - (IBAction) addSource:(id)sender;
 - (IBAction)showPreview:(id)sender;
 

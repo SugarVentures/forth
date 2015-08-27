@@ -191,10 +191,6 @@ NSString* kCSName = @"CSName";
     
 }
 
-- (void) setStreamInfo:(NSString *)info
-{
-    [serverPort setStringValue:info ];
-}
 
 - (IBAction)stopStreaming:(id)sender {
     [self setStreaming:false];
@@ -205,13 +201,18 @@ NSString* kCSName = @"CSName";
 }
 
 - (IBAction)startStreaming:(id)sender {
-    [self setStreaming:true];
-    [document startStreaming];
-    if (self.hidden)
+    if (streamKey.stringValue && streamKey.stringValue.length == oppvs::STREAM_KEY_SIZE)
     {
-        [self hideWindow: sender];
-        [self activateStatusMenu];
+        [self setStreaming:true];
+        [document startStreaming: [streamKey stringValue]];
+        if (self.hidden)
+        {
+            [self hideWindow: sender];
+            [self activateStatusMenu];
+        }
     }
+    else
+        NSLog(@"Please enter stream key");
 }
 
 - (void)dealloc

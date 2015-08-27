@@ -22,21 +22,22 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		68F253DF6D25B1491604EC46 /* stun_server_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C75751B6B5D421A79120C971 /* stun_server_thread.cpp */; };
-		89DED5CAF853090E924C06C9 /* signaling_server_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 456C81F326303C907B2A347F /* signaling_server_thread.cpp */; };
-		90ED529BDD592A1790AF50D9 /* stun_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8ED27437C685883A07C616D /* stun_server.cpp */; };
-		B227B7544AD192CB5E5F45C6 /* signaling_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 094CE036D13A37CD1E47B85C /* signaling_server.cpp */; };
+		20E685D5D9AF237434B6AF35 /* dynamic_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AAE2C8242EB6C8FEF769AD8 /* dynamic_buffer.cpp */; };
+		3A68FF18BF5EEB858A0870E1 /* stun_server_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C75751B6B5D421A79120C971 /* stun_server_thread.cpp */; };
+		484A6D80ACB8AA7CD5E41156 /* signaling_server_subthread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5D9F01EFE8A815BB2BFA41 /* signaling_server_subthread.cpp */; };
+		4DCA32AF7C93437C86B8AA9F /* stun_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8ED27437C685883A07C616D /* stun_server.cpp */; };
+		55A0E77E4C0EC49DBCDFF720 /* signaling_server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 094CE036D13A37CD1E47B85C /* signaling_server.cpp */; };
+		8AF8C14C39361630A67FBB0A /* socket_address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A4721ED60D01D6829D62F29 /* socket_address.cpp */; };
+		8B4D8F2B98E776538BCB0C86 /* physical_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103C5E440EB6AA383821C9CA /* physical_socket.cpp */; };
+		99C65830AEA3CDA57FEE4760 /* signaling_message_builder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB1C058652A49CAA228C20FD /* signaling_message_builder.cpp */; };
+		CB0B46D09CB068203E71F7A4 /* signaling_message_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64D5ECCD6B7783AB3778C48E /* signaling_message_reader.cpp */; };
+		E89E68B919BB318C534412CF /* signaling_server_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 456C81F326303C907B2A347F /* signaling_server_thread.cpp */; };
+		F2C3F6168A548F9D88E6128B /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44AE6CD98E010C551A5E35EB /* data_stream.cpp */; };
+		F8B4A4C1265308C03144EB0C /* ipaddress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 166A8E6471575C3778598706 /* ipaddress.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		1527D46C162F42CE65DB9E0D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5BF89FDE5C7E350730C95FED /* network_engine.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 6A03BA77C2A08309394D31E0;
-			remoteInfo = network_engine;
-		};
-		358701F1396C249504E21869 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5BF89FDE5C7E350730C95FED /* network_engine.xcodeproj */;
 			proxyType = 1;
@@ -67,18 +68,35 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		020F7C882E04690757DBEF2E /* dynamic_buffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = dynamic_buffer.hpp; sourceTree = "<group>"; };
 		094CE036D13A37CD1E47B85C /* signaling_server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = signaling_server.cpp; sourceTree = "<group>"; };
+		103C5E440EB6AA383821C9CA /* physical_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = physical_socket.cpp; sourceTree = "<group>"; };
+		117F9FD3076B2B56FAA697FE /* socket_address.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = socket_address.hpp; sourceTree = "<group>"; };
+		166A8E6471575C3778598706 /* ipaddress.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ipaddress.cpp; sourceTree = "<group>"; };
+		2118CFD7F83DE09ED2F131EF /* ipaddress.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = ipaddress.hpp; sourceTree = "<group>"; };
+		227889F0408434CB765C0464 /* signaling_server_subthread.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = signaling_server_subthread.hpp; sourceTree = "<group>"; };
 		22B1C8EB97181159DAAE1BF4 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
+		44242FAC9A11D4AFA6E32B2A /* signaling_message_builder.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = signaling_message_builder.hpp; sourceTree = "<group>"; };
+		44AE6CD98E010C551A5E35EB /* data_stream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = data_stream.cpp; sourceTree = "<group>"; };
 		456C81F326303C907B2A347F /* signaling_server_thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = signaling_server_thread.cpp; sourceTree = "<group>"; };
+		506C2B293FA8EA08387795EB /* physical_socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = physical_socket.hpp; sourceTree = "<group>"; };
+		5AAE2C8242EB6C8FEF769AD8 /* dynamic_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = dynamic_buffer.cpp; sourceTree = "<group>"; };
 		5BF89FDE5C7E350730C95FED /* network_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = network_engine.xcodeproj; path = ../network/network_engine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		608F0D475EBE08A5F317FEAF /* signaling_message_reader.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = signaling_message_reader.hpp; sourceTree = "<group>"; };
+		64D5ECCD6B7783AB3778C48E /* signaling_message_reader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = signaling_message_reader.cpp; sourceTree = "<group>"; };
 		69DB7A79DD3A3780ECDCC255 /* stun_server_thread.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_server_thread.hpp; sourceTree = "<group>"; };
+		7A4721ED60D01D6829D62F29 /* socket_address.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = socket_address.cpp; sourceTree = "<group>"; };
 		7CD3AF8937621D6C8D7B81A3 /* signaling_server.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = signaling_server.hpp; sourceTree = "<group>"; };
 		8838DE66DA158ABDE0D411EE /* libstun_server.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libstun_server.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C3D274C85003E27AC5395E5 /* signaling_server_thread.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = signaling_server_thread.hpp; sourceTree = "<group>"; };
+		8E0B5D287B537BA15E545BB3 /* data_stream.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = data_stream.hpp; sourceTree = "<group>"; };
 		A8ED27437C685883A07C616D /* stun_server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stun_server.cpp; sourceTree = "<group>"; };
 		AEDCE49788E5BC68C1094ED8 /* server_engine.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = server_engine.gyp; sourceTree = "<group>"; };
 		C4093A2EABFD000710D125C0 /* libsignaling_server.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsignaling_server.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C75751B6B5D421A79120C971 /* stun_server_thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stun_server_thread.cpp; sourceTree = "<group>"; };
+		CD5D9F01EFE8A815BB2BFA41 /* signaling_server_subthread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = signaling_server_subthread.cpp; sourceTree = "<group>"; };
+		DB1C058652A49CAA228C20FD /* signaling_message_builder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = signaling_message_builder.cpp; sourceTree = "<group>"; };
+		E8FE5283D9A4769A9325E3A1 /* signaling_common.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = signaling_common.hpp; sourceTree = "<group>"; };
 		F82401C0D05E50B1FDBFF2B1 /* stun_server.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_server.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,19 +135,26 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		41ACDBCF73F459F934266C91 /* Source */ = {
+		4164DD5C57415E72D5E49DD6 /* ../network */ = {
 			isa = PBXGroup;
 			children = (
-				094CE036D13A37CD1E47B85C /* signaling_server.cpp */,
-				7CD3AF8937621D6C8D7B81A3 /* signaling_server.hpp */,
-				456C81F326303C907B2A347F /* signaling_server_thread.cpp */,
-				8C3D274C85003E27AC5395E5 /* signaling_server_thread.hpp */,
-				A8ED27437C685883A07C616D /* stun_server.cpp */,
-				F82401C0D05E50B1FDBFF2B1 /* stun_server.hpp */,
-				C75751B6B5D421A79120C971 /* stun_server_thread.cpp */,
-				69DB7A79DD3A3780ECDCC255 /* stun_server_thread.hpp */,
+				44AE6CD98E010C551A5E35EB /* data_stream.cpp */,
+				8E0B5D287B537BA15E545BB3 /* data_stream.hpp */,
+				5AAE2C8242EB6C8FEF769AD8 /* dynamic_buffer.cpp */,
+				020F7C882E04690757DBEF2E /* dynamic_buffer.hpp */,
+				166A8E6471575C3778598706 /* ipaddress.cpp */,
+				2118CFD7F83DE09ED2F131EF /* ipaddress.hpp */,
+				103C5E440EB6AA383821C9CA /* physical_socket.cpp */,
+				506C2B293FA8EA08387795EB /* physical_socket.hpp */,
+				E8FE5283D9A4769A9325E3A1 /* signaling_common.hpp */,
+				DB1C058652A49CAA228C20FD /* signaling_message_builder.cpp */,
+				44242FAC9A11D4AFA6E32B2A /* signaling_message_builder.hpp */,
+				64D5ECCD6B7783AB3778C48E /* signaling_message_reader.cpp */,
+				608F0D475EBE08A5F317FEAF /* signaling_message_reader.hpp */,
+				7A4721ED60D01D6829D62F29 /* socket_address.cpp */,
+				117F9FD3076B2B56FAA697FE /* socket_address.hpp */,
 			);
-			name = Source;
+			path = ../network;
 			sourceTree = "<group>";
 		};
 		6842E3825C17BC6F33C0BD33 /* Projects */ = {
@@ -143,11 +168,29 @@
 		AC3361AF3ABE2B106513E266 = {
 			isa = PBXGroup;
 			children = (
-				41ACDBCF73F459F934266C91 /* Source */,
+				CD6812E3D6C6DD4DB1CC9DC9 /* Source */,
 				6842E3825C17BC6F33C0BD33 /* Projects */,
 				D37BEDF98483D0BDA8039D05 /* Products */,
 				0AEDC5852791A94D61EA71CA /* Build */,
 			);
+			sourceTree = "<group>";
+		};
+		CD6812E3D6C6DD4DB1CC9DC9 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				4164DD5C57415E72D5E49DD6 /* ../network */,
+				094CE036D13A37CD1E47B85C /* signaling_server.cpp */,
+				7CD3AF8937621D6C8D7B81A3 /* signaling_server.hpp */,
+				CD5D9F01EFE8A815BB2BFA41 /* signaling_server_subthread.cpp */,
+				227889F0408434CB765C0464 /* signaling_server_subthread.hpp */,
+				456C81F326303C907B2A347F /* signaling_server_thread.cpp */,
+				8C3D274C85003E27AC5395E5 /* signaling_server_thread.hpp */,
+				A8ED27437C685883A07C616D /* stun_server.cpp */,
+				F82401C0D05E50B1FDBFF2B1 /* stun_server.hpp */,
+				C75751B6B5D421A79120C971 /* stun_server_thread.cpp */,
+				69DB7A79DD3A3780ECDCC255 /* stun_server_thread.hpp */,
+			);
+			name = Source;
 			sourceTree = "<group>";
 		};
 		D37BEDF98483D0BDA8039D05 /* Products */ = {
@@ -172,7 +215,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				DAEC1622BB7E481AE879CF37 /* PBXTargetDependency */,
 			);
 			name = libsignaling_server;
 			productName = signaling_server;
@@ -239,8 +281,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B227B7544AD192CB5E5F45C6 /* signaling_server.cpp in Sources */,
-				89DED5CAF853090E924C06C9 /* signaling_server_thread.cpp in Sources */,
+				55A0E77E4C0EC49DBCDFF720 /* signaling_server.cpp in Sources */,
+				E89E68B919BB318C534412CF /* signaling_server_thread.cpp in Sources */,
+				484A6D80ACB8AA7CD5E41156 /* signaling_server_subthread.cpp in Sources */,
+				20E685D5D9AF237434B6AF35 /* dynamic_buffer.cpp in Sources */,
+				F2C3F6168A548F9D88E6128B /* data_stream.cpp in Sources */,
+				F8B4A4C1265308C03144EB0C /* ipaddress.cpp in Sources */,
+				8AF8C14C39361630A67FBB0A /* socket_address.cpp in Sources */,
+				8B4D8F2B98E776538BCB0C86 /* physical_socket.cpp in Sources */,
+				99C65830AEA3CDA57FEE4760 /* signaling_message_builder.cpp in Sources */,
+				CB0B46D09CB068203E71F7A4 /* signaling_message_reader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,8 +298,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90ED529BDD592A1790AF50D9 /* stun_server.cpp in Sources */,
-				68F253DF6D25B1491604EC46 /* stun_server_thread.cpp in Sources */,
+				4DCA32AF7C93437C86B8AA9F /* stun_server.cpp in Sources */,
+				3A68FF18BF5EEB858A0870E1 /* stun_server_thread.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,11 +321,6 @@
 			target = F30403C336C5CF9E92E81D4B /* libstun_server */;
 			targetProxy = 416C50EBAD881F7C0C59130E /* PBXContainerItemProxy */;
 		};
-		DAEC1622BB7E481AE879CF37 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = network_engine;
-			targetProxy = 358701F1396C249504E21869 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -283,12 +328,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = __APPLE_USE_RFC_3542;
 				HEADER_SEARCH_PATHS = (
 					../include,
 					../thread,
 					../network,
 					../misc,
 				);
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = signaling_server;
 			};
 			name = Default;

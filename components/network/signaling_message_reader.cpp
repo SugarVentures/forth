@@ -16,7 +16,12 @@ namespace oppvs {
 	void SignalingMessageReader::reset()
 	{
 		m_dataStream.reset();
-		delete [] m_videoStreamInfo.sources;
+		if (m_videoStreamInfo.noSources > 0)
+		{
+			delete [] m_videoStreamInfo.sources;
+			m_videoStreamInfo.noSources = 0;
+			m_videoStreamInfo.sources = NULL;
+		}
 	}
 
 	DataStream& SignalingMessageReader::getStream()

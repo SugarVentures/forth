@@ -133,6 +133,7 @@ static int noView = 0;
 {
     NSPoint clickLocation = [self convertPoint:[event locationInWindow] fromView:nil];
     NSView* view = nil;
+    
     //[viewList exchangeObjectAtIndex:[viewList indexOfObject:view] withObjectAtIndex:[viewList count] - 1];
     //[self setSubviews:viewList];
     for (NSView *subView in [self subviews]) {

@@ -94,9 +94,9 @@ static GLint default_frame_buffer = 0;
         //[self setup];
         glGenBuffers(2, pbo);
         self.initialized = false;
-        [self generatePBO];
+        
     };
-
+    [self generatePBO];
     /*glUseProgram(progName);
     // This call is crucial, to ensure we are working with the correct context
     CGLSetCurrentContext(glContext);
