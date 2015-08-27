@@ -8,7 +8,7 @@
 namespace oppvs {
 	const static int DEFAULT_SIGNALING_PORT = 33333;
 	const static int MAX_SIGNALING_MESSAGE_SIZE = 2000;
-	const static int STREAM_KEY_SIZE = 4;
+	const static int STREAM_KEY_SIZE = 36;
 	const static int SIGNALING_HEADER_SIZE = STREAM_KEY_SIZE + 4;
 
 	enum SignalingUserRole
@@ -66,6 +66,7 @@ namespace oppvs {
 	typedef std::function<int(const std::string&, int, const VideoStreamInfo&)> callbackStreamRegister;
 	typedef std::function<int(const std::string&, int*, VideoStreamInfo&)> callbackStreamRequest;
 	typedef std::function<int(const VideoStreamInfo&)> callbackStreamResponse;
+	typedef std::function<int(int sockfd)> callbackDisconnect;
 } // oppvs
 
 #endif // OPPVS_SIGNALING_COMMON_HPP
