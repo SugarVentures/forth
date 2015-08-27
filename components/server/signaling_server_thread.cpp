@@ -66,6 +66,7 @@ namespace oppvs {
 			thread->init(psocket, sockfd, remoteAddress);
 			thread->attachCallback(m_cbStreamRegister);
 			thread->attachCallback(m_cbStreamRequest);
+			thread->attachCallback(m_cbDisconnect);
 			thread->start();
 			m_threads.push_back(thread);
 		}
@@ -118,5 +119,10 @@ namespace oppvs {
 	void SignalingServerThread::attachCallback(callbackStreamRequest cb)
 	{
 		m_cbStreamRequest = cb;
+	}
+
+	void SignalingServerThread::attachCallback(callbackDisconnect cb)
+	{
+		m_cbDisconnect = cb;
 	}	
 } // oppvs

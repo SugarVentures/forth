@@ -25,6 +25,7 @@ namespace oppvs {
 		thread->init(&m_socket, &m_streamKey, &m_broadcaster);
 		thread->attachCallback([this](const std::string& sk, int sockfd, const VideoStreamInfo& info) { return updateStream(sk, sockfd, info); });
 		thread->attachCallback([this](const std::string& sk, int* psockfd, VideoStreamInfo& info) { return getStreamInfo(sk, psockfd, info); });
+		thread->attachCallback([this](int sockfd) { return removeStream(sockfd); });
 	}
 
 	int SignalingServer::addSocket(const SocketAddress& addressListen, const SocketAddress& addressAdvertised)
@@ -134,6 +135,26 @@ namespace oppvs {
 			return -1;
 		*psockfd = pstream->sockFD;
 		info = pstream->videoStreamInfo;
+		return 0;
+	}
+
+	int SignalingServer::removeStream(int sockfd)
+	{
+		if (sockfd < 0)
+			return -1;
+		std::vector<SignalingStreamInfo>::iterator it = m_streams.begin();
+		while (it != m_streams.end())
+		{
+			SignalingStreamInfo stream = *it;
+			if (stream.sockFD == sockfd)
+			{
+				printf("Delete stream: %s\n", stream.streamKey.c_str());
+				it = m_streams.erase(it);
+				break;
+			}
+			else
+				++it;
+		}
 		return 0;
 	}
 } // oppvs

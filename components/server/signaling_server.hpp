@@ -57,6 +57,7 @@ namespace oppvs {
 
 		int updateStream(const std::string& streamKey, int sockfd, const VideoStreamInfo& info);
 		int getStreamInfo(const std::string& streamKey, int* psockfd, VideoStreamInfo& info);
+		int removeStream(int sockfd);
 
 	private:
 		SignalingServerConfiguration m_config;

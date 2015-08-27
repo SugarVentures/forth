@@ -39,6 +39,7 @@ namespace oppvs {
 			if (rcvlen <= 0)
 			{
 				std::cout << "Error in receiving packet" << std::endl;
+				m_cbDisconnect(m_sockfd);
 				break;
 			}
 
@@ -136,6 +137,7 @@ namespace oppvs {
 				if (buildStreamResponse(m_messageReader.getStreamKey(), info) < 0)
 					return;
 
+				printf("%d %d\n", m_sockfd, broadcasterfd);
 				sendResponse(m_sockfd);
 
 				if (buildIceResponse(m_messageReader.getStreamKey(), m_messageReader.getUsername(), 
@@ -231,6 +233,11 @@ namespace oppvs {
 	void SignalingServerSubThread::attachCallback(callbackStreamRequest cb)
 	{
 		m_cbStreamRequest = cb;
-	}	
+	}
+
+	void SignalingServerSubThread::attachCallback(callbackDisconnect cb)
+	{
+		m_cbDisconnect = cb;
+	}
 
 } // oppvs
