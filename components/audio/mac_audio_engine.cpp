@@ -129,7 +129,18 @@ namespace oppvs {
 
 	        	delete [] bufferList;
 	        }
-	        AudioDevice aDevice(audioDevices[i], strDeviceName, strDeviceManu, safetyOffset, bufferSizeFrames, totalChannels);
+
+	        //Get sample rate
+	        Float64 sampleRate = 0.0;
+	        proSize = sizeof(Float64);
+	        address.mSelector = kAudioDevicePropertyNominalSampleRate;
+	        status = AudioHardwareServiceGetPropertyData(audioDevices[i], &address, 0, NULL, &proSize, &sampleRate);
+	        if (kAudioHardwareNoError != status) {
+	            printf("AudioObjectGetPropertyDataSize (kAudioDevicePropertyNominalSampleRate) failed: %i\n", status);
+	            continue;
+	        }
+
+	        AudioDevice aDevice(audioDevices[i], strDeviceName, strDeviceManu, safetyOffset, bufferSizeFrames, totalChannels, sampleRate);
 	        m_listAudioDevices.push_back(aDevice);
 	    }
 
