@@ -6,6 +6,11 @@ namespace  oppvs {
 
 	}
 
+	AudioDevice::AudioDevice(uint32_t id, const std::string& deviceName, const std::string& deviceManu) : 
+		m_deviceID(id), m_deviceName(deviceName), m_manufacturer(deviceManu)
+	{
+	}
+
 	AudioDevice::~AudioDevice()
 	{
 

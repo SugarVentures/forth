@@ -12,8 +12,23 @@ namespace oppvs {
 
 		virtual ~AudioEngine() {}
 		virtual void getListAudioDevices(std::vector<AudioDevice>& result) {}
+
+		void printAudioDeviceList()
+		{
+			std::vector<AudioDevice>::iterator it;
+			for (it = m_listAudioDevices.begin(); it != m_listAudioDevices.end(); ++it)
+			{
+				printf("Source id %d Name: %s \n", it->getDeviceID(), it->getDeviceName().c_str());
+			}
+		}
 	protected:
 		std::vector<AudioDevice> m_listAudioDevices;
+		void resetAudioDeviceList()
+		{
+			m_listAudioDevices.clear();
+		}
+
+
 	private:
 
 	};

@@ -9,6 +9,7 @@ namespace oppvs {
 	{
 	public:
 		AudioDevice();
+		AudioDevice(uint32_t id, const std::string& deviceName, const std::string& deviceManu);
 		~AudioDevice();
 
 		uint32_t getDeviceID();

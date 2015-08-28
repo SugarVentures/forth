@@ -8,6 +8,8 @@ CFLAGS = -Wall -g
 LDFLAGS = -L$(rootDir)/../../libs
 LIBS = 
 
+FRAMEWORKS = -framework AudioToolbox -framework CoreFoundation
+
 OBJLIBS = libaudioengine.so
 
 SRCS = $(wildcard *.cpp)
@@ -19,7 +21,7 @@ rootDir = .
 all: $(OBJLIBS) install
 
 $(OBJLIBS): $(OBJS)
-	$(CXX) $(INCDIR) $(LDFLAGS) -fgnu-runtime -shared -o $(OBJLIBS) $(OBJS) $(LIBS)
+	$(CXX) $(INCDIR) $(LDFLAGS) -fgnu-runtime -shared -o $(OBJLIBS) $(OBJS) $(LIBS) $(FRAMEWORKS)
 
 
 %.o: %.cpp
