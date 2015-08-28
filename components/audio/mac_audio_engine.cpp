@@ -79,7 +79,6 @@ namespace oppvs {
 	        	continue;
 	        }
 
-	        printf("Device ID: %s size: %d\n", CFStringGetCStringPtr(deviceUID, kCFStringEncodingMacRoman), proSize);
 	        CFStringRef deviceName = NULL;
 	        proSize = sizeof(deviceName);
 	        address.mSelector = kAudioDevicePropertyDeviceNameCFString;
@@ -88,20 +87,49 @@ namespace oppvs {
 	        	printf("AudioHardwareServiceGetPropertyData (kAudioDevicePropertyDeviceName) failed: %i\n", status);
 	        	continue;
 	        }
-	        printf("Device Name: %s size: %d\n", CFStringGetCStringPtr(deviceName, kCFStringEncodingMacRoman), proSize);
+
 	        std::string strDeviceName = std::string(CFStringGetCStringPtr(deviceName, kCFStringEncodingMacRoman));
 
 	        CFStringRef deviceManufacturer = NULL;
 	        proSize = sizeof(deviceManufacturer);
 	        address.mSelector = kAudioDevicePropertyDeviceManufacturerCFString;
 	        status = AudioHardwareServiceGetPropertyData(audioDevices[i], &address, 0, NULL, &proSize, &deviceManufacturer);
-	        if(kAudioHardwareNoError != status) {
+	        if (kAudioHardwareNoError != status) {
 	            printf("AudioHardwareServiceGetPropertyData (kAudioDevicePropertyDeviceManufacturerCFString) failed: %i\n", status);
 	            continue;
 	        }
 	        std::string strDeviceManu = std::string(CFStringGetCStringPtr(deviceManufacturer, kCFStringEncodingMacRoman));
-	        printf("Device Manu: %s size: %d\n", CFStringGetCStringPtr(deviceManufacturer, kCFStringEncodingMacRoman), proSize);
-	        AudioDevice aDevice(audioDevices[i], strDeviceName, strDeviceManu);
+
+	        //Get channel
+	        int totalChannels = 0;
+	        proSize = 0;
+	        address.mSelector = kAudioDevicePropertyStreamConfiguration;
+	        status = AudioHardwareServiceGetPropertyDataSize(audioDevices[i], &address, 0, NULL, &proSize);
+	        if (kAudioHardwareNoError != status) {
+	            printf("AudioObjectGetPropertyDataSize (kAudioDevicePropertyStreamConfiguration) failed: %i\n", status);
+	            continue;
+	        }
+
+	        AudioBufferList *bufferList = new AudioBufferList[dataSize];
+	        status = AudioHardwareServiceGetPropertyData(audioDevices[i], &address, 0, NULL, &proSize, bufferList);
+	        if (kAudioHardwareNoError != status || 0 == bufferList->mNumberBuffers) {
+	            if (kAudioHardwareNoError != status)
+	                printf("AudioHardwareServiceGetPropertyData (kAudioDevicePropertyStreamConfiguration) failed: %i\n", status);
+	            delete [] bufferList;
+	            bufferList = NULL;
+	        }
+	        else
+	        {        	
+	        	UInt32 numBuffers = bufferList->mNumberBuffers;
+	        	
+	        	for (int j = 0; j < numBuffers; ++j)
+	        	{
+	        		totalChannels += bufferList->mBuffers[j].mNumberChannels;
+	        	}
+
+	        	delete [] bufferList;
+	        }
+	        AudioDevice aDevice(audioDevices[i], strDeviceName, strDeviceManu, safetyOffset, bufferSizeFrames, totalChannels);
 	        m_listAudioDevices.push_back(aDevice);
 	    }
 

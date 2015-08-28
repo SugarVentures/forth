@@ -6,8 +6,11 @@ namespace  oppvs {
 
 	}
 
-	AudioDevice::AudioDevice(uint32_t id, const std::string& deviceName, const std::string& deviceManu) : 
-		m_deviceID(id), m_deviceName(deviceName), m_manufacturer(deviceManu)
+	AudioDevice::AudioDevice(uint32_t id, const std::string& deviceName, const std::string& deviceManu,
+		uint32_t safetyOffset, uint32_t bufferSizeFrames, int noChannels) : 
+		m_deviceID(id), m_deviceName(deviceName), m_manufacturer(deviceManu),
+		m_safetyOffset(safetyOffset), m_bufferSizeFrames(bufferSizeFrames), 
+		m_numberChannels(noChannels)
 	{
 	}
 
@@ -29,5 +32,10 @@ namespace  oppvs {
 	const std::string& AudioDevice::getManufacturer()
 	{
 		return m_manufacturer;
+	}
+
+	int AudioDevice::getNumberChannels()
+	{
+		return m_numberChannels;
 	}
 } //  oppvs
