@@ -18,6 +18,29 @@ public:
     virtual bool start(IOService *inProvider);
     virtual void stop(IOService *provider);
     
+    //	IO Management
+public:
+    IOBufferMemoryDescriptor*	getBuffer(int inBufferType);
+    IOReturn					startHardware();
+    void						stopHardware();
+    IOReturn					setSampleRate(UInt64 inNewSampleRate);
+    
+private:
+    static IOReturn				_getBuffer(OSObject* inTarget, void* inArg0, void* inArg1, void* inArg2, void* inArg3);
+    static IOReturn				_startHardware(OSObject* inTarget, void* inArg0, void* inArg1, void* inArg2, void* inArg3);
+    static IOReturn				_stopHardware(OSObject* inTarget, void* inArg0, void* inArg1, void* inArg2, void* inArg3);
+    static IOReturn				_setSampleRate(OSObject* inTarget, void* inArg0, void* inArg1, void* inArg2, void* inArg3);
+    
+    //	Controls
+public:
+    IOReturn					getVolume(int inVolumeID, UInt32& outVolume);
+    IOReturn					setVolume(int inVolumeID, UInt32 inNewVolume);
+    
+private:
+    static IOReturn				_getVolume(OSObject* inTarget, void* inArg0, void* inArg1, void* inArg2, void* inArg3);
+    static IOReturn				_setVolume(OSObject* inTarget, void* inArg0, void* inArg1, void* inArg2, void* inArg3);
+
+    
 private:
     IOReturn					allocateBuffers();
     void						freeBuffers();

@@ -96,6 +96,275 @@ void ForthAudioDevice::stop(IOService* inProvider)
     IOService::stop(inProvider);
 }
 
+IOBufferMemoryDescriptor*	ForthAudioDevice::getBuffer(int inBufferType)
+{
+    //	we gate the external methods onto the work loop for thread safety
+    IOBufferMemoryDescriptor* theAnswer = NULL;
+    if(mCommandGate != NULL)
+    {
+        mCommandGate->runAction(_getBuffer, &inBufferType, &theAnswer);
+    }
+    return theAnswer;
+}
+
+IOReturn ForthAudioDevice::startHardware()
+{
+    //	we gate the external methods onto the work loop for thread safety
+    IOReturn theAnswer = kIOReturnSuccess;
+    if(mCommandGate != NULL)
+    {
+        theAnswer = mCommandGate->runAction(_startHardware);
+    }
+    else
+    {
+        theAnswer = kIOReturnNoResources;
+    }
+    return theAnswer;
+}
+
+void ForthAudioDevice::stopHardware()
+{
+    //	we gate the external methods onto the work loop for thread safety
+    if(mCommandGate != NULL)
+    {
+        mCommandGate->runAction(_stopHardware);
+    }
+}
+
+IOReturn ForthAudioDevice::setSampleRate(UInt64 inNewSampleRate)
+{
+    //	we gate the external methods onto the work loop for thread safety
+    IOReturn theAnswer = kIOReturnSuccess;
+    if(mCommandGate != NULL)
+    {
+        theAnswer = mCommandGate->runAction(_setSampleRate, &inNewSampleRate);
+    }
+    else
+    {
+        theAnswer = kIOReturnNoResources;
+    }
+    return theAnswer;
+}
+
+IOReturn ForthAudioDevice::_getBuffer(OSObject* inTarget, void* inArg0, void* inArg1, void* inArg2, void* inArg3)
+{
+#pragma unused(inArg2, inArg3)
+    IOReturn theAnswer = kIOReturnSuccess;
+    ForthAudioDevice* theDriver = NULL;
+    const int* theBufferType = NULL;
+    IOBufferMemoryDescriptor** theBuffer = NULL;
+    
+    //	cast the arguments back to what they need to be
+    theDriver = OSDynamicCast(ForthAudioDevice, inTarget);
+    FailIfNULL(theDriver, theAnswer = kIOReturnBadArgument, Done, "ForthAudioDevice::_startHardware: this is not a ForthAudioDevice");
+    
+    theBufferType = reinterpret_cast<const int*>(inArg0);
+    FailIfNULL(theBufferType, theAnswer = kIOReturnBadArgument, Done, "ForthAudioDevice::_startHardware: no buffer type");
+    
+    theBuffer = reinterpret_cast<IOBufferMemoryDescriptor**>(inArg1);
+    FailIfNULL(theBuffer, theAnswer = kIOReturnBadArgument, Done, "ForthAudioDevice::_startHardware: no buffer");
+    
+    switch(*theBufferType)
+    {
+        case kForthAudio_Buffer_Status:
+            *theBuffer = theDriver->mStatusBuffer;
+            break;
+            
+        case kForthAudio_Buffer_Input:
+            *theBuffer = theDriver->mInputBuffer;
+            break;
+            
+        case kForthAudio_Buffer_Output:
+            *theBuffer = theDriver->mOutputBuffer;
+            break;
+    };
+    
+Done:
+    return theAnswer;
+}
+
+IOReturn ForthAudioDevice::_startHardware(OSObject* inTarget, void* inArg0, void* inArg1, void* inArg2, void* inArg3)
+{
+    //	This driver uses a work loop timer to simulate an interrupt to driver the timing
+    
+#pragma unused(inArg0, inArg1, inArg2, inArg3)
+    IOReturn theAnswer = kIOReturnSuccess;
+    
+    //	cast the arguments back to what they need to be
+    ForthAudioDevice* theDriver = OSDynamicCast(ForthAudioDevice, inTarget);
+    FailIfNULL(theDriver, theAnswer = kIOReturnBadArgument, Done, "ForthAudioDevice::_startHardware: this is not a ForthAudioDevice");
+    
+    if(!theDriver->mIsRunning)
+    {
+        if((theDriver->mInputBuffer != NULL) && (theDriver->mOutputBuffer != NULL))
+        {
+            //	clear the buffers
+            bzero(theDriver->mInputBuffer->getBytesNoCopy(), theDriver->mInputBuffer->getCapacity());
+            bzero(theDriver->mOutputBuffer->getBytesNoCopy(), theDriver->mOutputBuffer->getCapacity());
+            
+            //	start the timer
+            theAnswer = theDriver->startTimer();
+            FailIfError(theAnswer, , Done, "ForthAudioDevice::_startHardware: starting the timer failed");
+            
+            //	update the is running state
+            theDriver->mIsRunning = true;
+        }
+        else
+        {
+            theAnswer = kIOReturnNoResources;
+        }
+    }
+    
+Done:
+    return theAnswer;
+}
+
+IOReturn ForthAudioDevice::_stopHardware(OSObject* inTarget, void* inArg0, void* inArg1, void* inArg2, void* inArg3)
+{
+    //	cast the arguments back to what they need to be
+#pragma unused(inArg0, inArg1, inArg2, inArg3)
+    ForthAudioDevice* theDriver = OSDynamicCast(ForthAudioDevice, inTarget);
+    if((theDriver != NULL) && theDriver->mIsRunning)
+    {
+        //	all we need to do is stop the timer
+        theDriver->stopTimer();
+        theDriver->mIsRunning = false;
+    }
+    return kIOReturnSuccess;
+}
+
+IOReturn	ForthAudioDevice::_setSampleRate(OSObject* inTarget, void* inArg0, void* inArg1, void* inArg2, void* inArg3)
+{
+#pragma unused(inArg1, inArg2, inArg3)
+    IOReturn theAnswer = kIOReturnSuccess;
+    ForthAudioDevice* theDriver = NULL;
+    const UInt64* theNewSampleRate = NULL;
+    
+    //	cast the arguments back to what they need to be
+    theDriver = OSDynamicCast(ForthAudioDevice, inTarget);
+    FailIfNULL(theDriver, theAnswer = kIOReturnBadArgument, Done, "ForthAudioDevice::_setSampleRate: this is not a ForthAudioDevice");
+    
+    theNewSampleRate = reinterpret_cast<const UInt64*>(inArg0);
+    FailIfNULL(theNewSampleRate, theAnswer = kIOReturnBadArgument, Done, "ForthAudioDevice::_setSampleRate: no new sample rate");
+    
+    //	make sure that IO is stopped
+    FailIf(theDriver->mIsRunning, theAnswer = kIOReturnNotPermitted, Done, "ForthAudioDevice::_setSampleRate: can't change the sample rate while IO is running");
+    
+    //	make sure the sample rate is something we support
+    if((*theNewSampleRate == 44100) || (*theNewSampleRate == 48000))
+    {
+        theDriver->mSampleRate = *theNewSampleRate;
+        theDriver->setProperty(kForthAudio_RegistryKey_SampleRate, theDriver->mSampleRate, sizeof(theDriver->mSampleRate) * 8);
+        theDriver->updateTimer();
+    }
+    else
+    {
+        theAnswer = kIOReturnUnsupported;
+    }
+    
+Done:
+    return theAnswer;
+}
+
+IOReturn ForthAudioDevice::getVolume(int inVolumeID, UInt32& outVolume)
+{
+    //	we gate the external methods onto the work loop for thread safety
+    IOReturn theAnswer = 0;
+    if(mCommandGate != NULL)
+    {
+        theAnswer = mCommandGate->runAction(_getVolume, &inVolumeID, &outVolume);
+    }
+    return theAnswer;
+}
+
+IOReturn ForthAudioDevice::setVolume(int inVolumeID, UInt32 inNewVolume)
+{
+    //	we gate the external methods onto the work loop for thread safety
+    IOReturn theAnswer = kIOReturnSuccess;
+    if(mCommandGate != NULL)
+    {
+        theAnswer = mCommandGate->runAction(_setVolume, &inVolumeID, &inNewVolume);
+    }
+    else
+    {
+        theAnswer = kIOReturnNoResources;
+    }
+    return theAnswer;
+}
+
+IOReturn ForthAudioDevice::_getVolume(OSObject* inTarget, void* inArg0, void* inArg1, void* inArg2, void* inArg3)
+{
+#pragma unused(inArg2, inArg3)
+    IOReturn theAnswer = kIOReturnSuccess;
+    ForthAudioDevice* theDriver = NULL;
+    const int* theControlID = NULL;
+    UInt32* theControlValue = NULL;
+    
+    //	cast the arguments back to what they need to be
+    theDriver = OSDynamicCast(ForthAudioDevice, inTarget);
+    FailIfNULL(theDriver, theAnswer = kIOReturnBadArgument, Done, "ForthAudioDevice::_startHardware: this is not a ForthAudioDevice");
+    
+    theControlID = reinterpret_cast<const int*>(inArg0);
+    FailIfNULL(theControlID, theAnswer = kIOReturnBadArgument, Done, "ForthAudioDevice::_startHardware: no control ID");
+    
+    theControlValue = reinterpret_cast<UInt32*>(inArg1);
+    FailIfNULL(theControlValue, theAnswer = kIOReturnBadArgument, Done, "ForthAudioDevice::_startHardware: no control value");
+    
+    switch(*theControlID)
+    {
+        case kForthAudio_Control_MasterInputVolume:
+            *theControlValue = theDriver->mMasterInputVolume;
+            break;
+            
+        case kForthAudio_Control_MasterOutputVolume:
+            *theControlValue = theDriver->mMasterOutputVolume;
+            break;
+    };
+    
+Done:
+    return theAnswer;
+}
+
+IOReturn ForthAudioDevice::_setVolume(OSObject* inTarget, void* inArg0, void* inArg1, void* inArg2, void* inArg3)
+{
+#pragma unused(inArg2, inArg3)
+    IOReturn theAnswer = kIOReturnSuccess;
+    ForthAudioDevice* theDriver = NULL;
+    const int* theControlID = NULL;
+    const UInt32* theNewControlValue = NULL;
+    
+    //	cast the arguments back to what they need to be
+    theDriver = OSDynamicCast(ForthAudioDevice, inTarget);
+    FailIfNULL(theDriver, theAnswer = kIOReturnBadArgument, Done, "ForthAudioDevice::_startHardware: this is not a ForthAudioDevice");
+    
+    theControlID = reinterpret_cast<const int*>(inArg0);
+    FailIfNULL(theControlID, theAnswer = kIOReturnBadArgument, Done, "ForthAudioDevice::_startHardware: no control ID");
+    
+    theNewControlValue = reinterpret_cast<UInt32*>(inArg1);
+    FailIfNULL(theNewControlValue, theAnswer = kIOReturnBadArgument, Done, "ForthAudioDevice::_startHardware: no control value");
+    
+    switch(*theControlID)
+    {
+        case kForthAudio_Control_MasterInputVolume:
+            theDriver->mMasterInputVolume = *theNewControlValue;
+            if(theDriver->mMasterInputVolume > kForthAudio_Control_MaxRawVolumeValue)
+            {
+                theDriver->mMasterInputVolume = kForthAudio_Control_MaxRawVolumeValue;
+            }
+            break;
+            
+        case kForthAudio_Control_MasterOutputVolume:
+            theDriver->mMasterOutputVolume = *theNewControlValue;
+            if(theDriver->mMasterOutputVolume > kForthAudio_Control_MaxRawVolumeValue)
+            {
+                theDriver->mMasterOutputVolume = kForthAudio_Control_MaxRawVolumeValue;
+            }
+            break;
+    };
+    
+Done:
+    return theAnswer;
+}
 
 
 IOReturn ForthAudioDevice::allocateBuffers()
