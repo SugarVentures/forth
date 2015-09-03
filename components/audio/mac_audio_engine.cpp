@@ -148,42 +148,34 @@ namespace oppvs {
 
 	int MacAudioEngine::init()
 	{
-		AudioComponentInstance auHAL;
-		if (createAudioOutputUnit(&auHAL) < 0)
-			return -1;
-		enableIO(auHAL);
+		
 		return 0;
 	}
 
-	int MacAudioEngine::createAudioOutputUnit(AudioComponentInstance* pinstance)
+	int MacAudioEngine::addNewCapture(uint32_t deviceid)
 	{
-		//Create an AudioOutputUnit
-		AudioComponent component;
-	    AudioComponentDescription description;
-	    
-	    description.componentType = kAudioUnitType_Output;
-	    description.componentSubType = kAudioUnitSubType_HALOutput;
-	    
-	    description.componentManufacturer = kAudioUnitManufacturer_Apple;
-	    description.componentFlags = 0;
-	    description.componentFlagsMask = 0;
-	    
-	    component = AudioComponentFindNext(NULL, &description);
-	    if (component == NULL)
-	    {
-	        printf("Can not find audio component\n");
-	        return -1;
-	    }
-	    AudioComponentInstanceNew(component, pinstance);
-		return 0;	
-	}
+		AudioDevice device;
+		if (getDeviceByID(deviceid, device) < 0)
+		{
+			printf("The device is not found\n");
+			return -1;
+		}
+		MacAudioCapture capture(device);
+		if (capture.init() < 0)
+		{
+			return -1;
+		}
+		return 0;
+	}	
 
-	void MacAudioEngine::enableIO(AudioComponentInstance& instance)
+	int MacAudioEngine::setInputDevice(AudioDeviceID deviceid, AudioComponentInstance& instance)
 	{
-		UInt32 enableIO;
-	    enableIO = 1;
-	    AudioUnitSetProperty(instance, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Input, 1, &enableIO, sizeof(enableIO));
-	    enableIO = 0;
-	    AudioUnitSetProperty(instance, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Output, 0, &enableIO, sizeof(enableIO));
+		UInt32 size;
+		OSStatus err = noErr;
+		size = sizeof(AudioDeviceID);
+		err = AudioUnitSetProperty(instance, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &deviceid, sizeof(deviceid));
+		if (err)
+			return -1;
+		return 0;
 	}
 } // oppvs

@@ -19,27 +19,27 @@ namespace  oppvs {
 
 	}
 
-	uint32_t AudioDevice::getDeviceID()
+	uint32_t AudioDevice::getDeviceID() const
 	{
 		return m_deviceID;
 	}
 
-	const std::string& AudioDevice::getDeviceName()
+	const std::string& AudioDevice::getDeviceName() const
 	{
 		return m_deviceName;
 	}
 
-	const std::string& AudioDevice::getManufacturer()
+	const std::string& AudioDevice::getManufacturer() const
 	{
 		return m_manufacturer;
 	}
 
-	int AudioDevice::getNumberChannels()
+	int AudioDevice::getNumberChannels() const
 	{
 		return m_numberChannels;
 	}
 
-	uint32_t AudioDevice::getSampleRate()
+	uint32_t AudioDevice::getSampleRate() const
 	{
 		return m_sampleRate;
 	}

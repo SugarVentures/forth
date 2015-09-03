@@ -13,11 +13,11 @@ namespace oppvs {
 			uint32_t safetyeOffset, uint32_t bufferSizeFrames, int noChannels, uint32_t sampleRate);
 		~AudioDevice();
 
-		uint32_t getDeviceID();
-		const std::string& getDeviceName();
-		const std::string& getManufacturer();
-		int getNumberChannels();
-		uint32_t getSampleRate();
+		uint32_t getDeviceID() const;
+		const std::string& getDeviceName() const;
+		const std::string& getManufacturer() const;
+		int getNumberChannels() const;
+		uint32_t getSampleRate() const;
 	private:
 		uint32_t m_deviceID;
 		std::string m_deviceName;
