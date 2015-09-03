@@ -168,14 +168,5 @@ namespace oppvs {
 		return 0;
 	}	
 
-	int MacAudioEngine::setInputDevice(AudioDeviceID deviceid, AudioComponentInstance& instance)
-	{
-		UInt32 size;
-		OSStatus err = noErr;
-		size = sizeof(AudioDeviceID);
-		err = AudioUnitSetProperty(instance, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &deviceid, sizeof(deviceid));
-		if (err)
-			return -1;
-		return 0;
-	}
+	
 } // oppvs

@@ -15,8 +15,12 @@ namespace oppvs {
 	private:
 		AudioComponentInstance m_auHAL;
 
-		int createAudioOutputUnit(AudioComponentInstance* pinstance);
-		void enableIO(AudioComponentInstance& instance);
+		int createAudioOutputUnit();
+		void enableIO();
+		int setInputDevice(AudioDeviceID deviceid);
+		void setupCallback();
+
+		static OSStatus AudioInputProc(void* inRefCon, AudioUnitRenderActionFlags* ioActionFlags, const AudioTimeStamp* inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList* ioData);
 	};
 } // oppvs
 

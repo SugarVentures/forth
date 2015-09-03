@@ -15,7 +15,7 @@ namespace oppvs {
 		void getListAudioDevices(std::vector<AudioDevice>& result);
 		int addNewCapture(uint32_t deviceid);
 		int init();
-		int setInputDevice(AudioDeviceID deviceid, AudioComponentInstance& instance);
+
 	private:
 		
 	};
