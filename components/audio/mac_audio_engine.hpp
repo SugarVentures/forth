@@ -11,5 +11,9 @@ namespace oppvs {
 		~MacAudioEngine();
 		
 		void getListAudioDevices(std::vector<AudioDevice>& result);
+		int init();
+	private:
+		int createAudioOutputUnit(AudioComponentInstance* pinstance);
+		void enableIO(AudioComponentInstance& instance);
 	};
 } // oppvs

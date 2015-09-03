@@ -8,7 +8,7 @@ CFLAGS = -Wall -g
 LDFLAGS = -L$(rootDir)/../../libs
 LIBS = 
 
-FRAMEWORKS = -framework AudioToolbox -framework CoreFoundation
+FRAMEWORKS = -framework AudioToolbox -framework CoreFoundation -framework AudioUnit
 
 OBJLIBS = libaudioengine.so
 
