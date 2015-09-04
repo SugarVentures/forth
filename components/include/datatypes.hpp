@@ -92,7 +92,58 @@ namespace oppvs {
     	void* user;
 	};
 
+	//Based on AudioBuffer Struct of Apple Core Audio
+	struct GenericAudioBuffer
+	{
+		uint32_t numberChannels;	//Number of interleaved channels in the buffer
+		uint32_t dataLength;		//Number of bytes pointed at by data;
+		void* data;
+
+		GenericAudioBuffer()
+		{
+			numberChannels = 0;
+			dataLength = 0;
+			data = NULL;
+		}
+
+	};
+
+	class GenericAudioBufferList {
+	public:
+		uint32_t nBuffers;
+		GenericAudioBuffer* buffers;
+		uint32_t nFrames;
+		uint8_t source;
+
+		GenericAudioBufferList(): nBuffers(0), buffers(NULL)
+		{
+			reset();
+		}
+
+		~GenericAudioBufferList()
+		{
+			reset();
+		}
+
+		void reset() {
+			if (nBuffers > 0 && buffers != NULL)
+			{
+				for (unsigned i = 0; i < nBuffers; ++i) {
+					if (buffers[i].data)
+					{
+						//data is pointed to the local audio buffer, then no release here
+						buffers[i].data = NULL;
+					}
+				}
+				delete [] buffers;
+			}
+			buffers = NULL;
+			nBuffers = 0;
+		}
+	};
+
 	typedef void (*frame_callback)(PixelBuffer& pf);	//Pointer to function that handles pixel buffer
+	typedef void (*audio_callback)(GenericAudioBufferList& ab);	//Pointer to function that handles audio buffer
 
 	const int DEFAULT_VIDEO_FRAME_WIDTH = 1280;
 	const int DEFAULT_VIDEO_FRAME_HEIGHT = 	720;
