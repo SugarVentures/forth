@@ -1,6 +1,13 @@
 #include "mac_audio_capture.hpp"
 
+
 namespace oppvs {
+	MacAudioCapture::~MacAudioCapture()
+	{
+		stop();
+		destroyAudioBufferList(m_audioBuffer);
+	}
+
 	int MacAudioCapture::init()
 	{
 		if (createAudioOutputUnit() < 0)
@@ -9,6 +16,32 @@ namespace oppvs {
 
 		if (setInputDevice(m_device.getDeviceID()) < 0)
 			return -1;
+		setupCallback();
+		OSStatus err = noErr;
+	    err = AudioUnitInitialize(m_auHAL);
+	    if (err)
+	    	return -1;
+
+		if (setupBuffer() < 0)
+			return -1;
+		return 0;
+	}
+
+	int MacAudioCapture::start()
+	{
+		OSStatus err = noErr;
+	    err = AudioOutputUnitStart(m_auHAL);
+	   	if (err)
+	   		return -1;
+		return 0;
+	}
+
+	int MacAudioCapture::stop()
+	{
+		if (m_auHAL != NULL)
+		{
+			OSStatus err = AudioOutputUnitStop(m_auHAL);
+		}
 		return 0;
 	}
 
@@ -57,6 +90,14 @@ namespace oppvs {
 
 	OSStatus MacAudioCapture::AudioInputProc(void* inRefCon, AudioUnitRenderActionFlags* ioActionFlags, const AudioTimeStamp* inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList* ioData)
 	{
+		printf("Receive data\n");
+		MacAudioCapture* capture = (MacAudioCapture*)inRefCon;
+		OSStatus err = AudioUnitRender(capture->m_auHAL, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, capture->m_audioBuffer);
+		if (err)
+		{
+			printf("AudioUnitRender failed with error %i\n", err);
+			return err;
+		}
 		return noErr;
 	}
 
@@ -64,6 +105,95 @@ namespace oppvs {
 	{
 		AURenderCallbackStruct input;
 		input.inputProc = AudioInputProc;
-		input.inputProcRefCon = 0;
+		input.inputProcRefCon = this;
+
+    	AudioUnitSetProperty(m_auHAL, kAudioOutputUnitProperty_SetInputCallback, kAudioUnitScope_Global, 0, &input, sizeof(input));
+	}
+
+	int MacAudioCapture::setupBuffer()
+	{
+		CAStreamBasicDescription deviceFormat;
+		UInt32 bufferSizeFrames, propsize;		
+    	UInt32 size = sizeof(CAStreamBasicDescription);
+
+    	//Get the size of the IO buffers
+    	propsize = sizeof(bufferSizeFrames);
+    	OSStatus err = AudioUnitGetProperty(m_auHAL, kAudioDevicePropertyBufferFrameSize, kAudioUnitScope_Global, 0, &bufferSizeFrames, &propsize);
+		if (err)
+			return -1;
+ 
+	     //Get the input device format
+	    err = AudioUnitGetProperty (m_auHAL, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 1, &deviceFormat, &size);
+	    if (err)
+	    	return -1;
+	    printf("Input Device Format: \n");
+	    deviceFormat.Print();
+	    //Get the output format
+	    err = AudioUnitGetProperty (m_auHAL, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &m_outputFormat, &size);
+	 	if (err)
+	 		return -1;
+
+	    //set the desired format to the device's sample rate
+	    m_outputFormat.mSampleRate =  deviceFormat.mSampleRate;
+	 
+	     //set format to output scope
+	    AudioUnitSetProperty(m_auHAL, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &m_outputFormat, sizeof(CAStreamBasicDescription));
+	    
+	    printf("Output Format: \n");
+	    m_outputFormat.Print();
+	    printf("Bits Per Channel: %d Bytes Per Frame: %d Frame Per Packet: %d\n", m_outputFormat.mBitsPerChannel, m_outputFormat.mBytesPerFrame, 
+	    	m_outputFormat.mFramesPerPacket);
+
+		m_audioBuffer = allocateAudioBufferListWithNumChannels(m_outputFormat.mChannelsPerFrame, bufferSizeFrames * m_outputFormat.mBytesPerFrame);
+		if (m_audioBuffer == NULL)
+		{
+			printf("Cannot allocate buffer for audio capture\n");
+			return -1;
+		}
+		return 0;
+	}
+
+	AudioBufferList* MacAudioCapture::allocateAudioBufferListWithNumChannels(UInt32 numChannels, UInt32 size)
+	{
+		AudioBufferList*			list = NULL;
+		UInt32						i = 0;
+		
+		list = (AudioBufferList*) calloc(1, sizeof(AudioBufferList) + numChannels * sizeof(AudioBuffer));
+		if (list == NULL)
+			return NULL;
+		
+		list->mNumberBuffers = numChannels;
+		
+		for (i = 0; i < numChannels; ++i)
+		{
+			list->mBuffers[i].mNumberChannels = 1;
+			list->mBuffers[i].mDataByteSize = size;
+			list->mBuffers[i].mData = malloc(size);
+			if (list->mBuffers[i].mData == NULL)
+			{
+				destroyAudioBufferList(list);
+				return NULL;
+			}
+		}
+		
+		return list;
+		
+	}
+
+	void MacAudioCapture::destroyAudioBufferList(AudioBufferList* list)
+	{
+		UInt32 i = 0;
+		printf("Destroy audio buffer list\n");
+		if (list)
+		{
+			for (i = 0; i < list->mNumberBuffers; i++)
+			{
+				if (list->mBuffers[i].mData)
+				{
+					free(list->mBuffers[i].mData);
+				}
+			}
+			free(list);
+		}
 	}
 } // oppvs

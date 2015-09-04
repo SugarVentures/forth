@@ -11,6 +11,8 @@ namespace oppvs {
 		AudioCapture(const AudioDevice& device) : m_device(device) {}
 		virtual ~AudioCapture() {}
 		virtual int init() { return 0;}
+		virtual int start() { return 0; }
+		virtual int stop() { return 0; }
 	protected:
 		AudioDevice m_device;
 	};

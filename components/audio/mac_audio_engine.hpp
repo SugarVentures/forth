@@ -4,6 +4,8 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <CoreFoundation/CoreFoundation.h>
 
+#include <vector>
+
 namespace oppvs {
 
 	class MacAudioEngine : public AudioEngine
@@ -15,8 +17,8 @@ namespace oppvs {
 		void getListAudioDevices(std::vector<AudioDevice>& result);
 		int addNewCapture(uint32_t deviceid);
 		int init();
-
+		int shutdown();
 	private:
-		
+		std::vector<MacAudioCapture*> m_listCaptures;
 	};
 } // oppvs

@@ -13,6 +13,7 @@ FRAMEWORKS = -framework AudioToolbox -framework CoreFoundation -framework AudioU
 OBJLIBS = libaudioengine.so
 
 SRCS = $(wildcard *.cpp)
+SRCS += $(wildcard mac_utility/*.cpp)
 OBJS = $(subst .cpp,.o,$(SRCS))
 
 

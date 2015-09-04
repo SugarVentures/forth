@@ -3,12 +3,12 @@
 namespace oppvs {
 	MacAudioEngine::MacAudioEngine()
 	{
-
+		shutdown();
 	}
 
 	MacAudioEngine::~MacAudioEngine()
 	{
-
+		shutdown();
 	}
 
 	void MacAudioEngine::getListAudioDevices(std::vector<AudioDevice>& result)
@@ -160,13 +160,26 @@ namespace oppvs {
 			printf("The device is not found\n");
 			return -1;
 		}
-		MacAudioCapture capture(device);
-		if (capture.init() < 0)
+		MacAudioCapture* capture = new MacAudioCapture(device);
+		if (capture->init() < 0)
 		{
+			printf("Can not init the audio capture device\n");
 			return -1;
 		}
+		if (capture->start() < 0)
+		{
+			printf("Can not start the audio capture\n");
+		}
+		m_listCaptures.push_back(capture);
 		return 0;
 	}	
 
-	
+	int MacAudioEngine::shutdown()
+	{
+		for (unsigned i = 0; i < m_listCaptures.size(); ++i) {
+			delete m_listCaptures.back();
+			m_listCaptures.pop_back();
+		}
+		return 0;
+	}	
 } // oppvs
