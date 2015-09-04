@@ -6,6 +6,8 @@ namespace oppvs {
 	{
 		stop();
 		destroyAudioBufferList(m_audioBuffer);
+		if (m_auHAL)
+			AudioComponentInstanceDispose(m_auHAL);
 	}
 
 	int MacAudioCapture::init()
@@ -90,7 +92,6 @@ namespace oppvs {
 
 	OSStatus MacAudioCapture::AudioInputProc(void* inRefCon, AudioUnitRenderActionFlags* ioActionFlags, const AudioTimeStamp* inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList* ioData)
 	{
-		printf("Receive data\n");
 		MacAudioCapture* capture = (MacAudioCapture*)inRefCon;
 		OSStatus err = AudioUnitRender(capture->m_auHAL, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, capture->m_audioBuffer);
 		if (err)
@@ -98,6 +99,10 @@ namespace oppvs {
 			printf("AudioUnitRender failed with error %i\n", err);
 			return err;
 		}
+		//Convert to GenericAudioBufferList
+		convertABLToGenericABL(capture->m_audioBuffer, &capture->m_callbackBuffer);
+		capture->m_callbackBuffer.nFrames = inNumberFrames;
+		capture->callbackAudio(capture->m_callbackBuffer);
 		return noErr;
 	}
 
@@ -194,6 +199,28 @@ namespace oppvs {
 				}
 			}
 			free(list);
+		}
+	}
+
+	void convertABLToGenericABL(AudioBufferList* abl, GenericAudioBufferList* gbl)
+	{
+		if (abl != NULL && gbl != NULL)
+		{
+			if (gbl->nBuffers != abl->mNumberBuffers)
+			{
+				if (gbl->nBuffers != 0)
+				{
+					delete [] gbl->buffers;
+				}
+				gbl->buffers = new GenericAudioBuffer[abl->mNumberBuffers];
+				gbl->nBuffers = abl->mNumberBuffers;
+			}
+			for (unsigned i = 0; i < abl->mNumberBuffers; ++i) {
+				gbl->buffers[i].numberChannels = abl->mBuffers[i].mNumberChannels;
+				gbl->buffers[i].dataLength = abl->mBuffers[i].mDataByteSize;
+				//Point to the memory instead of copying
+				gbl->buffers[i].data = abl->mBuffers[i].mData;
+			}
 		}
 	}
 } // oppvs

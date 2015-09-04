@@ -39,6 +39,8 @@ namespace oppvs {
 			}
 			return -1;
 		}
+
+		audio_callback callbackAudio;
 	protected:
 		std::vector<AudioDevice> m_listAudioDevices;
 		void resetAudioDeviceList()

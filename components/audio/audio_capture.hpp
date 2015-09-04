@@ -13,8 +13,11 @@ namespace oppvs {
 		virtual int init() { return 0;}
 		virtual int start() { return 0; }
 		virtual int stop() { return 0; }
+
+		audio_callback callbackAudio;
 	protected:
 		AudioDevice m_device;
+		GenericAudioBufferList m_callbackBuffer;
 	};
 } // oppvs
 

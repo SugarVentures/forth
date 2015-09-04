@@ -161,6 +161,7 @@ namespace oppvs {
 			return -1;
 		}
 		MacAudioCapture* capture = new MacAudioCapture(device);
+		capture->callbackAudio = callbackAudio;
 		if (capture->init() < 0)
 		{
 			printf("Can not init the audio capture device\n");
