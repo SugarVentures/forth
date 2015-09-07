@@ -110,7 +110,7 @@ namespace oppvs {
 
 	class GenericAudioBufferList {
 	public:
-		uint32_t nBuffers;
+		uint32_t nBuffers;	//1 channel - 1 buffer
 		GenericAudioBuffer* buffers;
 		uint32_t nFrames;
 		uint8_t source;
@@ -149,6 +149,12 @@ namespace oppvs {
 	const int DEFAULT_VIDEO_FRAME_HEIGHT = 	720;
 	const int ST_VIDEO_STREAMING = 1;
 
+	enum MEDIA_CODEC
+	{
+		MEDIA_CODEC_VIDEO_FRAME_VP8 = 1,
+		MEDIA_CODEC_AUDIO_OPUS = 2
+	};
+
 	struct VideoSourceInfo
 	{
 		uint8_t source;
@@ -171,9 +177,8 @@ namespace oppvs {
 
 	struct VideoStreamInfo
 	{
-		uint16_t videoWidth;
-		uint16_t videoHeight;
 		uint8_t noSources;
+		uint8_t codecType;
 		VideoSourceInfo *sources;
 
 		VideoStreamInfo()
@@ -182,11 +187,32 @@ namespace oppvs {
 		}
 	};
 
+	struct AudioSourceInfo
+	{
+		uint8_t source;
+		uint32_t numberChannels;
+		uint64_t sampleRate;
+	};
+
+	struct AudioStreamInfo
+	{
+		uint8_t noSources;
+		uint8_t codecType;
+		AudioSourceInfo * sources;
+
+		AudioStreamInfo()
+		{
+			noSources = 0;
+		}
+	};
+
 	struct ServiceInfo
 	{
 		uint8_t type;
-		uint32_t key;	//In case of video streaming, key = ssrc
+		uint32_t key;					//In case of video streaming, key = ssrc
+		uint64_t startTimeStamp;		//Timestamp to start stream in global time
 		VideoStreamInfo videoStreamInfo;
+		AudioStreamInfo audioStreamInfo;
 	};
 
 }
