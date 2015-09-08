@@ -8,7 +8,8 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../threa
 		-I$(rootDir)/../../libs/libvpx -I$(rootDir)/../error \
 		-I$(rootDir)/../network \
 		-I$(rootDir)/../streaming \
-		-I$(rootDir)/../server -I$(rootDir)/../client 
+		-I$(rootDir)/../server -I$(rootDir)/../client  \
+		-I$(rootDir)/../audio
 
 INCDIR += -I$(rootDir)/../../libs/libnice -I$(rootDir)/../../libs/libnice/agent \
 		  -I/usr/local/include/glib-2.0 \
@@ -32,10 +33,13 @@ ENCODINGLIBS = -lyuv -lvpx
 SRCS = testvideoengine.cpp
 OBJS = $(subst .cpp,.o,$(SRCS))
 
+AUDIOLDFLAGS = -L$(rootDir)/../../libs
+AUDIOLIBS = -laudioengine
+
 rootDir = .
 
 #all: testvideoengine testnetworkengine teststream testvp teststun testbuffer testdatastream proclib
-all: testice proclib
+all: testaudio proclib
 
 testvideoengine: $(OBJS)
 	$(CXX) $(INCDIR) $(CFLAGS) $(VIDEOLDFLAGS) $(VIDEOLIBS) $(OBJS) -o testvideoengine
@@ -86,6 +90,12 @@ testice: testice.o
 testice.o: testice.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
 
+testaudio: testaudio.o
+	$(CXX) $(INCDIR) $(CFLAGS) $(AUDIOLDFLAGS) $< $(AUDIOLIBS) -o $@
+
+testaudio.o: testaudio.cpp
+	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
+
 proclib:
 	cp $(rootDir)/../video/*.so $(rootDir)
 	cp $(rootDir)/../network/*.so $(rootDir)
@@ -95,7 +105,6 @@ proclib:
 	cp $(rootDir)/../../libs/libsrtp/*.a $(rootDir)
 	cp $(rootDir)/../../libs/*.a $(rootDir)
 	cp $(rootDir)/../encoding/*.so $(rootDir)
-	cp $(rootDir)/../server/*.so $(rootDir)
 	cp $(rootDir)/../client/*.so $(rootDir)
 	
 clean:
