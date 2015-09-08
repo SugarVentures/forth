@@ -6,7 +6,8 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../erro
 		-I$(rootDir)/../../libs/libyuv/include \
 		-I$(rootDir)/../../libs/libvpx \
 		-I$(rootDir)/../../libs/libsrtp/crypto/include  \
-		-I$(rootDir)/../misc
+		-I$(rootDir)/../misc \
+		-I$(rootDir)/../../libs/libopus/include
 
 CFLAGS = -Wall -g
 
