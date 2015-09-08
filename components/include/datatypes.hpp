@@ -114,6 +114,7 @@ namespace oppvs {
 		GenericAudioBuffer* buffers;
 		uint32_t nFrames;
 		uint8_t source;
+		double sampleTime;
 
 		GenericAudioBufferList(): nBuffers(0), buffers(NULL)
 		{
