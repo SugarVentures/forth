@@ -1,5 +1,5 @@
 #include "mac_audio_capture.hpp"
-
+#include "mac_audio_tool.hpp"
 
 namespace oppvs {
 	MacAudioCapture::~MacAudioCapture()
@@ -104,6 +104,7 @@ namespace oppvs {
 		//Convert to GenericAudioBufferList
 		convertABLToGenericABL(capture->m_audioBuffer, &capture->m_callbackBuffer);
 		capture->m_callbackBuffer.nFrames = inNumberFrames;
+		capture->m_callbackBuffer.sampleTime = inTimeStamp->mSampleTime;
 		capture->callbackAudio(capture->m_callbackBuffer);
 		return noErr;
 	}
@@ -160,69 +161,5 @@ namespace oppvs {
 		return 0;
 	}
 
-	AudioBufferList* MacAudioCapture::allocateAudioBufferListWithNumChannels(UInt32 numChannels, UInt32 size)
-	{
-		AudioBufferList*			list = NULL;
-		UInt32						i = 0;
-		
-		list = (AudioBufferList*) calloc(1, sizeof(AudioBufferList) + numChannels * sizeof(AudioBuffer));
-		if (list == NULL)
-			return NULL;
-		
-		list->mNumberBuffers = numChannels;
-		
-		for (i = 0; i < numChannels; ++i)
-		{
-			list->mBuffers[i].mNumberChannels = 1;
-			list->mBuffers[i].mDataByteSize = size;
-			list->mBuffers[i].mData = malloc(size);
-			if (list->mBuffers[i].mData == NULL)
-			{
-				destroyAudioBufferList(list);
-				return NULL;
-			}
-		}
-		
-		return list;
-		
-	}
-
-	void MacAudioCapture::destroyAudioBufferList(AudioBufferList* list)
-	{
-		UInt32 i = 0;
-		printf("Destroy audio buffer list\n");
-		if (list)
-		{
-			for (i = 0; i < list->mNumberBuffers; i++)
-			{
-				if (list->mBuffers[i].mData)
-				{
-					free(list->mBuffers[i].mData);
-				}
-			}
-			free(list);
-		}
-	}
-
-	void convertABLToGenericABL(AudioBufferList* abl, GenericAudioBufferList* gbl)
-	{
-		if (abl != NULL && gbl != NULL)
-		{
-			if (gbl->nBuffers != abl->mNumberBuffers)
-			{
-				if (gbl->nBuffers != 0)
-				{
-					delete [] gbl->buffers;
-				}
-				gbl->buffers = new GenericAudioBuffer[abl->mNumberBuffers];
-				gbl->nBuffers = abl->mNumberBuffers;
-			}
-			for (unsigned i = 0; i < abl->mNumberBuffers; ++i) {
-				gbl->buffers[i].numberChannels = abl->mBuffers[i].mNumberChannels;
-				gbl->buffers[i].dataLength = abl->mBuffers[i].mDataByteSize;
-				//Point to the memory instead of copying
-				gbl->buffers[i].data = abl->mBuffers[i].mData;
-			}
-		}
-	}
+	
 } // oppvs

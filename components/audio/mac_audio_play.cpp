@@ -1,4 +1,5 @@
 #include "mac_audio_play.hpp"
+#include "mac_audio_tool.hpp"
 
 namespace oppvs {
 	MacAudioPlay::MacAudioPlay()
@@ -8,12 +9,13 @@ namespace oppvs {
 
 	MacAudioPlay::MacAudioPlay(const AudioDevice& device, uint64_t isr, uint32_t inc) : AudioPlay(device, isr, inc)
 	{
-
+		m_firstInputTime = -1;
+		m_firstOutputTime = -1;
 	}
 
 	MacAudioPlay::~MacAudioPlay()
 	{
-
+		cleanup();
 	}
 
 	int MacAudioPlay::init()
@@ -27,16 +29,59 @@ namespace oppvs {
 		err = setupBuffer();
 		if (err)
 			return -1;
+		err = AUGraphConnectNodeInput(m_graph, m_varispeedNode, 0, m_outputNode, 0);
+		if (err)
+			return -1;
+		err = AUGraphInitialize(m_graph);
+		if (err)
+			return -1;
+
+		return 0;
+	}
+
+	void MacAudioPlay::cleanup()
+	{
+		stop();
+		AUGraphClose(m_graph);
+		DisposeAUGraph(m_graph);
+	}
+
+	bool MacAudioPlay::isRunning()
+	{
+		OSStatus err = noErr;
+		Boolean graphRunning = false;
+		if (m_graph)
+		{
+			err = AUGraphIsRunning(m_graph, &graphRunning);
+			checkErr(err);
+			m_firstInputTime = -1;
+		}
+
+		return graphRunning;
+	}
+
+	int MacAudioPlay::start()
+	{
+		OSStatus err = noErr;
+		if (!isRunning()) {
+			//Start pulling for audio data
+			err = AUGraphStart(m_graph);
+			checkErr(err);
+			m_firstInputTime = -1;
+			m_firstOutputTime = -1;
+		}
 		return 0;
 	}
 
 	int MacAudioPlay::stop()
 	{
-		if (m_outputUnit != NULL)
+		OSStatus err = noErr;
+		if (isRunning())
 		{
-			OSStatus err = AudioOutputUnitStop(m_outputUnit);
-			if (err)
-				return -1;
+			err = AUGraphStop(m_graph);
+			checkErr(err);
+			m_firstInputTime = -1;
+			m_firstOutputTime = -1;
 		}
 		return 0;
 	}
@@ -158,6 +203,35 @@ namespace oppvs {
 							 AudioBufferList * ioData)
 	{
 		OSStatus err = noErr;
+		MacAudioPlay* player = (MacAudioPlay*)inRefCon;
+		double rate = 1.0;
+		if (player->getFirstInputTime() < 0.)
+		{
+			//No input
+			makeBufferSilent(ioData);
+			return err;
+		}
+
+		err = AudioUnitSetParameter(player->m_varispeedUnit, kVarispeedParam_PlaybackRate, kAudioUnitScope_Global, 0, rate, 0);
+		checkErr(err);
+		
+		if (player->m_buffer)
+		{
+			if (player->m_firstOutputTime < 0.0)
+			{
+				player->m_firstOutputTime = TimeStamp->mSampleTime;
+				double delta = player->m_firstInputTime - player->m_firstOutputTime;
+				player->m_offset = 1175.0; //Fix for now
+				if (delta < 0.0)		
+					player->m_offset -= delta;
+				else
+					player->m_offset = -delta + player->m_offset;
+				makeBufferSilent(ioData);
+				return noErr;
+			}
+
+			err = player->m_buffer->Fetch(ioData, inNumberFrames, TimeStamp->mSampleTime - player->m_offset);
+		}
 		return err;
 	}
 
@@ -198,5 +272,20 @@ namespace oppvs {
 		err = AudioUnitSetProperty(m_outputUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &outputFormat, propertySize);
 		checkErr(err);
 		return err;
+	}
+
+	void MacAudioPlay::attachBuffer(CARingBuffer* pb)
+	{
+		m_buffer = pb;
+	}
+
+	double MacAudioPlay::getFirstInputTime()
+	{
+		return m_firstInputTime;
+	}
+
+	void MacAudioPlay::setFirstInputTime(double itime)
+	{
+		m_firstInputTime = itime;
 	}
 } // oppvs

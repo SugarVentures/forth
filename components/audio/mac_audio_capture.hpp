@@ -28,13 +28,9 @@ namespace oppvs {
 		void setupCallback();
 		int setupBuffer();
 
-		AudioBufferList* allocateAudioBufferListWithNumChannels(UInt32 numChannels, UInt32 size);
-		void destroyAudioBufferList(AudioBufferList* list);
-
 		static OSStatus AudioInputProc(void* inRefCon, AudioUnitRenderActionFlags* ioActionFlags, const AudioTimeStamp* inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList* ioData);
 	};
 
-	void convertABLToGenericABL(AudioBufferList* abl, GenericAudioBufferList* gbl);
 } // oppvs
 
 #endif // OPPVS_MAC_AUDIO_CAPTURE_HPP

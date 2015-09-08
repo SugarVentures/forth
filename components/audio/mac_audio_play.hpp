@@ -5,6 +5,7 @@
 #import <CoreAudio/CoreAudio.h>
 //#import <CoreFoundation/CoreFoundation.h>
 #include "mac_utility/CAStreamBasicDescription.h"
+#include "mac_utility/CARingBuffer.h"
 #include "audio_play.hpp"
 
 namespace oppvs {
@@ -28,6 +29,12 @@ namespace oppvs {
 		int init();
 		int start();
 		int stop();
+		void cleanup();
+		void attachBuffer(CARingBuffer*);
+
+		double getFirstInputTime();
+		void setFirstInputTime(double);
+
 	private:
 		//AudioUnits and Graph
 		AUGraph m_graph;
@@ -35,13 +42,16 @@ namespace oppvs {
 		AudioUnit m_varispeedUnit;
 		AUNode m_outputNode;
 		AudioUnit m_outputUnit;
-
-
+		CARingBuffer *m_buffer;
+		double m_firstInputTime;
+		double m_firstOutputTime;
+		double m_offset;
 
 		OSStatus setupGraph(AudioDeviceID deviceid);
 		OSStatus makeGraph();
 		OSStatus setOutputDevice(AudioDeviceID deviceid);
 		OSStatus setupBuffer();
+		bool isRunning();
 
 		static OSStatus OutputProc(void *inRefCon,
 							 AudioUnitRenderActionFlags *ioActionFlags,
@@ -49,7 +59,9 @@ namespace oppvs {
 							 UInt32 inBusNumber,
 							 UInt32 inNumberFrames,
 							 AudioBufferList * ioData);
+
 	};
+
 } // oppvs
 
 #endif // OPPVS_MAC_AUDIO_PLAY_HPP
