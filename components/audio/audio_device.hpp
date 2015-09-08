@@ -11,6 +11,7 @@ namespace oppvs {
 		AudioDevice();
 		AudioDevice(uint32_t id, const std::string& deviceName, const std::string& deviceManu,
 			uint32_t safetyeOffset, uint32_t bufferSizeFrames, int noChannels, uint32_t sampleRate);
+		AudioDevice(uint32_t id);
 		~AudioDevice();
 
 		uint32_t getDeviceID() const;

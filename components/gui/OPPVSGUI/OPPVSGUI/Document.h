@@ -21,7 +21,6 @@
 {
 @private
     oppvs::MacVideoEngine *videoEngine;
-    oppvs::PixelBuffer *sharedBuffer;
 }
 
 @property NSMutableArray *videoCaptureDevices;

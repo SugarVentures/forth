@@ -14,6 +14,11 @@ namespace  oppvs {
 	{
 	}
 
+	AudioDevice::AudioDevice(uint32_t id): m_deviceID(id)
+	{
+
+	}
+
 	AudioDevice::~AudioDevice()
 	{
 

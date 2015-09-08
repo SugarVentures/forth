@@ -43,6 +43,8 @@ namespace oppvs {
 		if (m_auHAL != NULL)
 		{
 			OSStatus err = AudioOutputUnitStop(m_auHAL);
+			if (err)
+				return -1;
 		}
 		return 0;
 	}
