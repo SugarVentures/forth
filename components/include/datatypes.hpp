@@ -179,7 +179,6 @@ namespace oppvs {
 	struct VideoStreamInfo
 	{
 		uint8_t noSources;
-		uint8_t codecType;
 		VideoSourceInfo *sources;
 
 		VideoStreamInfo()
@@ -188,9 +187,13 @@ namespace oppvs {
 		}
 	};
 
+	const uint8_t AUDIO_TYPE_VOIP = 1;	//Voice signals
+	const uint8_t AUDIO_TYPE_MIXED = 2;	//Mixed music/voice
+
 	struct AudioSourceInfo
 	{
 		uint8_t source;
+		uint8_t type;
 		uint32_t numberChannels;
 		uint64_t sampleRate;
 	};
@@ -198,8 +201,7 @@ namespace oppvs {
 	struct AudioStreamInfo
 	{
 		uint8_t noSources;
-		uint8_t codecType;
-		AudioSourceInfo * sources;
+		AudioSourceInfo *sources;
 
 		AudioStreamInfo()
 		{

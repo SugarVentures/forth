@@ -12,7 +12,7 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../erro
 CFLAGS = -Wall -g
 
 LDFLAGS = -L$(rootDir)/../../libs
-LIBS = -lyuv -lvpx -lsrtp -lmisc
+LIBS = -lyuv -lvpx -lsrtp -lmisc -lopus
 
 OBJLIBS = libencodingengine.so
 

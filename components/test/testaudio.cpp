@@ -7,7 +7,7 @@
 #include <iostream>
 
 #include "mac_audio_tool.hpp"
-
+#include "audio_opus_encoder.hpp"
 
 using namespace oppvs;
 CARingBuffer *mBuffer;
@@ -93,8 +93,18 @@ int main(int argc, char const *argv[])
 	{
 		return -1;
 	}
-
 	printf("Successful to add new audio capture\n");
+
+	AudioOpusEncoder encoder;
+	AudioStreamInfo info;
+	info.noSources = 1;
+	info.sources = new AudioSourceInfo[info.noSources];
+	info.sources[0].source = 1;
+	info.sources[0].type = AUDIO_TYPE_MIXED;
+	info.sources[0].numberChannels = 2;
+	info.sources[0].sampleRate = 44100;
+	encoder.init(info);
+	
 
 	AudioDevice output(40);
 	MacAudioPlay player(output, 44100, 2);

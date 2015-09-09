@@ -18,7 +18,8 @@ namespace oppvs {
 		~AudioOpusEncoder();
 
 		int init(const AudioStreamInfo&);
-
+		void cleanup();
+		int encode(const void* input, int source, uint8_t* output);
 	private:
 		struct AudioEncodingController
 		{
@@ -27,6 +28,10 @@ namespace oppvs {
 		};
 
 		std::vector<AudioEncodingController*> m_controllers;
+
+		OpusEncoder* initOpus(int sampleRate, int channels, int application);
+		int getCodingMode(uint8_t);
+		void destroyOpus(OpusEncoder* enc);
 	};
 } // oppsvs
 

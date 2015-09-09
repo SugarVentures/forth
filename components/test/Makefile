@@ -9,7 +9,8 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../threa
 		-I$(rootDir)/../network \
 		-I$(rootDir)/../streaming \
 		-I$(rootDir)/../server -I$(rootDir)/../client  \
-		-I$(rootDir)/../audio
+		-I$(rootDir)/../audio \
+		-I$(rootDir)/../../libs/libopus/include
 
 INCDIR += -I$(rootDir)/../../libs/libnice -I$(rootDir)/../../libs/libnice/agent \
 		  -I/usr/local/include/glib-2.0 \
@@ -34,7 +35,7 @@ SRCS = testvideoengine.cpp
 OBJS = $(subst .cpp,.o,$(SRCS))
 
 AUDIOLDFLAGS = -L$(rootDir)/../../libs
-AUDIOLIBS = -laudioengine
+AUDIOLIBS = -laudioengine -lopus -lencodingengine
 
 rootDir = .
 
@@ -106,7 +107,7 @@ proclib:
 	cp $(rootDir)/../../libs/*.a $(rootDir)
 	cp $(rootDir)/../encoding/*.so $(rootDir)
 	cp $(rootDir)/../client/*.so $(rootDir)
-	
+	cp $(rootDir)/../audio/*.o $(rootDir)
 clean:
 	$(RM) *.o
 
