@@ -1,5 +1,6 @@
 
 CXX = g++
+CX = gcc
 RM = rm -f
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error  \
@@ -19,18 +20,21 @@ OBJLIBS = libencodingengine.so
 SRCS = $(wildcard *.cpp)
 OBJS = $(subst .cpp,.o,$(SRCS))
 
-
+resample_CPPFLAGS = -DSPX_RESAMPLE_EXPORT= -DRANDOM_PREFIX=oppvs -DOUTSIDE_SPEEX -DFLOATING_POINT
 
 rootDir = .
 
 all: $(OBJLIBS) install
 
-$(OBJLIBS): $(OBJS)
-	$(CXX) $(INCDIR) $(LDFLAGS) -fgnu-runtime -shared -o $(OBJLIBS) $(OBJS) $(LIBS)
+$(OBJLIBS): opus-resample.o $(OBJS)
+	$(CXX) $(INCDIR) $(LDFLAGS) -fgnu-runtime -shared -o $(OBJLIBS) $(OBJS) opus-resample.o $(LIBS)
 
+opus-resample.o: resample/*.c
+	$(CX) $(CFLAGS) $(resample_CPPFLAGS) -c -o $@ $<
 
-%.o: %.cpp
-	$(CXX) $(INCDIR) $(CFLAGS) -c -o $@ $<	
+%.o: %.cpp 
+	$(CXX) $(INCDIR) $(CFLAGS) $(resample_CPPFLAGS) -c -o $@ $<	
+
 
 install:
 	cp *.so $(rootDir)/../../libs

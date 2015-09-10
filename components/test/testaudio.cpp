@@ -8,11 +8,17 @@
 
 #include "mac_audio_tool.hpp"
 #include "audio_opus_encoder.hpp"
+#include "audio_opus_decoder.hpp"
 
 using namespace oppvs;
 CARingBuffer *mBuffer;
 AudioBufferList *mAudioBufferList;
 MacAudioPlay* pplayer;
+
+AudioOpusEncoder *pencoder;
+AudioOpusDecoder *pdecoder;
+float *in;
+uint8_t *out;
 
 int initAppExitListener()
 {
@@ -54,11 +60,30 @@ void audioCallback(GenericAudioBufferList& ab)
 	for (unsigned i = 0; i < ab.nBuffers; ++i) {
 		printf("Data Size: %d Interleaved Channel: %d\n", ab.buffers[i].dataLength, ab.buffers[i].numberChannels);
 	}*/
-	//if (mFirstInputTime < 0.)
-	//	mFirstInputTime = ab.sampleTime;
-
-	if (!pplayer)
+	
+	if (!pplayer || !pencoder)
 		return;
+	if (in == NULL)
+	{
+		int totalsize = 0;
+		for(unsigned i = 0; i < ab.nBuffers; ++i) {
+			totalsize += ab.buffers[i].dataLength;
+		}
+		in = new float[totalsize / sizeof(float)];
+
+	}
+	int pos = 0;
+	for(unsigned i = 0; i < ab.nBuffers; ++i) {
+		memcpy(in + pos, ab.buffers[i].data, ab.buffers[i].dataLength);
+		pos += ab.buffers[i].dataLength;
+	}
+
+	if (out == NULL)
+	{
+		out = new uint8_t[AUDIO_MAX_ENCODING_PACKET_SIZE];
+	}
+	int len = pencoder->encode(in, 1, out);
+
 	if (pplayer->getFirstInputTime() < 0.)
 		pplayer->setFirstInputTime(ab.sampleTime);
 	convertGenericABLToABL(&ab, mAudioBufferList);
@@ -72,6 +97,10 @@ int main(int argc, char const *argv[])
     initAppExitListener();
 
     pplayer = NULL;
+    pencoder = NULL;
+    in = NULL;
+    out = NULL;
+
     mBuffer = NULL;
     mBuffer = new CARingBuffer();
     mBuffer->Allocate(2, 4, 512 * 20);
@@ -101,10 +130,16 @@ int main(int argc, char const *argv[])
 	info.sources = new AudioSourceInfo[info.noSources];
 	info.sources[0].source = 1;
 	info.sources[0].type = AUDIO_TYPE_MIXED;
+	info.sources[0].format = AUDIO_FORMAT_FLOAT;
 	info.sources[0].numberChannels = 2;
+	info.sources[0].samplePerChannels = 512;
 	info.sources[0].sampleRate = 44100;
 	encoder.init(info);
-	
+	pencoder = &encoder;
+
+	AudioOpusDecoder decoder;
+	decoder.init(info);
+	pdecoder = &decoder;
 
 	AudioDevice output(40);
 	MacAudioPlay player(output, 44100, 2);
@@ -115,6 +150,9 @@ int main(int argc, char const *argv[])
 
 	waitForAppExitSignal();
 	player.stop();
+
+	delete [] in;
+	delete [] out;
 	printf("End programing\n");
 	return 0;
 }

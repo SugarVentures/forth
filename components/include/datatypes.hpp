@@ -190,11 +190,18 @@ namespace oppvs {
 	const uint8_t AUDIO_TYPE_VOIP = 1;	//Voice signals
 	const uint8_t AUDIO_TYPE_MIXED = 2;	//Mixed music/voice
 
+	const uint8_t AUDIO_FORMAT_FLOAT = 1;
+	const uint8_t AUDIO_FORMAT_INT = 2;
+
+	const uint16_t AUDIO_MAX_ENCODING_PACKET_SIZE = 4000;
+
 	struct AudioSourceInfo
 	{
 		uint8_t source;
 		uint8_t type;
+		uint8_t format;	//Float or Int
 		uint32_t numberChannels;
+		uint32_t samplePerChannels;
 		uint64_t sampleRate;
 	};
 

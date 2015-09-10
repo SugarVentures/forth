@@ -37,6 +37,8 @@ OBJS = $(subst .cpp,.o,$(SRCS))
 AUDIOLDFLAGS = -L$(rootDir)/../../libs
 AUDIOLIBS = -laudioengine -lopus -lencodingengine
 
+resample_CPPFLAGS = -DSPX_RESAMPLE_EXPORT= -DRANDOM_PREFIX=oppvs -DOUTSIDE_SPEEX -DFLOATING_POINT
+
 rootDir = .
 
 #all: testvideoengine testnetworkengine teststream testvp teststun testbuffer testdatastream proclib
@@ -92,10 +94,10 @@ testice.o: testice.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
 
 testaudio: testaudio.o
-	$(CXX) $(INCDIR) $(CFLAGS) $(AUDIOLDFLAGS) $< $(AUDIOLIBS) -o $@
+	$(CXX) $(INCDIR) $(CFLAGS) $(resample_CPPFLAGS) $(AUDIOLDFLAGS) $< $(AUDIOLIBS) -o $@
 
 testaudio.o: testaudio.cpp
-	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
+	$(CXX) $(INCDIR) $(CFLAGS) $(resample_CPPFLAGS) -o $@ -c $<
 
 proclib:
 	cp $(rootDir)/../video/*.so $(rootDir)
