@@ -78,23 +78,12 @@ namespace oppvs {
 		AudioConverterDispose(m_converter);
 	}
 
-	int MacAudioResampler::convert(UInt32 numberPCMFrames, const AudioBufferList* inputData, AudioBufferList* outputData)
-	{
-		OSStatus err = noErr;
-		err = AudioConverterConvertComplexBuffer(m_converter, numberPCMFrames, inputData, outputData);
-		if (err)
-		{
-			printf("Failed to resample\n");
-			return -1;
-		}
-		return 0;
-	}
-
-	int MacAudioResampler::convert(AudioConverterComplexInputDataProc proc, void* userData, UInt32 *ioOutputDataPackets)
+	int MacAudioResampler::convert(AudioConverterComplexInputDataProc proc, void* userData, UInt32 *ioOutputDataPackets, AudioBufferList* abl)
 	{
 		OSStatus err = noErr;
 		AudioConverterReset(m_converter);
-		err = AudioConverterFillComplexBuffer(m_converter, proc, userData, &m_ioOutputDataPackets, m_buffer, NULL);
+        printf("io data packets in resampler: %d\n", m_ioOutputDataPackets);
+		err = AudioConverterFillComplexBuffer(m_converter, proc, userData, ioOutputDataPackets, m_buffer, NULL);
 		if (err)
 		{
 			printf("Failed to resample audio data %d\n", err);
@@ -104,7 +93,6 @@ namespace oppvs {
             printf("\n");
 			return -1;
 		}
-		*ioOutputDataPackets = m_ioOutputDataPackets;
 		return 0;
 	}
 

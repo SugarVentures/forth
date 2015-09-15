@@ -25,7 +25,6 @@ namespace oppvs {
 			}
 		}
 		return list;
-		
 	}
 
 	void destroyAudioBufferList(AudioBufferList* list, bool noAllocData)
@@ -84,7 +83,6 @@ namespace oppvs {
 			//Point to memory
 			abl->mBuffers[i].mData = gbl->buffers[i].data;
 		}
-
 	}
 
 	void makeBufferSilent(AudioBufferList* ioData)
@@ -92,4 +90,23 @@ namespace oppvs {
 		for (UInt32 i = 0; i < ioData->mNumberBuffers; i++)
 			memset(ioData->mBuffers[i].mData, 0, ioData->mBuffers[i].mDataByteSize);
 	}
+    
+    void allocateBufferDataMemory(UInt32 newSize, char*& data, UInt32* oldSize)
+    {
+        if (data == NULL)
+        {
+            data = new char[newSize];
+            *oldSize = newSize;
+        }
+        else
+        {
+            //extend if need
+            if (newSize > *oldSize)
+            {
+                delete [] data;
+                data = new char[newSize];
+                *oldSize = newSize;
+            }
+        }
+    }
 } // oppvs

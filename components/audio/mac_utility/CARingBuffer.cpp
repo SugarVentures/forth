@@ -197,6 +197,7 @@ CARingBufferError	CARingBuffer::Store(const AudioBufferList *abl, UInt32 framesT
 	}
 
 	offset1 = FrameOffset(endWrite);
+	printf("offset: %d %d\n", offset0, offset1);
 	if (offset0 < offset1)
 		StoreABL(buffers, offset0, abl, 0, offset1 - offset0);
 	else {
@@ -207,7 +208,7 @@ CARingBufferError	CARingBuffer::Store(const AudioBufferList *abl, UInt32 framesT
 	
 	// now update the end time
 	SetTimeBounds(StartTime(), endWrite);
-	
+	printf("Store: %lld %lld\n", StartTime(), endWrite);
 	return kCARingBufferError_OK;	// success
 }
 
@@ -243,10 +244,12 @@ CARingBufferError	CARingBuffer::GetTimeBounds(SampleTime &startTime, SampleTime 
 CARingBufferError	CARingBuffer::ClipTimeBounds(SampleTime& startRead, SampleTime& endRead)
 {
 	SampleTime startTime, endTime;
-	
+	printf("TimeRead: %lld %lld\n", startRead, endRead);
 	CARingBufferError err = GetTimeBounds(startTime, endTime);
+	printf("TimeBounds: %lld %lld\n", startTime, endTime);
 	if (err) return err;
 	
+	printf("****************Time difference: %lld ** %lld\n", startRead - endTime, startTime - endRead);
 	if (startRead > endTime || endRead < startTime) {
 		endRead = startRead;
 		return kCARingBufferError_OK;
@@ -255,7 +258,6 @@ CARingBufferError	CARingBuffer::ClipTimeBounds(SampleTime& startRead, SampleTime
 	startRead = std::max(startRead, startTime);
 	endRead = std::min(endRead, endTime);
 	endRead = std::max(endRead, startRead);
-		
 	return kCARingBufferError_OK;	// success
 }
 
@@ -270,10 +272,10 @@ CARingBufferError	CARingBuffer::Fetch(AudioBufferList *abl, UInt32 nFrames, Samp
 
 	SampleTime startRead0 = startRead;
 	SampleTime endRead0 = endRead;
-
 	CARingBufferError err = ClipTimeBounds(startRead, endRead);
 	if (err) return err;
 
+	printf("Fetch: %lld %lld\n", startRead, endRead);
 	if (startRead == endRead) {
 		ZeroABL(abl, 0, nFrames * mBytesPerFrame);
 		return kCARingBufferError_OK;

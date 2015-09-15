@@ -10,6 +10,8 @@ namespace oppvs {
 	void convertGenericABLToABL(GenericAudioBufferList* gbl, AudioBufferList*& abl);
 	void convertABLToGenericABL(AudioBufferList* abl, GenericAudioBufferList* gbl);
 	void makeBufferSilent(AudioBufferList* ioData);
+    
+    void allocateBufferDataMemory(UInt32 newSize, char*& data, UInt32* oldSize);
 } // oppvs
 
 
