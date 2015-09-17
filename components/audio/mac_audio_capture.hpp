@@ -21,7 +21,7 @@ namespace oppvs {
 		int stop();
 	private:
 		AudioComponentInstance m_auHAL;
-		AudioBufferList* m_audioBuffer;
+        
 		UInt32 m_pos;
 		CAStreamBasicDescription m_deviceFormat;    //Format of recording device
         CAStreamBasicDescription m_streamFormat;
@@ -37,8 +37,13 @@ namespace oppvs {
         Float64 m_rPos;                 //Temporary pos to get data from ring buffer
         AudioBufferList* m_tempBuffer;  //Use to feed data for converter
         
+        Float32 m_convertSampleRate;
 
 		UInt32 m_totalPos;
+        
+        UInt32 m_streamBufferSize;
+        char* m_streamBuffer;
+        
 		int createAudioOutputUnit();
 		void enableIO();
 		int setInputDevice(AudioDeviceID deviceid);
@@ -54,7 +59,10 @@ namespace oppvs {
 										void*							inUserData);
 
 		AudioFileID fOutputAudioFile;
-		OSStatus ConfigureOutputFile(CAStreamBasicDescription& format);
+		OSStatus configureOutputFile(CAStreamBasicDescription& format);
+        void writeCookie (AudioConverterRef converter, AudioFileID outfile);
+        
+        ExtAudioFileRef outputAudioFile;
 	};
 
 } // oppvs

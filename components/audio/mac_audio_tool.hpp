@@ -5,13 +5,15 @@
 #include "datatypes.hpp"
 
 namespace oppvs {
+    static const OSStatus caConverterEOFDErr = 0x656F6664;
+    
 	AudioBufferList* allocateAudioBufferListWithNumChannels(UInt32 numChannels, UInt32 size, bool noAllocData = false);
 	void destroyAudioBufferList(AudioBufferList* list, bool noAllocData = false);
 	void convertGenericABLToABL(GenericAudioBufferList* gbl, AudioBufferList*& abl);
 	void convertABLToGenericABL(AudioBufferList* abl, GenericAudioBufferList* gbl);
 	void makeBufferSilent(AudioBufferList* ioData);
     
-    void allocateBufferDataMemory(UInt32 newSize, char*& data, UInt32* oldSize);
+    void checkResult(OSStatus result, const char *operation);
 } // oppvs
 
 

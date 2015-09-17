@@ -14,12 +14,11 @@ namespace oppvs {
 		
 		int init(CAStreamBasicDescription& inputFormat, CAStreamBasicDescription& outputFormat);
 		void cleanup();
-		int convert(AudioConverterComplexInputDataProc proc, void* userData, UInt32 *ioOutputDataPackets, AudioBufferList* abl);
-		AudioBufferList* getBuffer();
+		OSStatus convert(AudioConverterComplexInputDataProc proc, void* userData, UInt32 *ioOutputDataPackets, AudioBufferList* abl, UInt32 inNumFrames, UInt32 bytesPerFrame);
+        AudioConverterRef getConverter();
 	private:
 		AudioConverterRef m_converter;
-		AudioBufferList* m_buffer;
-		UInt32 m_ioOutputDataPackets;
+
 	};
 } // oppvs
 	

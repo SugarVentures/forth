@@ -2,18 +2,19 @@
 #include "mac_audio_tool.hpp"
 
 namespace oppvs {
-    MacAudioCapture::MacAudioCapture(const AudioDevice& device) : AudioCapture(device), m_audioBuffer(NULL),
+    MacAudioCapture::MacAudioCapture(const AudioDevice& device) : AudioCapture(device), m_bufferList(NULL),
     m_sampleRatio(0.0), m_bufferSize(0), m_bufferData(NULL)
     {
-        
+        m_convertSampleRate = 48000;
     }
     
 	MacAudioCapture::~MacAudioCapture()
 	{
 		stop();
-		destroyAudioBufferList(m_audioBuffer);
 		if (m_auHAL)
 			AudioComponentInstanceDispose(m_auHAL);
+        destroyAudioBufferList(m_bufferList);
+        destroyAudioBufferList(m_tempBuffer);
         delete m_ringBuffer;
 	}
 
@@ -36,14 +37,31 @@ namespace oppvs {
 
 		m_streamFormat = m_deviceFormat;
 
-		err = ConfigureOutputFile(m_streamFormat);
-		if (err)
-			printf("Cannot create output file\n");
-
-        m_streamFormat.mSampleRate = 48000;
+        m_streamFormat.mSampleRate = m_convertSampleRate;
+        m_streamFormat.mFormatID = kAudioFormatLinearPCM;
+        m_streamFormat.mBitsPerChannel = 32;
+        m_streamFormat.mFormatFlags = kAudioFormatFlagIsFloat | kAudioFormatFlagIsPacked;
+        m_streamFormat.mFramesPerPacket = 1;
+        m_streamFormat.mChannelsPerFrame = 2;
+        m_streamFormat.mBytesPerFrame = sizeof(Float32) * m_streamFormat.mChannelsPerFrame;
+        m_streamFormat.mBytesPerPacket = m_streamFormat.mFramesPerPacket * m_streamFormat.mBytesPerFrame;
         
 		m_resampler.init(m_deviceFormat, m_streamFormat);
-    
+        err = configureOutputFile(m_streamFormat);
+        if (err)
+            printf("Cannot create output file\n");
+
+        writeCookie(m_resampler.getConverter(), fOutputAudioFile);
+        
+        m_deviceFormat.Print();
+        printf("Output capture format: %d %d %d %d %d\n", m_deviceFormat.mBitsPerChannel, m_deviceFormat.mBytesPerFrame, m_deviceFormat.mChannelsPerFrame, m_deviceFormat.mBytesPerPacket, m_deviceFormat.mFramesPerPacket);
+        
+        m_streamFormat.Print();
+        printf("Output file format: %d %d %d %d %d\n", m_streamFormat.mBitsPerChannel, m_streamFormat.mBytesPerFrame, m_streamFormat.mChannelsPerFrame, m_streamFormat.mBytesPerPacket, m_streamFormat.mFramesPerPacket);
+        
+        //Setup Stream Buffer
+        m_streamBufferSize = 32768/8;
+        m_streamBuffer = new char[m_streamBufferSize];
 		return 0;
 	}
 
@@ -64,6 +82,7 @@ namespace oppvs {
 			if (err)
 				return -1;
 		}
+        writeCookie(m_resampler.getConverter(), fOutputAudioFile);
 		AudioFileClose(fOutputAudioFile);
 		return 0;
 	}
@@ -111,22 +130,45 @@ namespace oppvs {
 		return 0;
 	}
 
+    //Callback to feed audio input buffer
 	OSStatus MacAudioCapture::AudioInputProc(void* inRefCon, AudioUnitRenderActionFlags* ioActionFlags, const AudioTimeStamp* inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList* ioData)
 	{
-		MacAudioCapture* capture = (MacAudioCapture*)inRefCon;
-		printf("sample time: %f frames: %d\n", inTimeStamp->mSampleTime, inNumberFrames);
         //No record data then returns
         if (inNumberFrames == 0)
             return noErr;
+     
+        MacAudioCapture* capture = (MacAudioCapture*)inRefCon;
+        OSStatus err = noErr;
         
-		OSStatus err = AudioUnitRender(capture->m_auHAL, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, capture->m_bufferList);
-		if (err)
-		{
-			printf("AudioUnitRender failed with error %i\n", err);
-			return err;
-		}
+		err = AudioUnitRender(capture->m_auHAL, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, capture->m_bufferList);
+        checkResult(err, "AudioUnitRender failed");
         
-        err = capture->m_ringBuffer->Store(capture->m_bufferList, inNumberFrames, inTimeStamp->mSampleTime);
+        //Setup buffer for converter
+        AudioBufferList convertBufferList;
+        convertBufferList.mNumberBuffers = 1;
+        convertBufferList.mBuffers[0].mNumberChannels = capture->m_deviceFormat.mChannelsPerFrame;
+        convertBufferList.mBuffers[0].mData = capture->m_streamBuffer;
+        memset(convertBufferList.mBuffers[0].mData, 0, capture->m_streamBufferSize);
+        
+        //Convert data
+        UInt32 ioOutputDataPackets = 0;
+        capture->m_pos = 0;
+        err = capture->m_resampler.convert(MacAudioCapture::EncoderDataProc, capture, &ioOutputDataPackets, &convertBufferList, inNumberFrames, capture->m_streamFormat.mBytesPerPacket);
+        checkResult(err, "AudioConverter");
+        
+        if (ioOutputDataPackets == 0)
+        {
+            //EOF condition;
+            return noErr;
+        }
+
+        UInt32 noWriteBytes = convertBufferList.mBuffers[0].mDataByteSize;
+        err = AudioFileWritePackets(capture->fOutputAudioFile, false, noWriteBytes, nil, capture->m_totalPos, &ioOutputDataPackets, convertBufferList.mBuffers[0].mData);
+        checkResult(err, "AudioFileWritePackets");
+        capture->m_totalPos += ioOutputDataPackets;
+        printf("Wrote %d packets to file\n", ioOutputDataPackets);
+        
+        /*err = capture->m_ringBuffer->Store(capture->m_bufferList, inNumberFrames, inTimeStamp->mSampleTime);
         if (err)
         {
             printf("Cannot store recording audio data to ring buffer %d\n", err);
@@ -134,45 +176,49 @@ namespace oppvs {
         }
         
         if (capture->m_rPos == 0)
+        {
             capture->m_rPos = inTimeStamp->mSampleTime;
+            return noErr;
+        }
         printf("Pos in inputproc: %f\n", capture->m_rPos);
         
-        UInt32 ioNumberDataPackets = 512;
+
         UInt32 wroteDataPackets = 0;
         capture->m_pos = 0;
-        while (ioNumberDataPackets)
+        //while (ioNumberDataPackets)
         {
             wroteDataPackets = inNumberFrames;
             if (capture->m_resampler.convert(MacAudioCapture::EncoderDataProc, capture, &wroteDataPackets, capture->m_resampler.getBuffer()) == 0)
             {
+                printf("buffer out convert byte size: %d\n", capture->m_resampler.getBuffer()->mBuffers[0].mDataByteSize);
                // printf("data size: %d no packets: %d frames: %d\n", capture->m_resampler.getBuffer()->mBuffers[0].mDataByteSize, ioNumberDataPackets, capture->m_callbackBuffer.nFrames);
                 //ioNumberDataPackets = 512;
-                UInt32 noWriteBytes = ioNumberDataPackets * 4;
-                err = AudioFileWriteBytes(capture->fOutputAudioFile, false, capture->m_totalPos, &noWriteBytes, capture->m_resampler.getBuffer()->mBuffers[0].mData);
-                //err = AudioFileWriteBytes(capture->fOutputAudioFile, false, capture->m_totalPos, &noWriteBytes, capture->m_bufferList->mBuffers[0].mData);
+                if (wroteDataPackets == 0)
+                    return noErr;
+                //UInt32 noWriteBytes = wroteDataPackets * capture->m_streamFormat.mBytesPerPacket;
+                UInt32 noWriteBytes = capture->m_resampler.getBuffer()->mBuffers[0].mDataByteSize;
+                err = AudioFileWritePackets(capture->fOutputAudioFile, false, noWriteBytes, nil, capture->m_totalPos, &wroteDataPackets, capture->m_resampler.getBuffer()->mBuffers[0].mData);
                 if (err)
                 {
                     printf("Faile to write to file\n");
                 }
                 else
                 {
-                    printf("Wrote %d bytes\n", noWriteBytes);
-                    capture->m_totalPos += noWriteBytes;
-                    //err = AudioFileWriteBytes(capture->fOutputAudioFile, false, capture->m_totalPos, &noWriteBytes, capture->m_resampler.getBuffer()->mBuffers[1].mData);
-                    //err = AudioFileWriteBytes(capture->fOutputAudioFile, false, capture->m_totalPos, &noWriteBytes, capture->m_bufferList->mBuffers[1].mData);
-                    //if (!err)
-                    //    capture->m_totalPos += noWriteBytes;
+                    printf("Wrote %d bytes packets: %d\n", noWriteBytes, wroteDataPackets);
+                    capture->m_totalPos += wroteDataPackets;
+                    
+                    //capture->m_totalPos += noWriteBytes;
                 }
                 capture->m_callbackBuffer.nFrames = capture->m_resampler.getBuffer()->mBuffers[0].mDataByteSize / 4;
                 capture->m_callbackBuffer.sampleTime = inTimeStamp->mSampleTime;
                 
                 convertABLToGenericABL(capture->m_resampler.getBuffer(), &capture->m_callbackBuffer);
                 //capture->callbackAudio(capture->m_callbackBuffer);
-                ioNumberDataPackets -= wroteDataPackets;
+                //ioNumberDataPackets -= wroteDataPackets;
             }
-            else
-                break;
-        }
+            //else
+            //    break;
+        }*/
         
 		return noErr;
 	}
@@ -186,43 +232,25 @@ namespace oppvs {
 		OSStatus err = noErr;
 		MacAudioCapture* capture = (MacAudioCapture*)inUserData;
         printf("Encoder no data packets: %d\n", *ioNumberDataPackets);
-
-		if (*ioNumberDataPackets > 512)
-			*ioNumberDataPackets = 512;
+        UInt32 numPacketsPerRead = capture->m_bufferList->mBuffers[0].mDataByteSize / capture->m_deviceFormat.mBytesPerPacket;
         
-
-        printf("m_pos: %d \n", capture->m_pos);
-		if (capture->m_pos >= 2048)
-		{
-			ioData->mBuffers[0].mData = NULL;
-			ioData->mBuffers[1].mData = NULL;
-			ioData->mBuffers[0].mDataByteSize = 0;
-			ioData->mBuffers[1].mDataByteSize = 0;
+        if (capture->m_pos >= capture->m_bufferList->mBuffers[0].mDataByteSize)
+        {
             *ioNumberDataPackets = 0;
-            err = noErr;
-		}
-		else	
-		{
-            ioData->mNumberBuffers = 2;
-            ioData->mBuffers[0].mNumberChannels = 1;
-            ioData->mBuffers[1].mNumberChannels = 1;
-            
-            printf("Pos to fetch: %f\n", capture->m_rPos);
-            err = capture->m_ringBuffer->Fetch(capture->m_tempBuffer, *ioNumberDataPackets, capture->m_rPos);
-            if (err)
-            {
-                printf("Cannot get audio data from ring buffer for converter %d\n", err);
-                return err;
-            }
-            
-            ioData->mBuffers[0].mData = (uint8_t*)capture->m_tempBuffer->mBuffers[0].mData + capture->m_pos;
-            ioData->mBuffers[1].mData = (uint8_t*)capture->m_tempBuffer->mBuffers[1].mData + capture->m_pos;
-            ioData->mBuffers[0].mDataByteSize = (*ioNumberDataPackets) * 4;
-            ioData->mBuffers[1].mDataByteSize = (*ioNumberDataPackets) * 4;
-            capture->m_pos += (*ioNumberDataPackets) * 4;
-            capture->m_rPos += *ioNumberDataPackets;
-		}
-		
+            ioData->mBuffers[0].mData = NULL;
+            ioData->mBuffers[0].mDataByteSize = 0;
+            return err;
+        }
+        
+        if (*ioNumberDataPackets > numPacketsPerRead)
+            *ioNumberDataPackets = numPacketsPerRead;
+        
+        printf("Encoder no data packets: %d\n", *ioNumberDataPackets);
+        
+        ioData->mBuffers[0].mData = (uint8_t*)capture->m_bufferList->mBuffers[0].mData + capture->m_pos;
+        ioData->mBuffers[0].mDataByteSize = *ioNumberDataPackets * capture->m_deviceFormat.mBytesPerPacket;
+        
+        capture->m_pos += *ioNumberDataPackets * capture->m_deviceFormat.mBytesPerPacket;
 
 		return err;
 	}
@@ -259,10 +287,9 @@ namespace oppvs {
 	 	if (err)
 	 		return -1;
 
-	    //set the desired format to the device's sample rate
-	    m_deviceFormat.mSampleRate =  deviceFormat.mSampleRate;
-	 
-	     //set format to output scope
+        m_deviceFormat = deviceFormat;
+        
+        //set format to output scope
 	    AudioUnitSetProperty(m_auHAL, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &m_deviceFormat, sizeof(CAStreamBasicDescription));
 	    
         m_bufferList = allocateAudioBufferListWithNumChannels(m_deviceFormat.mChannelsPerFrame, bufferSizeFrames * m_deviceFormat.mBytesPerFrame);
@@ -285,44 +312,43 @@ namespace oppvs {
         m_ringBuffer->Allocate(2, m_deviceFormat.mBytesPerFrame, bufferSizeFrames * 20);
         m_rPos = 0;
         
-        m_tempBuffer = allocateAudioBufferListWithNumChannels(m_bufferList->mNumberBuffers, m_bufferList->mBuffers[0].mDataByteSize);
-
+        m_tempBuffer = allocateAudioBufferListWithNumChannels(2, bufferSizeFrames * m_deviceFormat.mBytesPerFrame);
 		return 0;
 	}
 
-	OSStatus MacAudioCapture::ConfigureOutputFile(CAStreamBasicDescription& sformat)
+	OSStatus MacAudioCapture::configureOutputFile(CAStreamBasicDescription& sformat)
 	{
 		OSStatus err = noErr;
-        CAStreamBasicDescription format;
-		format.mSampleRate = 48000;
-		format.mFormatID = kAudioFormatLinearPCM;
-		format.mBitsPerChannel = 32;
-		format.mFormatFlags = kAudioFormatFlagIsFloat | kAudioFormatFlagIsPacked;
-		format.mFramesPerPacket = 1;
-        format.mChannelsPerFrame = 2;
-		format.mBytesPerFrame = 8;
-		format.mBytesPerPacket = 8;
-
 		m_totalPos = 0;
 		CFURLRef destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, 
 		                                                        CFSTR("/Users/caominhtrang/Desktop/testaudio.wav"),
 		                                                        kCFURLPOSIXPathStyle, 
 		                                                        false);
 	    
-	    err = AudioFileCreateWithURL(destinationURL, kAudioFileWAVEType, &format, kAudioFileFlags_EraseFile, &fOutputAudioFile);
+	    err = AudioFileCreateWithURL(destinationURL, kAudioFileCAFType, &sformat, kAudioFileFlags_EraseFile, &fOutputAudioFile);
 
-		if(err != noErr)
-		{
-			char formatID[5];
-			*(UInt32 *)formatID = CFSwapInt32HostToBig(err);
-			formatID[4] = '\0';
-			fprintf(stderr, "ExtAudioFileSetProperty FAILED! '%-4.4s'\n", formatID);
-			return err;
-		}
-
-
+        checkResult(err, "Can not create audio file");
 		return err;
 	}
+    
+    void MacAudioCapture::writeCookie (AudioConverterRef converter, AudioFileID outfile)
+    {
+        // grab the cookie from the converter and write it to the file
+        UInt32 cookieSize = 0;
+        OSStatus err = AudioConverterGetPropertyInfo(converter, kAudioConverterCompressionMagicCookie, &cookieSize, NULL);
+        // if there is an error here, then the format doesn't have a cookie, so on we go
+        if (!err && cookieSize) {
+            char* cookie = new char [cookieSize];
+            
+            err = AudioConverterGetProperty(converter, kAudioConverterCompressionMagicCookie, &cookieSize, cookie);
+            checkResult(err, "Get Cookie From AudioConverter");
+            
+            /*err =*/ AudioFileSetProperty (outfile, kAudioFilePropertyMagicCookieData, cookieSize, cookie);
+            // even though some formats have cookies, some files don't take them, so we ignore the error
+            delete [] cookie;
+        }
+    }
+
 
 	
 } // oppvs

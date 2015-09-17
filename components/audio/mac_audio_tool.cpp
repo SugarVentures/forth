@@ -6,18 +6,21 @@ namespace oppvs {
 		AudioBufferList*			list = NULL;
 		UInt32						i = 0;
 		
-		list = (AudioBufferList*) calloc(1, sizeof(AudioBufferList) + numChannels * sizeof(AudioBuffer));
+		list = new AudioBufferList;
 		if (list == NULL)
 			return NULL;
 		
-		list->mNumberBuffers = numChannels;
+		list->mNumberBuffers = 1;
 		
 		for (i = 0; i < numChannels; ++i)
 		{
-			list->mBuffers[i].mNumberChannels = 1;
+			list->mBuffers[i].mNumberChannels = numChannels;
 			list->mBuffers[i].mDataByteSize = size;
 			if (!noAllocData)
+            {
 				list->mBuffers[i].mData = malloc(size);
+                memset(list->mBuffers[i].mData, 0, size);
+            }
 			if (list->mBuffers[i].mData == NULL)
 			{
 				destroyAudioBufferList(list, noAllocData);
@@ -43,7 +46,7 @@ namespace oppvs {
 					}
 				}
 			}
-			free(list);
+			delete(list);
 		}
 	}
 
@@ -91,22 +94,22 @@ namespace oppvs {
 			memset(ioData->mBuffers[i].mData, 0, ioData->mBuffers[i].mDataByteSize);
 	}
     
-    void allocateBufferDataMemory(UInt32 newSize, char*& data, UInt32* oldSize)
+    void checkResult(OSStatus result, const char *operation)
     {
-        if (data == NULL)
-        {
-            data = new char[newSize];
-            *oldSize = newSize;
-        }
-        else
-        {
-            //extend if need
-            if (newSize > *oldSize)
-            {
-                delete [] data;
-                data = new char[newSize];
-                *oldSize = newSize;
-            }
-        }
+        if (result == noErr) return;
+        
+        char errorString[20];
+        // see if it appears to be a 4-char-code
+        *(UInt32 *)(errorString + 1) = CFSwapInt32HostToBig(result);
+        if (isprint(errorString[1]) && isprint(errorString[2]) && isprint(errorString[3]) && isprint(errorString[4])) {
+            errorString[0] = errorString[5] = '\'';
+            errorString[6] = '\0';
+        } else
+            // no, format it as an integer
+            sprintf(errorString, "%d", (int)result);
+        
+        fprintf(stderr, "Error: %s (%s)\n", operation, errorString);
+        
+        exit(1);
     }
 } // oppvs

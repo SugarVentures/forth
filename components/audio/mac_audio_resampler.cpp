@@ -5,7 +5,6 @@ namespace oppvs {
 	MacAudioResampler::MacAudioResampler()
 	{
 		m_converter = NULL;
-		m_ioOutputDataPackets = 0;
 	}
 
 	MacAudioResampler::~MacAudioResampler()
@@ -33,10 +32,9 @@ namespace oppvs {
 		}
 
 		size = sizeof(outputFormat);
-		err = AudioConverterGetProperty(m_converter, kAudioConverterCurrentInputStreamDescription, &size, &outputFormat);
+		err = AudioConverterGetProperty(m_converter, kAudioConverterCurrentOutputStreamDescription, &size, &outputFormat);
 		if (err)
 		{
-			printf("Failed to set output format\n");
             return -1;
 		}
 
@@ -47,29 +45,8 @@ namespace oppvs {
 		UInt32 uFlag = kAudioConverterQuality_Max;
         err = AudioConverterSetProperty(m_converter, kAudioConverterSampleRateConverterQuality,
                                         sizeof(uFlag), &uFlag);
-
-        /*Float64 sr = 48000;
-        size = sizeof(Float64);
-        err = AudioConverterSetProperty(m_converter,kAudioConverterEncodeAdjustableSampleRate, size, &sr);
-		err = AudioConverterGetProperty(m_converter,kAudioConverterEncodeAdjustableSampleRate, &size, &sr);
-		printf("Encode out rate: %f\n", sr);*/
-
-		//Setup buffers
-		int outputSizePerPacket = outputFormat.mBytesPerPacket;
-		UInt32 theOutputBufSize = 4096;
-		printf("output size per packet %d %d\n", outputSizePerPacket, theOutputBufSize);
-		m_ioOutputDataPackets = theOutputBufSize / outputSizePerPacket;
-		printf("m_ioOutputDataPackets %d\n", m_ioOutputDataPackets);
-
-		m_buffer = allocateAudioBufferListWithNumChannels(2, theOutputBufSize);
-		if (m_buffer == NULL)
-		{
-			printf("Failed to init audio resampler \n");
-			return -1;
-		}
-
-		size = sizeof(outputFormat);
-		err = AudioConverterGetProperty(m_converter, kAudioConverterCurrentOutputStreamDescription, &size, &outputFormat);
+        checkResult(err, "Set Sample Rate Converter Quality");
+        
 		return 0;
 	}
 
@@ -78,27 +55,48 @@ namespace oppvs {
 		AudioConverterDispose(m_converter);
 	}
 
-	int MacAudioResampler::convert(AudioConverterComplexInputDataProc proc, void* userData, UInt32 *ioOutputDataPackets, AudioBufferList* abl)
+	OSStatus MacAudioResampler::convert(AudioConverterComplexInputDataProc proc, void* userData, UInt32 *ioOutputDataPackets, AudioBufferList* abl, UInt32 inNumFrames, UInt32 bytesPerFrame)
 	{
 		OSStatus err = noErr;
+        //Calculate correct number output frames
+        UInt32 availableInputFrames = inNumFrames;
+        UInt32 actualOutputFrames;
+        
+        UInt32 availableInputBytes = availableInputFrames * bytesPerFrame;
+        UInt32 availableOutputBytes = availableInputBytes;
+        UInt32 availableOutputFrames = availableOutputBytes / bytesPerFrame;
+        UInt32 propertySize = sizeof (availableOutputBytes);
+        err = AudioConverterGetProperty(m_converter,
+                                        kAudioConverterPropertyCalculateOutputBufferSize,
+                                        &propertySize,
+                                        &availableOutputBytes);
+        checkResult(err, "AudioConverterGetProperty CalculateOutputBufferSize");
+        
+        availableOutputFrames = availableOutputBytes / bytesPerFrame;
+        UInt32 inputBytes = availableOutputBytes;
+        propertySize = sizeof(availableOutputBytes);
+        err = AudioConverterGetProperty(m_converter,
+                                        kAudioConverterPropertyCalculateInputBufferSize,
+                                        &propertySize,
+                                        &inputBytes);
+        checkResult(err, "AudioConverterGetProperty CalculateInputBufferSize");
+        
+        printf("input bytes: %d %d\n", inputBytes, availableInputBytes);
+        if(inputBytes < availableInputBytes) {
+            // OK to zero pad the input a little
+            availableOutputFrames += 1;
+            availableOutputBytes = availableOutputFrames * bytesPerFrame;
+        }
+        
+        printf("%d %d\n", availableOutputFrames, availableOutputBytes);
+        
+        *ioOutputDataPackets = availableOutputFrames;
 		AudioConverterReset(m_converter);
-        printf("io data packets in resampler: %d\n", m_ioOutputDataPackets);
-		err = AudioConverterFillComplexBuffer(m_converter, proc, userData, ioOutputDataPackets, m_buffer, NULL);
-		if (err)
-		{
-			printf("Failed to resample audio data %d\n", err);
-			int i = 0;
-			while(i < 4 )
-                printf("%c", *(((char*)&err)+i++) );
-            printf("\n");
-			return -1;
-		}
-		return 0;
+		return AudioConverterFillComplexBuffer(m_converter, proc, userData, ioOutputDataPackets, abl, NULL);
 	}
 
-	AudioBufferList* MacAudioResampler::getBuffer()
-	{
-		return m_buffer;
-	}
-
+    AudioConverterRef MacAudioResampler::getConverter()
+    {
+        return m_converter;
+    }
 } // oppvs
