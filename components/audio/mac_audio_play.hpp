@@ -7,6 +7,7 @@
 #include "mac_utility/CAStreamBasicDescription.h"
 #include "mac_utility/CARingBuffer.h"
 #include "audio_play.hpp"
+#include "mac_audio_resampler.hpp"
 
 namespace oppvs {
 	#define checkErr( err) \
@@ -42,10 +43,19 @@ namespace oppvs {
 		AudioUnit m_varispeedUnit;
 		AUNode m_outputNode;
 		AudioUnit m_outputUnit;
+        //AUNode m_converterNode;
+        //AudioUnit m_converterUnit;
+        
 		CARingBuffer *m_buffer;
 		double m_firstInputTime;
 		double m_firstOutputTime;
 		double m_offset;
+        
+        AudioConverterRef m_converter;  //Used to convert interleave to deinterleave
+        AudioBufferList* m_inBuffer;  //Buffer to be used as input of converter
+        AudioBufferList* m_outBuffer; //Buffer to be used as output of converter
+        
+		CAStreamBasicDescription m_inputFormat;
 
 		OSStatus setupGraph(AudioDeviceID deviceid);
 		OSStatus makeGraph();

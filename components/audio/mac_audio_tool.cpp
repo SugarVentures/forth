@@ -30,6 +30,33 @@ namespace oppvs {
 		return list;
 	}
 
+    AudioBufferList* allocateDeinterleaveAudioBufferListWithNumChannels(UInt32 numChannels, UInt32 size)
+    {
+        AudioBufferList*			list = NULL;
+        UInt32						i = 0;
+        
+        list = new AudioBufferList;
+        if (list == NULL)
+            return NULL;
+        
+        list->mNumberBuffers = numChannels;
+        
+        for (i = 0; i < numChannels; ++i)
+        {
+            list->mBuffers[i].mNumberChannels = 1;
+            list->mBuffers[i].mDataByteSize = size;
+            list->mBuffers[i].mData = malloc(size);
+            memset(list->mBuffers[i].mData, 0, size);
+            
+            if (list->mBuffers[i].mData == NULL)
+            {
+                destroyAudioBufferList(list);
+                return NULL;
+            }
+        }
+        return list;
+    }
+    
 	void destroyAudioBufferList(AudioBufferList* list, bool noAllocData)
 	{
 		UInt32 i = 0;
@@ -111,5 +138,19 @@ namespace oppvs {
         fprintf(stderr, "Error: %s (%s)\n", operation, errorString);
         
         exit(1);
+    }
+    
+    void printFormat(const CAStreamBasicDescription& format)
+    {
+        printf("****** AUDIO FORMAT INFO ******\n");
+        char formatID[4];
+        strncpy(formatID, (char*)(&format.mFormatID), 4);
+        printf(" *** Format ID          : %.4s\n", formatID);
+        printf(" *** Format Flags       : %d\n", format.mFormatFlags);
+        printf(" *** Bytes per Packet   : %d\n", format.mBytesPerPacket);
+        printf(" *** Frames per Packet  : %d\n", format.mFramesPerPacket);
+        printf(" *** Bytes per Frame    : %d\n", format.mBytesPerFrame);
+        printf(" *** Channels per Frame : %d\n", format.mChannelsPerFrame);
+        printf(" *** Bits per Channel   : %d\n", format.mBitsPerChannel);
     }
 } // oppvs

@@ -46,7 +46,8 @@ namespace oppvs {
         m_streamFormat.mBytesPerFrame = sizeof(Float32) * m_streamFormat.mChannelsPerFrame;
         m_streamFormat.mBytesPerPacket = m_streamFormat.mFramesPerPacket * m_streamFormat.mBytesPerFrame;
         
-		m_resampler.init(m_deviceFormat, m_streamFormat);
+		if (m_resampler.init(m_deviceFormat, m_streamFormat) < 0)
+            return -1;
         err = configureOutputFile(m_streamFormat);
         if (err)
             printf("Cannot create output file\n");
@@ -167,6 +168,12 @@ namespace oppvs {
         checkResult(err, "AudioFileWritePackets");
         capture->m_totalPos += ioOutputDataPackets;
         printf("Wrote %d packets to file\n", ioOutputDataPackets);
+        
+        capture->m_callbackBuffer.nFrames = ioOutputDataPackets;
+        capture->m_callbackBuffer.sampleTime = inTimeStamp->mSampleTime;
+        
+        convertABLToGenericABL(&convertBufferList, &capture->m_callbackBuffer);
+        capture->callbackAudio(capture->m_callbackBuffer);
         
         /*err = capture->m_ringBuffer->Store(capture->m_bufferList, inNumberFrames, inTimeStamp->mSampleTime);
         if (err)
