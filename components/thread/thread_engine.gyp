@@ -15,7 +15,10 @@
                 "thread.cpp",
                 "tsqueue.hpp",
                 "ring_buffer.h",
-                "ring_buffer.cpp"
+                "ring_buffer.cpp",
+                "CAAtomic.h",
+                "audio_ring_buffer.h",
+                "audio_ring_buffer.cpp"
             ]
 
         }
