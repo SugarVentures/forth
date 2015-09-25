@@ -68,8 +68,20 @@ namespace oppvs
 			m_controllers[i].config.g_timebase.num = 1;
 			m_controllers[i].config.g_timebase.den = 30;
 			m_controllers[i].config.rc_target_bitrate = 500;
-			m_controllers[i].config.g_threads = 2;
+			if (info.sources[i].width * info.sources[i].height > 704 * 576)
+				m_controllers[i].config.g_threads = 2;
+			else
+				m_controllers[i].config.g_threads = 1;
+			m_controllers[i].config.g_lag_in_frames = 0;	//0 - no frame lagging
 
+			m_controllers[i].config.rc_undershoot_pct = 100;
+			m_controllers[i].config.rc_overshoot_pct = 15;
+			m_controllers[i].config.rc_buf_initial_sz = 500;
+			m_controllers[i].config.rc_buf_optimal_sz = 600;
+			m_controllers[i].config.rc_buf_sz = 1000;
+
+			m_controllers[i].config.rc_end_usage = VPX_CBR;
+			m_controllers[i].config.g_pass = VPX_RC_ONE_PASS;
 
  			if (vpx_codec_enc_init(&m_controllers[i].codec, codec_interface(), &m_controllers[i].config, 0))
 		 	{
