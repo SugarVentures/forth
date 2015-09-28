@@ -32,11 +32,7 @@ namespace oppvs {
         Float64 m_sampleRatio;          //The ratio between the device and the stream sample rate
         UInt32 m_bufferSize;
         char*  m_bufferData;
-        
-        CARingBuffer* m_ringBuffer;     //For transferring data from the recording thread
-        Float64 m_rPos;                 //Temporary pos to get data from ring buffer
-        AudioBufferList* m_tempBuffer;  //Use to feed data for converter
-        
+                
         Float32 m_convertSampleRate;
 
 		UInt32 m_totalPos;
@@ -62,7 +58,6 @@ namespace oppvs {
 		OSStatus configureOutputFile(CAStreamBasicDescription& format);
         void writeCookie (AudioConverterRef converter, AudioFileID outfile);
         
-        ExtAudioFileRef outputAudioFile;
 	};
 
 } // oppvs

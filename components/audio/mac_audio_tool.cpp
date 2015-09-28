@@ -6,27 +6,26 @@ namespace oppvs {
 		AudioBufferList*			list = NULL;
 		UInt32						i = 0;
 		
-		list = new AudioBufferList;
+        UInt32 prosize = offsetof(AudioBufferList, mBuffers[0]) + sizeof(AudioBuffer);
+        list = (AudioBufferList*)malloc(prosize);
 		if (list == NULL)
 			return NULL;
 		
 		list->mNumberBuffers = 1;
 		
-		for (i = 0; i < numChannels; ++i)
-		{
-			list->mBuffers[i].mNumberChannels = numChannels;
-			list->mBuffers[i].mDataByteSize = size;
-			if (!noAllocData)
-            {
-				list->mBuffers[i].mData = malloc(size);
-                memset(list->mBuffers[i].mData, 0, size);
-            }
-			if (list->mBuffers[i].mData == NULL)
-			{
-				destroyAudioBufferList(list, noAllocData);
-				return NULL;
-			}
-		}
+        list->mBuffers[0].mNumberChannels = numChannels;
+        list->mBuffers[0].mDataByteSize = size;
+        if (!noAllocData)
+        {
+            list->mBuffers[0].mData = malloc(size);
+            memset(list->mBuffers[0].mData, 0, size);
+        }
+        if (list->mBuffers[0].mData == NULL)
+        {
+            destroyAudioBufferList(list, noAllocData);
+            return NULL;
+        }
+		
 		return list;
 	}
 
@@ -35,7 +34,8 @@ namespace oppvs {
         AudioBufferList*			list = NULL;
         UInt32						i = 0;
         
-        list = new AudioBufferList;
+        UInt32 prosize = offsetof(AudioBufferList, mBuffers[0]) + (sizeof(AudioBuffer) * numChannels);
+        list = (AudioBufferList*)malloc(prosize);
         if (list == NULL)
             return NULL;
         
@@ -73,7 +73,7 @@ namespace oppvs {
 					}
 				}
 			}
-			delete(list);
+			free(list);
 		}
 	}
 
@@ -152,5 +152,6 @@ namespace oppvs {
         printf(" *** Bytes per Frame    : %d\n", format.mBytesPerFrame);
         printf(" *** Channels per Frame : %d\n", format.mChannelsPerFrame);
         printf(" *** Bits per Channel   : %d\n", format.mBitsPerChannel);
+        printf(" *** Sample Rate        : %f\n", format.mSampleRate);
     }
 } // oppvs
