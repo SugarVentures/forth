@@ -118,7 +118,11 @@ namespace oppvs {
 	void makeBufferSilent(AudioBufferList* ioData)
 	{
 		for (UInt32 i = 0; i < ioData->mNumberBuffers; i++)
-			memset(ioData->mBuffers[i].mData, 0, ioData->mBuffers[i].mDataByteSize);
+        {
+			//memset(ioData->mBuffers[i].mData, 0, ioData->mBuffers[i].mDataByteSize);
+            ioData->mBuffers[i].mData = NULL;
+            ioData->mBuffers[i].mDataByteSize = 0;
+        }
 	}
     
     void checkResult(OSStatus result, const char *operation)
@@ -143,9 +147,8 @@ namespace oppvs {
     void printFormat(const CAStreamBasicDescription& format)
     {
         printf("****** AUDIO FORMAT INFO ******\n");
-        char formatID[4];
-        strncpy(formatID, (char*)(&format.mFormatID), 4);
-        printf(" *** Format ID          : %.4s\n", formatID);
+        UInt32 format4cc = CFSwapInt32HostToBig(format.mFormatID);
+        printf(" *** Format ID          : %4.4s\n", (char*)&format4cc);
         printf(" *** Format Flags       : %d\n", format.mFormatFlags);
         printf(" *** Bytes per Packet   : %d\n", format.mBytesPerPacket);
         printf(" *** Frames per Packet  : %d\n", format.mFramesPerPacket);
