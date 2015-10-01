@@ -132,6 +132,7 @@ namespace oppvs {
     //Callback to feed audio input buffer
 	OSStatus MacAudioCapture::AudioInputProc(void* inRefCon, AudioUnitRenderActionFlags* ioActionFlags, const AudioTimeStamp* inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList* ioData)
 	{
+        //printf("Audio Capture: %f %d %lld\n", inTimeStamp->mSampleTime, inNumberFrames, inTimeStamp->mHostTime);
         //No record data then returns
         if (inNumberFrames == 0)
             return noErr;
@@ -185,7 +186,7 @@ namespace oppvs {
 	{
 		OSStatus err = noErr;
 		MacAudioCapture* capture = (MacAudioCapture*)inUserData;
-        printf("Encoder no data packets before: %d\n", *ioNumberDataPackets);
+        //printf("Encoder no data packets before: %d\n", *ioNumberDataPackets);
         UInt32 numPacketsPerRead = capture->m_bufferList->mBuffers[0].mDataByteSize / capture->m_deviceFormat.mBytesPerPacket;
         
         if (capture->m_pos >= capture->m_bufferList->mBuffers[0].mDataByteSize)
@@ -199,7 +200,7 @@ namespace oppvs {
         if (*ioNumberDataPackets > numPacketsPerRead)
             *ioNumberDataPackets = numPacketsPerRead;
         
-        printf("Encoder no data packets after: %d\n", *ioNumberDataPackets);
+        //printf("Encoder no data packets after: %d\n", *ioNumberDataPackets);
         
         ioData->mBuffers[0].mData = (uint8_t*)capture->m_bufferList->mBuffers[0].mData + capture->m_pos;
         ioData->mBuffers[0].mDataByteSize = *ioNumberDataPackets * capture->m_deviceFormat.mBytesPerPacket;

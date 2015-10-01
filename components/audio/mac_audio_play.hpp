@@ -9,6 +9,9 @@
 #include "audio_play.hpp"
 #include "mac_audio_resampler.hpp"
 
+#include "audio_ring_buffer.h"
+#include "utility.h"
+
 namespace oppvs {
 	#define checkErr( err) \
 	if(err) {\
@@ -31,7 +34,7 @@ namespace oppvs {
 		int start();
 		int stop();
 		void cleanup();
-		void attachBuffer(CARingBuffer*);
+		void attachBuffer(AudioRingBuffer*);
 
 		double getFirstInputTime();
 		void setFirstInputTime(double);
@@ -55,7 +58,15 @@ namespace oppvs {
         AudioBufferList* m_inBuffer;  //Buffer to be used as input of converter
         AudioBufferList* m_outBuffer; //Buffer to be used as output of converter
         
+        MacAudioResampler m_resampler;
 		CAStreamBasicDescription m_inputFormat;
+        UInt32 m_pos;
+        double m_currentSampleTime;
+        
+        AudioRingBuffer* m_ringBuffer;
+        char* m_encoderBuffer;
+        CAStreamBasicDescription m_convertFormat;
+        CAStreamBasicDescription m_variFormat;
 
 		OSStatus setupGraph(AudioDeviceID deviceid);
 		OSStatus makeGraph();
@@ -69,7 +80,17 @@ namespace oppvs {
 							 UInt32 inBusNumber,
 							 UInt32 inNumberFrames,
 							 AudioBufferList * ioData);
+        
+        static OSStatus EncoderDataProc(AudioConverterRef				inAudioConverter,
+                                        UInt32*							ioNumberDataPackets,
+                                        AudioBufferList*				ioData,
+                                        AudioStreamPacketDescription**	outDataPacketDescription,
+                                        void*							inUserData);
 
+        UInt32 m_totalPos;
+        AudioFileID fOutputAudioFile;
+        OSStatus configureOutputFile(CAStreamBasicDescription& format);
+        void writeCookie (AudioConverterRef converter, AudioFileID outfile);
 	};
 
 } // oppvs

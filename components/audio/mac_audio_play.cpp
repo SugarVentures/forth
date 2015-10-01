@@ -55,6 +55,8 @@ namespace oppvs {
         destroyAudioBufferList(m_outBuffer);
 		AUGraphClose(m_graph);
 		DisposeAUGraph(m_graph);
+        
+        delete [] m_encoderBuffer;
 	}
 
 	bool MacAudioPlay::isRunning()
@@ -168,9 +170,6 @@ namespace oppvs {
 		///MAKE NODES
 		//This creates a node in the graph that is an AudioUnit, using
 		//the supplied ComponentDescription to find and open that unit
-        //err = AUGraphAddNode(m_graph, &converterDesc, &m_converterNode);
-        //checkErr(err);
-        
 		err = AUGraphAddNode(m_graph, &varispeedDesc, &m_varispeedNode);
 		checkErr(err);
 		err = AUGraphAddNode(m_graph, &outDesc, &m_outputNode);
@@ -182,7 +181,6 @@ namespace oppvs {
 		err = AUGraphNodeInfo(m_graph, m_outputNode, NULL, &m_outputUnit);   
 		checkErr(err);
 		
-        //err = AUGraphNodeInfo(m_graph, m_converterNode, NULL, &m_converterUnit);
 		// don't connect nodes until the varispeed unit has input and output formats set
 
 		return err;
@@ -224,56 +222,54 @@ namespace oppvs {
 	{
 		OSStatus err = noErr;
 		MacAudioPlay* player = (MacAudioPlay*)inRefCon;
-		double rate = 44100.0 / 48000.0;
-        //double rate = 512.0 / 557.0;
-
-		printf("AudioPlay: sample time: %f Frames: %d\n", TimeStamp->mSampleTime, inNumberFrames);;
+        double rate = 1.0;
+		//printf("AudioPlay: sample time: %f Frames: %d at %f\n", TimeStamp->mSampleTime, inNumberFrames, CFAbsoluteTimeGetCurrent());
+        
 		if (player->getFirstInputTime() < 0.)
 		{
 			//No input
 			makeBufferSilent(ioData);
 			return err;
 		}
-
+        
 		err = AudioUnitSetParameter(player->m_varispeedUnit, kVarispeedParam_PlaybackRate, kAudioUnitScope_Global, 0, rate, 0);
 		checkErr(err);
 		
-		if (player->m_buffer)
+		if (player->m_ringBuffer)
 		{
+            
 			if (player->m_firstOutputTime < 0.0)
 			{
 				player->m_firstOutputTime = TimeStamp->mSampleTime;
-				printf("in time: %f out time: %f\n", player->m_firstInputTime, player->m_firstOutputTime);
-				double delta = player->m_firstInputTime - player->m_firstOutputTime;
-				player->m_offset = 1175.0 - 1350; //Fix for now
+                double delta = player->m_firstInputTime - player->m_firstOutputTime;
+				printf("in time: %f out time: %f delta: %f\n", player->m_firstInputTime, player->m_firstOutputTime, delta);
+
+				//player->m_offset = 1175.0; //Fix for now
+                player->m_offset = 0.0;
 				if (delta < 0.0)		
 					player->m_offset -= delta;
 				else
 					player->m_offset = -delta + player->m_offset;
-				makeBufferSilent(ioData);				
+				makeBufferSilent(ioData);
 				return noErr;
 			}
 
-			printf("Delta: %f\n", TimeStamp->mSampleTime - player->m_offset);
-			err = player->m_buffer->Fetch(player->m_inBuffer, inNumberFrames, SInt64(TimeStamp->mSampleTime - player->m_offset));
-			/*uint8_t* data = (uint8_t*)ioData->mBuffers[0].mData;
-            for (int i = 0; i < ioData->mBuffers[0].mDataByteSize; i++)
+            //If the number of packets in buffer is too small, then don't fetch data
+            if (player->m_ringBuffer->getNumberFrames() < 3 * inNumberFrames)
             {
-                printf("%d", data[i]);
+                makeBufferSilent(ioData);
+                return noErr;
             }
-            printf("\n");*/
-			if (err != kCARingBufferError_OK)
-			{
-				printf("Error in fetch\n");
-			}
-            else
+            UInt32 ioNumberDataPackets = 0;
+            player->m_currentSampleTime = TimeStamp->mSampleTime;
+            err = player->m_resampler.convert(MacAudioPlay::EncoderDataProc, player, &ioNumberDataPackets, ioData, inNumberFrames, player->m_variFormat.mBytesPerPacket, true);
+
+            //printf("after convert io pkt %d %d\n", ioNumberDataPackets, ioData->mBuffers[0].mDataByteSize);
+            if (err || ioNumberDataPackets == 0)
             {
-                printf("%d\n", player->m_inBuffer->mNumberBuffers);
-                //Convert
-                printf("data byte size; %d %d\n", ioData->mBuffers[0].mDataByteSize, player->m_inBuffer->mBuffers[0].mDataByteSize);
-                AudioConverterReset(player->m_converter);
-                AudioConverterConvertComplexBuffer(player->m_converter, inNumberFrames, player->m_inBuffer, ioData);
-                printf("data byte size after convert %d\n", ioData->mBuffers[0].mDataByteSize);
+                printf("Error in convert\n");
+                makeBufferSilent(ioData);
+                return noErr;
             }
 		}
 		return err;
@@ -292,9 +288,6 @@ namespace oppvs {
         err = AudioUnitGetProperty(m_varispeedUnit, kAudioUnitProperty_StreamFormat,
                                    kAudioUnitScope_Input, 0, &variFormat, &propertySize);
         checkResult(err, "AudioUnitGetProperty: m_varispeedUnit");
-        
-        //err = AudioUnitGetProperty(m_converterUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &convertFormat, &propertySize);
-        //checkResult(err, "AudioUnitGetProperty: m_converterUnit");
     
         convertFormat.mFormatID = kAudioFormatLinearPCM;
         convertFormat.mSampleRate = m_inputSampleRate;
@@ -302,41 +295,12 @@ namespace oppvs {
         convertFormat.mChannelsPerFrame = 2;
         convertFormat.mFormatFlags = kAudioFormatFlagIsFloat | kAudioFormatFlagIsPacked;
         convertFormat.mFramesPerPacket = 1;
-        convertFormat.mBytesPerFrame = 8;
-        convertFormat.mBytesPerPacket = 8;
-        
-        //Set format for the input of Converter Node
-        //err = AudioUnitSetProperty(m_converterUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &convertFormat, propertySize);
-        //checkResult(err, "AudioUnitSetProperty: failed to set format");
-        //printFormat(convertFormat);
+        convertFormat.mBytesPerFrame = sizeof(Float32) * convertFormat.mChannelsPerFrame;
+        convertFormat.mBytesPerPacket = convertFormat.mFramesPerPacket * convertFormat.mBytesPerFrame;
         
         //Get the lower number of channels
         variFormat.mChannelsPerFrame = (outputFormat.mChannelsPerFrame < m_inputNumChannels) ? outputFormat.mChannelsPerFrame : m_inputNumChannels;
         variFormat.mSampleRate = m_inputSampleRate;
-        //Set format for the output of Converter Node
-        //err = AudioUnitSetProperty(m_converterUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 0, &variFormat, propertySize);
-        //checkResult(err, "AudioUnitSetProperty: failed to set format");
-        //printFormat(variFormat);
-		//Set format for the input of Varispeed Node
-        
-        //Setup converter
-        err = AudioConverterNew(&convertFormat, &variFormat, &m_converter);
-        checkResult(err, "Failed to create converter");
-        UInt32 size = sizeof(convertFormat);
-        err = AudioConverterGetProperty(m_converter, kAudioConverterCurrentInputStreamDescription, &size, &convertFormat);
-        if (err)
-        {
-            return -1;
-        }
-        
-        size = sizeof(variFormat);
-        err = AudioConverterGetProperty(m_converter, kAudioConverterCurrentOutputStreamDescription, &size, &variFormat);
-        if (err)
-        {
-            return -1;
-        }
-        printFormat(convertFormat);
-        printFormat(variFormat);
         
 		err = AudioUnitSetProperty(m_varispeedUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &variFormat, propertySize);
         checkResult(err, "AudioUnitSetProperty: m_varispeedUnit");
@@ -353,24 +317,37 @@ namespace oppvs {
 		checkErr(err);
         
         //Setup buffer for converter
-        //Get the size of the IO buffers
-        UInt32 bufferSizeFrames = 0;
-        propertySize = sizeof(bufferSizeFrames);
-        err = AudioUnitGetProperty(m_outputUnit, kAudioDevicePropertyBufferFrameSize, kAudioUnitScope_Input, 0, &bufferSizeFrames, &propertySize);
-        checkResult(err, "Failed to get buffer size frames");
+        uint32_t maxEncoderBuffer = 32768; //32KB
+        m_encoderBuffer = new char[maxEncoderBuffer];
         
-        printf("buffer size frames: %d\n", bufferSizeFrames);
-        m_inBuffer = allocateAudioBufferListWithNumChannels(convertFormat.mChannelsPerFrame, bufferSizeFrames * convertFormat.mBytesPerFrame);
-        m_outBuffer = allocateDeinterleaveAudioBufferListWithNumChannels(variFormat.mChannelsPerFrame, bufferSizeFrames * variFormat.mBytesPerFrame);
+        if (m_resampler.init(convertFormat, variFormat) < 0)
+            return -1;
+        m_convertFormat = convertFormat;
+        m_variFormat = variFormat;
         
-        convertFormat.Print();
-        variFormat.Print();
+        UInt32 numFrames = 1500;
+        UInt32 dataSize = sizeof(numFrames);
+        
+        AudioUnitSetProperty(m_varispeedUnit, kAudioUnitProperty_MaximumFramesPerSlice,
+                             kAudioUnitScope_Global, 0, &numFrames, sizeof(numFrames));
+        
+        // the AUConverter will scale up
+        AudioUnitGetProperty(m_varispeedUnit, kAudioUnitProperty_MaximumFramesPerSlice,
+                             kAudioUnitScope_Global, 0, &numFrames, &dataSize);
+        
+        printFormat(m_convertFormat);
+        printFormat(m_variFormat);
+        
+        err = configureOutputFile(m_convertFormat);
+        if (err)
+            printf("Cannot create output file\n");
+        
 		return err;
 	}
 
-	void MacAudioPlay::attachBuffer(CARingBuffer* pb)
+	void MacAudioPlay::attachBuffer(AudioRingBuffer* pb)
 	{
-		m_buffer = pb;
+		m_ringBuffer = pb;
 	}
 
 	double MacAudioPlay::getFirstInputTime()
@@ -382,4 +359,66 @@ namespace oppvs {
 	{
 		m_firstInputTime = itime;
 	}
+    
+    OSStatus MacAudioPlay::EncoderDataProc(AudioConverterRef			inAudioConverter,
+                                              UInt32*							ioNumberDataPackets,
+                                              AudioBufferList*				ioData,
+                                              AudioStreamPacketDescription**	outDataPacketDescription,
+                                              void*							inUserData)
+    {
+        OSStatus err = noErr;
+        MacAudioPlay* player = (MacAudioPlay*)inUserData;
+        
+        ioData->mBuffers[0].mData = NULL;
+        ioData->mBuffers[0].mDataByteSize = 0;
+        
+        uint64_t timeStamp = player->m_currentSampleTime - player->m_offset;
+        RingBufferError rbError = player->m_ringBuffer->fetch(*ioNumberDataPackets, player->m_encoderBuffer, timeStamp);
+        
+        printf("Error: %d\n", rbError);
+        if (rbError)
+            return err;
+        
+        if (*ioNumberDataPackets > 0)
+        {
+            ioData->mBuffers[0].mData = player->m_encoderBuffer;
+            ioData->mBuffers[0].mDataByteSize = *ioNumberDataPackets * player->m_convertFormat.mBytesPerPacket;
+        }
+        return err;
+    }
+    
+    OSStatus MacAudioPlay::configureOutputFile(CAStreamBasicDescription& sformat)
+    {
+        OSStatus err = noErr;
+        m_totalPos = 0;
+        CFURLRef destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
+                                                                CFSTR("/Users/caominhtrang/Desktop/testaudioout.wav"),
+                                                                kCFURLPOSIXPathStyle,
+                                                                false);
+        
+        err = AudioFileCreateWithURL(destinationURL, kAudioFileCAFType, &sformat, kAudioFileFlags_EraseFile, &fOutputAudioFile);
+        
+        checkResult(err, "Can not create audio file");
+        return err;
+    }
+    
+    void MacAudioPlay::writeCookie (AudioConverterRef converter, AudioFileID outfile)
+    {
+        // grab the cookie from the converter and write it to the file
+        UInt32 cookieSize = 0;
+        OSStatus err = AudioConverterGetPropertyInfo(converter, kAudioConverterCompressionMagicCookie, &cookieSize, NULL);
+        // if there is an error here, then the format doesn't have a cookie, so on we go
+        if (!err && cookieSize) {
+            char* cookie = new char [cookieSize];
+            
+            err = AudioConverterGetProperty(converter, kAudioConverterCompressionMagicCookie, &cookieSize, cookie);
+            checkResult(err, "Get Cookie From AudioConverter");
+            
+            /*err =*/ AudioFileSetProperty (outfile, kAudioFilePropertyMagicCookieData, cookieSize, cookie);
+            // even though some formats have cookies, some files don't take them, so we ignore the error
+            delete [] cookie;
+        }
+    }
+    
+
 } // oppvs
