@@ -42,11 +42,13 @@ namespace oppvs {
 		UInt32 maxOutputSize = 0;
 		err = AudioConverterGetProperty(m_converter, kAudioConverterPropertyMaximumOutputPacketSize, &size, &maxOutputSize);
 
-		UInt32 uFlag = kAudioConverterQuality_Max;
-        err = AudioConverterSetProperty(m_converter, kAudioConverterSampleRateConverterQuality,
-                                        sizeof(uFlag), &uFlag);
-        checkResult(err, "Set Sample Rate Converter Quality");
-        
+        if (inputFormat.mSampleRate != outputFormat.mSampleRate)
+        {
+            UInt32 uFlag = kAudioConverterQuality_Max;
+            err = AudioConverterSetProperty(m_converter, kAudioConverterSampleRateConverterQuality,
+                                            sizeof(uFlag), &uFlag);
+            checkResult(err, "Set Sample Rate Converter Quality");
+        }
 		return 0;
 	}
 
@@ -55,7 +57,7 @@ namespace oppvs {
 		AudioConverterDispose(m_converter);
 	}
 
-	OSStatus MacAudioResampler::convert(AudioConverterComplexInputDataProc proc, void* userData, UInt32 *ioOutputDataPackets, AudioBufferList* abl, UInt32 inNumFrames, UInt32 bytesPerFrame)
+	OSStatus MacAudioResampler::convert(AudioConverterComplexInputDataProc proc, void* userData, UInt32 *ioOutputDataPackets, AudioBufferList* abl, UInt32 inNumFrames, UInt32 bytesPerFrame, bool isUp)
 	{
 		OSStatus err = noErr;
         //Calculate correct number output frames
@@ -66,29 +68,31 @@ namespace oppvs {
         UInt32 availableOutputBytes = availableInputBytes;
         UInt32 availableOutputFrames = availableOutputBytes / bytesPerFrame;
         UInt32 propertySize = sizeof (availableOutputBytes);
-        err = AudioConverterGetProperty(m_converter,
-                                        kAudioConverterPropertyCalculateOutputBufferSize,
-                                        &propertySize,
-                                        &availableOutputBytes);
-        checkResult(err, "AudioConverterGetProperty CalculateOutputBufferSize");
-        
-        availableOutputFrames = availableOutputBytes / bytesPerFrame;
-        UInt32 inputBytes = availableOutputBytes;
-        propertySize = sizeof(availableOutputBytes);
-        err = AudioConverterGetProperty(m_converter,
-                                        kAudioConverterPropertyCalculateInputBufferSize,
-                                        &propertySize,
-                                        &inputBytes);
-        checkResult(err, "AudioConverterGetProperty CalculateInputBufferSize");
-        
-        printf("input bytes: %d %d\n", inputBytes, availableInputBytes);
-        if(inputBytes < availableInputBytes) {
-            // OK to zero pad the input a little
-            availableOutputFrames += 1;
-            availableOutputBytes = availableOutputFrames * bytesPerFrame;
+        if (!isUp)
+        {
+            err = AudioConverterGetProperty(m_converter,
+                                            kAudioConverterPropertyCalculateOutputBufferSize,
+                                            &propertySize,
+                                            &availableOutputBytes);
+            checkResult(err, "AudioConverterGetProperty CalculateOutputBufferSize");
+            
+            availableOutputFrames = availableOutputBytes / bytesPerFrame;
+            UInt32 inputBytes = availableOutputBytes;
+            propertySize = sizeof(availableOutputBytes);
+            err = AudioConverterGetProperty(m_converter,
+                                            kAudioConverterPropertyCalculateInputBufferSize,
+                                            &propertySize,
+                                            &inputBytes);
+            checkResult(err, "AudioConverterGetProperty CalculateInputBufferSize");
+            
+            printf("num frames: %d input bytes: %d %d\n", inNumFrames, inputBytes, availableInputBytes);
+            if(inputBytes < availableInputBytes) {
+                // OK to zero pad the input a little
+                availableOutputFrames += 1;
+                availableOutputBytes = availableOutputFrames * bytesPerFrame;
+            }
         }
-        
-        printf("%d %d\n", availableOutputFrames, availableOutputBytes);
+        printf("Available output frames %d %d \n", availableOutputFrames, availableOutputBytes);
         
         *ioOutputDataPackets = availableOutputFrames;
 		AudioConverterReset(m_converter);
