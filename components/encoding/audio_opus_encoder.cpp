@@ -57,7 +57,7 @@ namespace oppvs {
 		m_controllers.clear();
 	}
 
-	int AudioOpusEncoder::encode(const void* input, int inLen, uint8_t source, uint8_t* output)
+	int AudioOpusEncoder::encode(const void* input, int inLen, uint8_t source, uint8_t*& output)
 	{
 		AudioEncodingController* controller = getController(source);
 		if (controller == NULL)

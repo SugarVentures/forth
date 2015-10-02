@@ -62,7 +62,9 @@ namespace oppvs {
 		AudioDecodingController* controller = getController(source);
 		if (controller == NULL)
 			return -1;
-        return 0;
+        int ret = opus_multistream_decode_float(controller->dec, (const unsigned char*)input, len, output, 960, 0);
+        
+        return ret;
 	}
 
 	OpusMSDecoder* AudioOpusDecoder::initOpus(AudioDecodingController* controller)

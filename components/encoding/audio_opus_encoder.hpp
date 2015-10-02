@@ -36,7 +36,7 @@ namespace oppvs {
 
 		int init(const AudioStreamInfo&);
 		void cleanup();
-		int encode(const void* input, int inLen, uint8_t source, uint8_t* output);
+		int encode(const void* input, int inLen, uint8_t source, uint8_t*& output);
 	private:
 		struct AudioEncodingController
 		{
