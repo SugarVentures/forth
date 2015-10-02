@@ -57,20 +57,20 @@ namespace oppvs {
 		m_controllers.clear();
 	}
 
-	int AudioOpusEncoder::encode(const void* input, uint8_t source, float* output)
+	int AudioOpusEncoder::encode(const void* input, int inLen, uint8_t source, uint8_t* output)
 	{
 		AudioEncodingController* controller = getController(source);
 		if (controller == NULL)
 			return -1;
-		float* buffer = new float[960 * 2];
-        int nBytes; // = opus_encode_float(controller->enc, buffer, 960, (unsigned char*)output, AUDIO_MAX_ENCODING_PACKET_SIZE);
-		if (nBytes < 0)
-		{
-			printf("Encode failed: %s\n", opus_strerror(nBytes));
-			return -1;
-		}
-		delete [] buffer;
-		return nBytes;
+		
+        int maxDataBytes = AUDIO_MAX_ENCODE_PACKET_SIZE;
+        output = new uint8_t[maxDataBytes];
+        int ret = opus_multistream_encode_float(controller->enc, (const float*)input, m_frameSize, output, maxDataBytes);
+        if (ret < 0)
+        {
+            delete [] output;
+        }
+		return ret;
 	}
 
 	OpusMSEncoder* AudioOpusEncoder::initOpus(AudioEncodingController* controller, int application)
@@ -92,15 +92,16 @@ namespace oppvs {
 			codingRate = 8000;
         
         m_frameSize = AUDIO_ENCODING_FRAME_SIZE / (48000/codingRate);
-        OpusHeader header;
-        header.channels = channels;
-        header.input_sample_rate = sampleRate;
+        controller->header.channels = channels;
+        controller->header.input_sample_rate = sampleRate;
         
         OpusMSEncoder* enc;
         const uint8_t *mapping;
         mapping = opusEncodeChannelMap[channels - 1];
         int coupleStreamCount = opusCoupledStreams[channels - 1];
         int streamCount = channels - coupleStreamCount;
+        
+        controller->header.nb_streams = streamCount;
         
         //In opus, the mapping for channels > 8 is undefined
         if (channels > 8)
@@ -139,7 +140,7 @@ namespace oppvs {
 	{
 		if (enc)
 		{
-			//opus_encoder_destroy(enc);
+            opus_multistream_encoder_destroy(enc);
 		}
 	}
 

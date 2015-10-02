@@ -14,6 +14,7 @@
 namespace oppvs {
 
 	const int AUDIO_ENCODING_FRAME_SIZE = 960;
+    const int AUDIO_MAX_ENCODE_PACKET_SIZE = 4000;
     
     struct OpusHeader
     {
@@ -49,11 +50,12 @@ namespace oppvs {
 
 		int init(const AudioStreamInfo&);
 		void cleanup();
-		int encode(const void* input, uint8_t source, float* output);
+		int encode(const void* input, int inLen, uint8_t source, uint8_t* output);
 	private:
 		struct AudioEncodingController
 		{
 			OpusMSEncoder *enc;
+            OpusHeader header;
 			uint8_t source;
 			uint8_t format;	//Float or Int
 			int channels;
