@@ -16,20 +16,6 @@ namespace oppvs {
 	const int AUDIO_ENCODING_FRAME_SIZE = 960;
     const int AUDIO_MAX_ENCODE_PACKET_SIZE = 4000;
     
-    struct OpusHeader
-    {
-        int version;
-        int channels; /* Number of channels: 1..255 */
-        int preskip;
-        uint32_t input_sample_rate;
-        int gain; /* in dB S7.8 should be zero whenever possible */
-        int channel_mapping;
-        /* The rest is only used if channel_mapping != 0 */
-        int nb_streams;
-        int nb_coupled;
-        unsigned char stream_map[255];
-    };
-    
     constexpr static const uint8_t opusCoupledStreams[8] = {0, 1, 1, 2, 2, 2, 2, 3};
     constexpr static const uint8_t opusEncodeChannelMap[8][8] = {
         { 0 },

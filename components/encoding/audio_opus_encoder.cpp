@@ -102,6 +102,7 @@ namespace oppvs {
         int streamCount = channels - coupleStreamCount;
         
         controller->header.nb_streams = streamCount;
+        controller->header.nb_coupled = coupleStreamCount;
         
         //In opus, the mapping for channels > 8 is undefined
         if (channels > 8)
