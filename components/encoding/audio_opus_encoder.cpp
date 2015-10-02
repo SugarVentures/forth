@@ -34,7 +34,7 @@ namespace oppvs {
 			controller->rate = info.sources[i].sampleRate;
 			controller->samples = info.sources[i].samplePerChannels;
 
-			OpusEncoder *enc = initOpus(controller, application);
+			OpusMSEncoder *enc = initOpus(controller, application);
 			if (enc == NULL)
 			{
 				delete controller;
@@ -51,37 +51,34 @@ namespace oppvs {
 		for (unsigned i = 0; i < m_controllers.size(); ++i) {
 			destroyOpus(m_controllers[i]->enc);
 			m_controllers[i]->enc = NULL;
-			clearResampler(m_controllers[i]->resampler);
 			delete m_controllers[i];
 			m_controllers[i] = NULL;
 		}
 		m_controllers.clear();
 	}
 
-	int AudioOpusEncoder::encode(const void* input, uint8_t source, uint8_t* output)
+	int AudioOpusEncoder::encode(const void* input, uint8_t source, float* output)
 	{
 		AudioEncodingController* controller = getController(source);
 		if (controller == NULL)
 			return -1;
 		float* buffer = new float[960 * 2];
-		long noSamples = readResampler(controller->resampler, input, buffer, 960);
-		int nBytes = opus_encode_float(controller->enc, buffer, 960, output, AUDIO_MAX_ENCODING_PACKET_SIZE);
+        int nBytes; // = opus_encode_float(controller->enc, buffer, 960, (unsigned char*)output, AUDIO_MAX_ENCODING_PACKET_SIZE);
 		if (nBytes < 0)
 		{
 			printf("Encode failed: %s\n", opus_strerror(nBytes));
 			return -1;
 		}
-		printf("Encoded bytes: %d\n", nBytes);
-		return 0;
+		delete [] buffer;
+		return nBytes;
 	}
 
-	OpusEncoder* AudioOpusEncoder::initOpus(AudioEncodingController* controller, int application)
+	OpusMSEncoder* AudioOpusEncoder::initOpus(AudioEncodingController* controller, int application)
 	{
 		int error = 0;
 		int complexity = 10;	//Complexity must be 0 - 10
 		uint32_t sampleRate = controller->rate;
 		int channels = controller->channels;
-		OpusEncoder *enc = NULL;
 		int codingRate;
 		if (sampleRate > 24000)
 			codingRate = 48000;
@@ -92,13 +89,27 @@ namespace oppvs {
 		else if (sampleRate > 8000)
 			codingRate = 12000;
 		else
-			codingRate = 80000;
-
-		/*Scale the resampler complexity, but only for 48000 output because the near-cutoff behavior matters a lot more at lower rates.*/
-		if (sampleRate != codingRate)
-			setupResampler(controller, codingRate == 48000 ? (complexity + 1)/2:5, codingRate);
-
-		enc = opus_encoder_create(codingRate, channels, application, &error);
+			codingRate = 8000;
+        
+        m_frameSize = AUDIO_ENCODING_FRAME_SIZE / (48000/codingRate);
+        OpusHeader header;
+        header.channels = channels;
+        header.input_sample_rate = sampleRate;
+        
+        OpusMSEncoder* enc;
+        const uint8_t *mapping;
+        mapping = opusEncodeChannelMap[channels - 1];
+        int coupleStreamCount = opusCoupledStreams[channels - 1];
+        int streamCount = channels - coupleStreamCount;
+        
+        //In opus, the mapping for channels > 8 is undefined
+        if (channels > 8)
+        {
+            printf("Channel layout undefined for %d channels\n", channels);
+            return NULL;
+        }
+        
+        enc = opus_multistream_encoder_create(codingRate, channels, streamCount, coupleStreamCount, mapping, application, &error);
 		if (error != OPUS_OK || enc == NULL)
 		{
 			printf("Failed to init Opus Encoder: %s\n", opus_strerror(error));
@@ -124,11 +135,11 @@ namespace oppvs {
 		return -1;
 	}
 
-	void AudioOpusEncoder::destroyOpus(OpusEncoder* enc)
+	void AudioOpusEncoder::destroyOpus(OpusMSEncoder* enc)
 	{
 		if (enc)
 		{
-			opus_encoder_destroy(enc);
+			//opus_encoder_destroy(enc);
 		}
 	}
 
@@ -141,52 +152,5 @@ namespace oppvs {
 		return NULL;
 	}
 
-	int AudioOpusEncoder::setupResampler(AudioEncodingController* controller, int complexity, long outFreq)
-	{
-		Resampler *rs = new Resampler;
-		int err;
-		
-		rs->bufSize = 5760*2; /* Have at least two output frames worth, just in case of ugly ratios */
-		rs->bufPos = 0;
 
-		rs->channels = controller->channels;
-		rs->done = 0;
-
-		rs->resampler = speex_resampler_init(rs->channels, controller->rate, outFreq, complexity, &err);
-		if (err != 0)
-			printf("resampler error: %s\n", speex_resampler_strerror(err));
-		controller->skip += speex_resampler_get_output_latency(rs->resampler);
-
-		rs->bufs = new float[rs->bufSize * controller->channels];
-
-		if (controller->samples)
-		    controller->samples = (int)((float)controller->samples * ((float)outFreq/(float)controller->rate));
-
-		controller->rate = outFreq;
-		controller->resampler = rs;
-		return 0;
-	}
-
-	long AudioOpusEncoder::readResampler(Resampler* rs, const void* input, float* buffer, int samples)
-	{
-		int outSamples = 0;
-		float *pcmBuf;
-		int *inBuf;
-
-		pcmBuf = rs->bufs;
-		inBuf = &rs->bufPos;
-		unsigned int inLen = 512*2;
-		unsigned int outLen = samples;
-		speex_resampler_process_interleaved_float(rs->resampler, (const float*)input, &inLen, buffer, &outLen);
-		
-		return outLen;
-	}
-
-	void AudioOpusEncoder::clearResampler(Resampler* rs)
-	{
-		speex_resampler_destroy(rs->resampler);
-		delete [] rs->bufs;
-		delete rs;
-		rs = NULL;
-	}
 } // oppvs
