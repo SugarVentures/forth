@@ -10,28 +10,27 @@
 
 #import <Cocoa/Cocoa.h>
 #include "mac_video_capture.hpp"
+#include "mac_audio_engine.hpp"
 #include "streaming_engine.hpp"
 
 #include "ViewController.h"
-
+#include "Util.h"
 
 @class ViewController;
 
 @interface Document : NSDocument
 {
 @private
-    oppvs::MacVideoEngine *videoEngine;
+    oppvs::MacVideoEngine* mVideoEngine;
+    oppvs::MacAudioEngine* mAudioEngine;
 }
-
-@property NSMutableArray *videoCaptureDevices;
-@property NSMutableDictionary *windowCaptureInputs;
-@property NSInteger severPort;
 
 - (void) addSource: (NSString*) sourceid hasType: (oppvs::VideoSourceType) type sourceRect: (CGRect)srect renderRect: (CGRect)rrect withViewID: (id) viewid atIndex: (NSInteger) index;
 - (void) startRecording;
 - (void) stopRecording;
 - (void) startStreaming: (NSString*)streamKey;
 - (void) stopStreaming;
+- (void) initEngines: (id) userid;
 
 @end
 

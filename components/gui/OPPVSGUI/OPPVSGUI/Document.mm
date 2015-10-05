@@ -11,17 +11,6 @@
 
 bool isStreaming;
 
-
-static oppvs::window_rect_t createFromCGRect(CGRect rect)
-{
-    oppvs::window_rect_t out;
-    out.left = rect.origin.x;
-    out.bottom = rect.origin.y;
-    out.right = rect.origin.x + rect.size.width;
-    out.top = rect.origin.y + rect.size.height;
-    return out;
-}
-
 @interface Document ()
 {
 @private
@@ -32,16 +21,9 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
 
 @implementation Document
 
-@synthesize videoCaptureDevices;
-@synthesize windowCaptureInputs;
 
 - (instancetype)init {
     self = [super init];
-    sharedBuffer = new oppvs::PixelBuffer();
-    sharedBuffer->width[0] = oppvs::DEFAULT_VIDEO_FRAME_WIDTH;
-    sharedBuffer->height[0] = oppvs::DEFAULT_VIDEO_FRAME_HEIGHT;
-    sharedBuffer->stride[0] = sharedBuffer->width[0] * 4;
-    sharedBuffer->nbytes = sharedBuffer->height[0] * sharedBuffer->stride[0];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cleanup)
@@ -56,59 +38,24 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
     ViewController* view = (ViewController*)viewController;
     [view reset];
     
-    /*for (id obj in [view listCaptureSources])
-    {
-        NSMutableDictionary *dict = (NSMutableDictionary*)obj;
-        NSString* device = [dict valueForKey:@"CSName"];
-        void* user = (__bridge void*)[dict valueForKey:@"User"];
-        NSRect frame = [[dict valueForKey:@"Rect"] rectValue];
-        oppvs::window_rect_t rect(frame.origin.x, frame.size.width, frame.size.height, frame.origin.y);
-
-        //NSRange range = [[view selectedVideoDevice] rangeOfString:@"Screen Capturing" options:NSCaseInsensitiveSearch];
-        NSRange range = [device rangeOfString:@"Screen Capturing" options:NSCaseInsensitiveSearch];
-        if (range.location != NSNotFound)
-        {
-            if ([view selectedWindowInput])
-            {
-                videoEngine->addSource(oppvs::VST_WINDOW, [[view selectedWindowInput] intValue], 30, rect, user);
-            }
-            else
-                videoEngine->addSource(oppvs::VST_WINDOW, 0, 1, rect, user);
-        }
-        else
-        {
-            std::string title([device UTF8String]);
-            int index = videoEngine->getDeviceID(title);
-            if (index < 0)
-            {
-                NSLog(@"Device not found\n");
-                return;
-            }
-            videoEngine->addSource(oppvs::VST_WEBCAM, index, 30, rect, user);
-        }
-    }
-    
-    
-    videoEngine->setupCaptureSessions();
-    videoEngine->startRecording();*/
 }
 
 - (void) stopRecording
 {
-    videoEngine->stopRecording();
-    videoEngine->removeAllSource();
+    mVideoEngine->stopRecording();
+    mVideoEngine->removeAllSource();
 
 
 }
 
 - (void) startStreaming: (NSString*) streamKey
 {
-    streamingEngine.setStreamInfo(videoEngine->getVideoActiveSources());
+    streamingEngine.setStreamInfo(mVideoEngine->getVideoActiveSources());
     
     dispatch_queue_t queue = dispatch_queue_create("oppvs.streaming.queue", DISPATCH_QUEUE_SERIAL);
     dispatch_async(queue, ^{
-        if (streamingEngine.init(oppvs::ROLE_BROADCASTER, "54.169.227.237", "54.169.227.237", "turn", "password",
-                                 "54.169.227.237", 33333) < 0)
+        if (streamingEngine.init(oppvs::ROLE_BROADCASTER, "52.76.92.162", "52.76.92.162", "turn", "password",
+                                 "52.76.92.162", 33333) < 0)
         {
             NSLog(@"Failed to init streaming engine");
             return;
@@ -158,6 +105,16 @@ void frameCallback(oppvs::PixelBuffer& pf)
 }
 
 #pragma mark Utilities
+
+static oppvs::window_rect_t createFromCGRect(CGRect rect)
+{
+    oppvs::window_rect_t out;
+    out.left = rect.origin.x;
+    out.bottom = rect.origin.y;
+    out.right = rect.origin.x + rect.size.width;
+    out.top = rect.origin.y + rect.size.height;
+    return out;
+}
 
 // Returns the io_service_t corresponding to a CG display ID, or 0 on failure.
 // The io_service_t should be released with IOObjectRelease when not needed.
@@ -352,7 +309,6 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
                 [nswindows setObject: title forKey: [NSString stringWithFormat:@"%d", it->id]];
             }
             
-            [document setWindowCaptureInputs:nswindows];
         }
     }
     
@@ -373,16 +329,101 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     oppvs::ControllerLinker *controller = new oppvs::ControllerLinker();
     controller->streamer = &streamingEngine;
     controller->render = (__bridge void*)viewid;
-    activeSource = videoEngine->addSource(type, source, 24, sourceRect, renderRect, (void*)controller, (int)index);
+    activeSource = mVideoEngine->addSource(type, source, 24, sourceRect, renderRect, (void*)controller, (int)index);
     if (activeSource)
     {
-        videoEngine->setupCaptureSession(activeSource);
-        videoEngine->startCaptureSession(*activeSource);
+        mVideoEngine->setupCaptureSession(activeSource);
+        mVideoEngine->startCaptureSession(*activeSource);
     }
     else
         NSLog(@"Failed to add capture source");
 
 }
+
+- (void) initEngines: (id) userid
+{
+    std::vector<oppvs::AudioDevice> audioDevices;
+    std::vector<oppvs::VideoCaptureDevice> videoDevices;
+    std::vector<oppvs::Monitor> monitors;
+    
+    oppvs::MacAudioEngine* audioEngine = new oppvs::MacAudioEngine;
+    oppvs::MacVideoEngine* videoEngine = new oppvs::MacVideoEngine(frameCallback, (__bridge void*)userid);
+    
+    NSMutableArray *listSources = [[NSMutableArray alloc] init];
+    
+    NSMutableDictionary *dashItem = [[NSMutableDictionary alloc] init];
+    [dashItem setObject: kMenuItemValueBlank forKey: kMenuItemKeyTitle];
+    [dashItem setObject: kMenuItemValueEmpty forKey: kMenuItemKeyId];
+    [dashItem setObject: kMenuItemValueDash forKey: kMenuItemKeyType];
+    
+    //Get information of monitors
+    videoEngine->getListMonitors(monitors);
+    if (monitors.size() > 0)
+    {
+        for (std::vector<oppvs::Monitor>::const_iterator it = monitors.begin(); it != monitors.end(); ++it)
+        {
+            NSString *monitorName = screenNameForDisplay(it->id);
+            NSMutableDictionary *monitorItem = [[NSMutableDictionary alloc] init];
+            [monitorItem setObject: monitorName forKey: kMenuItemKeyTitle];
+            [monitorItem setObject: [NSNumber numberWithUnsignedLong:it->id] forKey: kMenuItemKeyId];
+            [monitorItem setObject: kMenuItemValueMonitor forKey: kMenuItemKeyType];
+            [listSources addObject: monitorItem];
+        }
+        //Add dash
+        [listSources addObject:dashItem];
+    }
+    
+    //Custom area
+    NSMutableDictionary *customItem = [[NSMutableDictionary alloc] init];
+    [customItem setObject: kMenuItemValueCustomRegion forKey: kMenuItemKeyTitle];
+    [customItem setObject: kMenuItemValueEmpty forKey: kMenuItemKeyId];
+    [customItem setObject: kMenuItemValueCustom forKey: kMenuItemKeyType];
+    [listSources addObject:customItem];
+    
+    //Add dash
+    [listSources addObject:dashItem];
+
+    //Get information of capture devices
+    videoEngine->getListCaptureDevices(videoDevices);
+    if (videoDevices.size() > 0)
+    {
+        for (std::vector<oppvs::VideoCaptureDevice>::const_iterator it = videoDevices.begin(); it != videoDevices.end(); ++it)
+        {
+            NSString *deviceName = [NSString stringWithCString:it->device_name.c_str()
+                                                      encoding:[NSString defaultCStringEncoding]];
+            NSString *deviceId = [NSString stringWithCString:it->device_id.c_str()
+                                                    encoding:[NSString defaultCStringEncoding]];
+            NSMutableDictionary *deviceItem = [[NSMutableDictionary alloc] init];
+            [deviceItem setObject: deviceName forKey: kMenuItemKeyTitle];
+            [deviceItem setObject: deviceId forKey: kMenuItemKeyId];
+            [deviceItem setObject: kMenuItemValueDevice forKey: kMenuItemKeyType];
+            [listSources addObject: deviceItem];
+        }
+        //Add dash
+        [listSources addObject:dashItem];
+    }
+    
+    audioEngine->getListAudioDevices(audioDevices);
+    if (audioDevices.size() > 0)
+    {
+        for (std::vector<oppvs::AudioDevice>::const_iterator it = audioDevices.begin(); it != audioDevices.end(); ++it)
+        {
+            NSString* audioDeviceName = [NSString stringWithCString:it->getDeviceName().c_str() encoding:[NSString defaultCStringEncoding]];
+            NSNumber *audioDeviceId = [NSNumber numberWithUnsignedLong:it->getDeviceID()];
+            NSMutableDictionary *audioItem = [[NSMutableDictionary alloc] init];
+            [audioItem setObject: audioDeviceName forKey: kMenuItemKeyTitle];
+            [audioItem setObject: audioDeviceId forKey: kMenuItemKeyId];
+            [audioItem setObject: kMenuItemValueAudio forKey: kMenuItemKeyType];
+            [listSources addObject: audioItem];
+        }
+    }
+    
+    [userid setListSources:listSources];
+    mVideoEngine = videoEngine;
+    mAudioEngine = audioEngine;
+}
+
+#pragma mark Default functions
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
     [super windowControllerDidLoadNib:aController];
@@ -398,8 +439,8 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     // Override to return the Storyboard file name of the document.
     [self addWindowController:[[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"Document Window Controller"]];
     viewController = self.windowForSheet.contentViewController;
-    videoEngine = initVideoEngine(self, viewController);
-
+    //mVideoEngine = initVideoEngine(self, viewController);
+    [self initEngines: viewController];
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError {
@@ -421,10 +462,7 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
 {
     NSLog(@"Cleanup");
     
-    
-    delete sharedBuffer;
-    delete videoEngine;
-    //delete streamingEngine;
+    delete mVideoEngine;
     
 }
 

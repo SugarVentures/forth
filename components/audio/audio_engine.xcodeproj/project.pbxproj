@@ -13,7 +13,6 @@
 		3533FE68CAE870F6FAFC8D55 /* mac_audio_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E94DC30675674573E01128D /* mac_audio_capture.cpp */; };
 		6040976BE9BC0A03FAAB9283 /* mac_audio_engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A86294766A509C9EBBC809B /* mac_audio_engine.cpp */; };
 		7B750DC42752ED5D5DC0AE65 /* mac_audio_tool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 606ED3EE80C944D0B8341561 /* mac_audio_tool.cpp */; };
-		80AAE75CCC60E51B3CBD48CD /* CARingBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 936862546893E42E14CBDBCD /* CARingBuffer.cpp */; };
 		931E748F8F8D2505A9ABD9CB /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8AE7219162F861CFA1AE9A9B /* CAStreamBasicDescription.cpp */; };
 		BA7447FCA4189BFE0D5C9AA3 /* audio_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A36E4D9C585EE2F265BDD69 /* audio_device.cpp */; };
 		CECF3CFC473B7AD5839CDA65 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4B8FC5ACA038A9CF3E4F7E3 /* AudioUnit.framework */; };
@@ -194,7 +193,6 @@
 				D85C0A2257855820C2005DB5 /* mac_audio_resampler.cpp in Sources */,
 				7B750DC42752ED5D5DC0AE65 /* mac_audio_tool.cpp in Sources */,
 				931E748F8F8D2505A9ABD9CB /* CAStreamBasicDescription.cpp in Sources */,
-				80AAE75CCC60E51B3CBD48CD /* CARingBuffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

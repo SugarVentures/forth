@@ -77,7 +77,6 @@ NSString* kCSName = @"CSName";
     document = [self.view.window.windowController document];
     if (document)
     {
-        [self setVideoDevices: document.videoCaptureDevices];
         if (videoDevices.count > 0)
         {
             [self setSelectedVideoDevice:videoDevices[0]];
@@ -106,7 +105,6 @@ NSString* kCSName = @"CSName";
     NSRange range = [device rangeOfString:@"Screen Capturing" options:NSCaseInsensitiveSearch];
     if (range.location != NSNotFound)
     {
-        [self setWindowInputs: document.windowCaptureInputs];
         //[view setReverse:false];
     }
     else
@@ -201,7 +199,7 @@ NSString* kCSName = @"CSName";
 }
 
 - (IBAction)startStreaming:(id)sender {
-    if (streamKey.stringValue && streamKey.stringValue.length == oppvs::STREAM_KEY_SIZE)
+    if (streamKey.stringValue && streamKey.stringValue.length > 0)
     {
         [self setStreaming:true];
         [document startStreaming: [streamKey stringValue]];
@@ -294,6 +292,7 @@ NSString* kCSName = @"CSName";
         //CGRect outrect = CGRectMake(rect.origin.x, rect.origin.y, 600, 588);
         OpenGLFrame *user = [self addSubView:renderFrame];
         [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_CUSTOM sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex: user.order];
+        
         @autoreleasepool {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
             [dict setObject:@"Test" forKey:@"id"];
@@ -355,28 +354,20 @@ NSString* kCSName = @"CSName";
         sourceFrame = CGRectMake(0, 0, 400, 300);
     }
     
-    if ([[source objectForKey:@"type"] isEqualToString:@"Monitor"])
+    if ([[source objectForKey: kMenuItemKeyType] isEqualToString: kMenuItemValueMonitor])
     {
         user = [self addSubView:renderFrame];
-        [document addSource:[[source objectForKey:@"id"] stringValue] hasType:oppvs::VST_WINDOW sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex:user.order];
-        @autoreleasepool {
-            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-            [dict setObject:@"Test" forKey:@"id"];
-            [[self listCaptureSources] addObject:dict];
-        }
+        [document addSource:[[source objectForKey: kMenuItemKeyId] stringValue] hasType:oppvs::VST_WINDOW sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex:user.order];
+        [[self listCaptureSources] addObject: source];
     }
-    else if ([[source objectForKey:@"type"] isEqualToString:@"Device"])
+    else if ([[source objectForKey: kMenuItemKeyType] isEqualToString: kMenuItemValueDevice])
     {
         user = [self addSubView:renderFrame];
         
-        [document addSource: [source objectForKey:@"id"] hasType:oppvs::VST_WEBCAM sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex:user.order];
-        @autoreleasepool {
-            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-            [dict setObject:@"Test" forKey:@"id"];
-            [[self listCaptureSources] addObject:dict];
-        }
+        [document addSource: [source objectForKey: kMenuItemKeyId] hasType:oppvs::VST_WEBCAM sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex:user.order];
+        [[self listCaptureSources] addObject: source];
     }
-    else if ([[source objectForKey:@"type"] isEqualToString:@"Custom"])
+    else if ([[source objectForKey: kMenuItemKeyType] isEqualToString: kMenuItemValueCustom])
     {
         [self setRegion];
     }

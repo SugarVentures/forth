@@ -7,7 +7,6 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <CoreFoundation/CoreFoundation.h>
 #include "mac_utility/CAStreamBasicDescription.h"
-#include "mac_utility/CARingBuffer.h"
 #include "mac_audio_resampler.hpp"
 
 namespace oppvs {

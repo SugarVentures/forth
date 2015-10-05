@@ -144,6 +144,7 @@ namespace oppvs {
 	        m_listAudioDevices.push_back(aDevice);
 	    }
 
+	    result = m_listAudioDevices;
 	}
 
 	int MacAudioEngine::init()
