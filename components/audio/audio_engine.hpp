@@ -13,7 +13,7 @@ namespace oppvs {
 		AudioEngine() {}
 
 		virtual ~AudioEngine() {}
-		virtual void getListAudioDevices(std::vector<AudioDevice>& result) {}
+		virtual void getListAudioDevices(std::vector<AudioDevice>& result, bool input) {}
 		virtual int addNewCapture(uint32_t deviceid) { return 0; }
 
 		void printAudioDeviceList() const

@@ -14,7 +14,7 @@ namespace oppvs {
 		MacAudioEngine();
 		~MacAudioEngine();
 		
-		void getListAudioDevices(std::vector<AudioDevice>& result);
+		void getListAudioDevices(std::vector<AudioDevice>& result, bool input);
 		int addNewCapture(uint32_t deviceid);
 		int init();
 		int shutdown();

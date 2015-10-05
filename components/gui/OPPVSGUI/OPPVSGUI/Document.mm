@@ -403,7 +403,7 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
         [listSources addObject:dashItem];
     }
     
-    audioEngine->getListAudioDevices(audioDevices);
+    audioEngine->getListAudioDevices(audioDevices, true);
     if (audioDevices.size() > 0)
     {
         for (std::vector<oppvs::AudioDevice>::const_iterator it = audioDevices.begin(); it != audioDevices.end(); ++it)

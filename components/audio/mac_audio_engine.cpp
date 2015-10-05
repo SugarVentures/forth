@@ -11,7 +11,7 @@ namespace oppvs {
 		shutdown();
 	}
 
-	void MacAudioEngine::getListAudioDevices(std::vector<AudioDevice>& result)
+	void MacAudioEngine::getListAudioDevices(std::vector<AudioDevice>& result, bool input)
 	{
 		resetAudioDeviceList();
 		AudioObjectPropertyAddress propertyAddress = {
@@ -104,13 +104,15 @@ namespace oppvs {
 	        int totalChannels = 0;
 	        proSize = 0;
 	        address.mSelector = kAudioDevicePropertyStreamConfiguration;
+            address.mScope = input ? kAudioDevicePropertyScopeInput : kAudioDevicePropertyScopeOutput;
+            
 	        status = AudioHardwareServiceGetPropertyDataSize(audioDevices[i], &address, 0, NULL, &proSize);
 	        if (kAudioHardwareNoError != status) {
 	            printf("AudioObjectGetPropertyDataSize (kAudioDevicePropertyStreamConfiguration) failed: %i\n", status);
 	            continue;
 	        }
-
-	        AudioBufferList *bufferList = new AudioBufferList[dataSize];
+            
+	        AudioBufferList *bufferList = new AudioBufferList[proSize];
 	        status = AudioHardwareServiceGetPropertyData(audioDevices[i], &address, 0, NULL, &proSize, bufferList);
 	        if (kAudioHardwareNoError != status || 0 == bufferList->mNumberBuffers) {
 	            if (kAudioHardwareNoError != status)
@@ -129,6 +131,9 @@ namespace oppvs {
 
 	        	delete [] bufferList;
 	        }
+            
+            if (totalChannels <= 0)
+                continue;
 
 	        //Get sample rate
 	        Float64 sampleRate = 0.0;
