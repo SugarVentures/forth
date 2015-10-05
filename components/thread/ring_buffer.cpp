@@ -59,8 +59,7 @@ namespace oppvs {
 		if (inLen == 0)
 			return RingBufferError_OK;
         
-        printf("inLen store: %d\n", inLen);
-        printf("Size %d cap: %d\n", m_size, m_capacity);
+        //printf("Size %d cap: %d\n", m_size, m_capacity);
         if (m_fetchIndex == m_storeIndex && size() > 0)
             return RingBufferError_FullBuffer;
 
@@ -69,7 +68,6 @@ namespace oppvs {
         if (writeBytes <= m_capacity - m_storeIndex)
         {
         	memcpy(m_buffer + m_storeIndex, data, writeBytes);
-            printf("Current store index: %d writebytes: %d\n", m_storeIndex, writeBytes);
         	m_storeIndex += writeBytes;
         	if (m_storeIndex == m_capacity)
         		m_storeIndex = 0;
@@ -116,5 +114,10 @@ namespace oppvs {
         m_size -= readBytes;
 		*outLen = readBytes;
 		return RingBufferError_OK;
-	}	
+	}
+    
+    bool RingBuffer::isFull()
+    {
+        return (m_capacity == m_size);
+    }
 } // oppvs

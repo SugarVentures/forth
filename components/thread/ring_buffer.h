@@ -24,6 +24,7 @@ namespace oppvs {
 		uint32_t size();
 		uint32_t capacity();
         void reset();
+        bool isFull();
 
 		RingBufferError store(const uint8_t* data, uint32_t inLen, uint32_t* outLen);
 		RingBufferError fetch(uint8_t* data, uint32_t inLen, uint32_t* outLen);

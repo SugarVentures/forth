@@ -6,7 +6,7 @@
     "targets": [
         {
             "target_name": "thread_engine",
-            "type": 'static_library',
+            "type": 'shared_library',
             'include_dirs': [
                 '../include',
             ],

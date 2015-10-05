@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "19A7BE6AAB8E7AFA6731878E"
-               BuildableName = "libthread_engine.a"
+               BuildableName = "libthread_engine.dylib"
                BlueprintName = "thread_engine"
                ReferencedContainer = "container:thread_engine.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "19A7BE6AAB8E7AFA6731878E"
-            BuildableName = "libthread_engine.a"
+            BuildableName = "libthread_engine.dylib"
             BlueprintName = "thread_engine"
             ReferencedContainer = "container:thread_engine.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "19A7BE6AAB8E7AFA6731878E"
-            BuildableName = "libthread_engine.a"
+            BuildableName = "libthread_engine.dylib"
             BlueprintName = "thread_engine"
             ReferencedContainer = "container:thread_engine.xcodeproj">
          </BuildableReference>

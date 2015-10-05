@@ -13,11 +13,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18F92990A15D854AC10A1A3B /* libthread_engine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libthread_engine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ring_buffer.cpp; sourceTree = "<group>"; };
 		56A7BEF83122E6E93D3F2728 /* audio_ring_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_ring_buffer.h; sourceTree = "<group>"; };
 		664245FF2A7AAA4A0CEBDF7C /* thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread.cpp; sourceTree = "<group>"; };
 		69A036E19E16EF7C3E790468 /* ring_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ring_buffer.h; sourceTree = "<group>"; };
-		85B29969623F068F9144E752 /* libthread_engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libthread_engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA144AA8CF389F6E5018D1D /* CAAtomic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAAtomic.h; sourceTree = "<group>"; };
 		AE004DD1378F0A438BFD5226 /* tsqueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = tsqueue.hpp; sourceTree = "<group>"; };
 		B5688B33306D04C73C068171 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
@@ -41,15 +41,15 @@
 			isa = PBXGroup;
 			children = (
 				CA0C71FBF73D131B4F273378 /* Source */,
-				2E5B295471092E289A95A5A3 /* Products */,
+				41956C78EBE2331033BD3DB2 /* Products */,
 				ABC5D748870E83CE29D9B32B /* Build */,
 			);
 			sourceTree = "<group>";
 		};
-		2E5B295471092E289A95A5A3 /* Products */ = {
+		41956C78EBE2331033BD3DB2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				85B29969623F068F9144E752 /* libthread_engine.a */,
+				18F92990A15D854AC10A1A3B /* libthread_engine.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,8 +94,8 @@
 			);
 			name = thread_engine;
 			productName = thread_engine;
-			productReference = 85B29969623F068F9144E752 /* libthread_engine.a */;
-			productType = "com.apple.product-type.library.static";
+			productReference = 18F92990A15D854AC10A1A3B /* libthread_engine.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
 

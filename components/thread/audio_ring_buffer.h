@@ -11,7 +11,7 @@ namespace oppvs {
 
 		void allocate(uint32_t bytesPerFrame, uint32_t maxFrames);
         RingBufferError store(uint32_t* ioFrames, const void* data, uint64_t timeStamp);
-        RingBufferError fetch(uint32_t* ioFrames, void* data, uint64_t timeStamp);
+        RingBufferError fetch(uint32_t ioFrames, void* data, uint64_t timeStamp);
         uint32_t getNumberFrames();
         uint64_t getStartTime();
 	protected:
