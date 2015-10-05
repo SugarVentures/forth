@@ -1,12 +1,12 @@
 CXX = g++
 RM = rm -f
 
-INCDIR = -I$(rootDir)/../include
+INCDIR = -I$(rootDir)/../include -I$(rootDir)/../thread
 
 CFLAGS = -Wall -g
 
 LDFLAGS = -L$(rootDir)/../../libs
-LIBS = 
+LIBS = -lthreadengine
 
 FRAMEWORKS = -framework AudioToolbox -framework CoreFoundation -framework AudioUnit -framework CoreAudio
 

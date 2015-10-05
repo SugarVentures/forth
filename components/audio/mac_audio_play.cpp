@@ -30,8 +30,6 @@ namespace oppvs {
 		if (err)
 			return -1;
         
-        //err = AUGraphConnectNodeInput(m_graph, m_converterNode, 0, m_varispeedNode, 0);
-        //checkResult(err, "Can not connect converter to varispeed node");
 		err = AUGraphConnectNodeInput(m_graph, m_varispeedNode, 0, m_outputNode, 0);
         checkResult(err, "Can not connect varispeed to output node");
 		if (err)

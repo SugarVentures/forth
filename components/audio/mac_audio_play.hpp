@@ -3,14 +3,12 @@
 
 #import <AudioToolbox/AudioToolbox.h>
 #import <CoreAudio/CoreAudio.h>
-//#import <CoreFoundation/CoreFoundation.h>
 #include "mac_utility/CAStreamBasicDescription.h"
 #include "mac_utility/CARingBuffer.h"
 #include "audio_play.hpp"
 #include "mac_audio_resampler.hpp"
 
 #include "audio_ring_buffer.h"
-#include "utility.h"
 
 namespace oppvs {
 	#define checkErr( err) \

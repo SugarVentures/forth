@@ -160,7 +160,8 @@ CARingBufferError	CARingBuffer::Store(const AudioBufferList *abl, UInt32 framesT
 	
 	if (framesToWrite > mCapacityFrames)
 		return kCARingBufferError_TooMuch;		// too big!
-
+    
+    printf("StartTime Store: %lld End Time: %lld startWrite %lld frames: %d\n", StartTime(), EndTime(), startWrite, framesToWrite);
 	SampleTime endWrite = startWrite + framesToWrite;
 	
 	if (startWrite < EndTime()) {
@@ -172,6 +173,7 @@ CARingBufferError	CARingBuffer::Store(const AudioBufferList *abl, UInt32 framesT
 		// advance the start time past the region we are about to overwrite
 		SampleTime newStart = endWrite - mCapacityFrames;	// one buffer of time behind where we're writing
 		SampleTime newEnd = std::max(newStart, EndTime());
+        printf("New start: %lld old start: %lld\n", newStart, StartTime());
 		SetTimeBounds(newStart, newEnd);
 	}
 	
@@ -207,6 +209,7 @@ CARingBufferError	CARingBuffer::Store(const AudioBufferList *abl, UInt32 framesT
 	}
 	
 	// now update the end time
+    printf("Start Time: %lld\n", StartTime());
 	SetTimeBounds(StartTime(), endWrite);
 	printf("Store: %lld %lld\n", StartTime(), endWrite);
 	return kCARingBufferError_OK;	// success
@@ -216,6 +219,7 @@ void	CARingBuffer::SetTimeBounds(SampleTime startTime, SampleTime endTime)
 {
 	UInt32 nextPtr = mTimeBoundsQueuePtr + 1;
 	UInt32 index = nextPtr & kGeneralRingTimeBoundsQueueMask;
+    printf("Index: %d\n", index);
 	
 	mTimeBoundsQueue[index].mStartTime = startTime;
 	mTimeBoundsQueue[index].mEndTime = endTime;
@@ -235,6 +239,7 @@ CARingBufferError	CARingBuffer::GetTimeBounds(SampleTime &startTime, SampleTime 
 		endTime = bounds->mEndTime;
 		UInt32 newPtr = bounds->mUpdateCounter;
 		
+        printf("Time bounds %lld index: %d\n", startTime, curPtr);
 		if (newPtr == curPtr) 
 			return kCARingBufferError_OK;
 	}

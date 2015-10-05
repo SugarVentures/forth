@@ -7,9 +7,13 @@
     'targets': [
         {
             'target_name': 'libaudio_engine',
-            'type': 'static_library',
+            'type': 'shared_library',
             'include_dirs': [
                 '../include',
+                '../thread',
+                '../misc',
+                '../../libs/libsrtp/include',
+                '../../libs/libsrtp/crypto/include',
             ],
             'conditions': [
                 ['OS == "mac"', {
