@@ -210,14 +210,14 @@ int main(int argc, char const *argv[])
 	std::vector<AudioDevice> devices;
 
 	engine.callbackAudio = audioCallback;
-	engine.getListAudioDevices(devices);
+	engine.getListAudioDevices(devices, true);
 	engine.printAudioDeviceList();
 
 	uint32_t deviceid = 96;
 	if (engine.init() < 0)
 		return -1;
 
-	if (engine.addNewCapture(deviceid) < 0)
+	if (engine.addNewCapture(deviceid, NULL) < 0)
 	{
 		return -1;
 	}

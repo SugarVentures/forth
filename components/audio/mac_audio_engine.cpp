@@ -166,27 +166,41 @@ namespace oppvs {
 			printf("The device is not found\n");
 			return -1;
 		}
+
 		MacAudioCapture* capture = new MacAudioCapture(device);
 		capture->callbackAudio = callbackAudio;
 		capture->user = user;
 		if (capture->init() < 0)
 		{
 			printf("Can not init the audio capture device\n");
+			delete capture;
 			return -1;
 		}
 		if (capture->start() < 0)
 		{
 			printf("Can not start the audio capture\n");
+			delete capture;
+			return -1;
 		}
-		m_listCaptures.push_back(capture);
+
+		AudioActiveSource* psrc = addSource(deviceid, device.getSampleRate());
+		if (psrc == NULL)
+		{
+			printf("Can not add the audio device\n");
+			return -1;
+		}
+
+		psrc->capture = capture;
 		return 0;
 	}	
 
 	int MacAudioEngine::shutdown()
 	{
-		for (unsigned i = 0; i < m_listCaptures.size(); ++i) {
-			delete m_listCaptures.back();
-			m_listCaptures.pop_back();
+		for (unsigned i = 0; i < m_activeSources.size(); ++i) {
+			AudioActiveSource source = m_activeSources.back();
+			MacAudioCapture* capture = (MacAudioCapture*)source.capture;
+			delete capture;
+			m_activeSources.pop_back();
 		}
 		return 0;
 	}	

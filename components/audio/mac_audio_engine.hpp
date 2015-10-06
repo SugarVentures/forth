@@ -18,7 +18,5 @@ namespace oppvs {
 		int addNewCapture(uint32_t deviceid, void* user);
 		int init();
 		int shutdown();
-	private:
-		std::vector<MacAudioCapture*> m_listCaptures;
 	};
 } // oppvs
