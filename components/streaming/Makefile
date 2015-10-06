@@ -12,6 +12,8 @@ INCDIR += -I$(rootDir)/../network -I$(rootDir)/../../libs/libnice -I$(rootDir)/.
 		  -I/usr/local/include/glib-2.0 \
 		  -I$(rootDir)/../../libs/libnice/include
 
+INCDIR += -I$(rootDir)/../../libs/libopus/include
+
 CFLAGS = -Wall -g -std=c++11
 
 

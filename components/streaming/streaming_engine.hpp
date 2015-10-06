@@ -53,7 +53,6 @@ namespace oppvs
 		void setSSRC(uint32_t value) { m_ssrc = value; }
 		uint32_t getSSRC() { return m_ssrc;}
 
-		void setStreamInfo(PixelBuffer& pf);
 		void setStreamInfo(const std::vector<VideoActiveSource>& sources);
 
 		bool isRunning();
