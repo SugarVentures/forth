@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <unistd.h>
+#include <string>
 
 #define OPPVS_IDLE_TIME	500
 #define OPPVS_DEFAULT_SERVER_LISTEN_PORT 33432

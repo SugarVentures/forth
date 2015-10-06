@@ -9,7 +9,6 @@
 #include "datatypes.hpp"
 #include "thread.hpp"
 #include "video_capture.hpp"
-#include "video_decoding_vp.hpp"
 
 #include "signaling_handler.hpp"
 #include "packet_handler.hpp"
@@ -33,6 +32,13 @@ namespace oppvs
 		SocketAddress signalingServerAddress;
 		StreamingRole role;
 	};
+
+	const std::string STUN_SERVER_ADDRESS("192.168.0.101");
+	const std::string TURN_SERVER_ADDRESS("192.168.0.101");
+	const std::string TURN_SERVER_USER("turn");
+	const std::string TURN_SERVER_PASS("password");
+	const std::string SIGN_SERVER_ADDRESS("192.168.0.101");
+	const static int SIGN_SERVER_PORT = 33333;
 
 	class StreamingEngine
 	{

@@ -147,7 +147,7 @@ namespace oppvs {
 		}
 		delete [] pf.plane[0];
 
-		printf("Encoding Length %u Key: %d timestamp: %u\n", encodingLength, isKey, m_timestamp);
+		//printf("Encoding Length %u Key: %d timestamp: %u\n", encodingLength, isKey, m_timestamp);
 		sendLength = encodingLength;
 		uint8_t* curPos = data;
 		do
@@ -180,7 +180,7 @@ namespace oppvs {
 			sendLength -= sentLength;
 			curPos += sentLength;
 
-			printf("Sent length: %u\n", sentLength);
+			//printf("Sent length: %u\n", sentLength);
 			p_segmentPool->push(segment);
 		}
 		while (sendLength > 0);
@@ -248,7 +248,7 @@ namespace oppvs {
 			m_keyFrame = !(o1 & 1);
 			o1 >>= Size0BitShift;
 			uint32_t frameSize = o1 + 8 * data[curPos + 1] + 2048 * data[curPos + 2];
-			printf("Size: %u key: %d\n", frameSize, m_keyFrame);
+			//printf("Size: %u key: %d\n", frameSize, m_keyFrame);
 			//Create buffer for new frame
 			m_dataStream.reset();
 			SharedDynamicBufferRef buffer = SharedDynamicBufferRef(new DynamicBuffer());
@@ -322,7 +322,7 @@ namespace oppvs {
 		memcpy(&timestamp, data, 4);
 		timestamp = ntohl(timestamp);
 		memcpy(&sourceid, data + 4, 1);
-		printf("timestamp %u len: %u source: %d\n", timestamp, len, sourceid);
+		//printf("timestamp %u len: %u source: %d\n", timestamp, len, sourceid);
 		SegmentReader* reader = getReader(sourceid);
 		if (reader == NULL)
 			return;

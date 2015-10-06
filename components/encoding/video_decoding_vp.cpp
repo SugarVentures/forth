@@ -81,7 +81,7 @@ namespace oppvs
 	      		return -1;
 	      	}
 	     	++frame_cnt;
-	     	printf("Frame count: %u len: %u\n", frame_cnt, length);
+	     	//printf("Frame count: %u len: %u\n", frame_cnt, length);
 	    }
 	    return error;
 	}

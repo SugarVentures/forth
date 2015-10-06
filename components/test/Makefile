@@ -10,7 +10,8 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../threa
 		-I$(rootDir)/../streaming \
 		-I$(rootDir)/../server -I$(rootDir)/../client  \
 		-I$(rootDir)/../audio \
-		-I$(rootDir)/../../libs/libopus/include
+		-I$(rootDir)/../../libs/libopus/include \
+		-I$(rootDir)/../../libs/libsamplerate/src
 
 INCDIR += -I$(rootDir)/../../libs/libnice -I$(rootDir)/../../libs/libnice/agent \
 		  -I/usr/local/include/glib-2.0 \
@@ -35,7 +36,7 @@ SRCS = testvideoengine.cpp
 OBJS = $(subst .cpp,.o,$(SRCS))
 
 AUDIOLDFLAGS = -L$(rootDir)/../../libs
-AUDIOLIBS = -laudioengine -lopus -lencodingengine
+AUDIOLIBS = -laudioengine -lopus -lencodingengine -lsamplerate
 
 resample_CPPFLAGS = -DSPX_RESAMPLE_EXPORT= -DRANDOM_PREFIX=oppvs -DOUTSIDE_SPEEX -DFLOATING_POINT
 

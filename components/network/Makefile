@@ -12,7 +12,7 @@ INCDIR += -I$(rootDir)/../../libs/libnice -I$(rootDir)/../../libs/libnice/agent 
 		  -I$(rootDir)/../thread
 
 
-NICELDFLAGS = -L/user/local/lib
+NICELDFLAGS = -L/usr/local/lib
 NICELIBS = -lgio-2.0 -lgobject-2.0 -lgthread-2.0 -lglib-2.0 -lintl -lnice.10
 
 
@@ -33,7 +33,6 @@ OBJLIBS = libnetworkengine.so
 
 SRCS = $(wildcard *.cpp)
 OBJS = $(subst .cpp,.o,$(SRCS))
-
 
 
 rootDir = .

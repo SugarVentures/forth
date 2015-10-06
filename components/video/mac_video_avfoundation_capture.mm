@@ -156,8 +156,8 @@
         [output setAlwaysDiscardsLateVideoFrames: YES];
 
         pixelBufferOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-                              //@(CGRectGetWidth(rect)), (id)kCVPixelBufferWidthKey,
-                              //@(CGRectGetHeight(rect)), (id)kCVPixelBufferHeightKey,
+                              @(CGRectGetWidth(rect)), (id)kCVPixelBufferWidthKey,
+                              @(CGRectGetHeight(rect)), (id)kCVPixelBufferHeightKey,
                               [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA], (id)kCVPixelBufferPixelFormatTypeKey,
                               nil];
 
@@ -210,7 +210,7 @@
         return oppvs::ERR_VIDEO_CAPTURE_INPUT_DEVICE_FAILED;
     }
     screen_input.removesDuplicateFrames = 1;
-    screen_input.scaleFactor = 0.5;
+    screen_input.scaleFactor = 0.4;
     if (isDrop)
     {        
         [screen_input setCropRect: rect];

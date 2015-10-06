@@ -65,7 +65,6 @@ namespace oppvs
 			m_serviceInfo.videoStreamInfo.sources[0].source = 0;
 			m_serviceInfo.videoStreamInfo.sources[0].order = 0;
 			m_serviceInfo.videoStreamInfo.sources[0].stride = 4 * DEFAULT_VIDEO_FRAME_WIDTH;
-			//m_depacketizer.init(m_serviceInfo.videoStreamInfo, &m_recvPool);
 		}
 		return 0;
 	}
@@ -111,8 +110,6 @@ namespace oppvs
 		m_serviceInfo.type = ST_VIDEO_STREAMING;
 		m_serviceInfo.key = m_ssrc;
 		VideoStreamInfo* vsi = &m_serviceInfo.videoStreamInfo;
-		vsi->videoWidth = DEFAULT_VIDEO_FRAME_WIDTH;
-		vsi->videoHeight = DEFAULT_VIDEO_FRAME_HEIGHT;
 		if (sources.size() == 0)
 			return;
 		vsi->noSources = sources.size();
@@ -133,7 +130,6 @@ namespace oppvs
 
 	void StreamingEngine::printServiceInfo()
 	{
-		printf("Stream Info: Width %d Height %d \n", m_serviceInfo.videoStreamInfo.videoWidth, m_serviceInfo.videoStreamInfo.videoHeight);
 		printf("Stream Info: Number of capture sources: %d\n", m_serviceInfo.videoStreamInfo.noSources);
 		for (int i = 0; i < m_serviceInfo.videoStreamInfo.noSources; i++)
 		{

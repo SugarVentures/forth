@@ -14,7 +14,9 @@ INCDIR += -I$(rootDir)/../network -I$(rootDir)/../../libs/libnice -I$(rootDir)/.
 
 CFLAGS = -Wall -g -std=c++11
 
+
 LDFLAGS = -L$(rootDir)/../../libs
+
 LIBS = -lsrtp -lnetworkengine -lthreadengine -lmisc -lencodingengine
 
 OBJLIBS = libstreaming.so

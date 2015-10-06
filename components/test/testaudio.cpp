@@ -1,7 +1,6 @@
 #include "datatypes.hpp"
 #include "mac_audio_engine.hpp"
 #include "mac_audio_play.hpp"
-#include "mac_utility/CARingBuffer.h"
 
 #include <signal.h>
 #include <iostream>
@@ -10,13 +9,21 @@
 #include "audio_opus_encoder.hpp"
 #include "audio_opus_decoder.hpp"
 
+#include "audio_ring_buffer.h"
+#include "utility.h"
+#include <thread>
+#include <chrono>
+#include <mutex>
 
-#include "samplerate.h"
 
 #define BUFFER_LEN 4096
-#define DEFAULT_CONVERTER SRC_SINC_BEST_QUALITY
 
 using namespace oppvs;
+
+AudioFileID fOutputAudioFile;
+bool interrupt;
+
+
 CARingBuffer *mBuffer;
 AudioBufferList *mAudioBufferList;
 MacAudioPlay* pplayer;
@@ -24,14 +31,94 @@ MacAudioPlay* pplayer;
 AudioOpusEncoder *pencoder;
 AudioOpusDecoder *pdecoder;
 float *in;
-int *out;
+uint8_t *out;
 float *outDecode;
+uint64_t totalPos;
+uint32_t oldNoFrames;
+double oldTime;
 
-SRC_STATE* src_state;
-SRC_DATA src_data;
+AudioRingBuffer* ringBuffer;
 
-SRC_STATE* dest_state;
-SRC_DATA dest_data;
+OSStatus configureOutputFile()
+{
+    OSStatus err = noErr;
+    CAStreamBasicDescription format;
+    format.mSampleRate = 48000;
+    format.mFormatID = kAudioFormatLinearPCM;
+    format.mBitsPerChannel = 32;
+    format.mFormatFlags = kAudioFormatFlagIsFloat | kAudioFormatFlagIsPacked;
+    format.mFramesPerPacket = 1;
+    format.mChannelsPerFrame = 2;
+    format.mBytesPerFrame = sizeof(Float32) * format.mChannelsPerFrame;
+    format.mBytesPerPacket = format.mFramesPerPacket * format.mBytesPerFrame;
+
+    CFURLRef destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
+                                                            CFSTR("/Users/caominhtrang/Desktop/testaudio.wav"),
+                                                            kCFURLPOSIXPathStyle,
+                                                            false);
+    
+    err = AudioFileCreateWithURL(destinationURL, kAudioFileCAFType, &format, kAudioFileFlags_EraseFile, &fOutputAudioFile);
+    
+    return err;
+
+}
+
+void encode(void* p)
+{
+    printf("Encode process\n");
+    if (in == NULL)
+    {
+        in = new float[6000];
+        memset(in, 0, 6000 * 4);
+    }
+
+    while (!interrupt)
+    {
+        if (ringBuffer->getNumberFrames() > 0)
+        {
+            if (ringBuffer->getNumberFrames() > 960)
+            {
+                oldNoFrames = 960;
+                int err = ringBuffer->fetch(oldNoFrames, in, ringBuffer->getStartTime());
+                printf("Fetch error: %d read frames: %d\n", err, oldNoFrames);
+                
+                
+                int inLen = oldNoFrames * 8;
+                int outLen = pencoder->encode(in, inLen, 1, out);
+                
+                printf("Encode Out Len: %d\n", outLen);
+                
+                if (outDecode == NULL)
+                {
+                    outDecode = new float[4000];
+                }
+                int decodeLen = pdecoder->decode(out, outLen, 1, outDecode);
+                printf("Decode Out Len: %d\n", decodeLen);
+                
+                if (decodeLen > 0)
+                {
+                    UInt32 noWriteBytes = decodeLen * 8;
+                    
+                    OSStatus error = AudioFileWritePackets(fOutputAudioFile, false, noWriteBytes, nil, totalPos, &oldNoFrames, outDecode);
+                    if (!error)
+                        totalPos += oldNoFrames;
+                }
+            }
+            else
+                oldNoFrames = ringBuffer->getNumberFrames();
+            
+            
+
+            /*UInt32 noWriteBytes = oldNoFrames * 8;
+
+            OSStatus error = AudioFileWritePackets(fOutputAudioFile, false, noWriteBytes, nil, totalPos, &oldNoFrames, outDecode);
+            if (!error)
+                totalPos += oldNoFrames;*/
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+    }
+    
+}
 
 
 
@@ -62,6 +149,7 @@ void waitForAppExitSignal()
         int ret = sigwait(&sigs, &sig);
         if ((sig == SIGINT) || (sig == SIGTERM))
         {
+            interrupt = true;
             break;
         }
     }
@@ -77,133 +165,46 @@ void audioCallback(GenericAudioBufferList& ab)
 		printf("Data Size: %d \n", ab.buffers[i].dataLength);
 	}*/
 	
-	if (!pplayer || !pencoder)
+	if (!pplayer)
 		return;
-	if (in == NULL)
-	{
-		int totalsize = 0;
-		for(unsigned i = 0; i < ab.nBuffers; ++i) {
-			totalsize += ab.buffers[i].dataLength;
-		}
-		in = new float[totalsize / sizeof(float)];
-
-	}
-	int pos = 0;
-	for(unsigned i = 0; i < ab.nBuffers; ++i) {
-		//memcpy(in + pos, ab.buffers[i].data, ab.buffers[i].dataLength);
-		pos += ab.buffers[i].dataLength;
-	}
-
-	/*if (out == NULL)
-	{
-		out = new int[AUDIO_MAX_ENCODING_PACKET_SIZE];
-		outDecode = new float[2*2048];
-		memset(outDecode, 0, 2*2048);
-	}
-
-	int outLen = 0;
-	int channel[2];
 	
-	src_data.data_in = in;
-	src_data.input_frames = 1024;
-	src_data.data_out = outDecode;
+    uint32_t noFrames = ab.nFrames;
+    if (pplayer->getFirstInputTime() < 0.)
+    {
+        pplayer->setFirstInputTime(ab.sampleTime);
+        totalPos = 0;
+    }
+    
+    oppvs::RingBufferError err = ringBuffer->store(&noFrames, ab.buffers[0].data, ab.sampleTime);
+    printf("Store error: %d wrote frames: %d Time: %f\n", err, noFrames, CFAbsoluteTimeGetCurrent());
 
-	int error = src_process(src_state, &src_data);
-	if (error)
-	{
-		printf ("\nError : %s\n", src_strerror (error));
-	}
-	printf("out len of resampler: %d used frames: %d\n", src_data.output_frames_gen, src_data.input_frames_used);
-	outLen = src_data.output_frames_gen;
-
-	memset(in, 0, 4096);
-	dest_data.data_in = outDecode;
-	dest_data.input_frames = outLen;
-	dest_data.data_out = in;
-
-	error = src_process(dest_state, &dest_data);
-	if (error)
-	{
-		printf ("\nError : %s\n", src_strerror (error));
-	}
-	printf("out len of resampler (rev): %d\n", dest_data.output_frames_gen);
-	outLen = dest_data.output_frames_gen;
-	
 
 	/*int len = pencoder->encode(in, 1, (float*)out);
 	printf("Encoded len: %d\n", len);
 	int len2 = pdecoder->decode(out, len, 1, outDecode);
 	printf("Decoded len: %d\n", len2);*/
 
-	pos = 0;
-	for(unsigned i = 0; i < ab.nBuffers; ++i) {
-		//memcpy(ab.buffers[i].data, in + pos, ab.buffers[i].dataLength);
-		pos += ab.buffers[i].dataLength;
-	}	
 
-	if (pplayer->getFirstInputTime() < 0.)
-		pplayer->setFirstInputTime(ab.sampleTime);
-
-	convertGenericABLToABL(&ab, mAudioBufferList);
-	printf("nFrames: %d\n", ab.nFrames);
-	//ab.nFrames = 512;
-	if (mBuffer)
-	{
-		/*printf("audiobuffer list %d\n", mAudioBufferList->mNumberBuffers);
-			uint8_t* data = (uint8_t*)mAudioBufferList->mBuffers[0].mData;
-			for (int i = 0; i < mAudioBufferList->mBuffers[0].mDataByteSize; i++)
-			{
-				printf("%d", data[i]);
-			}
-			printf("\n");*/
-
-		int err = mBuffer->Store(mAudioBufferList, ab.nFrames, ab.sampleTime);
-		//printf("Err: %d\n", err);
-	}
+	
 }
 
 int main(int argc, char const *argv[])
 {
 	int error = 0;
-	src_state = src_delete(src_state);
-	dest_state = src_delete(dest_state);
-
-	if ((src_state = src_new(DEFAULT_CONVERTER, 2, &error)) == NULL)
-	{
-		printf ("\n\nError : src_new() failed : %s.\n\n", src_strerror (error));
-	}
-	src_data.end_of_input = 0;
-
-	/* Start with zero to force load in while loop. */
-	src_data.input_frames = 0 ;
-	src_data.src_ratio = (double)48000/(double)44100;
-	src_data.output_frames = BUFFER_LEN / 2;
-
-	if ((dest_state = src_new(DEFAULT_CONVERTER, 2, &error)) == NULL)
-	{
-		printf ("\n\nError : src_new() failed : %s.\n\n", src_strerror (error));
-	}
-	dest_data.end_of_input = 0;
-
-	/* Start with zero to force load in while loop. */
-	dest_data.input_frames = 0 ;
-	dest_data.src_ratio = (double)44100/(double)48000;
-	dest_data.output_frames = BUFFER_LEN / 2;
-
+    interrupt = false;
 
 	signal(SIGPIPE, SIG_IGN);
     initAppExitListener();
 
     pplayer = NULL;
-    pencoder = NULL;
+    //pencoder = NULL;
     in = NULL;
     out = NULL;
 
-    mBuffer = NULL;
-    mBuffer = new CARingBuffer();
-    mBuffer->Allocate(2, 4, 512 * 20);
-
     mAudioBufferList = NULL;
+    
+    ringBuffer = new AudioRingBuffer();
+    ringBuffer->allocate(8, 10 * 512);
 
 	MacAudioEngine engine;
 	std::vector<AudioDevice> devices;
@@ -222,7 +223,7 @@ int main(int argc, char const *argv[])
 	}
 	printf("Successful to add new audio capture\n");
 
-	AudioOpusEncoder encoder;
+	
 	AudioStreamInfo info;
 	info.noSources = 1;
 	info.sources = new AudioSourceInfo[info.noSources];
@@ -231,28 +232,39 @@ int main(int argc, char const *argv[])
 	info.sources[0].format = AUDIO_FORMAT_FLOAT;
 	info.sources[0].numberChannels = 2;
 	info.sources[0].samplePerChannels = 512;
-	info.sources[0].sampleRate = 44100;
-	encoder.init(info);
-	pencoder = &encoder;
+	info.sources[0].sampleRate = 48000;
+    
+    AudioOpusEncoder encoder;
+	if (encoder.init(info) < 0)
+        return -1;
+    pencoder = &encoder;
 
 	AudioOpusDecoder decoder;
-	decoder.init(info);
+	if (decoder.init(info) < 0)
+        return -1;
 	pdecoder = &decoder;
 
 	AudioDevice output(40);
 	MacAudioPlay player(output, 48000, 2);
 	pplayer = &player;
-	player.attachBuffer(mBuffer);
-	player.init();
-	player.start();
+	player.attachBuffer(ringBuffer);
+	if (player.init() < 0)
+        return -1;
+    
+    totalPos = 0;
+    configureOutputFile();
+	//player.start();
+    void* p;
+    std::thread t1(encode, p);
+    t1.join();
 
 	waitForAppExitSignal();
-	player.stop();
+	//player.stop();
 
-	src_state = src_delete(src_state);
-	dest_state = src_delete(dest_state);
 	delete [] in;
 	delete [] out;
+    
+    delete ringBuffer;
 	printf("End programing\n");
 	return 0;
 }
