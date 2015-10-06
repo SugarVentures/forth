@@ -25,7 +25,8 @@
     oppvs::MacAudioEngine* mAudioEngine;
 }
 
-- (void) addSource: (NSString*) sourceid hasType: (oppvs::VideoSourceType) type sourceRect: (CGRect)srect renderRect: (CGRect)rrect withViewID: (id) viewid atIndex: (NSInteger) index;
+- (void) addVideoSource: (NSString*) sourceid hasType: (oppvs::VideoSourceType) type sourceRect: (CGRect)srect renderRect: (CGRect)rrect withViewID: (id) viewid atIndex: (NSInteger) index;
+- (void) addAudioSource: (NSString*) sourceid withViewID: (id) viewid;
 - (void) startRecording;
 - (void) stopRecording;
 - (void) startStreaming: (NSString*)streamKey;

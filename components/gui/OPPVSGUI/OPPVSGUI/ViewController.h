@@ -17,6 +17,7 @@
 
 @interface ViewController : NSViewController<NSTableViewDataSource, NSTableViewDelegate, DrawMouseBoxViewDelegate>
 {
+@private
     NSArray *videoDevices;
     NSDictionary *windowInputs;
     
@@ -47,6 +48,9 @@
 
 @property (assign,getter=isRecording) BOOL recording;
 @property (assign,getter=isStreaming) BOOL streaming;
+
+@property (assign) IBOutlet NSLevelIndicator *audioLevelMeter;
+@property (assign) Float32 audioDecibels;
 
 @property BOOL hidden;
 

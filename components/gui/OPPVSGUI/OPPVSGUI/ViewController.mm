@@ -15,7 +15,7 @@
 
 @property NSUInteger videoDeviceIndex;
 @property NSString* windowInputKey;
-
+@property (assign) NSTimer *audioLevelTimer;
 
 @end
 
@@ -35,6 +35,9 @@
 @synthesize videoDeviceIndex;
 @synthesize windowInputKey;
 
+@synthesize audioLevelMeter;
+@synthesize audioLevelTimer;
+@synthesize audioDecibels;
 
 NSString* kCSName = @"CSName";
 
@@ -43,6 +46,7 @@ NSString* kCSName = @"CSName";
     
     self = [super init];
     isBackground = false;
+    audioDecibels = 0.0;
     return self;
 }
 
@@ -61,6 +65,8 @@ NSString* kCSName = @"CSName";
     //Set target for drop down menu
     [addSourceButton setTarget:self];
     
+    // Start updating the audio level meter
+    [self setAudioLevelTimer:[NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(updateAudioLevels:) userInfo:nil repeats:YES]];
     
 }
 
@@ -150,7 +156,7 @@ NSString* kCSName = @"CSName";
 - (IBAction)AddClick:(id)sender {
     
     FrameView *superview = (FrameView*)hostPreviewLayer;
-    int i = [self.listCaptureSources count];
+    unsigned long i = [self.listCaptureSources count];
     NSRect frame;
     NSValue *frameid;
     if (i == 0)
@@ -291,7 +297,7 @@ NSString* kCSName = @"CSName";
         CGRect sourceFrame = CGRectMake(rect.origin.x, rect.origin.y, width, ceil(rect.size.height));
         //CGRect outrect = CGRectMake(rect.origin.x, rect.origin.y, 600, 588);
         OpenGLFrame *user = [self addSubView:renderFrame];
-        [document addSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_CUSTOM sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex: user.order];
+        [document addVideoSource:[NSString stringWithFormat:@"%u", displayID] hasType:oppvs::VST_CUSTOM sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex: user.order];
         
         @autoreleasepool {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
@@ -357,19 +363,23 @@ NSString* kCSName = @"CSName";
     if ([[source objectForKey: kMenuItemKeyType] isEqualToString: kMenuItemValueMonitor])
     {
         user = [self addSubView:renderFrame];
-        [document addSource:[[source objectForKey: kMenuItemKeyId] stringValue] hasType:oppvs::VST_WINDOW sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex:user.order];
+        [document addVideoSource:[[source objectForKey: kMenuItemKeyId] stringValue] hasType:oppvs::VST_WINDOW sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex:user.order];
         [[self listCaptureSources] addObject: source];
     }
     else if ([[source objectForKey: kMenuItemKeyType] isEqualToString: kMenuItemValueDevice])
     {
         user = [self addSubView:renderFrame];
         
-        [document addSource: [source objectForKey: kMenuItemKeyId] hasType:oppvs::VST_WEBCAM sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex:user.order];
+        [document addVideoSource: [source objectForKey: kMenuItemKeyId] hasType:oppvs::VST_WEBCAM sourceRect:sourceFrame renderRect:renderFrame withViewID:user atIndex:user.order];
         [[self listCaptureSources] addObject: source];
     }
     else if ([[source objectForKey: kMenuItemKeyType] isEqualToString: kMenuItemValueCustom])
     {
         [self setRegion];
+    }
+    else if ([[source objectForKey: kMenuItemKeyType] isEqualToString: kMenuItemValueAudio])
+    {
+        [document addAudioSource: [[source objectForKey: kMenuItemKeyId] stringValue] withViewID: self];
     }
     
 }
@@ -420,6 +430,13 @@ NSString* kCSName = @"CSName";
 - (void) cleanup
 {
     
+}
+
+#pragma mark - Audio Preview
+- (void)updateAudioLevels: (NSTimer*)timer
+{
+    float decibels = [self audioDecibels] / 10;
+    [[self audioLevelMeter] setFloatValue: decibels];
 }
 
 

@@ -8,6 +8,21 @@
 
 #import "Document.h"
 #import <IOKit/graphics/IOGraphicsLib.h>
+#include "audio_engine.hpp"
+
+#include <stdlib.h>
+#include <cfloat>
+#include <cmath>
+
+#define DBOFFSET -74.0
+// DBOFFSET is An offset that will be used to normalize
+// the decibels to a maximum of zero.
+// This is an estimate, you can do your own or construct
+// an experiment to find the right value
+#define LOWPASSFILTERTIMESLICE .001
+// LOWPASSFILTERTIMESLICE is part of the low pass filter
+// and should be a small positive value
+
 
 bool isStreaming;
 
@@ -29,6 +44,8 @@ bool isStreaming;
                                              selector:@selector(cleanup)
                                                  name:NSApplicationWillTerminateNotification
                                                object:nil];
+    
+    
     return self;
 }
 
@@ -76,6 +93,8 @@ bool isStreaming;
     
 }
 
+#pragma mark Callback functions
+
 void frameCallback(oppvs::PixelBuffer& pf)
 {
     if (pf.nbytes == 0)
@@ -102,6 +121,49 @@ void frameCallback(oppvs::PixelBuffer& pf)
             streamer->pushData(pf);
         }
     }
+}
+
+static float caculateDecibels(float* samples, int numberFrames)
+{
+    float decibels = DBOFFSET;
+    float currentFilteredValueOfSampleAmplitude, previousFilteredValueOfSampleAmplitude = 0;
+    float peakValue = DBOFFSET;
+    for (int i=0; i < numberFrames; i++) {
+        float absoluteValueOfSampleAmplitude = std::abs(samples[i]) * 100; //Step 2: for each sample,
+        // get its amplitude's absolute value.
+        
+        // Step 3: for each sample's absolute value, run it through a simple low-pass filter
+        // Begin low-pass filter
+        currentFilteredValueOfSampleAmplitude = LOWPASSFILTERTIMESLICE * absoluteValueOfSampleAmplitude + (1.0 - LOWPASSFILTERTIMESLICE) * previousFilteredValueOfSampleAmplitude;
+        previousFilteredValueOfSampleAmplitude = currentFilteredValueOfSampleAmplitude;
+        float amplitudeToConvertToDB = currentFilteredValueOfSampleAmplitude;
+        // End low-pass filter
+        
+        float sampleDB = 20.0*log10(amplitudeToConvertToDB) + DBOFFSET;
+        // Step 4: for each sample's filtered absolute value, convert it into decibels
+        // Step 5: for each sample's filtered absolute value in decibels,
+        // add an offset value that normalizes the clipping point of the device to zero.
+        
+        if((sampleDB == sampleDB) && (sampleDB != -DBL_MAX)) { // if it's a rational number and
+            // isn't infinite
+            
+            if(sampleDB > peakValue) peakValue = sampleDB; // Step 6: keep the highest value
+            // you find.
+            decibels = peakValue; // final value
+        }
+    }
+    
+    return decibels;
+    
+}
+
+
+void audioCallback(oppvs::GenericAudioBufferList& ab)
+{
+    float decibels = caculateDecibels((float*)ab.buffers[0].data, ab.nFrames);
+    oppvs::ControllerLinker* linker = (oppvs::ControllerLinker*)ab.user;
+    ViewController* view = (__bridge ViewController*)linker->render;
+    [view setAudioDecibels: std::abs(decibels)];
 }
 
 #pragma mark Utilities
@@ -220,106 +282,8 @@ NSString* screenNameForDisplay(CGDirectDisplayID displayID)
     return screenName;
 }
 
-oppvs::MacVideoEngine* initVideoEngine(id document, id view)
-{
-    oppvs::MacVideoEngine *ve;
-    std::vector<oppvs::VideoCaptureDevice> devices;
-    std::vector<oppvs::VideoScreenSource> windows;
-    std::vector<oppvs::Monitor> monitors;
-    
-    void* user = (__bridge void*)view;
-    
-    ve = new oppvs::MacVideoEngine(frameCallback, user);
-    if (!ve)
-        return NULL;
-    
-    NSMutableArray *listSources = [[NSMutableArray alloc] init];
-    NSMutableDictionary *dashItem = [[NSMutableDictionary alloc] init];
-    [dashItem setObject:@" " forKey:@"title"];
-    [dashItem setObject:@"Empty" forKey:@"id"];
-    [dashItem setObject:@"Dash" forKey:@"type"];
-    
-    ve->getListMonitors(monitors);
-    if (monitors.size() == 0)
-        return ve;
-    
-    for (std::vector<oppvs::Monitor>::const_iterator it = monitors.begin(); it != monitors.end(); ++it)
-    {
-        NSString *monitorName = screenNameForDisplay(it->id);
-        NSMutableDictionary *monitorItem = [[NSMutableDictionary alloc] init];
-        [monitorItem setObject:monitorName forKey:@"title"];
-        NSNumber *monitorID = [NSNumber numberWithUnsignedLong:it->id];
-        [monitorItem setObject:monitorID forKey:@"id"];
-        [monitorItem setObject:@"Monitor" forKey:@"type"];
-        [listSources addObject: monitorItem];
-    }
-    
-    //Add dash
-    [listSources addObject:dashItem];
-    
-    NSMutableDictionary *customItem = [[NSMutableDictionary alloc] init];
-    [customItem setObject:@"Custom region" forKey:@"title"];
-    [customItem setObject:@"Empty" forKey:@"id"];
-    [customItem setObject:@"Custom" forKey:@"type"];
-    [listSources addObject:customItem];
-    
-    //Add dash
-    [listSources addObject:dashItem];
 
-    ve->getListCaptureDevices(devices);
-    if (devices.size() > 0)
-    {
-        for (std::vector<oppvs::VideoCaptureDevice>::const_iterator it = devices.begin(); it != devices.end(); ++it)
-        {
-            NSString *deviceName = [NSString stringWithCString:it->device_name.c_str()
-                                                       encoding:[NSString defaultCStringEncoding]];
-            NSString *deviceId = [NSString stringWithCString:it->device_id.c_str()
-                                                    encoding:[NSString defaultCStringEncoding]];
-            NSMutableDictionary *deviceItem = [[NSMutableDictionary alloc] init];
-            [deviceItem setObject:deviceName forKey:@"title"];
-            [deviceItem setObject:deviceId forKey:@"id"];
-            [deviceItem setObject:@"Device" forKey:@"type"];
-            [listSources addObject:deviceItem];
-        }
-    }
-    
-    [view setListSources:listSources];
-    
-    ve->getListVideoSource(windows);
-    if (windows.size() > 0)
-    {
-        @autoreleasepool {
-            NSMutableDictionary *nswindows = [[NSMutableDictionary alloc] init];
-            for (std::vector<oppvs::VideoScreenSource>::const_iterator it = windows.begin(); it != windows.end(); ++it)
-            {
-                
-                NSString *window_name = [NSString stringWithCString:it->title.c_str() encoding:[NSString defaultCStringEncoding]];
-                NSString *app_name = [NSString stringWithCString:it->app_name.c_str() encoding:[NSString defaultCStringEncoding]];
-                NSString *title;
-                if ([window_name length] == 0 && [app_name length] == 0)
-                    continue;
-                if ([window_name length] == 0)
-                {
-                    title = app_name;
-                }
-                else
-                {
-                    title = [NSString stringWithFormat:@"%@ - %@", app_name, window_name];
-                }
-                [nswindows setObject: title forKey: [NSString stringWithFormat:@"%d", it->id]];
-            }
-            
-        }
-    }
-    
-    monitors.clear();
-    devices.clear();
-    windows.clear();
-    
-    return ve;
-}
-
-- (void) addSource:(NSString *)sourceid hasType:(oppvs::VideoSourceType)type sourceRect:(CGRect)srect renderRect:(CGRect)rrect withViewID:(id)viewid atIndex:(NSInteger) index
+- (void) addVideoSource:(NSString *)sourceid hasType:(oppvs::VideoSourceType)type sourceRect:(CGRect)srect renderRect:(CGRect)rrect withViewID:(id)viewid atIndex:(NSInteger) index
 {
     std::string source = [sourceid UTF8String];
     oppvs::window_rect_t sourceRect = createFromCGRect(srect);
@@ -340,6 +304,20 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
 
 }
 
+- (void) addAudioSource:(NSString *)sourceid withViewID: (id) viewid
+{
+    int deviceid = [sourceid intValue];
+    oppvs::ControllerLinker *controller = new oppvs::ControllerLinker();
+    controller->streamer = &streamingEngine;
+    controller->render = (__bridge void*)viewid;
+
+    int result = mAudioEngine->addNewCapture(deviceid, controller);
+    if (result < 0)
+    {
+        printf("Can not add the audio device %d for recording\n", deviceid);
+    }
+}
+
 - (void) initEngines: (id) userid
 {
     std::vector<oppvs::AudioDevice> audioDevices;
@@ -347,6 +325,8 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     std::vector<oppvs::Monitor> monitors;
     
     oppvs::MacAudioEngine* audioEngine = new oppvs::MacAudioEngine;
+    audioEngine->callbackAudio = audioCallback;
+    
     oppvs::MacVideoEngine* videoEngine = new oppvs::MacVideoEngine(frameCallback, (__bridge void*)userid);
     
     NSMutableArray *listSources = [[NSMutableArray alloc] init];
@@ -423,7 +403,7 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     mAudioEngine = audioEngine;
 }
 
-#pragma mark Default functions
+#pragma mark - Default functions
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
     [super windowControllerDidLoadNib:aController];
@@ -463,7 +443,7 @@ oppvs::MacVideoEngine* initVideoEngine(id document, id view)
     NSLog(@"Cleanup");
     
     delete mVideoEngine;
-    
+    delete mAudioEngine;
 }
 
 

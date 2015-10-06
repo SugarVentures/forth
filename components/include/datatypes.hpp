@@ -19,6 +19,8 @@
 #define OPPVS_MAX_CAPTURE_SOURCES 5
 #define OPPVS_NETWORK_MAX_WAIT_TIME 5
 
+/* 120ms at 48000 */
+#define MAX_FRAME_SIZE (960*6)
 
 namespace oppvs {
 	typedef enum PixelFormat {
@@ -115,6 +117,7 @@ namespace oppvs {
 		uint32_t nFrames;
 		uint8_t source;
 		double sampleTime;
+		void* user;
 
 		GenericAudioBufferList(): nBuffers(0), buffers(NULL)
 		{
@@ -224,6 +227,20 @@ namespace oppvs {
 		VideoStreamInfo videoStreamInfo;
 		AudioStreamInfo audioStreamInfo;
 	};
+
+	struct OpusHeader
+    {
+        int version;
+        int channels; /* Number of channels: 1..255 */
+        int preskip;
+        uint32_t input_sample_rate;
+        int gain; /* in dB S7.8 should be zero whenever possible */
+        int channel_mapping;
+        /* The rest is only used if channel_mapping != 0 */
+        int nb_streams;
+        int nb_coupled;
+        unsigned char stream_map[255];
+    };
 
 }
 
