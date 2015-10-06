@@ -4,6 +4,7 @@
 #include "audio_device.hpp"
 #include <vector>
 
+
 namespace oppvs {
 
 
@@ -14,7 +15,7 @@ namespace oppvs {
 
 		virtual ~AudioEngine() {}
 		virtual void getListAudioDevices(std::vector<AudioDevice>& result, bool input) {}
-		virtual int addNewCapture(uint32_t deviceid) { return 0; }
+		virtual int addNewCapture(uint32_t deviceid, void* user) { return 0; }
 
 		void printAudioDeviceList() const
 		{
@@ -52,6 +53,7 @@ namespace oppvs {
 	private:
 
 	};
+    
 } // oppvs
 
 #endif // OPPVS_AUDIO_ENGINE_HPP

@@ -15,6 +15,7 @@ namespace oppvs {
 		virtual int stop() { return 0; }
 
 		audio_callback callbackAudio;
+		void* user;
 	protected:
 		AudioDevice m_device;
 		GenericAudioBufferList m_callbackBuffer;

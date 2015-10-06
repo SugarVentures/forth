@@ -158,7 +158,7 @@ namespace oppvs {
 		return 0;
 	}
 
-	int MacAudioEngine::addNewCapture(uint32_t deviceid)
+	int MacAudioEngine::addNewCapture(uint32_t deviceid, void* user)
 	{
 		AudioDevice device;
 		if (getDeviceByID(deviceid, device) < 0)
@@ -168,6 +168,7 @@ namespace oppvs {
 		}
 		MacAudioCapture* capture = new MacAudioCapture(device);
 		capture->callbackAudio = callbackAudio;
+		capture->user = user;
 		if (capture->init() < 0)
 		{
 			printf("Can not init the audio capture device\n");
