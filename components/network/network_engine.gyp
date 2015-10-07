@@ -9,12 +9,18 @@
             'type': 'shared_library',
             'dependencies': [
                 '../misc/misc.gyp:libmisc2',
+                '../thread/thread_engine.gyp:thread_engine',
             ],
             'include_dirs': [
                 '../../libs/libsrtp/include',
                 '../../libs/libsrtp/crypto/include',
                 '../include',
-                '../misc'
+                '../misc',
+                '../thread',
+                '../../libs/libnice',
+                '../../libs/libnice/agent',
+                '/usr/local/include/glib-2.0',
+                '../../libs/libnice/include'
             ],
 
             'conditions': [
@@ -26,9 +32,18 @@
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                     },
                     'libraries': [
-                    
                         '../../libs/libsrtp.a',
                     ],
+                    'link_settings': {
+                        'libraries': [
+                            '/usr/local/lib/libgio-2.0.0.dylib',
+                            '/usr/local/lib/libgobject-2.0.0.dylib',
+                            '/usr/local/lib/libgthread-2.0.0.dylib',
+                            '/usr/local/lib/libglib-2.0.0.dylib',
+                            '/usr/local/lib/libintl.a',
+                            '../../libs/libnice.10.dylib'
+                        ]
+                    }
 
                 }],
                 ['OS == "linux"', {
@@ -60,6 +75,9 @@
                 'signaling_manager.hpp',
                 'signaling_message_builder.hpp',
                 'signaling_message_reader.hpp',
+                'ice_common.hpp',
+                'ice_manager.hpp',
+                'ice_stream.hpp',
 
                 #sources
                  'client_socket.cpp',
@@ -75,7 +93,9 @@
                 'stun_socket.cpp',
                 'signaling_manager.cpp',
                 'signaling_message_builder.cpp',
-                'signaling_message_reader.cpp'
+                'signaling_message_reader.cpp',
+                'ice_manager.cpp',
+                'ice_stream.cpp'
             ]
 
         }

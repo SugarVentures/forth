@@ -40,7 +40,7 @@ rootDir = .
 all: $(OBJLIBS) install
 
 $(OBJLIBS): $(OBJS)
-	$(CXX) $(INCDIR) $(LDFLAGS) -fgnu-runtime -shared -o $(OBJLIBS) $(OBJS) $(LIBS) $(NICELIBS)
+	$(CXX) $(INCDIR) $(LDFLAGS) $(NICELDFLAGS) -fgnu-runtime -shared -o $(OBJLIBS) $(OBJS) $(LIBS) $(NICELIBS)
 
 
 %.o: %.cpp
