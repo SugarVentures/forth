@@ -163,12 +163,6 @@ namespace oppvs {
             //EOF condition;
             return noErr;
         }
-
-        UInt32 noWriteBytes = convertBufferList.mBuffers[0].mDataByteSize;
-        //err = AudioFileWritePackets(capture->fOutputAudioFile, false, noWriteBytes, nil, capture->m_totalPos, &ioOutputDataPackets, convertBufferList.mBuffers[0].mData);
-        checkResult(err, "AudioFileWritePackets");
-        capture->m_totalPos += ioOutputDataPackets;
-        //printf("Wrote %d packets to file. Sample Time: %f\n", ioOutputDataPackets, inTimeStamp->mSampleTime);
         
         capture->m_callbackBuffer.nFrames = ioOutputDataPackets;
         capture->m_callbackBuffer.sampleTime = inTimeStamp->mSampleTime;
@@ -270,7 +264,6 @@ namespace oppvs {
 	OSStatus MacAudioCapture::configureOutputFile(CAStreamBasicDescription& sformat)
 	{
 		OSStatus err = noErr;
-		m_totalPos = 0;
 		CFURLRef destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, 
 		                                                        CFSTR("/Users/caominhtrang/Desktop/testaudio.wav"),
 		                                                        kCFURLPOSIXPathStyle, 

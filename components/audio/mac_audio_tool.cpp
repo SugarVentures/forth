@@ -4,7 +4,6 @@ namespace oppvs {
 	AudioBufferList* allocateAudioBufferListWithNumChannels(UInt32 numChannels, UInt32 size, bool noAllocData)
 	{
 		AudioBufferList*			list = NULL;
-		UInt32						i = 0;
 		
         UInt32 prosize = offsetof(AudioBufferList, mBuffers[0]) + sizeof(AudioBuffer);
         list = (AudioBufferList*)malloc(prosize);

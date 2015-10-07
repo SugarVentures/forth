@@ -34,8 +34,6 @@ namespace oppvs {
                 
         Float32 m_convertSampleRate;
 
-		UInt32 m_totalPos;
-        
         UInt32 m_streamBufferSize;
         char* m_streamBuffer;
         

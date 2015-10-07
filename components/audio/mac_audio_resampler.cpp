@@ -85,14 +85,14 @@ namespace oppvs {
                                             &inputBytes);
             checkResult(err, "AudioConverterGetProperty CalculateInputBufferSize");
             
-            printf("num frames: %d input bytes: %d %d\n", inNumFrames, inputBytes, availableInputBytes);
+            //printf("num frames: %d input bytes: %d %d\n", inNumFrames, inputBytes, availableInputBytes);
             if(inputBytes < availableInputBytes) {
                 // OK to zero pad the input a little
                 availableOutputFrames += 1;
                 availableOutputBytes = availableOutputFrames * bytesPerFrame;
             }
         }
-        printf("Available output frames %d %d \n", availableOutputFrames, availableOutputBytes);
+        //printf("Available output frames %d %d \n", availableOutputFrames, availableOutputBytes);
         
         *ioOutputDataPackets = availableOutputFrames;
 		AudioConverterReset(m_converter);
