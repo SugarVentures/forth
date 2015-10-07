@@ -43,6 +43,11 @@ namespace oppvs {
 	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ID = 0x000D;
 	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ORDER = 0x000E;
 
+	const static uint16_t SIGNALING_ATTRIBUTE_AUDIO_NOSOURCES = 0x000F;
+	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_AUDIO_ID = 0x0010;
+	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_AUDIO_CHANNELS = 0x0011;
+	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_AUDIO_SAMPLE_RATE = 0x0012;
+
 	inline SignalingMessageType convertToSignalingMessageType(uint16_t value)
 	{
 		switch (value)

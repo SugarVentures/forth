@@ -204,9 +204,9 @@ namespace oppvs {
 		uint8_t source;
 		uint8_t type;
 		uint8_t format;	//Float or Int
-		uint32_t numberChannels;
+		uint16_t numberChannels;
 		uint32_t samplePerChannels;
-		uint64_t sampleRate;
+		uint32_t sampleRate;
 	};
 
 	struct AudioStreamInfo

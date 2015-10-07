@@ -30,6 +30,7 @@ namespace oppvs {
 		int addIceCandidates(const std::vector<IceCandidate>& candidates);
 
 		int addVideoSources(const VideoStreamInfo&);
+		int addAudioSources(const AudioStreamInfo&);
 
 	private:
 		DataStream m_dataStream;
