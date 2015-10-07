@@ -48,6 +48,11 @@ namespace oppvs {
 			return -1;
 		}
 
+		const std::vector<AudioActiveSource>& getAudioActiveSources() const
+		{
+			return m_activeSources;
+		}
+
 		audio_callback callbackAudio;
 	protected:
 		std::vector<AudioDevice> m_listAudioDevices;
