@@ -67,7 +67,7 @@ bool isStreaming;
 
 - (void) startStreaming: (NSString*) streamKey
 {
-    streamingEngine.setStreamInfo(mVideoEngine->getVideoActiveSources());
+    streamingEngine.setStreamInfo(mVideoEngine->getVideoActiveSources(), mAudioEngine->getAudioActiveSources());
     
     dispatch_queue_t queue = dispatch_queue_create("oppvs.streaming.queue", DISPATCH_QUEUE_SERIAL);
     dispatch_async(queue, ^{

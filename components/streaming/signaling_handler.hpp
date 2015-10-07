@@ -16,7 +16,7 @@ namespace oppvs {
 		std::vector<IceManager*> m_connectors;
 		IceServerInfo		m_stunServer;
 		IceServerInfo		m_turnServer;
-		VideoStreamInfo*	p_streamInfo;
+		ServiceInfo*		p_streamInfo;
 
 		callbackNewSubscriber	callbackNewSubscriberEvent;
 		void* 	callbackNewSubscriberObject;
@@ -30,7 +30,7 @@ namespace oppvs {
 		~SignalingHandler();
 
 		int init(const IceServerInfo& stunServer, const IceServerInfo& turnServer, 
-			const SocketAddress& signalingServerAddress, StreamingRole role, VideoStreamInfo* pinfo);
+			const SocketAddress& signalingServerAddress, StreamingRole role, ServiceInfo* pinfo);
 		int start(const std::string& streamKey);
 		int sendStreamRequest(std::string username, std::string password, std::vector<IceCandidate>& candidates);
 		void prepareConnection(std::string& username, std::string& password, std::vector<IceCandidate>& candidates);

@@ -31,7 +31,7 @@ namespace oppvs {
 	}
 
 	int SignalingHandler::init(const IceServerInfo& stunServer, const IceServerInfo& turnServer, 
-			const SocketAddress& signalingServerAddress, StreamingRole role, VideoStreamInfo* pinfo)
+			const SocketAddress& signalingServerAddress, StreamingRole role, ServiceInfo* pinfo)
 	{
 		p_manager = new SignalingManager(signalingServerAddress);
 		if (p_manager->init() < 0)

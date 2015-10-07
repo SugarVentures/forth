@@ -48,14 +48,17 @@ namespace oppvs
 		m_configuration.signalingServerAddress.setPort(port);
 
 		if (m_signaler.init(m_configuration.stunServer, m_configuration.turnServer, m_configuration.signalingServerAddress, 
-			role, &m_serviceInfo.videoStreamInfo) < 0)
+			role, &m_serviceInfo) < 0)
 			return -1;
 
 		m_signaler.attachCallback(StreamingEngine::onNewSubscriber, this);
 		m_signaler.attachCallback(StreamingEngine::onReceiveSegment, this);
 		m_signaler.attachCallback([this](const VideoStreamInfo& info) { return updateStreamInfo(info); });
 		if (role == ROLE_BROADCASTER)
+		{
 			m_packetizer.init(m_serviceInfo.videoStreamInfo, &m_sendPool);
+			m_audioPacketizer.init(m_serviceInfo.audioStreamInfo);
+		}
 		else if (role == ROLE_VIEWER)
 		{
 			m_serviceInfo.videoStreamInfo.noSources = 1;
@@ -75,6 +78,7 @@ namespace oppvs
 			return -1;
 		
 		m_packetizer.start();
+		m_audioPacketizer.start();
 		return 0;
 	}
 
@@ -105,26 +109,45 @@ namespace oppvs
 	}
 
 
-	void StreamingEngine::setStreamInfo(const std::vector<VideoActiveSource>& sources)
+	void StreamingEngine::setStreamInfo(const std::vector<VideoActiveSource>& videoSources, const std::vector<AudioActiveSource>& audioSources)
 	{
 		m_serviceInfo.type = ST_VIDEO_STREAMING;
 		m_serviceInfo.key = m_ssrc;
 		VideoStreamInfo* vsi = &m_serviceInfo.videoStreamInfo;
-		if (sources.size() == 0)
-			return;
-		vsi->noSources = sources.size();
-		vsi->sources = new VideoSourceInfo[vsi->noSources];		
-
-		std::vector<VideoActiveSource>::const_iterator it;
-		int i = 0;
-		for (it = sources.begin(); it != sources.end(); ++it)
+		if (videoSources.size() > 0)
 		{
-			vsi->sources[i].source = it->id;
-			vsi->sources[i].order = it->order;
-			vsi->sources[i].width = it->rect.right - it->rect.left;
-			vsi->sources[i].height = it->rect.top - it->rect.bottom;
-			vsi->sources[i].stride = it->stride;
-			i++;
+			vsi->noSources = videoSources.size();
+			vsi->sources = new VideoSourceInfo[vsi->noSources];		
+
+			std::vector<VideoActiveSource>::const_iterator it;
+			int i = 0;
+			for (it = videoSources.begin(); it != videoSources.end(); ++it)
+			{
+				vsi->sources[i].source = it->id;
+				vsi->sources[i].order = it->order;
+				vsi->sources[i].width = it->rect.right - it->rect.left;
+				vsi->sources[i].height = it->rect.top - it->rect.bottom;
+				vsi->sources[i].stride = it->stride;
+				i++;
+			}
+		}
+		AudioStreamInfo* asi = &m_serviceInfo.audioStreamInfo;
+		if (audioSources.size() > 0)
+		{
+			asi->noSources = audioSources.size();
+			asi->sources = new AudioSourceInfo[asi->noSources];
+			std::vector<AudioActiveSource>::const_iterator it;
+			int i = 0;
+			for (it = audioSources.begin(); it != audioSources.end(); ++it)
+			{
+				asi->sources[i].source = it->id;
+				asi->sources[i].type = AUDIO_TYPE_MIXED;
+				asi->sources[i].format = AUDIO_FORMAT_FLOAT;
+				asi->sources[i].numberChannels = 2;
+				asi->sources[i].samplePerChannels = 512;
+				asi->sources[i].sampleRate = it->sampleRate;
+				i++;
+			}
 		}
 	}
 

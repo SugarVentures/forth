@@ -9,9 +9,11 @@
 #include "datatypes.hpp"
 #include "thread.hpp"
 #include "video_capture.hpp"
+#include "audio_engine.hpp"
 
 #include "signaling_handler.hpp"
 #include "packet_handler.hpp"
+#include "audio_packet_handler.h"
 
 #include "streaming_send_thread.hpp"
 
@@ -53,7 +55,7 @@ namespace oppvs
 		void setSSRC(uint32_t value) { m_ssrc = value; }
 		uint32_t getSSRC() { return m_ssrc;}
 
-		void setStreamInfo(const std::vector<VideoActiveSource>& sources);
+		void setStreamInfo(const std::vector<VideoActiveSource>& videoSources, const std::vector<AudioActiveSource>& audioSources);
 
 		bool isRunning();
 		void setIsRunning(bool value);
@@ -88,6 +90,9 @@ namespace oppvs
 		tsqueue<SharedDynamicBufferRef> 	m_sendPool;
 		Depacketizer						m_depacketizer;
 		tsqueue<IncomingStreamingFrame*>	m_recvPool;
+
+		//Audio
+		AudioPacketizer						m_audioPacketizer;
 
 		static void* runMainThreadFunction(void* object);
 		static void onNewSubscriber(void* object, IceStream* stream);
