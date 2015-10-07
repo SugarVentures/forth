@@ -84,7 +84,10 @@ namespace oppvs {
 		if (m_messageBuilder.addStreamKey(streamKey) < 0)
 			return -1;
 
-		if ((m_messageBuilder.addVideoSources(info.videoStreamInfo) < 0) && (m_messageBuilder.addAudioSources(info.audioStreamInfo) < 0))
+        int vret = m_messageBuilder.addVideoSources(info.videoStreamInfo);
+        int aret = m_messageBuilder.addAudioSources(info.audioStreamInfo);
+        
+		if (vret < 0 && aret < 0)
 			return -1;
 		
 		return sendSignal();

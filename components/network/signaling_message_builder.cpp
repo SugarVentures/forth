@@ -178,8 +178,14 @@ namespace oppvs {
 		if (noSources == 0)
 			return -1;
 
+		int ret = 0;
+		int currentPos = m_dataStream.getPosition();
+
 		if (addAttribute(SIGNALING_ATTRIBUTE_VIDEO_NOSOURCES, &noSources, 1) < 0)
+		{
+			m_dataStream.setAbsolutePosition(currentPos);
 			return -1;
+		}
 
 		for (uint8_t i = 0; i < noSources; i++)
 		{
@@ -188,17 +194,22 @@ namespace oppvs {
 			width = htons(info.sources[i].width);
 			height = htons(info.sources[i].height);
 			stride = htons(info.sources[i].stride);
-			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ID, &sid, 1) < 0)
-				return -1;
-			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ORDER, &order, 1) < 0)
-				return -1;
-			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH, &width, 2) < 0)
-				return -1;
-			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_HEIGHT, &height, 2) < 0)
-				return -1;
-			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_STRIDE, &stride, 2) < 0)
-				return -1;
+			if ((ret = addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ID, &sid, 1)) < 0)
+				break;
+			if ((ret = addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ORDER, &order, 1)) < 0)
+				break;
+			if ((ret = addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH, &width, 2)) < 0)
+				break;
+			if ((ret = addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_HEIGHT, &height, 2)) < 0)
+				break;
+			if ((ret = addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_STRIDE, &stride, 2)) < 0)
+				break;
 				
+		}
+		if (ret < 0)
+		{
+			m_dataStream.setAbsolutePosition(currentPos);
+			return -1;	
 		}
 		return 0;
 	}
@@ -209,24 +220,37 @@ namespace oppvs {
 		uint8_t aid;
 		uint16_t channels;
 		uint32_t sampleRate;
+
 		if (noSources == 0)
 			return -1;
 
+		int ret = 0;
+		int currentPos = m_dataStream.getPosition();
+
 		if (addAttribute(SIGNALING_ATTRIBUTE_AUDIO_NOSOURCES, &noSources, 1) < 0)
+		{
+			m_dataStream.setAbsolutePosition(currentPos);
 			return -1;
+		}
 
 		for (uint8_t i = 0; i < noSources; i++)
 		{
 			aid = info.sources[i].source;
 			channels = htons(info.sources[i].numberChannels);
 			sampleRate = htonl(info.sources[i].sampleRate);
-			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_ID, &aid, 1) < 0)
-				return -1;
-			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_CHANNELS, &channels, 2) < 0)
-				return -1;
-			if (addAttribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_SAMPLE_RATE, &sampleRate, 4) < 0)
-				return -1;
+			if ((ret = addAttribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_ID, &aid, 1)) < 0)
+				break;
+			if ((ret = addAttribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_CHANNELS, &channels, 2)) < 0)
+				break;
+			if ((ret = addAttribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_SAMPLE_RATE, &sampleRate, 4)) < 0)
+				break;
 		}
+		if (ret < 0)
+		{
+			m_dataStream.setAbsolutePosition(currentPos);
+			return -1;	
+		}
+		printf("Added audio source\n");
 		return 0;
 	}
 } // oppvs
