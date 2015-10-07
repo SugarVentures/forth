@@ -136,41 +136,80 @@ namespace oppvs {
     	else if (m_messageType == SignalingStreamRegister || SignalingStreamResponse)
     	{
     		uint8_t noVideoSources = 0;
-    		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_VIDEO_NOSOURCES, &noVideoSources) <  0)
+    		uint8_t noAudioSources = 0;
+    		int ret = 0;
+    		int currentPos = m_dataStream.getPosition();
+    		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_VIDEO_NOSOURCES, &noVideoSources) >= 0)
     		{
-    			return -1;
+	    		m_videoStreamInfo.noSources = noVideoSources;
+	    		m_videoStreamInfo.sources = new VideoSourceInfo[noVideoSources];
+	    		for (uint8_t i = 0; i < noVideoSources; ++i)
+	    		{
+	    			if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ID, &m_videoStreamInfo.sources[i].source) <  0)
+		    		{
+		    			return -1;
+		    		}
+		    		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ORDER, &m_videoStreamInfo.sources[i].order) <  0)
+		    		{
+		    			return -1;
+		    		}
+	    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH, &m_videoStreamInfo.sources[i].width) < 0)
+	    			{
+	    				return -1;
+	    			}
+	    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_HEIGHT, &m_videoStreamInfo.sources[i].height) < 0)
+	    			{
+	    				return -1;
+	    			}
+	    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_STRIDE, &m_videoStreamInfo.sources[i].stride) < 0)
+	    			{
+	    				return -1;
+	    			}
+	    			printf("Source: %d order: %d width: %d height: %d stride: %d\n", m_videoStreamInfo.sources[i].source,
+	    				m_videoStreamInfo.sources[i].order,
+	    				m_videoStreamInfo.sources[i].width,
+	    				m_videoStreamInfo.sources[i].height,
+	    				m_videoStreamInfo.sources[i].stride);
+	    		}
+    		}
+    		else
+    		{
+    			ret = -1;
+    			m_dataStream.setAbsolutePosition(currentPos);
     		}
 
-    		m_videoStreamInfo.noSources = noVideoSources;
-    		m_videoStreamInfo.sources = new VideoSourceInfo[noVideoSources];
-    		for (uint8_t i = 0; i < noVideoSources; ++i)
+    		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_AUDIO_NOSOURCES, &noAudioSources) >= 0)
     		{
-    			if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ID, &m_videoStreamInfo.sources[i].source) <  0)
-	    		{
-	    			return -1;
-	    		}
-	    		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ORDER, &m_videoStreamInfo.sources[i].order) <  0)
-	    		{
-	    			return -1;
-	    		}
-    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH, &m_videoStreamInfo.sources[i].width) < 0)
+
+    			m_audioStreamInfo.noSources = noAudioSources;
+    			m_audioStreamInfo.sources = new AudioSourceInfo[noAudioSources];
+    			for (uint8_t i = 0; i < noAudioSources; ++i)
     			{
-    				return -1;
+    				if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_ID, &m_audioStreamInfo.sources[i].source) <  0)
+		    		{
+		    			return -1;
+		    		}
+		    		if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_CHANNELS, &m_audioStreamInfo.sources[i].numberChannels) < 0)
+	    			{
+	    				return -1;
+	    			}
+	    			if (readUInt32Attribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_SAMPLE_RATE, &m_audioStreamInfo.sources[i].sampleRate) < 0)
+	    			{
+	    				return -1;
+	    			}
+	    			printf("Source %d channels: %d sample rate: %d\n", m_audioStreamInfo.sources[i].source, 
+	    				m_audioStreamInfo.sources[i].numberChannels,
+	    				m_audioStreamInfo.sources[i].sampleRate);
     			}
-    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_HEIGHT, &m_videoStreamInfo.sources[i].height) < 0)
-    			{
-    				return -1;
-    			}
-    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_STRIDE, &m_videoStreamInfo.sources[i].stride) < 0)
-    			{
-    				return -1;
-    			}
-    			printf("Source: %d order: %d width: %d height: %d stride: %d\n", m_videoStreamInfo.sources[i].source,
-    				m_videoStreamInfo.sources[i].order,
-    				m_videoStreamInfo.sources[i].width,
-    				m_videoStreamInfo.sources[i].height,
-    				m_videoStreamInfo.sources[i].stride);
+    			ret = 0;
     		}
+    		else
+    		{
+    			if (ret < 0)
+    				return -1;
+    		}
+
+
     	}
     	return 0;
 	}

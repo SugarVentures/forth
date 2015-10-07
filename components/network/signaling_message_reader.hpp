@@ -30,6 +30,7 @@ namespace oppvs {
 		std::string m_username;
 		std::string m_password;
 		VideoStreamInfo m_videoStreamInfo;
+		AudioStreamInfo m_audioStreamInfo;
 
 		int readHeader();
 		int readBody();
