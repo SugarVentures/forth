@@ -76,7 +76,6 @@ namespace oppvs {
 	OpusMSEncoder* AudioOpusEncoder::initOpus(AudioEncodingController* controller, int application)
 	{
 		int error = 0;
-		int complexity = 10;	//Complexity must be 0 - 10
 		uint32_t sampleRate = controller->rate;
 		int channels = controller->channels;
 		int codingRate;
