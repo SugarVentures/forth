@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.h"
-            timestampString = "462277201.293755"
+            timestampString = "465734677.964484"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "-cleanup"
             landmarkType = "4">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462335728.504516"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "386"
-            endingLineNumber = "386"
+            startingLineNumber = "387"
+            endingLineNumber = "387"
             landmarkName = "-addSubView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
             landmarkName = "IOServicePortFromCGDisplayID(CGDirectDisplayID displayID)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,27 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
-            landmarkName = "screenNameForDisplay(CGDirectDisplayID displayID)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
             landmarkName = "IOServicePortFromCGDisplayID(CGDirectDisplayID displayID)"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,12 +74,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
-            landmarkName = "screenNameForDisplay(CGDirectDisplayID displayID)"
+            startingLineNumber = "449"
+            endingLineNumber = "449"
+            landmarkName = "-cleanup"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
+            timestampString = "465909947.090299"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "457"
+            endingLineNumber = "457"
+            landmarkName = "@implementation Document"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
+            timestampString = "465909947.090299"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
+            landmarkName = "IOServicePortFromCGDisplayID(CGDirectDisplayID displayID)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,60 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
-            landmarkName = "screenNameForDisplay(CGDirectDisplayID displayID)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "374"
-            endingLineNumber = "374"
-            landmarkName = "-addSource:hasType:sourceRect:renderRect:withViewID:atIndex:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "382"
-            endingLineNumber = "382"
-            landmarkName = "-windowControllerDidLoadNib:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "-stopStreaming"
+            startingLineNumber = "451"
+            endingLineNumber = "451"
+            landmarkName = "-cleanup"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -170,43 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462335728.504516"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "376"
-            endingLineNumber = "376"
-            landmarkName = "-addSource:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "376"
-            endingLineNumber = "376"
-            landmarkName = "-addSource:hasType:sourceRect:renderRect:withViewID:atIndex:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462335728.504516"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "392"
-            endingLineNumber = "392"
+            startingLineNumber = "393"
+            endingLineNumber = "393"
             landmarkName = "@implementation ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -298,12 +234,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "375"
-            endingLineNumber = "375"
-            landmarkName = "-addSource:hasType:sourceRect:renderRect:withViewID:atIndex:"
+            startingLineNumber = "450"
+            endingLineNumber = "450"
+            landmarkName = "-cleanup"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -424,11 +360,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462335728.504516"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
             landmarkName = "-addSource:"
             landmarkType = "5">
          </BreakpointContent>
@@ -440,11 +376,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462335728.504516"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "358"
-            endingLineNumber = "358"
+            startingLineNumber = "363"
+            endingLineNumber = "363"
             landmarkName = "-addSource:"
             landmarkType = "5">
          </BreakpointContent>
@@ -456,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462335728.504516"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "302"
-            endingLineNumber = "302"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
             landmarkName = "-drawMouseBoxView:didSelectRect:"
             landmarkType = "5">
          </BreakpointContent>
@@ -472,11 +408,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462335728.504516"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
+            startingLineNumber = "309"
+            endingLineNumber = "309"
             landmarkName = "@implementation ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -584,11 +520,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "454924159.996599"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -600,12 +536,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362"
-            landmarkName = "-addSource:hasType:sourceRect:renderRect:withViewID:atIndex:"
+            startingLineNumber = "437"
+            endingLineNumber = "437"
+            landmarkName = "-dataOfType:error:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -748,7 +684,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "81"
-            endingLineNumber = "81">
+            endingLineNumber = "81"
+            landmarkName = "StreamingEngine::start(const std::string&amp; streamkey)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -854,13 +792,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "357"
-            endingLineNumber = "357"
-            landmarkName = "initVideoEngine(id document, id view)"
-            landmarkType = "7">
+            startingLineNumber = "432"
+            endingLineNumber = "432"
+            landmarkName = "-makeWindowControllers"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -902,11 +840,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462335728.504516"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "415"
-            endingLineNumber = "415"
+            startingLineNumber = "416"
+            endingLineNumber = "416"
             landmarkName = "-popStatusMenu:"
             landmarkType = "5">
          </BreakpointContent>
@@ -918,11 +856,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "-stopStreaming:"
             landmarkType = "5">
          </BreakpointContent>
@@ -934,11 +872,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "-stopStreaming:"
             landmarkType = "5">
          </BreakpointContent>
@@ -966,12 +904,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
-            landmarkName = "-addSource:hasType:sourceRect:renderRect:withViewID:atIndex:"
+            startingLineNumber = "447"
+            endingLineNumber = "447"
+            landmarkName = "-readFromData:ofType:error:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -982,12 +920,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
-            landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "IOServicePortFromCGDisplayID(CGDirectDisplayID displayID)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -998,12 +936,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
+            landmarkName = "IOServicePortFromCGDisplayID(CGDirectDisplayID displayID)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1046,12 +984,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
+            landmarkName = "IOServicePortFromCGDisplayID(CGDirectDisplayID displayID)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1152,29 +1090,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462335728.504516"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "293"
-            endingLineNumber = "293"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
             landmarkName = "-drawMouseBoxView:didSelectRect:"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "250"
-            endingLineNumber = "250"
-            landmarkName = "screenNameForDisplay(CGDirectDisplayID displayID)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1188,9 +1110,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "StreamingEngine::pushData(PixelBuffer&amp; pf)"
-            landmarkType = "5">
+            endingLineNumber = "84">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1205,7 +1125,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"
             endingLineNumber = "89"
-            landmarkName = "StreamingEngine::generateSSRC()"
+            landmarkName = "StreamingEngine::pushData(PixelBuffer&amp; pf)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1220,7 +1140,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "82"
-            endingLineNumber = "82">
+            endingLineNumber = "82"
+            landmarkName = "StreamingEngine::start(const std::string&amp; streamkey)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1235,7 +1157,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "150"
             endingLineNumber = "150"
-            landmarkName = "StreamingEngine::onNewSubscriber(void* object, IceStream* stream)"
+            landmarkName = "StreamingEngine::setStreamInfo(const std::vector&lt;VideoActiveSource&gt;&amp; videoSources, const std::vector&lt;AudioActiveSource&gt;&amp; audioSources)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1246,12 +1168,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
-            landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
+            landmarkName = "IOServicePortFromCGDisplayID(CGDirectDisplayID displayID)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1262,11 +1184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462335728.504516"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "287"
-            endingLineNumber = "287"
+            startingLineNumber = "291"
+            endingLineNumber = "291"
             landmarkName = "-drawMouseBoxView:didSelectRect:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1299,7 +1221,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "204"
             endingLineNumber = "204"
-            landmarkName = "StreamingEngine::onReceiveSegment(void* object, uint8_t* data, uint32_t len)"
+            landmarkName = "StreamingEngine::send()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1315,7 +1237,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "201"
             endingLineNumber = "201"
-            landmarkName = "StreamingEngine::onReceiveSegment(void* object, uint8_t* data, uint32_t len)"
+            landmarkName = "StreamingEngine::send()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1330,9 +1252,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "184"
-            endingLineNumber = "184"
-            landmarkName = "StreamingEngine::send()"
-            landmarkType = "5">
+            endingLineNumber = "184">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1363,7 +1283,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "198"
             endingLineNumber = "198"
-            landmarkName = "StreamingEngine::onReceiveSegment(void* object, uint8_t* data, uint32_t len)"
+            landmarkName = "StreamingEngine::runMainThreadFunction(void* object)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1379,7 +1299,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "186"
             endingLineNumber = "186"
-            landmarkName = "StreamingEngine::send()"
+            landmarkName = "StreamingEngine::createMainThread()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1598,9 +1518,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "StreamingEngine::runMainThreadFunction(void* object)"
-            landmarkType = "5">
+            endingLineNumber = "177">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1924,7 +1842,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "72"
-            endingLineNumber = "72">
+            endingLineNumber = "72"
+            landmarkName = "StreamingEngine::init(StreamingRole role, const std::string&amp; stun, const std::string&amp; turn, const std::string&amp; username, const std::string&amp; password, const std::string&amp; signaling, uint16_t port)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1954,7 +1874,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "147"
-            endingLineNumber = "147">
+            endingLineNumber = "147"
+            landmarkName = "StreamingEngine::setStreamInfo(const std::vector&lt;VideoActiveSource&gt;&amp; videoSources, const std::vector&lt;AudioActiveSource&gt;&amp; audioSources)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2176,9 +2098,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "234"
-            endingLineNumber = "234"
-            landmarkName = "StreamingEngine::receive()"
-            landmarkType = "5">
+            endingLineNumber = "234">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2241,7 +2161,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "121"
             endingLineNumber = "121"
-            landmarkName = "StreamingEngine::setStreamInfo(const std::vector&lt;VideoActiveSource&gt;&amp; sources)"
+            landmarkName = "StreamingEngine::setStreamInfo(const std::vector&lt;VideoActiveSource&gt;&amp; videoSources, const std::vector&lt;AudioActiveSource&gt;&amp; audioSources)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2268,13 +2188,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "461604962.221482"
+            timestampString = "465753547.001194"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "-startStreaming:"
-            landmarkType = "5">
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2392,12 +2312,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
+            timestampString = "465909947.090299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
-            landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "IOServicePortFromCGDisplayID(CGDirectDisplayID displayID)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2518,7 +2438,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "273"
-            endingLineNumber = "273">
+            endingLineNumber = "273"
+            landmarkName = "StreamingEngine::receive()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2542,124 +2464,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462205256.65443"
+            timestampString = "465753547.001194"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
-            landmarkName = "-startStreaming:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "-startStreaming:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
-            landmarkName = "initVideoEngine(id document, id view)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
-            landmarkName = "initVideoEngine(id document, id view)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "287"
-            endingLineNumber = "287"
-            landmarkName = "initVideoEngine(id document, id view)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
-            landmarkName = "screenNameForDisplay(CGDirectDisplayID displayID)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
-            landmarkName = "screenNameForDisplay(CGDirectDisplayID displayID)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
-            timestampString = "462277201.293755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
-            landmarkName = "screenNameForDisplay(CGDirectDisplayID displayID)"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "frameCallback(oppvs::PixelBuffer&amp; pf)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2702,11 +2512,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../network/signaling_manager.cpp"
-            timestampString = "462296429.954457"
+            timestampString = "465897253.921529"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "SignalingManager::processResponse()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2718,11 +2528,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../network/signaling_manager.cpp"
-            timestampString = "462296829.195914"
+            timestampString = "465897253.921529"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
             landmarkName = "SignalingManager::sendStreamRequest(const std::string&amp; username, const std::string&amp; password, const std::vector&lt;IceCandidate&gt;&amp; candidates)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2750,11 +2560,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../network/signaling_manager.cpp"
-            timestampString = "462297070.924508"
+            timestampString = "465897253.921529"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "SignalingManager::waitResponse()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2782,12 +2592,330 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
-            timestampString = "462335579.425398"
+            timestampString = "465796780.085061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
             landmarkName = "-startStreaming:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
+            timestampString = "465909947.090299"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
+            landmarkName = "-windowControllerDidLoadNib:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
+            timestampString = "465909947.090299"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "408"
+            endingLineNumber = "408"
+            landmarkName = "-initEngines:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../audio/mac_audio_engine.cpp"
+            timestampString = "465727532.096842"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "MacAudioEngine::getListAudioDevices(std::vector&lt;AudioDevice&gt;&amp; result, bool input)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
+            timestampString = "465753914.777106"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "caculateDecibels(float* samples, int numberFrames)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
+            timestampString = "465755707.597556"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "caculateDecibels(float* samples, int numberFrames)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
+            timestampString = "465755707.597556"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "caculateDecibels(float* samples, int numberFrames)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
+            timestampString = "465755707.597556"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "caculateDecibels(float* samples, int numberFrames)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/OPPVSGUI/ViewController.mm"
+            timestampString = "465796780.085061"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "438"
+            endingLineNumber = "438"
+            landmarkName = "-updateAudioLevels:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSClient/OPPVSClient/Document.mm"
+            timestampString = "465799690.919944"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "-initReceiver:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSClient/OPPVSClient/Document.mm"
+            timestampString = "465799903.870201"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "-initReceiver:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
+            timestampString = "465799939.406453"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "-startStreaming:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../network/signaling_manager.cpp"
+            timestampString = "465897253.921529"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "SignalingManager::sendStreamRegister(const std::string&amp; streamKey, const ServiceInfo&amp; info)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
+            timestampString = "465800123.884333"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "-startStreaming:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../streaming/streaming_engine.cpp"
+            timestampString = "465800325.965029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "74"
+            endingLineNumber = "74">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OPPVSGUI/OPPVSGUI/Document.mm"
+            timestampString = "465895026.921258"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "-startStreaming:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../network/signaling_message_builder.cpp"
+            timestampString = "465897160.011806"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
+            landmarkName = "SignalingMessageBuilder::addAudioSources(const AudioStreamInfo&amp; info)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../network/signaling_manager.cpp"
+            timestampString = "465897292.335769"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "SignalingManager::sendStreamRegister(const std::string&amp; streamKey, const ServiceInfo&amp; info)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../streaming/audio_packet_handler.cpp"
+            timestampString = "465898910.534953"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "AudioPacketizer::init(const AudioStreamInfo&amp; info)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../streaming/audio_packet_handler.cpp"
+            timestampString = "465899403.544962"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "AudioPacketizer::push(const GenericAudioBufferList&amp; ab)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../audio/mac_audio_engine.cpp"
+            timestampString = "465905773.430718"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "MacAudioEngine::getListAudioDevices(std::vector&lt;AudioDevice&gt;&amp; result, bool input)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

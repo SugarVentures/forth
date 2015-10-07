@@ -198,6 +198,7 @@ namespace oppvs {
 	const uint8_t AUDIO_FORMAT_INT = 2;
 
 	const uint16_t AUDIO_MAX_ENCODING_PACKET_SIZE = 4000;
+	const uint16_t AUDIO_ENCODING_FRAMES = 960;
 
 	struct AudioSourceInfo
 	{

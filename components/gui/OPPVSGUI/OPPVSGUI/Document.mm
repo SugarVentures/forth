@@ -164,6 +164,14 @@ void audioCallback(oppvs::GenericAudioBufferList& ab)
     oppvs::ControllerLinker* linker = (oppvs::ControllerLinker*)ab.user;
     ViewController* view = (__bridge ViewController*)linker->render;
     [view setAudioDecibels: std::abs(decibels)];
+    oppvs::StreamingEngine* streamer = (oppvs::StreamingEngine*)linker->streamer;
+    if (streamer)
+    {
+        //if (streamer->isRunning())
+        {
+            streamer->pushData(ab);
+        }
+    }
 }
 
 #pragma mark Utilities

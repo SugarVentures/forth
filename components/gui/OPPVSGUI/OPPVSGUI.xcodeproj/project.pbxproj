@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D92220361AC2BA310069116D /* libvideoengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D92220351AC2BA310069116D /* libvideoengine.so */; };
+		D9230F361BC5362500518664 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = D9230F351BC5362500518664 /* Util.m */; settings = {ASSET_TAGS = (); }; };
+		D9230F3C1BC5388A00518664 /* libaudioengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9230F3B1BC5388A00518664 /* libaudioengine.so */; settings = {ASSET_TAGS = (); }; };
 		D924C6C91AB7DC2500586413 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6C81AB7DC2500586413 /* OpenGL.framework */; };
 		D924C6CB1AB805B100586413 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6CA1AB805B100586413 /* QuartzCore.framework */; };
 		D924C6CD1AB83E6600586413 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6CC1AB83E6600586413 /* CoreGraphics.framework */; };
@@ -50,6 +52,9 @@
 
 /* Begin PBXFileReference section */
 		D92220351AC2BA310069116D /* libvideoengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvideoengine.so; path = ../../../libs/libvideoengine.so; sourceTree = "<group>"; };
+		D9230F341BC5362500518664 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		D9230F351BC5362500518664 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
+		D9230F3B1BC5388A00518664 /* libaudioengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaudioengine.so; path = ../../../libs/libaudioengine.so; sourceTree = "<group>"; };
 		D924C6C81AB7DC2500586413 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		D924C6CA1AB805B100586413 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D924C6CC1AB83E6600586413 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -85,6 +90,7 @@
 				D93DD5FF1B04818100591808 /* IOKit.framework in Frameworks */,
 				D9C89FE31B0310EE008A6E48 /* libOPPVSRendering.dylib in Frameworks */,
 				D951C8E81B006FF900FEA751 /* libstreaming.so in Frameworks */,
+				D9230F3C1BC5388A00518664 /* libaudioengine.so in Frameworks */,
 				D9250F271AC4F8B300858FF5 /* libnetworkengine.so in Frameworks */,
 				D92220361AC2BA310069116D /* libvideoengine.so in Frameworks */,
 				D924C6CD1AB83E6600586413 /* CoreGraphics.framework in Frameworks */,
@@ -106,6 +112,7 @@
 		D9277A3C1AF0C07B00669ABF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D9230F3B1BC5388A00518664 /* libaudioengine.so */,
 				D93DD5FE1B04818100591808 /* IOKit.framework */,
 				D9C89FE21B0310EE008A6E48 /* libOPPVSRendering.dylib */,
 				D951C8E71B006FF900FEA751 /* libstreaming.so */,
@@ -140,6 +147,8 @@
 		D97FC5471AB2EA4D00E3988E /* OPPVSGUI */ = {
 			isa = PBXGroup;
 			children = (
+				D9230F341BC5362500518664 /* Util.h */,
+				D9230F351BC5362500518664 /* Util.m */,
 				D9277A3A1AF0C00700669ABF /* DrawMouseBoxView.m */,
 				D9277A391AF0C00700669ABF /* DrawMouseBoxView.h */,
 				D97FC54A1AB2EA4D00E3988E /* AppDelegate.h */,
@@ -288,6 +297,7 @@
 				D97FC5511AB2EA4D00E3988E /* ViewController.mm in Sources */,
 				D97FC54E1AB2EA4D00E3988E /* main.m in Sources */,
 				D97FC54C1AB2EA4D00E3988E /* AppDelegate.m in Sources */,
+				D9230F361BC5362500518664 /* Util.m in Sources */,
 				D9277A3B1AF0C00700669ABF /* DrawMouseBoxView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,6 +432,8 @@
 					../../network,
 					"../../../libs/libnice/**",
 					"/usr/local/include/glib-2.0",
+					"../../../libs/libopus/**",
+					../../audio,
 				);
 				INFOPLIST_FILE = OPPVSGUI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -430,7 +442,7 @@
 					../../../libs,
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/components/gui/OPPVSRendering/build/Debug",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Default",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -460,6 +472,8 @@
 					../../network,
 					"../../../libs/libnice/**",
 					"/usr/local/include/glib-2.0",
+					"../../../libs/libopus/**",
+					../../audio,
 				);
 				INFOPLIST_FILE = OPPVSGUI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -468,7 +482,7 @@
 					../../../libs,
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/components/gui/OPPVSRendering/build/Debug",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Default",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

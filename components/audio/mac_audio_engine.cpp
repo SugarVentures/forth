@@ -167,22 +167,6 @@ namespace oppvs {
 			return -1;
 		}
 
-		MacAudioCapture* capture = new MacAudioCapture(device);
-		capture->callbackAudio = callbackAudio;
-		capture->user = user;
-		if (capture->init() < 0)
-		{
-			printf("Can not init the audio capture device\n");
-			delete capture;
-			return -1;
-		}
-		if (capture->start() < 0)
-		{
-			printf("Can not start the audio capture\n");
-			delete capture;
-			return -1;
-		}
-
 		AudioActiveSource* psrc = addSource(deviceid, device.getSampleRate());
 		if (psrc == NULL)
 		{
@@ -190,7 +174,28 @@ namespace oppvs {
 			return -1;
 		}
 
+		MacAudioCapture* capture = new MacAudioCapture(device);
+		capture->callbackAudio = callbackAudio;
+		capture->user = user;
+		capture->source = psrc->id;
+
+		if (capture->init() < 0)
+		{
+			printf("Can not init the audio capture device\n");
+			delete capture;
+			removeSource(deviceid);
+			return -1;
+		}
+		if (capture->start() < 0)
+		{
+			printf("Can not start the audio capture\n");
+			delete capture;
+			removeSource(deviceid);
+			return -1;
+		}
+
 		psrc->capture = capture;
+		
 		return 0;
 	}	
 

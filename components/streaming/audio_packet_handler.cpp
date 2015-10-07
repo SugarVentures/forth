@@ -1,7 +1,7 @@
 #include "audio_packet_handler.h"
 
 namespace oppvs {
-	AudioPacketizer::AudioPacketizer(): m_isRunning(true)
+	AudioPacketizer::AudioPacketizer(): m_isRunning(true), p_audioBuffer(NULL)
 	{
 		p_thread = new Thread(AudioPacketizer::run, this);
 
@@ -27,15 +27,26 @@ namespace oppvs {
 			else
 				size = 2;
 
-			size = size * info.sources[i].numberChannels;
+			m_size = size * info.sources[i].numberChannels;
 			p_audioBuffer = new AudioRingBuffer();
-			p_audioBuffer->allocate(size, 10 * 512);
+			p_audioBuffer->allocate(m_size, 10 * 512);
+
+			m_source = info.sources[i].source;
 		}
+		//Init encoder
+		if (m_encoder.init(info) < 0)
+			return -1;
 		return 0;
 	}
 
 	void* AudioPacketizer::run(void* object)
 	{
+		AudioPacketizer* handler = (AudioPacketizer*)object;
+		while (handler->isRunning())
+		{
+			handler->pull();
+			usleep(10000);
+		}
 		return NULL;
 	}
 
@@ -46,14 +57,34 @@ namespace oppvs {
 
 	void AudioPacketizer::push(const GenericAudioBufferList& ab)
 	{
+		if (p_audioBuffer == NULL)
+			return;
+
 		uint32_t noFrames = ab.nFrames;
 		RingBufferError err = p_audioBuffer->store(&noFrames, ab.buffers[0].data, ab.sampleTime);
 		if (err)
 			printf("Can not push audio samples, error: %d\n", err);
+		else
+			printf("Push audio to ring buffer\n");
 	}
 
 	void AudioPacketizer::pull()
 	{
+		uint16_t noFrames = AUDIO_ENCODING_FRAMES;
+		if (p_audioBuffer->getNumberFrames() > AUDIO_ENCODING_FRAMES)
+		{
+			int err = p_audioBuffer->fetch(noFrames, m_inBuffer, p_audioBuffer->getStartTime());
+			//printf("Fetch audio from ring buffer err: %d frames: %d\n", err, noFrames);
+			int inLen = noFrames * m_size;
+			uint8_t* out = NULL;
+			int outLen = m_encoder.encode(m_inBuffer, inLen, m_source, out);
+			printf("Encode out len: %d source: %d\n", outLen, m_source);
+			delete [] out;
+		}
+	}
 
+	bool AudioPacketizer::isRunning()
+	{
+		return m_isRunning;
 	}
 } // oppvs	

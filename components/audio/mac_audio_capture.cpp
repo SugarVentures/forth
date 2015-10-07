@@ -19,6 +19,7 @@ namespace oppvs {
 	int MacAudioCapture::init()
 	{
 		m_callbackBuffer.user = user;
+		m_callbackBuffer.source = source;
 		if (createAudioOutputUnit() < 0)
 			return -1;
 		enableIO();

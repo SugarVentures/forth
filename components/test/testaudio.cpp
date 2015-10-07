@@ -93,6 +93,7 @@ void encode(void* p)
                     outDecode = new float[4000];
                 }
                 int decodeLen = pdecoder->decode(out, outLen, 1, outDecode);
+                delete [] out;
                 printf("Decode Out Len: %d\n", decodeLen);
                 
                 if (decodeLen > 0)
@@ -213,7 +214,7 @@ int main(int argc, char const *argv[])
 	engine.getListAudioDevices(devices, true);
 	engine.printAudioDeviceList();
 
-	uint32_t deviceid = 96;
+	uint32_t deviceid = 175;
 	if (engine.init() < 0)
 		return -1;
 
@@ -244,7 +245,7 @@ int main(int argc, char const *argv[])
         return -1;
 	pdecoder = &decoder;
 
-	AudioDevice output(40);
+	AudioDevice output(0);
 	MacAudioPlay player(output, 48000, 2);
 	pplayer = &player;
 	player.attachBuffer(ringBuffer);

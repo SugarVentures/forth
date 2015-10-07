@@ -16,6 +16,7 @@ namespace oppvs {
 
 		audio_callback callbackAudio;
 		void* user;
+		uint8_t source;
 	protected:
 		AudioDevice m_device;
 		GenericAudioBufferList m_callbackBuffer;

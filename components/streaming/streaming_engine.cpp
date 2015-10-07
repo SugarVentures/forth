@@ -88,6 +88,11 @@ namespace oppvs
 		m_packetizer.pushFrame(pf);
 	}
 
+	void StreamingEngine::pushData(GenericAudioBufferList& ab)
+	{
+		m_audioPacketizer.push(ab);
+	}
+
 	uint32_t StreamingEngine::generateSSRC()
 	{
 		return random32(0);

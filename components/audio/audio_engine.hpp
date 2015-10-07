@@ -79,6 +79,15 @@ namespace oppvs {
 			m_activeSources.push_back(src);
 			return &m_activeSources.back();
 		}
+
+		int removeSource(uint32_t deviceid)
+		{
+			std::vector<AudioActiveSource>::iterator it = std::find_if(m_activeSources.begin(), m_activeSources.end(), findSource(deviceid));
+			if (it == m_activeSources.end())
+				return -1;
+			m_activeSources.erase(it);
+			return 0;
+		}
 	private:
 		const static uint8_t MAX_ACTIVE_SOURCES = 1;
 

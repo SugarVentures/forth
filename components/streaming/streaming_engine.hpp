@@ -68,6 +68,7 @@ namespace oppvs
 		void receive();
 
 		void pushData(PixelBuffer& pf);
+		void pushData(GenericAudioBufferList& ab);
 
 		int updateStreamInfo(const VideoStreamInfo& info);
 	private:
