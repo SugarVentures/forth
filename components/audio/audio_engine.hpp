@@ -91,7 +91,7 @@ namespace oppvs {
 	private:
 		const static uint8_t MAX_ACTIVE_SOURCES = 1;
 
-		uint8_t m_activeSourceIndex = 0;
+		uint8_t m_activeSourceIndex = 6;
 
 		struct findSource {
 			uint32_t id;

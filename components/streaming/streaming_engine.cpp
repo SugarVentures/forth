@@ -165,7 +165,13 @@ namespace oppvs
 				m_serviceInfo.videoStreamInfo.sources[i].width, m_serviceInfo.videoStreamInfo.sources[i].height,
 				m_serviceInfo.videoStreamInfo.sources[i].stride, m_serviceInfo.videoStreamInfo.sources[i].order);
 		}
-
+		printf("Stream Info: Number of capture sources: %d\n", m_serviceInfo.audioStreamInfo.noSources);
+		for (int i = 0; i < m_serviceInfo.audioStreamInfo.noSources; i++)
+		{
+			printf("Source %d channels: %d sample rate: %d\n", m_serviceInfo.audioStreamInfo.sources[i].source, 
+	    				m_serviceInfo.audioStreamInfo.sources[i].numberChannels,
+	    				m_serviceInfo.audioStreamInfo.sources[i].sampleRate);	
+		}
 	}
 
 
@@ -244,12 +250,6 @@ namespace oppvs
 
 	void StreamingEngine::receive()
 	{
-		PixelBuffer pf;
-		pf.width[0] = m_serviceInfo.videoStreamInfo.sources[0].width;
-		pf.height[0] = m_serviceInfo.videoStreamInfo.sources[0].height;
-		pf.stride[0] = pf.width[0] * 4;
-		pf.nbytes = pf.height[0] * pf.stride[0];
-
 		while (!m_exitMainThread)
 		{
 			if (m_recvPool.size() > 0)
@@ -257,20 +257,30 @@ namespace oppvs
 				IncomingStreamingFrame* frame = *m_recvPool.pop();
 				if (frame == NULL)
 					continue;
-				for (int i = 0; i < m_serviceInfo.videoStreamInfo.noSources; i++)
+				switch (frame->type)
 				{
-					if (m_serviceInfo.videoStreamInfo.sources[i].source == frame->sourceid)
-					{
-						PixelBuffer pf;
-						pf.width[0] = m_serviceInfo.videoStreamInfo.sources[i].width;
-						pf.height[0] = m_serviceInfo.videoStreamInfo.sources[i].height;
-						pf.stride[0] = m_serviceInfo.videoStreamInfo.sources[i].stride;
-						pf.order = m_serviceInfo.videoStreamInfo.sources[i].order;
-						pf.source = m_serviceInfo.videoStreamInfo.sources[i].source;
-						if (m_depacketizer.pullFrame(pf, frame->data) == 0)
-							m_callback(pf);
+					case VP8_PAYLOAD_TYPE:					
+						for (int i = 0; i < m_serviceInfo.videoStreamInfo.noSources; i++)
+						{
+							if (m_serviceInfo.videoStreamInfo.sources[i].source == frame->sourceid)
+							{
+								PixelBuffer pf;
+								pf.width[0] = m_serviceInfo.videoStreamInfo.sources[i].width;
+								pf.height[0] = m_serviceInfo.videoStreamInfo.sources[i].height;
+								pf.stride[0] = m_serviceInfo.videoStreamInfo.sources[i].stride;
+								pf.order = m_serviceInfo.videoStreamInfo.sources[i].order;
+								pf.source = m_serviceInfo.videoStreamInfo.sources[i].source;
+								if (m_depacketizer.pullFrame(pf, frame->data) == 0)
+									m_callback(pf);
+								break;
+							}
+						}
 						break;
-					}
+					case OPUS_PAYLOAD_TYPE:
+						m_depacketizer.pullFrame(frame->data, frame->sourceid);
+						break;
+					default:
+						printf("Unkown Error\n");
 				}
 			}
 			usleep(5000);
@@ -281,7 +291,7 @@ namespace oppvs
 	{
 		std::cout << "Update stream info " << std::endl;
 		m_serviceInfo = info;
-		m_depacketizer.init(m_serviceInfo.videoStreamInfo, &m_recvPool);
+		m_depacketizer.init(m_serviceInfo, &m_recvPool);
 		return 0;
 	}
 }

@@ -8,6 +8,7 @@
 
 #include "segment_reader.h"
 #include "video_decoding_vp.hpp"
+#include "audio_opus_decoder.hpp"
 
 namespace oppvs {
 	struct IncomingStreamingMessage
@@ -19,12 +20,15 @@ namespace oppvs {
 	struct IncomingStreamingFrame
 	{
 		uint8_t sourceid;
+		uint16_t type;
 		SharedDynamicBufferRef data;
 	};
 
 	class Depacketizer {
 	private:
-		VPVideoDecoder m_decoder;
+		VPVideoDecoder m_videoDecoder;
+		AudioOpusDecoder m_audioDecoder;
+
 		std::vector<IncomingStreamingMessage*> m_readers;
 		tsqueue<IncomingStreamingFrame*>* p_recvPool;
 
@@ -36,6 +40,7 @@ namespace oppvs {
 		void init(ServiceInfo&, tsqueue<IncomingStreamingFrame*>*);
 		void pushSegment(uint8_t* data, uint32_t len);
 		int pullFrame(PixelBuffer&, SharedDynamicBufferRef);
+		int pullFrame(SharedDynamicBufferRef, uint8_t source);
 	};
 } // oppvs
 

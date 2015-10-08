@@ -167,7 +167,7 @@ void audioCallback(oppvs::GenericAudioBufferList& ab)
     oppvs::StreamingEngine* streamer = (oppvs::StreamingEngine*)linker->streamer;
     if (streamer)
     {
-        //if (streamer->isRunning())
+        if (streamer->isRunning())
         {
             streamer->pushData(ab);
         }

@@ -8,12 +8,15 @@ namespace oppvs {
 
 	Depacketizer::~Depacketizer()
 	{
-		m_decoder.release();
+		m_videoDecoder.release();
 	}
 
 	void Depacketizer::init(ServiceInfo& info, tsqueue<IncomingStreamingFrame*>* p)
 	{
-		m_decoder.init(info.videoStreamInfo);
+		if (info.videoStreamInfo.noSources > 0)
+			m_videoDecoder.init(info.videoStreamInfo);
+		if (info.audioStreamInfo.noSources > 0)
+			m_audioDecoder.init(info.audioStreamInfo);
 		p_recvPool = p;
 		for(unsigned i = 0; i < info.videoStreamInfo.noSources; ++i) {
 			IncomingStreamingMessage* msg = new IncomingStreamingMessage();
@@ -75,6 +78,7 @@ namespace oppvs {
 		{
 			IncomingStreamingFrame* frame = new IncomingStreamingFrame();
 			frame->sourceid = sourceid;
+			frame->type = type;
 			frame->data = reader->getBuffer();
 			p_recvPool->push(frame);
 		}
@@ -82,9 +86,18 @@ namespace oppvs {
 
 	int Depacketizer::pullFrame(PixelBuffer& pf, SharedDynamicBufferRef frame)
 	{
-		//if (m_decoder.decode(pf, frame->size(), frame->data()) < 0)
+		if (m_videoDecoder.decode(pf, frame->size(), frame->data()) < 0)
 			return -1;
 
-		//return 0;
+		return 0;
+	}
+
+	int Depacketizer::pullFrame(SharedDynamicBufferRef frame, uint8_t source)
+	{
+		float* out = new float[AUDIO_MAX_ENCODING_PACKET_SIZE];
+		int len = m_audioDecoder.decode(frame->data(), frame->size(), source, out);
+		printf("audio out decode len %d\n", len);
+		delete [] out;
+		return 0;
 	}
 } // oppvs
