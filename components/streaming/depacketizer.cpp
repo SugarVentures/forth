@@ -11,13 +11,18 @@ namespace oppvs {
 		m_decoder.release();
 	}
 
-	void Depacketizer::init(VideoStreamInfo& info, tsqueue<IncomingStreamingFrame*>* p)
+	void Depacketizer::init(ServiceInfo& info, tsqueue<IncomingStreamingFrame*>* p)
 	{
-		m_decoder.init(info);
+		m_decoder.init(info.videoStreamInfo);
 		p_recvPool = p;
-		for(unsigned i = 0; i < info.noSources; ++i) {
+		for(unsigned i = 0; i < info.videoStreamInfo.noSources; ++i) {
 			IncomingStreamingMessage* msg = new IncomingStreamingMessage();
-			msg->sourceid = info.sources[i].source;
+			msg->sourceid = info.videoStreamInfo.sources[i].source;
+			m_readers.push_back(msg);
+		}
+		for(unsigned i = 0; i < info.audioStreamInfo.noSources; ++i) {
+			IncomingStreamingMessage* msg = new IncomingStreamingMessage();
+			msg->sourceid = info.audioStreamInfo.sources[i].source;
 			m_readers.push_back(msg);
 		}
 	}
@@ -35,6 +40,7 @@ namespace oppvs {
 	{
 		uint32_t timestamp = 0;
 		uint8_t sourceid = 0;
+		uint16_t type = 0;
 
 		if (len < RTP_HEADER_SIZE)
 			return;
@@ -42,12 +48,27 @@ namespace oppvs {
 		memcpy(&timestamp, data, 4);
 		timestamp = ntohl(timestamp);
 		memcpy(&sourceid, data + 4, 1);
-		//printf("timestamp %u len: %u source: %d\n", timestamp, len, sourceid);
+		memcpy(&type, data + 5, 2);
+		type = ntohs(type);
+		printf("timestamp %u len: %u source: %d type: %d\n", timestamp, len, sourceid, type);
+		
 		SegmentReader* reader = getReader(sourceid);
 		if (reader == NULL)
 			return;
 	
-		int ret = reader->addBytes(data, len);
+		int ret = -1;
+		switch (type)
+		{
+		 	case VP8_PAYLOAD_TYPE:
+		 		ret = reader->addVP8Bytes(data, len);
+		 		break;
+		 	case OPUS_PAYLOAD_TYPE:
+		 		ret = reader->addOpusBytes(data, len);
+		 		break;
+		 	default:
+		 		return;
+		}
+
 		if (ret < 0)
 			return;
 		else if (ret == 1)
@@ -61,9 +82,9 @@ namespace oppvs {
 
 	int Depacketizer::pullFrame(PixelBuffer& pf, SharedDynamicBufferRef frame)
 	{
-		if (m_decoder.decode(pf, frame->size(), frame->data()) < 0)
+		//if (m_decoder.decode(pf, frame->size(), frame->data()) < 0)
 			return -1;
 
-		return 0;
+		//return 0;
 	}
 } // oppvs

@@ -22,7 +22,7 @@ namespace oppvs {
 		return m_dataStream.getBuffer();
 	}
 
-	int SegmentReader::addBytes(uint8_t* data, uint32_t len)
+	int SegmentReader::addVP8Bytes(uint8_t* data, uint32_t len)
 	{
 		uint8_t req = 0;
 		uint8_t optx = 0;
@@ -80,6 +80,24 @@ namespace oppvs {
 			return 1;
 		}
 
+		return 0;
+	}
+
+	int SegmentReader::addOpusBytes(uint8_t* data, uint32_t len)
+	{
+		m_dataStream.reset();
+		SharedDynamicBufferRef buffer = SharedDynamicBufferRef(new DynamicBuffer());
+		uint32_t frameSize = len - OPUS_MAX_HEADER_SIZE;
+		buffer->setCapacity(frameSize);
+		m_dataStream.attach(buffer, true);
+		if (m_dataStream.write(data + OPUS_MAX_HEADER_SIZE, len - OPUS_MAX_HEADER_SIZE) < 0)
+			return -1;
+
+		if (m_dataStream.size() == m_dataStream.capacity())
+		{
+			printf("Audio Frame: %zu bytes\n", m_dataStream.size());
+			return 1;
+		}
 		return 0;
 	}
 } // oppvs

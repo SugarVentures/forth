@@ -26,7 +26,8 @@ namespace oppvs {
 		void reset();
 		SharedDynamicBufferRef getBuffer();
 
-		int addBytes(uint8_t* data, uint32_t len);
+		int addVP8Bytes(uint8_t* data, uint32_t len);
+		int addOpusBytes(uint8_t* data, uint32_t len);
 	};
 
 } // oppvs

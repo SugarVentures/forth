@@ -33,7 +33,7 @@ namespace oppvs {
 		Depacketizer();
 		~Depacketizer();
 
-		void init(VideoStreamInfo&, tsqueue<IncomingStreamingFrame*>*);
+		void init(ServiceInfo&, tsqueue<IncomingStreamingFrame*>*);
 		void pushSegment(uint8_t* data, uint32_t len);
 		int pullFrame(PixelBuffer&, SharedDynamicBufferRef);
 	};
