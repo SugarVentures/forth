@@ -8,36 +8,10 @@
 #include "video_encoding_vp.hpp"
 #include "video_decoding_vp.hpp"
 
+#include "segment_builder.h"
+#include "segment_reader.h"
+
 namespace oppvs {
-	const int VP8_PAYLOAD_HEADER_SIZE = 3;
-	const int VP8_COMMON_HEADER_SIZE = 3;
-	const int RTP_HEADER_SIZE = 5;
-	const int VP8_MAX_HEADER_SIZE = VP8_COMMON_HEADER_SIZE + VP8_PAYLOAD_HEADER_SIZE + RTP_HEADER_SIZE;
-
-	class SegmentBuilder {
-	private:
-		DataStream m_dataStream;
-
-		uint8_t SBit = 1 << 4;
-		uint8_t XBit = 1 << 7;
-		uint8_t IBit = 1 << 7;
-		uint8_t HBit = 1 << 4;
-		uint8_t Size0BitMask = 7;
-		uint8_t Size0BitShift = 5;
-
-	public:
-		SegmentBuilder();
-		~SegmentBuilder();
-
-		void reset();
-		DataStream& getStream();
-
-		int addCommonHeader(bool flag, int picID);
-		int addPayloadHeader(bool isKeyFrame, uint32_t length);
-		int addPayload(uint8_t* data, uint32_t size);
-
-		int addRTPHeader(uint32_t timestamp, uint8_t sourceid);
-	};
 
 	class Packetizer {
 	private:
@@ -63,31 +37,7 @@ namespace oppvs {
 
 		bool isRunning();
 	};
-
-	class SegmentReader
-	{
-	private:
-		DataStream m_dataStream;
-		uint8_t SBit = 1 << 4;
-		uint8_t XBit = 1 << 7;
-		uint8_t IBit = 1 << 7;
-		uint8_t HBit = 1 << 4;
-		uint8_t Size0BitMask = 7;
-		uint8_t Size0BitShift = 5;
-
-		bool m_keyFrame;
-		int m_sourceId;
-
-	public:
-		SegmentReader();
-		~SegmentReader();
-
-		void reset();
-		SharedDynamicBufferRef getBuffer();
-
-		int addBytes(uint8_t* data, uint32_t len);
-	};
-
+	
 	struct IncomingStreamingMessage
 	{
 		uint8_t sourceid;

@@ -1,77 +1,6 @@
 #include "packet_handler.hpp"
 
 namespace oppvs {
-	SegmentBuilder::SegmentBuilder()
-	{
-		reset();
-	}
-
-	SegmentBuilder::~SegmentBuilder()
-	{
-		reset();
-	}
-
-	void SegmentBuilder::reset()
-	{
-		m_dataStream.reset();
-	}
-
-	int SegmentBuilder::addPayload(uint8_t* data, uint32_t size)
-	{
-		return m_dataStream.write(data, size);
-	}
-
-	int SegmentBuilder::addCommonHeader(bool flag, int picID)
-	{
-		uint8_t req = XBit;
-		if (flag)
-			req |= SBit;
-		uint8_t optX = IBit;
-		uint8_t optI = (picID & 127);
-
-		//Add VP8 Required
-		if (m_dataStream.writeUInt8(req) < 0)
-			return -1;
-		if (m_dataStream.writeUInt8(optX) < 0)
-			return -1;
-		if (m_dataStream.writeUInt8(optI) < 0)
-			return -1;
-		return 0;
-	}
-
-	int SegmentBuilder::addPayloadHeader(bool isKeyFrame, uint32_t size)
-	{
-		//VP8 Payload Header
-		uint8_t o1 = (size & Size0BitMask) << Size0BitShift; // Size0
-		o1 |= HBit; // H (show frame)
-		if (!isKeyFrame)
-		{
-			o1 |= 1; //P (Inverse frame)
-		}
-
-		if (m_dataStream.writeUInt8(o1) < 0)
-			return -1;
-		if (m_dataStream.writeUInt8(static_cast<uint8_t>(size >> 3)) < 0)	//Size 1
-			return -1;
-
-		if (m_dataStream.writeUInt8(static_cast<uint8_t>(size >> 11)) < 0) //Size 2
-			return -1;
-		return 0;
-	}
-
-	int SegmentBuilder::addRTPHeader(uint32_t timestamp, uint8_t sourceid)
-	{
-		if (m_dataStream.writeUInt32(htonl(timestamp)) < 0)
-			return -1;
-		if (m_dataStream.writeUInt8(sourceid) < 0)
-			return -1;	
-		return 0;
-	}
-
-	DataStream& SegmentBuilder::getStream()
-	{
-		return m_dataStream;
-	}
 
 	Packetizer::Packetizer(): m_isRunning(true)
 	{
@@ -158,15 +87,15 @@ namespace oppvs {
 			m_builder.reset();
 			m_builder.getStream().attach(segment, true);
 
-			if (m_builder.addRTPHeader(m_timestamp, pf.source) < 0)
+			if (m_builder.addRTPHeader(m_timestamp, pf.source, VP8_PAYLOAD_TYPE) < 0)
 				return;
 
-			if (m_builder.addCommonHeader(flag, picID) < 0)
+			if (m_builder.addVideoCommonHeader(flag, picID) < 0)
 				return;
 			
 			if (flag)
 			{
-				if (m_builder.addPayloadHeader(isKey, encodingLength) < 0)
+				if (m_builder.addVideoPayloadHeader(isKey, encodingLength) < 0)
 					return;
 				sentLength = sendLength > (OPPVS_NETWORK_PACKET_LENGTH - VP8_MAX_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - VP8_MAX_HEADER_SIZE) : sendLength;
 			}
@@ -196,88 +125,6 @@ namespace oppvs {
 			usleep(30000);
 		}
 		return NULL;
-	}
-
-	SegmentReader::SegmentReader(): m_keyFrame(false)
-	{
-		reset();
-	}
-
-	SegmentReader::~SegmentReader()
-	{
-		reset();
-	}
-
-	void SegmentReader::reset()
-	{
-		m_sourceId = -1;
-		m_dataStream.reset();
-	}
-
-	SharedDynamicBufferRef SegmentReader::getBuffer()
-	{
-		return m_dataStream.getBuffer();
-	}
-
-	int SegmentReader::addBytes(uint8_t* data, uint32_t len)
-	{
-		uint8_t req = 0;
-		uint8_t optx = 0;
-		uint8_t opti = 0;
-		int picID = -1;
-		uint32_t curPos = 0;
-		bool showFrame = false;
-		
-		curPos = RTP_HEADER_SIZE;
-		req = data[curPos];
-		if (req & XBit)
-		{
-			optx = data[curPos + 1];
-			if (optx & IBit)
-			{
-				opti = data[curPos + 2];
-				picID = opti >> 1;
-			}
-		}
-		if (req & SBit)
-		{
-			//First segment => Read payload header
-			curPos += VP8_COMMON_HEADER_SIZE;
-			uint8_t o1 = data[curPos];
-			showFrame = o1 & HBit;
-			m_keyFrame = !(o1 & 1);
-			o1 >>= Size0BitShift;
-			uint32_t frameSize = o1 + 8 * data[curPos + 1] + 2048 * data[curPos + 2];
-			//printf("Size: %u key: %d\n", frameSize, m_keyFrame);
-			//Create buffer for new frame
-			m_dataStream.reset();
-			SharedDynamicBufferRef buffer = SharedDynamicBufferRef(new DynamicBuffer());
-			buffer->setCapacity(frameSize);
-			m_dataStream.attach(buffer, true);
-			if (m_dataStream.write(data + VP8_MAX_HEADER_SIZE, len - VP8_MAX_HEADER_SIZE) < 0)
-				return -1;
-		}
-		else
-		{
-			if (m_dataStream.capacity() == 0)
-				return -1;
-			if (m_dataStream.size() + len - VP8_COMMON_HEADER_SIZE - RTP_HEADER_SIZE > m_dataStream.capacity())
-			{
-				printf("Wrong segment\n");
-				m_dataStream.reset();
-				return -1;
-			}
-			if (m_dataStream.write(data + VP8_COMMON_HEADER_SIZE + RTP_HEADER_SIZE, len - VP8_COMMON_HEADER_SIZE - RTP_HEADER_SIZE) < 0)
-				return -1;
-			//printf("Current size: %u cap: %u\n", m_dataStream.size(), m_dataStream.capacity());
-		}
-		if (m_dataStream.size() == m_dataStream.capacity())
-		{
-			//printf("Frame size: %u\n", m_dataStream.size());
-			return 1;
-		}
-
-		return 0;
 	}
 
 

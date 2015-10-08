@@ -70,6 +70,8 @@ namespace oppvs {
 
 	void AudioPacketizer::pull()
 	{
+		if (p_audioBuffer == NULL)
+			return;
 		uint16_t noFrames = AUDIO_ENCODING_FRAMES;
 		if (p_audioBuffer->getNumberFrames() > AUDIO_ENCODING_FRAMES)
 		{
