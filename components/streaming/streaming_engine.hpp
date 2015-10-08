@@ -12,8 +12,9 @@
 #include "audio_engine.hpp"
 
 #include "signaling_handler.hpp"
-#include "packet_handler.hpp"
+#include "video_packetizer.h"
 #include "audio_packet_handler.h"
+#include "depacketizer.h"
 
 #include "streaming_send_thread.hpp"
 
@@ -70,7 +71,7 @@ namespace oppvs
 		void pushData(PixelBuffer& pf);
 		void pushData(GenericAudioBufferList& ab);
 
-		int updateStreamInfo(const VideoStreamInfo& info);
+		int updateStreamInfo(const ServiceInfo& info);
 	private:
 		uint32_t m_ssrc;
 		bool m_isRunning;
@@ -84,7 +85,7 @@ namespace oppvs
 
 		StreamingConfiguration 				m_configuration;
 		SignalingHandler 					m_signaler;
-		Packetizer 							m_packetizer;
+		VideoPacketizer 					m_videoPacketizer;
 		std::vector<StreamingSendThread*> 	m_sendingThreads;
 		Thread*								m_mainThread;	//Thread to distribute segments to all sending threads
 		bool								m_exitMainThread;

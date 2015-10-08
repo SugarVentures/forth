@@ -53,10 +53,10 @@ namespace oppvs
 
 		m_signaler.attachCallback(StreamingEngine::onNewSubscriber, this);
 		m_signaler.attachCallback(StreamingEngine::onReceiveSegment, this);
-		m_signaler.attachCallback([this](const VideoStreamInfo& info) { return updateStreamInfo(info); });
+		m_signaler.attachCallback([this](const ServiceInfo& info) { return updateStreamInfo(info); });
 		if (role == ROLE_BROADCASTER)
 		{
-			m_packetizer.init(m_serviceInfo.videoStreamInfo, &m_sendPool);
+			m_videoPacketizer.init(m_serviceInfo.videoStreamInfo, &m_sendPool);
 			m_audioPacketizer.init(m_serviceInfo.audioStreamInfo, &m_sendPool);
 		}
 		else if (role == ROLE_VIEWER)
@@ -77,7 +77,7 @@ namespace oppvs
 		if (m_signaler.start(streamkey) < 0)
 			return -1;
 		
-		m_packetizer.start();
+		m_videoPacketizer.start();
 		m_audioPacketizer.start();
 		return 0;
 	}
@@ -85,7 +85,7 @@ namespace oppvs
 
 	void StreamingEngine::pushData(PixelBuffer& pf)
 	{
-		m_packetizer.pushFrame(pf);
+		m_videoPacketizer.pushFrame(pf);
 	}
 
 	void StreamingEngine::pushData(GenericAudioBufferList& ab)
@@ -277,10 +277,10 @@ namespace oppvs
 		}
 	}
 
-	int StreamingEngine::updateStreamInfo(const VideoStreamInfo& info)
+	int StreamingEngine::updateStreamInfo(const ServiceInfo& info)
 	{
 		std::cout << "Update stream info " << std::endl;
-		m_serviceInfo.videoStreamInfo = info;
+		m_serviceInfo = info;
 		m_depacketizer.init(m_serviceInfo.videoStreamInfo, &m_recvPool);
 		return 0;
 	}

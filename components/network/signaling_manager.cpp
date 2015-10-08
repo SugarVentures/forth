@@ -177,6 +177,8 @@ namespace oppvs {
 
 	void SignalingManager::processResponse()
 	{
+		ServiceInfo info;
+		
 		m_messageReader.reset();
 		m_readerBuffer->setSize(0);
 		m_messageReader.getStream().attach(m_readerBuffer, true);
@@ -197,7 +199,8 @@ namespace oppvs {
 			}
 			case SignalingStreamResponse:
 				std::cout << "Receive stream response" << std::endl;
-				m_cbStreamResponse(m_messageReader.getVideoStreamInfo());
+				info.videoStreamInfo = m_messageReader.getVideoStreamInfo();
+				m_cbStreamResponse(info);
 				break;
 			default:
 				break;

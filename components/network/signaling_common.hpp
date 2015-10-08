@@ -68,9 +68,9 @@ namespace oppvs {
 	}
 
 	//Callback functions types
-	typedef std::function<int(const std::string&, int, const VideoStreamInfo&)> callbackStreamRegister;
-	typedef std::function<int(const std::string&, int*, VideoStreamInfo&)> callbackStreamRequest;
-	typedef std::function<int(const VideoStreamInfo&)> callbackStreamResponse;
+	typedef std::function<int(const std::string&, int, const ServiceInfo&)> callbackStreamRegister;
+	typedef std::function<int(const std::string&, int*, ServiceInfo&)> callbackStreamRequest;
+	typedef std::function<int(const ServiceInfo&)> callbackStreamResponse;
 	typedef std::function<int(int sockfd)> callbackDisconnect;
 } // oppvs
 
