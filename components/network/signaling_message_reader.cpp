@@ -3,8 +3,8 @@
 namespace oppvs {
 	SignalingMessageReader::SignalingMessageReader()
 	{
-		m_videoStreamInfo.sources = NULL;
-		m_videoStreamInfo.noSources = 0;
+		m_serviceInfo.videoStreamInfo.sources = NULL;
+		m_serviceInfo.videoStreamInfo.noSources = 0;
 		reset();	
 	}
 
@@ -16,11 +16,11 @@ namespace oppvs {
 	void SignalingMessageReader::reset()
 	{
 		m_dataStream.reset();
-		if (m_videoStreamInfo.noSources > 0)
+		if (m_serviceInfo.videoStreamInfo.noSources > 0)
 		{
-			delete [] m_videoStreamInfo.sources;
-			m_videoStreamInfo.noSources = 0;
-			m_videoStreamInfo.sources = NULL;
+			delete [] m_serviceInfo.videoStreamInfo.sources;
+			m_serviceInfo.videoStreamInfo.noSources = 0;
+			m_serviceInfo.videoStreamInfo.sources = NULL;
 		}
 	}
 
@@ -141,35 +141,35 @@ namespace oppvs {
     		int currentPos = m_dataStream.getPosition();
     		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_VIDEO_NOSOURCES, &noVideoSources) >= 0)
     		{
-	    		m_videoStreamInfo.noSources = noVideoSources;
-	    		m_videoStreamInfo.sources = new VideoSourceInfo[noVideoSources];
+	    		m_serviceInfo.videoStreamInfo.noSources = noVideoSources;
+	    		m_serviceInfo.videoStreamInfo.sources = new VideoSourceInfo[noVideoSources];
 	    		for (uint8_t i = 0; i < noVideoSources; ++i)
 	    		{
-	    			if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ID, &m_videoStreamInfo.sources[i].source) <  0)
+	    			if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ID, &m_serviceInfo.videoStreamInfo.sources[i].source) <  0)
 		    		{
 		    			return -1;
 		    		}
-		    		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ORDER, &m_videoStreamInfo.sources[i].order) <  0)
+		    		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ORDER, &m_serviceInfo.videoStreamInfo.sources[i].order) <  0)
 		    		{
 		    			return -1;
 		    		}
-	    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH, &m_videoStreamInfo.sources[i].width) < 0)
+	    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH, &m_serviceInfo.videoStreamInfo.sources[i].width) < 0)
 	    			{
 	    				return -1;
 	    			}
-	    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_HEIGHT, &m_videoStreamInfo.sources[i].height) < 0)
+	    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_HEIGHT, &m_serviceInfo.videoStreamInfo.sources[i].height) < 0)
 	    			{
 	    				return -1;
 	    			}
-	    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_STRIDE, &m_videoStreamInfo.sources[i].stride) < 0)
+	    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_STRIDE, &m_serviceInfo.videoStreamInfo.sources[i].stride) < 0)
 	    			{
 	    				return -1;
 	    			}
-	    			printf("Source: %d order: %d width: %d height: %d stride: %d\n", m_videoStreamInfo.sources[i].source,
-	    				m_videoStreamInfo.sources[i].order,
-	    				m_videoStreamInfo.sources[i].width,
-	    				m_videoStreamInfo.sources[i].height,
-	    				m_videoStreamInfo.sources[i].stride);
+	    			printf("Source: %d order: %d width: %d height: %d stride: %d\n", m_serviceInfo.videoStreamInfo.sources[i].source,
+	    				m_serviceInfo.videoStreamInfo.sources[i].order,
+	    				m_serviceInfo.videoStreamInfo.sources[i].width,
+	    				m_serviceInfo.videoStreamInfo.sources[i].height,
+	    				m_serviceInfo.videoStreamInfo.sources[i].stride);
 	    		}
     		}
     		else
@@ -181,25 +181,25 @@ namespace oppvs {
     		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_AUDIO_NOSOURCES, &noAudioSources) >= 0)
     		{
 
-    			m_audioStreamInfo.noSources = noAudioSources;
-    			m_audioStreamInfo.sources = new AudioSourceInfo[noAudioSources];
+    			m_serviceInfo.audioStreamInfo.noSources = noAudioSources;
+    			m_serviceInfo.audioStreamInfo.sources = new AudioSourceInfo[noAudioSources];
     			for (uint8_t i = 0; i < noAudioSources; ++i)
     			{
-    				if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_ID, &m_audioStreamInfo.sources[i].source) <  0)
+    				if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_ID, &m_serviceInfo.audioStreamInfo.sources[i].source) <  0)
 		    		{
 		    			return -1;
 		    		}
-		    		if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_CHANNELS, &m_audioStreamInfo.sources[i].numberChannels) < 0)
+		    		if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_CHANNELS, &m_serviceInfo.audioStreamInfo.sources[i].numberChannels) < 0)
 	    			{
 	    				return -1;
 	    			}
-	    			if (readUInt32Attribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_SAMPLE_RATE, &m_audioStreamInfo.sources[i].sampleRate) < 0)
+	    			if (readUInt32Attribute(SIGNALING_ATTRIBUTE_SOURCE_AUDIO_SAMPLE_RATE, &m_serviceInfo.audioStreamInfo.sources[i].sampleRate) < 0)
 	    			{
 	    				return -1;
 	    			}
-	    			printf("Source %d channels: %d sample rate: %d\n", m_audioStreamInfo.sources[i].source, 
-	    				m_audioStreamInfo.sources[i].numberChannels,
-	    				m_audioStreamInfo.sources[i].sampleRate);
+	    			printf("Source %d channels: %d sample rate: %d\n", m_serviceInfo.audioStreamInfo.sources[i].source, 
+	    				m_serviceInfo.audioStreamInfo.sources[i].numberChannels,
+	    				m_serviceInfo.audioStreamInfo.sources[i].sampleRate);
     			}
     			ret = 0;
     		}
@@ -339,8 +339,8 @@ namespace oppvs {
 		return m_password;
 	}
 
-	VideoStreamInfo& SignalingMessageReader::getVideoStreamInfo()
+	ServiceInfo& SignalingMessageReader::getServiceInfo()
 	{
-		return m_videoStreamInfo;
+		return m_serviceInfo;
 	}
 } // oppvs

@@ -22,7 +22,7 @@ namespace oppvs {
 		std::string streamKey;
 		int sockFD;
 		std::vector<IceCandidate> iceCandidates;
-		VideoStreamInfo videoStreamInfo;
+		ServiceInfo serviceInfo;
 
 		bool operator == (const SignalingStreamInfo& m) const {
 			return (m.streamKey.compare(streamKey) == 0);
@@ -55,8 +55,8 @@ namespace oppvs {
 
 		void setStreamKey(const std::string& streamKey);
 
-		int updateStream(const std::string& streamKey, int sockfd, const VideoStreamInfo& info);
-		int getStreamInfo(const std::string& streamKey, int* psockfd, VideoStreamInfo& info);
+		int updateStream(const std::string& streamKey, int sockfd, const ServiceInfo& info);
+		int getStreamInfo(const std::string& streamKey, int* psockfd, ServiceInfo& info);
 		int removeStream(int sockfd);
 
 	private:

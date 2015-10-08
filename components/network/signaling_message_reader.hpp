@@ -21,7 +21,7 @@ namespace oppvs {
 		std::string& getStreamKey();
 		std::string& getUsername();
 		std::string& getPassword();
-		VideoStreamInfo& getVideoStreamInfo();
+		ServiceInfo& getServiceInfo();
 	private:
 		DataStream m_dataStream;
 		SignalingMessageType m_messageType;
@@ -29,8 +29,8 @@ namespace oppvs {
 		std::string m_streamKey;
 		std::string m_username;
 		std::string m_password;
-		VideoStreamInfo m_videoStreamInfo;
-		AudioStreamInfo m_audioStreamInfo;
+		
+		ServiceInfo m_serviceInfo;
 
 		int readHeader();
 		int readBody();

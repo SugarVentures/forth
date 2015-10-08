@@ -23,8 +23,8 @@ namespace oppvs {
 		SignalingServerThread* thread = new SignalingServerThread();
 		m_threads.push_back(thread);
 		thread->init(&m_socket, &m_streamKey, &m_broadcaster);
-		thread->attachCallback([this](const std::string& sk, int sockfd, const VideoStreamInfo& info) { return updateStream(sk, sockfd, info); });
-		thread->attachCallback([this](const std::string& sk, int* psockfd, VideoStreamInfo& info) { return getStreamInfo(sk, psockfd, info); });
+		thread->attachCallback([this](const std::string& sk, int sockfd, const ServiceInfo& info) { return updateStream(sk, sockfd, info); });
+		thread->attachCallback([this](const std::string& sk, int* psockfd, ServiceInfo& info) { return getStreamInfo(sk, psockfd, info); });
 		thread->attachCallback([this](int sockfd) { return removeStream(sockfd); });
 	}
 
@@ -96,7 +96,7 @@ namespace oppvs {
 		m_streamKey = streamKey;
 	}
 
-	int SignalingServer::updateStream(const std::string& streamkey, int sockfd, const VideoStreamInfo& videoInfo)
+	int SignalingServer::updateStream(const std::string& streamkey, int sockfd, const ServiceInfo& info)
 	{
 		printf("Update stream %s %d\n", streamkey.c_str(), sockfd);
 		SignalingStreamInfo* pstream = findStream(streamkey);
@@ -106,14 +106,14 @@ namespace oppvs {
 			SignalingStreamInfo stream;
 			stream.streamKey = streamkey;
 			stream.sockFD = sockfd;
-			stream.videoStreamInfo = videoInfo;
+			stream.serviceInfo = info;
 			m_streams.push_back(stream);
 		}
 		else
 		{
-			printf("Found the stream. Update %d %d\n", pstream->videoStreamInfo.sources[0].width, pstream->videoStreamInfo.sources[0].height);
+			printf("Found the stream. Update.\n" );
 			pstream->sockFD = sockfd;
-			pstream->videoStreamInfo = videoInfo;
+			pstream->serviceInfo = info;
 		}
 		return 0;
 	}
@@ -128,13 +128,13 @@ namespace oppvs {
 		return &(*it);
 	}
 
-	int SignalingServer::getStreamInfo(const std::string& streamKey, int* psockfd, VideoStreamInfo& info)
+	int SignalingServer::getStreamInfo(const std::string& streamKey, int* psockfd, ServiceInfo& info)
 	{
 		SignalingStreamInfo* pstream = findStream(streamKey);
 		if (!pstream)
 			return -1;
 		*psockfd = pstream->sockFD;
-		info = pstream->videoStreamInfo;
+		info = pstream->serviceInfo;
 		return 0;
 	}
 

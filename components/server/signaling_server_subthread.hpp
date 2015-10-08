@@ -50,7 +50,7 @@ namespace oppvs
 		void sendResponse(int dest);
 		int buildIceRequest();
 		int buildIceResponse(const std::string& streamKey, const std::string& username, const std::string& password, const std::vector<IceCandidate>& candidates);
-		int buildStreamResponse(const std::string& streamKey, const VideoStreamInfo& videoInfo);
+		int buildStreamResponse(const std::string& streamKey, const ServiceInfo& videoInfo);
 
 		callbackStreamRegister m_cbStreamRegister;
 		callbackStreamRequest m_cbStreamRequest;

@@ -104,7 +104,7 @@ namespace oppvs {
 			case SignalingStreamRegister:
 			{
 				std::cout << "Receive Stream Register" << std::endl;
-				m_cbStreamRegister(m_messageReader.getStreamKey(), m_sockfd, m_messageReader.getVideoStreamInfo());
+				m_cbStreamRegister(m_messageReader.getStreamKey(), m_sockfd, m_messageReader.getServiceInfo());
 			}
 				break;
 			case SignalingIceResponse:
@@ -128,7 +128,7 @@ namespace oppvs {
 			{
 				std::cout << "Receive Stream Request" << std::endl;
 				std::cout << "Requested stream key: " << m_messageReader.getStreamKey() << std::endl;
-				VideoStreamInfo info;
+				ServiceInfo info;
 				int broadcasterfd = -1;
 				if (m_cbStreamRequest(m_messageReader.getStreamKey(), &broadcasterfd, info) < 0)
 				{
@@ -186,7 +186,7 @@ namespace oppvs {
 		return 0;
 	}
 
-	int SignalingServerSubThread::buildStreamResponse(const std::string& streamKey, const VideoStreamInfo& videoInfo)
+	int SignalingServerSubThread::buildStreamResponse(const std::string& streamKey, const ServiceInfo& info)
 	{
 		m_messageBuilder.reset();
 
@@ -196,8 +196,12 @@ namespace oppvs {
 		if (m_messageBuilder.addStreamKey(streamKey) < 0)
 			return -1;
 
-		if (m_messageBuilder.addVideoSources(videoInfo) < 0)
+		int vret = m_messageBuilder.addVideoSources(info.videoStreamInfo);
+        int aret = m_messageBuilder.addAudioSources(info.audioStreamInfo);
+        
+		if (vret < 0 && aret < 0)
 			return -1;
+		
 		return 0;
 	}
 
