@@ -70,6 +70,16 @@ namespace oppvs {
 		return 0;
 	}
 
+	int SegmentBuilder::addAudioPayloadHeader(int channels, uint32_t sampleRate)
+	{
+		uint8_t c = channels;
+		if (m_dataStream.writeUInt8(c) < 0)
+			return -1;
+		if (m_dataStream.writeUInt32(htonl(sampleRate)) < 0)
+			return -1;
+		return 0;
+	}
+
 	DataStream& SegmentBuilder::getStream()
 	{
 		return m_dataStream;

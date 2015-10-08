@@ -8,25 +8,32 @@
 #include "thread.hpp"
 #include "audio_opus_encoder.hpp"
 
+#include "segment_builder.h"
+#include "segment_reader.h"
+
 namespace oppvs {
 	class AudioPacketizer
 	{
 	private:
-		tsqueue<SharedDynamicBufferRef>* p_segementPool;
+		tsqueue<SharedDynamicBufferRef>* p_segmentPool;
 		AudioRingBuffer* p_audioBuffer;
 		uint8_t m_source;
 		uint8_t m_size;
+		uint8_t m_channels;
+		uint32_t m_sampleRate;
+		uint32_t m_timestamp;
 
 		AudioOpusEncoder m_encoder;
+		SegmentBuilder m_builder;
 		Thread* p_thread;
 		bool m_isRunning;
 		float m_inBuffer[AUDIO_MAX_ENCODING_PACKET_SIZE];
-		
+
 	public:
 		AudioPacketizer();
 		~AudioPacketizer();
 
-		int init(const AudioStreamInfo&);
+		int init(const AudioStreamInfo&, tsqueue<SharedDynamicBufferRef>*);
 		void start();
 		void push(const GenericAudioBufferList& ab);
 		void pull();

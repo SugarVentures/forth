@@ -57,7 +57,7 @@ namespace oppvs
 		if (role == ROLE_BROADCASTER)
 		{
 			m_packetizer.init(m_serviceInfo.videoStreamInfo, &m_sendPool);
-			m_audioPacketizer.init(m_serviceInfo.audioStreamInfo);
+			m_audioPacketizer.init(m_serviceInfo.audioStreamInfo, &m_sendPool);
 		}
 		else if (role == ROLE_VIEWER)
 		{

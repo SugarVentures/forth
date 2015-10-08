@@ -28,6 +28,8 @@ namespace oppvs {
 		int addVideoPayloadHeader(bool isKeyFrame, uint32_t length);
 		int addPayload(uint8_t* data, uint32_t size);
 
+		int addAudioPayloadHeader(int channels, uint32_t sampleRate);
+
 		int addRTPHeader(uint32_t timestamp, uint8_t sourceid, uint16_t type);
 	};
 } // oppvs

@@ -244,6 +244,16 @@ namespace oppvs {
         unsigned char stream_map[255];
     };
 
+    const int VP8_PAYLOAD_HEADER_SIZE = 3;
+	const int VP8_COMMON_HEADER_SIZE = 3;
+	const int RTP_HEADER_SIZE = 7;
+	const int VP8_MAX_HEADER_SIZE = VP8_COMMON_HEADER_SIZE + VP8_PAYLOAD_HEADER_SIZE + RTP_HEADER_SIZE;
+
+	const uint16_t OPUS_PAYLOAD_TYPE = 120;
+	const uint16_t VP8_PAYLOAD_TYPE = 103;
+
+	const int OPUS_PAYLOAD_HEADER_SIZE = 5;
+	const int OPUS_MAX_HEADER_SIZE = OPUS_PAYLOAD_HEADER_SIZE + RTP_HEADER_SIZE;
 }
 
 
