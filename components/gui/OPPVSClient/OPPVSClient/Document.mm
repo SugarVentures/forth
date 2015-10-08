@@ -46,8 +46,8 @@ void frameCallback(oppvs::PixelBuffer& pf)
     
     dispatch_queue_t queue = dispatch_queue_create("oppvs.streaming.queue", DISPATCH_QUEUE_SERIAL);
     dispatch_async(queue, ^{
-        if (streamEngine->init(oppvs::ROLE_VIEWER, "54.169.227.237", "54.169.227.237", "turn", "password",
-                                 "54.169.227.237", 33333) < 0)
+        if (streamEngine->init(oppvs::ROLE_VIEWER, oppvs::STUN_SERVER_ADDRESS, oppvs::TURN_SERVER_ADDRESS, oppvs::TURN_SERVER_USER, oppvs::TURN_SERVER_PASS,
+                               oppvs::SIGN_SERVER_ADDRESS, oppvs::SIGN_SERVER_PORT) < 0)
         {
             NSLog(@"Failed to init streaming engine");
             return;

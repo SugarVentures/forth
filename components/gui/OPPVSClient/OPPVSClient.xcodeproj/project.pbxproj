@@ -496,6 +496,8 @@
 					"../../../libs/libnice/**",
 					../../network,
 					"/usr/local/include/glib-2.0",
+					../../audio,
+					"../../../libs/libopus/**",
 				);
 				INFOPLIST_FILE = OPPVSClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -533,6 +535,8 @@
 					"../../../libs/libnice/**",
 					../../network,
 					"/usr/local/include/glib-2.0",
+					../../audio,
+					"../../../libs/libopus/**",
 				);
 				INFOPLIST_FILE = OPPVSClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
