@@ -65,7 +65,7 @@ namespace oppvs {
 			return -1;
 		if (m_dataStream.writeUInt8(sourceid) < 0)
 			return -1;
-		if (m_dataStream.writeUInt16(type) < 0)
+		if (m_dataStream.writeUInt16(htons(type)) < 0)
 			return -1;
 		return 0;
 	}
