@@ -3,7 +3,7 @@
 namespace oppvs {
 	Depacketizer::Depacketizer(): p_recvPool(NULL)
 	{
-
+		m_timestamp = 0;
 	}
 
 	Depacketizer::~Depacketizer()
@@ -11,7 +11,7 @@ namespace oppvs {
 		m_videoDecoder.release();
 	}
 
-	void Depacketizer::init(ServiceInfo& info, tsqueue<IncomingStreamingFrame*>* p)
+	void Depacketizer::init(ServiceInfo& info, tsqueue<IncomingStreamingFrame*>* p, AudioRingBuffer* pbuf)
 	{
 		if (info.videoStreamInfo.noSources > 0)
 			m_videoDecoder.init(info.videoStreamInfo);
@@ -28,6 +28,7 @@ namespace oppvs {
 			msg->sourceid = info.audioStreamInfo.sources[i].source;
 			m_readers.push_back(msg);
 		}
+		p_audioRingBuffer = pbuf;
 	}
 
 	SegmentReader* Depacketizer::getReader(uint8_t sourceid)
@@ -95,8 +96,15 @@ namespace oppvs {
 	int Depacketizer::pullFrame(SharedDynamicBufferRef frame, uint8_t source)
 	{
 		float* out = new float[AUDIO_MAX_ENCODING_PACKET_SIZE];
-		int len = m_audioDecoder.decode(frame->data(), frame->size(), source, out);
-		printf("audio out decode len %d\n", len);
+		uint32_t len = m_audioDecoder.decode(frame->data(), frame->size(), source, out);
+		printf("audio out decode len %d ts: %d\n", len, m_timestamp);
+		if (p_audioRingBuffer != NULL)
+		{
+			int err = p_audioRingBuffer->store(&len, out, m_timestamp);
+			if (err)
+				printf("Error when pushing to audio buffer %d\n", err);
+			m_timestamp += len;
+		}
 		delete [] out;
 		return 0;
 	}

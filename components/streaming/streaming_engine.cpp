@@ -8,6 +8,7 @@ namespace oppvs
 		m_exitMainThread = false;
 		m_mainThread = NULL;
 		m_isRunning = false;
+		p_audioRingBuffer = NULL;
 	}
 
 	StreamingEngine::~StreamingEngine()
@@ -289,9 +290,22 @@ namespace oppvs
 
 	int StreamingEngine::updateStreamInfo(const ServiceInfo& info)
 	{
+		if (p_audioRingBuffer == NULL)
+		{
+			printf("Can not update stream info\n");
+			return -1;
+		}
+
 		std::cout << "Update stream info " << std::endl;
 		m_serviceInfo = info;
-		m_depacketizer.init(m_serviceInfo, &m_recvPool);
+		p_audioRingBuffer->allocate(8, 10 * 512);
+		m_depacketizer.init(m_serviceInfo, &m_recvPool, p_audioRingBuffer);
+		
 		return 0;
+	}
+
+	void StreamingEngine::attachBuffer(AudioRingBuffer* pbuf)
+	{
+		p_audioRingBuffer = pbuf;
 	}
 }

@@ -10,6 +10,8 @@
 #include "video_decoding_vp.hpp"
 #include "audio_opus_decoder.hpp"
 
+#include "audio_ring_buffer.h"
+
 namespace oppvs {
 	struct IncomingStreamingMessage
 	{
@@ -33,11 +35,13 @@ namespace oppvs {
 		tsqueue<IncomingStreamingFrame*>* p_recvPool;
 
 		SegmentReader* getReader(uint8_t sourceid);
+		AudioRingBuffer* p_audioRingBuffer;
+		uint32_t m_timestamp;
 	public:
 		Depacketizer();
 		~Depacketizer();
 
-		void init(ServiceInfo&, tsqueue<IncomingStreamingFrame*>*);
+		void init(ServiceInfo&, tsqueue<IncomingStreamingFrame*>*, AudioRingBuffer* pbuf);
 		void pushSegment(uint8_t* data, uint32_t len);
 		int pullFrame(PixelBuffer&, SharedDynamicBufferRef);
 		int pullFrame(SharedDynamicBufferRef, uint8_t source);

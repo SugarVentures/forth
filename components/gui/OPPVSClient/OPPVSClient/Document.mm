@@ -55,6 +55,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
 {
     streamEngine = new oppvs::StreamingEngine();
     streamEngine->registerCallback(frameCallback);
+    streamEngine->attachBuffer(&mAudioRingBuffer);
     
     dispatch_queue_t queue = dispatch_queue_create("oppvs.streaming.queue", DISPATCH_QUEUE_SERIAL);
     dispatch_async(queue, ^{
