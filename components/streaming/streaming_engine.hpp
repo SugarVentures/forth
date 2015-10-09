@@ -43,6 +43,8 @@ namespace oppvs
 	const std::string SIGN_SERVER_ADDRESS("192.168.0.102");
 	const static int SIGN_SERVER_PORT = 33333;
 
+	typedef void (*streaming_callback)(void* user);
+
 	class StreamingEngine
 	{
 	public:
@@ -61,6 +63,7 @@ namespace oppvs
 		bool isRunning();
 		void setIsRunning(bool value);
 		void registerCallback(frame_callback cb);
+		void registerCallback(streaming_callback cb, void* user);
 		void attachBuffer(AudioRingBuffer* pbuf);
 
 		void createSendingThread(IceStream* stream);
@@ -80,6 +83,8 @@ namespace oppvs
 		uint32_t generateSSRC();
 
 		frame_callback m_callback;
+		streaming_callback m_streamingCallback;
+		void* m_streamingUser;
 
 		ServiceInfo m_serviceInfo;	//Store information of stream: video capture sources info
 		void printServiceInfo();

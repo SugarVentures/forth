@@ -210,7 +210,7 @@ int main(int argc, char const *argv[])
 	std::vector<AudioDevice> devices;
 
 	engine.callbackAudio = audioCallback;
-	engine.getListAudioDevices(devices, true);
+	engine.getListAudioDevices(devices, false);
 	engine.printAudioDeviceList();
 
 	uint32_t deviceid = 175;
@@ -244,7 +244,7 @@ int main(int argc, char const *argv[])
         return -1;
 	pdecoder = &decoder;
 
-	AudioDevice output(0);
+	AudioDevice output(207);
 	MacAudioPlay player(output, 48000, 2);
 	pplayer = &player;
 	player.attachBuffer(ringBuffer);
@@ -253,13 +253,13 @@ int main(int argc, char const *argv[])
     
     totalPos = 0;
     configureOutputFile();
-	//player.start();
-    void* p;
-    std::thread t1(encode, p);
-    t1.join();
+	player.start();
+    //void* p;
+    //std::thread t1(encode, p);
+    //t1.join();
 
 	waitForAppExitSignal();
-	//player.stop();
+	player.stop();
 
 	delete [] in;
 	delete [] out;

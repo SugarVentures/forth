@@ -22,6 +22,7 @@
 }
 
 - (void) initReceiver: (NSString*)streamKey;
+- (void) startAudioPlayer;
 - (void) cleanup;
 
 @end

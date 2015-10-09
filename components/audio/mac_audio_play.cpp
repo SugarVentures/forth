@@ -370,7 +370,8 @@ namespace oppvs {
         ioData->mBuffers[0].mData = NULL;
         ioData->mBuffers[0].mDataByteSize = 0;
         
-        uint64_t timeStamp = player->m_currentSampleTime - player->m_offset;
+        //uint64_t timeStamp = player->m_currentSampleTime - player->m_offset;
+        uint64_t timeStamp = player->m_ringBuffer->getStartTime();
         RingBufferError rbError = player->m_ringBuffer->fetch(*ioNumberDataPackets, player->m_encoderBuffer, timeStamp);
         
         printf("Error: %d\n", rbError);

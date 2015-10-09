@@ -114,6 +114,11 @@ namespace oppvs
 		m_callback = cb;
 	}
 
+	void StreamingEngine::registerCallback(streaming_callback cb, void* user)
+	{
+		m_streamingCallback = cb;
+		m_streamingUser = user;
+	}
 
 	void StreamingEngine::setStreamInfo(const std::vector<VideoActiveSource>& videoSources, const std::vector<AudioActiveSource>& audioSources)
 	{
@@ -301,6 +306,7 @@ namespace oppvs
 		p_audioRingBuffer->allocate(8, 10 * 512);
 		m_depacketizer.init(m_serviceInfo, &m_recvPool, p_audioRingBuffer);
 		
+		m_streamingCallback(m_streamingUser);
 		return 0;
 	}
 

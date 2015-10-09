@@ -27,7 +27,7 @@ ViewController* render;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        oppvs::AudioDevice output(0);
+        oppvs::AudioDevice output(207);
         mPlayer = new oppvs::MacAudioPlay(output, 48000, 2);
         mPlayer->attachBuffer(&mAudioRingBuffer);
         if (mPlayer->init() < 0)
@@ -50,12 +50,18 @@ void frameCallback(oppvs::PixelBuffer& pf)
     [render renderFrame:&pf];
 }
 
+void streamingCallback(void* user)
+{
+    Document* doc = (__bridge Document*)user;
+    [doc startAudioPlayer];
+}
 
 - (void)initReceiver: (NSString*)streamKey
 {
     streamEngine = new oppvs::StreamingEngine();
     streamEngine->registerCallback(frameCallback);
     streamEngine->attachBuffer(&mAudioRingBuffer);
+    streamEngine->registerCallback(streamingCallback, (__bridge void*)self);
     
     dispatch_queue_t queue = dispatch_queue_create("oppvs.streaming.queue", DISPATCH_QUEUE_SERIAL);
     dispatch_async(queue, ^{
@@ -76,8 +82,15 @@ void frameCallback(oppvs::PixelBuffer& pf)
     render = (ViewController*)viewController;
 }
 
+- (void)startAudioPlayer
+{
+    mPlayer->start();
+    mPlayer->setFirstInputTime(0.0);
+}
+
 - (void)cleanup
 {
+    mPlayer->stop();
     delete mPlayer;
 }
 
