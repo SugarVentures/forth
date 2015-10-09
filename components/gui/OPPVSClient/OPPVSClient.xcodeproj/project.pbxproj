@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D91D5F1A1BC77ABB00C47805 /* libaudio_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9230F3F1BC778C600518664 /* libaudio_engine.dylib */; };
 		D9250F381AC558DB00858FF5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F371AC558DB00858FF5 /* AppDelegate.m */; };
 		D9250F3A1AC558DB00858FF5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F391AC558DB00858FF5 /* main.m */; };
 		D9250F3D1AC558DB00858FF5 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9250F3C1AC558DB00858FF5 /* ViewController.mm */; };
@@ -16,9 +15,10 @@
 		D9250F451AC558DB00858FF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9250F431AC558DB00858FF5 /* Main.storyboard */; };
 		D9250F511AC558DB00858FF5 /* OPPVSClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */; };
 		D93A2C911B099FC800587EB4 /* libOPPVSRendering.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */; };
-		D94F94061BC77E740031543D /* libthread_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D94F94051BC77E740031543D /* libthread_engine.dylib */; };
 		D970FAD81B00B82D005AF09E /* libstreaming.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D970FAD71B00B82D005AF09E /* libstreaming.so */; };
 		D970FADA1B00BD40005AF09E /* libnetworkengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D970FAD91B00BD40005AF09E /* libnetworkengine.so */; };
+		D995B9BD1BC799AD00FBF06B /* libthread_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D995B9BC1BC799AD00FBF06B /* libthread_engine.dylib */; };
+		D995B9BF1BC799B700FBF06B /* libaudio_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D995B9BE1BC799B700FBF06B /* libaudio_engine.dylib */; };
 		D9FD72F51B86F92500AF2E71 /* libOPPVSRendering.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D9FD72F71B86FA5200AF2E71 /* libnetworkengine.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D970FAD91B00BD40005AF09E /* libnetworkengine.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D9FD72F81B86FA5200AF2E71 /* libstreaming.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D970FAD71B00B82D005AF09E /* libstreaming.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -111,6 +111,8 @@
 		D94F94051BC77E740031543D /* libthread_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libthread_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Default/libthread_engine.dylib"; sourceTree = "<group>"; };
 		D970FAD71B00B82D005AF09E /* libstreaming.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming.so; path = ../../../libs/libstreaming.so; sourceTree = "<group>"; };
 		D970FAD91B00BD40005AF09E /* libnetworkengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetworkengine.so; path = ../../../libs/libnetworkengine.so; sourceTree = "<group>"; };
+		D995B9BC1BC799AD00FBF06B /* libthread_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libthread_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libthread_engine.dylib"; sourceTree = "<group>"; };
+		D995B9BE1BC799B700FBF06B /* libaudio_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaudio_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libaudio_engine.dylib"; sourceTree = "<group>"; };
 		D9FD72F91B86FBEC00AF2E71 /* libmisc.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisc.so; path = ../../../libs/libmisc.so; sourceTree = "<group>"; };
 		D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisccpp.so; path = ../../../libs/libmisccpp.so; sourceTree = "<group>"; };
 		D9FD73001B87005C00AF2E71 /* libthreadengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libthreadengine.so; path = ../../../libs/libthreadengine.so; sourceTree = "<group>"; };
@@ -132,8 +134,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D94F94061BC77E740031543D /* libthread_engine.dylib in Frameworks */,
-				D91D5F1A1BC77ABB00C47805 /* libaudio_engine.dylib in Frameworks */,
+				D995B9BF1BC799B700FBF06B /* libaudio_engine.dylib in Frameworks */,
+				D995B9BD1BC799AD00FBF06B /* libthread_engine.dylib in Frameworks */,
 				D9FD73211B87126900AF2E71 /* libffi.6.dylib in Frameworks */,
 				D9FD731F1B8711E100AF2E71 /* libgmodule-2.0.0.dylib in Frameworks */,
 				D9FD73161B870D1600AF2E71 /* libgobject-2.0.0.dylib in Frameworks */,
@@ -227,6 +229,8 @@
 		D9FD73241B8ABEC800AF2E71 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D995B9BE1BC799B700FBF06B /* libaudio_engine.dylib */,
+				D995B9BC1BC799AD00FBF06B /* libthread_engine.dylib */,
 				D94F94051BC77E740031543D /* libthread_engine.dylib */,
 				D9230F3F1BC778C600518664 /* libaudio_engine.dylib */,
 				D9230F3D1BC76BDF00518664 /* libaudioengine.so */,
