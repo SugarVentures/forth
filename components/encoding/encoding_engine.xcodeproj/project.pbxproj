@@ -133,15 +133,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		56E63F1E12DE645551E5AFC7 /* Default */ = {
+		01E977E96DB516CBB58985EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
 			};
-			name = Default;
+			name = Debug;
 		};
-		B42FF4FAB1E178F435657F14 /* Default */ = {
+		115E435B6E5CAFE573FAC6A1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
@@ -153,7 +153,29 @@
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = encoding_engine;
 			};
-			name = Default;
+			name = Release;
+		};
+		CEE71BD27956F4CCEA3C7627 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Release;
+		};
+		E6C3A387ED90CF545111FE4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					../include,
+					../../libs/libopus/include,
+				);
+				LIBRARY_SEARCH_PATHS = ../../libs;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
+				PRODUCT_NAME = encoding_engine;
+			};
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -161,18 +183,20 @@
 		224255A490EB728BDACB75F7 /* Build configuration list for PBXNativeTarget "encoding_engine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B42FF4FAB1E178F435657F14 /* Default */,
+				E6C3A387ED90CF545111FE4E /* Debug */,
+				115E435B6E5CAFE573FAC6A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		3EB720EB7B7BCFB1433B9387 /* Build configuration list for PBXProject "encoding_engine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				56E63F1E12DE645551E5AFC7 /* Default */,
+				01E977E96DB516CBB58985EA /* Debug */,
+				CEE71BD27956F4CCEA3C7627 /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

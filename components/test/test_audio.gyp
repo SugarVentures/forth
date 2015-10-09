@@ -10,9 +10,14 @@
             'include_dirs': [
                 '../include',
                 '../audio',
+                '../thread',
+                '../encoding',
+                '../../libs/libopus/include'
             ],
             'dependencies': [
+                '../thread/thread_engine.gyp:thread_engine',
                 '../audio/audio_engine.gyp:libaudio_engine',
+                '../encoding/encoding_engine.gyp:encoding_engine'
             ],
             
             'conditions': [

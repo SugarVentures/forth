@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0630"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,58 +14,72 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "19A7BE6AAB8E7AFA6731878E"
-               BuildableName = "libthread_engine.dylib"
-               BlueprintName = "thread_engine"
-               ReferencedContainer = "container:thread_engine.xcodeproj">
+               BlueprintIdentifier = "1289EDBDD077061CB492522F"
+               BuildableName = "testaudio"
+               BlueprintName = "testaudio"
+               ReferencedContainer = "container:test_audio.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
+      buildConfiguration = "Default"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Default">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-   </TestAction>
-   <LaunchAction
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      launchStyle = "0"
-      useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Default"
-      ignoresPersistentStateOnLaunch = "NO"
-      debugDocumentVersioning = "YES"
-      allowLocationSimulation = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "19A7BE6AAB8E7AFA6731878E"
-            BuildableName = "libthread_engine.dylib"
-            BlueprintName = "thread_engine"
-            ReferencedContainer = "container:thread_engine.xcodeproj">
+            BlueprintIdentifier = "1289EDBDD077061CB492522F"
+            BuildableName = "testaudio"
+            BlueprintName = "testaudio"
+            ReferencedContainer = "container:test_audio.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Default"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      launchStyle = "0"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "1289EDBDD077061CB492522F"
+            BuildableName = "testaudio"
+            BlueprintName = "testaudio"
+            ReferencedContainer = "container:test_audio.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
+      buildConfiguration = "Default"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Default"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "19A7BE6AAB8E7AFA6731878E"
-            BuildableName = "libthread_engine.dylib"
-            BlueprintName = "thread_engine"
-            ReferencedContainer = "container:thread_engine.xcodeproj">
+            BlueprintIdentifier = "1289EDBDD077061CB492522F"
+            BuildableName = "testaudio"
+            BlueprintName = "testaudio"
+            ReferencedContainer = "container:test_audio.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Default">

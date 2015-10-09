@@ -9,6 +9,7 @@
 #import "Document.h"
 #include <errno.h>
 
+
 ViewController* render;
 
 @interface Document ()
@@ -26,7 +27,18 @@ ViewController* render;
 - (instancetype)init {
     self = [super init];
     if (self) {
+        oppvs::AudioDevice output(0);
+        mPlayer = new oppvs::MacAudioPlay(output, 48000, 2);
+        mPlayer->attachBuffer(&mAudioRingBuffer);
+        if (mPlayer->init() < 0)
+        {
+            printf("Can not init audio player\n");
+        }
         
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(cleanup)
+                                                     name:NSApplicationWillTerminateNotification
+                                                   object:nil];        
     }
     return self;
 }
@@ -61,6 +73,11 @@ void frameCallback(oppvs::PixelBuffer& pf)
         }
     });
     render = (ViewController*)viewController;
+}
+
+- (void)cleanup
+{
+    delete mPlayer;
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {

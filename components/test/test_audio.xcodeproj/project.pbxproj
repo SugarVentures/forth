@@ -1,0 +1,362 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		24DC9A04414DE3DA7D421AD9 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99C88FEBF8FE6B9369AC7570 /* AudioUnit.framework */; };
+		26C28E168DBAF150F867D44D /* testaudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA724168B3025FEB039FE4F /* testaudio.cpp */; };
+		373EC0DA68F6DA9DCB08314F /* libaudio_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D6A5FD8508F14A166224DB8 /* libaudio_engine.dylib */; };
+		48162BAA1C47CD5C76A2C23E /* libencoding_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5313C7389BCA77F70FF7454D /* libencoding_engine.dylib */; };
+		7026A52FFEFFD72EC8FB62E0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 647096E9EF98B53C880064AB /* CoreFoundation.framework */; };
+		7DC2885D3D23EB0677478C60 /* libthread_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0723E9D807307285109C6749 /* libthread_engine.dylib */; };
+		8CDA5612B2A087F60C497FCA /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C14293B3EABE99B1EB98706F /* CoreAudio.framework */; };
+		E748E8D89ADFCE088434DDD9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0480CDE8478D0F8A76C55 /* AudioToolbox.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		121620931274614F7160E521 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30BF75BAB98BCDBD71C6513A /* audio_engine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FB81B2EF1E59D2AA12E3431A;
+			remoteInfo = libaudio_engine;
+		};
+		58A77485DFD7BBCCEB3E0D4D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30BF75BAB98BCDBD71C6513A /* audio_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 79156A13FA0B6297EEB5593E;
+			remoteInfo = libaudio_engine;
+		};
+		AD3402D6ABC884F0056C42A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC2C2F665AC63F60763B75B5 /* encoding_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DC13720F9DFCE3EA5184E835;
+			remoteInfo = encoding_engine;
+		};
+		D55E62F66926098C165AB8EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CF2A7779F8EF8CBF770E1CC5 /* thread_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 18F92990A15D854AC10A1A3B;
+			remoteInfo = thread_engine;
+		};
+		E8C2B24AFED4FE694423C0A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CF2A7779F8EF8CBF770E1CC5 /* thread_engine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19A7BE6AAB8E7AFA6731878E;
+			remoteInfo = thread_engine;
+		};
+		FCE3AB4F5EBCDECBF6767210 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC2C2F665AC63F60763B75B5 /* encoding_engine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8ED49CB53A55D69F2749AAB7;
+			remoteInfo = encoding_engine;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		30BF75BAB98BCDBD71C6513A /* audio_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = audio_engine.xcodeproj; path = ../audio/audio_engine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		31D846633D55CBD97FB2BEAA /* testaudio */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testaudio; sourceTree = BUILT_PRODUCTS_DIR; };
+		51767C35BF3FCDF1855A9A05 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
+		647096E9EF98B53C880064AB /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		7D4441B9DB8EC3E22D412244 /* test_audio.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = test_audio.gyp; sourceTree = "<group>"; };
+		99C88FEBF8FE6B9369AC7570 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		99D0480CDE8478D0F8A76C55 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		BC2C2F665AC63F60763B75B5 /* encoding_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = encoding_engine.xcodeproj; path = ../encoding/encoding_engine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		C14293B3EABE99B1EB98706F /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		CF2A7779F8EF8CBF770E1CC5 /* thread_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = thread_engine.xcodeproj; path = ../thread/thread_engine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		FCA724168B3025FEB039FE4F /* testaudio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testaudio.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		012BDC5B1FC010F180AF9B6C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DC2885D3D23EB0677478C60 /* libthread_engine.dylib in Frameworks */,
+				373EC0DA68F6DA9DCB08314F /* libaudio_engine.dylib in Frameworks */,
+				48162BAA1C47CD5C76A2C23E /* libencoding_engine.dylib in Frameworks */,
+				7026A52FFEFFD72EC8FB62E0 /* CoreFoundation.framework in Frameworks */,
+				E748E8D89ADFCE088434DDD9 /* AudioToolbox.framework in Frameworks */,
+				24DC9A04414DE3DA7D421AD9 /* AudioUnit.framework in Frameworks */,
+				8CDA5612B2A087F60C497FCA /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0A6D27129B315FD8F878ACA8 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				FCA724168B3025FEB039FE4F /* testaudio.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		16D42DB1A9C2DEC62E3EBFD0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				31D846633D55CBD97FB2BEAA /* testaudio */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		59409618382A70F12F753E0A = {
+			isa = PBXGroup;
+			children = (
+				0A6D27129B315FD8F878ACA8 /* Source */,
+				696B950D2EBA8A33FD71E0BF /* Projects */,
+				7713DCCF87A3C30CAADB4B1D /* Frameworks */,
+				16D42DB1A9C2DEC62E3EBFD0 /* Products */,
+				9F08054F38CEAC25DA7955A8 /* Build */,
+			);
+			sourceTree = "<group>";
+		};
+		696B950D2EBA8A33FD71E0BF /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				30BF75BAB98BCDBD71C6513A /* audio_engine.xcodeproj */,
+				BC2C2F665AC63F60763B75B5 /* encoding_engine.xcodeproj */,
+				CF2A7779F8EF8CBF770E1CC5 /* thread_engine.xcodeproj */,
+			);
+			name = Projects;
+			sourceTree = "<group>";
+		};
+		7713DCCF87A3C30CAADB4B1D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				99D0480CDE8478D0F8A76C55 /* AudioToolbox.framework */,
+				99C88FEBF8FE6B9369AC7570 /* AudioUnit.framework */,
+				C14293B3EABE99B1EB98706F /* CoreAudio.framework */,
+				647096E9EF98B53C880064AB /* CoreFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		89E294F380B77C2CE1956712 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0723E9D807307285109C6749 /* libthread_engine.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		91D69A561C5E8FA08FEE7A9B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5313C7389BCA77F70FF7454D /* libencoding_engine.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9F08054F38CEAC25DA7955A8 /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				51767C35BF3FCDF1855A9A05 /* common.gypi */,
+				7D4441B9DB8EC3E22D412244 /* test_audio.gyp */,
+			);
+			name = Build;
+			sourceTree = "<group>";
+		};
+		D1C06D859C5EC82783878A1E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5D6A5FD8508F14A166224DB8 /* libaudio_engine.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1289EDBDD077061CB492522F /* testaudio */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4B89412B72AA84373EA0909 /* Build configuration list for PBXNativeTarget "testaudio" */;
+			buildPhases = (
+				E12F272089236C8FADF4F30F /* Sources */,
+				012BDC5B1FC010F180AF9B6C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D4F9712AC99EE46D26D91A31 /* PBXTargetDependency */,
+				2258A2D8CF29ED4752728428 /* PBXTargetDependency */,
+				F06E256D608FDC5BE3F726D2 /* PBXTargetDependency */,
+			);
+			name = testaudio;
+			productName = testaudio;
+			productReference = 31D846633D55CBD97FB2BEAA /* testaudio */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		374D93BA238B585A372F6BF9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
+			buildConfigurationList = 85E6DD61D97D9DB211FE4C99 /* Build configuration list for PBXProject "test_audio" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 59409618382A70F12F753E0A;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D1C06D859C5EC82783878A1E /* Products */;
+					ProjectRef = 30BF75BAB98BCDBD71C6513A /* audio_engine.xcodeproj */;
+				},
+				{
+					ProductGroup = 91D69A561C5E8FA08FEE7A9B /* Products */;
+					ProjectRef = BC2C2F665AC63F60763B75B5 /* encoding_engine.xcodeproj */;
+				},
+				{
+					ProductGroup = 89E294F380B77C2CE1956712 /* Products */;
+					ProjectRef = CF2A7779F8EF8CBF770E1CC5 /* thread_engine.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				1289EDBDD077061CB492522F /* testaudio */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0723E9D807307285109C6749 /* libthread_engine.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libthread_engine.dylib;
+			remoteRef = D55E62F66926098C165AB8EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5313C7389BCA77F70FF7454D /* libencoding_engine.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libencoding_engine.dylib;
+			remoteRef = AD3402D6ABC884F0056C42A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5D6A5FD8508F14A166224DB8 /* libaudio_engine.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libaudio_engine.dylib;
+			remoteRef = 58A77485DFD7BBCCEB3E0D4D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E12F272089236C8FADF4F30F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26C28E168DBAF150F867D44D /* testaudio.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2258A2D8CF29ED4752728428 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libaudio_engine;
+			targetProxy = 121620931274614F7160E521 /* PBXContainerItemProxy */;
+		};
+		D4F9712AC99EE46D26D91A31 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = thread_engine;
+			targetProxy = E8C2B24AFED4FE694423C0A2 /* PBXContainerItemProxy */;
+		};
+		F06E256D608FDC5BE3F726D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = encoding_engine;
+			targetProxy = FCE3AB4F5EBCDECBF6767210 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		29BD98A9F11B6F98BEEDD082 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = "";
+				HEADER_SEARCH_PATHS = (
+					../include,
+					../audio,
+					../thread,
+					../encoding,
+					../../libs/libopus/include,
+				);
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/System/Library/Frameworks";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
+				PRODUCT_NAME = testaudio;
+			};
+			name = Debug;
+		};
+		3D2EEC8BD215EDE1452528CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Debug;
+		};
+		C3E9169FA201FF4AC4DFDA60 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = "";
+				HEADER_SEARCH_PATHS = (
+					../include,
+					../audio,
+					../thread,
+					../encoding,
+					../../libs/libopus/include,
+				);
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/System/Library/Frameworks";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
+				PRODUCT_NAME = testaudio;
+			};
+			name = Release;
+		};
+		DC56ADE71C822291101D3260 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		85E6DD61D97D9DB211FE4C99 /* Build configuration list for PBXProject "test_audio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D2EEC8BD215EDE1452528CF /* Debug */,
+				DC56ADE71C822291101D3260 /* Release */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Debug;
+		};
+		C4B89412B72AA84373EA0909 /* Build configuration list for PBXNativeTarget "testaudio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29BD98A9F11B6F98BEEDD082 /* Debug */,
+				C3E9169FA201FF4AC4DFDA60 /* Release */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 374D93BA238B585A372F6BF9 /* Project object */;
+}

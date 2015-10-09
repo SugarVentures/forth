@@ -3,6 +3,7 @@
 		'oppvs_root%': '<(DEPTH)/../'
 	},
 	'target_defaults': {
+        'default_configuration': 'Debug',
 		'conditions': [
             ['OS == "linux"', {
             	'cflags': [
@@ -15,6 +16,17 @@
     			'ldflags': [
     				'-pthread',
     			]
+            }],
+            ['OS == "mac"', {
+                'configurations': {
+                    'Debug': {
+
+                    },
+                    'Release': {
+
+                    }
+                }
+                
             }]
         ],
 

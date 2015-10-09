@@ -3,7 +3,7 @@
     'includes': [
         '../../common.gypi'
     ],
-    
+
     'targets': [
         {
             'target_name': 'libaudio_engine',
@@ -14,6 +14,9 @@
                 '../misc',
                 '../../libs/libsrtp/include',
                 '../../libs/libsrtp/crypto/include',
+            ],
+            'dependencies': [
+                '../thread/thread_engine.gyp:thread_engine',
             ],
             'conditions': [
                 ['OS == "mac"', {

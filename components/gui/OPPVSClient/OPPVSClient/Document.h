@@ -9,14 +9,20 @@
 #import <Cocoa/Cocoa.h>
 #import "streaming_engine.hpp"
 
+#include "mac_audio_play.hpp"
 #include "ViewController.h"
 
 @class ViewController;
 
 
 @interface Document : NSDocument
+{
+    oppvs::MacAudioPlay* mPlayer;
+    oppvs::AudioRingBuffer mAudioRingBuffer;
+}
 
 - (void) initReceiver: (NSString*)streamKey;
+- (void) cleanup;
 
 @end
 

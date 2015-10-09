@@ -10,7 +10,6 @@
 #include "audio_opus_decoder.hpp"
 
 #include "audio_ring_buffer.h"
-#include "utility.h"
 #include <thread>
 #include <chrono>
 #include <mutex>
