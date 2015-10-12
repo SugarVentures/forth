@@ -13,10 +13,15 @@
 #include "audio_ring_buffer.h"
 
 namespace oppvs {
+	
+
+	class DepacketizerThread;
+
 	struct IncomingStreamingMessage
 	{
 		uint8_t sourceid;
 		SegmentReader reader;
+		DepacketizerThread* thread;
 	};
 
 	struct IncomingStreamingFrame
@@ -25,6 +30,8 @@ namespace oppvs {
 		uint16_t type;
 		SharedDynamicBufferRef data;
 	};
+
+	typedef std::shared_ptr<IncomingStreamingFrame> SharedIncomingStreamingFrame;
 
 	class Depacketizer {
 	private:
@@ -35,16 +42,41 @@ namespace oppvs {
 		tsqueue<IncomingStreamingFrame*>* p_recvPool;
 
 		SegmentReader* getReader(uint8_t sourceid);
+		DepacketizerThread* getThread(uint8_t sourceid);
+
 		AudioRingBuffer* p_audioRingBuffer;
 		uint32_t m_timestamp;
+
+		ServiceInfo* p_serviceInfo;
+
 	public:
 		Depacketizer();
 		~Depacketizer();
 
-		void init(ServiceInfo&, tsqueue<IncomingStreamingFrame*>*, AudioRingBuffer* pbuf);
+		void init(ServiceInfo*, tsqueue<IncomingStreamingFrame*>*, AudioRingBuffer* pbuf);
+		void start();
 		void pushSegment(uint8_t* data, uint32_t len);
 		int pullFrame(PixelBuffer&, SharedDynamicBufferRef);
 		int pullFrame(SharedDynamicBufferRef, uint8_t source);
+
+		void pullFrame(SharedIncomingStreamingFrame frame);
+	};
+
+	class DepacketizerThread : public Thread
+	{
+	public:
+		DepacketizerThread(Depacketizer*);
+		~DepacketizerThread();
+
+		void pushFrame(SharedIncomingStreamingFrame);
+
+	private:
+		bool m_exitThread;
+		Depacketizer* p_depacketizer;
+		tsqueue<SharedIncomingStreamingFrame> m_queue;
+		static void* run(void* object);
+
+		void processFrame();
 	};
 } // oppvs
 
