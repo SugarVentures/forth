@@ -93,6 +93,8 @@ namespace oppvs {
     	uint8_t source;
     	uint8_t order;
     	void* user;
+
+    	uint32_t timestamp;
 	};
 
 	//Based on AudioBuffer Struct of Apple Core Audio

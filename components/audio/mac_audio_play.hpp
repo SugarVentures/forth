@@ -53,8 +53,6 @@ namespace oppvs {
 		double m_offset;
         
         AudioConverterRef m_converter;  //Used to convert interleave to deinterleave
-        AudioBufferList* m_inBuffer;  //Buffer to be used as input of converter
-        AudioBufferList* m_outBuffer; //Buffer to be used as output of converter
         
         MacAudioResampler m_resampler;
 		CAStreamBasicDescription m_inputFormat;

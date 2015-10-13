@@ -1,4 +1,6 @@
 #include "depacketizer.h"
+#include <ctime>
+#include <chrono>
 
 namespace oppvs {
 	Depacketizer::Depacketizer(): p_recvPool(NULL)
@@ -16,14 +18,14 @@ namespace oppvs {
 		}
 	}
 
-	void Depacketizer::init(ServiceInfo* info, tsqueue<IncomingStreamingFrame*>* p, AudioRingBuffer* pbuf)
+	void Depacketizer::init(ServiceInfo* info, VideoFrameBuffer* pvideoBuf, AudioRingBuffer* paudioBuf)
 	{
 		if (info->videoStreamInfo.noSources > 0)
 			m_videoDecoder.init(info->videoStreamInfo);
 
 		if (info->audioStreamInfo.noSources > 0)
 			m_audioDecoder.init(info->audioStreamInfo);
-		p_recvPool = p;
+		
 		for(unsigned i = 0; i < info->videoStreamInfo.noSources; ++i) {
 			IncomingStreamingMessage* msg = new IncomingStreamingMessage();
 			msg->sourceid = info->videoStreamInfo.sources[i].source;
@@ -38,7 +40,9 @@ namespace oppvs {
 			msg->thread->create();
 			m_readers.push_back(msg);
 		}
-		p_audioRingBuffer = pbuf;
+
+		p_videoFrameBuffer = pvideoBuf;
+		p_audioRingBuffer = paudioBuf;
 		p_serviceInfo = info;
 	}
 
@@ -74,7 +78,7 @@ namespace oppvs {
 		memcpy(&sourceid, data + 4, 1);
 		memcpy(&type, data + 5, 2);
 		type = ntohs(type);
-		printf("timestamp %u len: %u source: %d type: %d\n", timestamp, len, sourceid, type);
+		//printf("timestamp %u len: %u source: %d type: %d\n", timestamp, len, sourceid, type);
 		
 		SegmentReader* reader = getReader(sourceid);
 		if (reader == NULL)
@@ -101,16 +105,15 @@ namespace oppvs {
 			frame->sourceid = sourceid;
 			frame->type = type;
 			frame->data = reader->getBuffer();
-
+			frame->timestamp = timestamp;
 			DepacketizerThread* thread = getThread(sourceid);
 			thread->pushFrame(frame);
-			//p_recvPool->push(frame);
 		}
 	}
 
-	int Depacketizer::pullFrame(PixelBuffer& pf, SharedDynamicBufferRef frame)
+	int Depacketizer::pullFrame(PixelBuffer* pf, SharedDynamicBufferRef frame)
 	{
-		if (m_videoDecoder.decode(pf, frame->size(), frame->data()) < 0)
+		if (m_videoDecoder.decode(*pf, frame->size(), frame->data()) < 0)
 			return -1;
 
 		return 0;
@@ -150,9 +153,13 @@ namespace oppvs {
 						pf.stride[0] = p_serviceInfo->videoStreamInfo.sources[i].stride;
 						pf.order = p_serviceInfo->videoStreamInfo.sources[i].order;
 						pf.source = p_serviceInfo->videoStreamInfo.sources[i].source;
-						if (pullFrame(pf, frame->data) < 0)
+						if (pullFrame(&pf, frame->data) < 0)
 						{
 							printf("Invalid video frame\n");
+						}
+						else
+						{
+							m_callback(pf);
 						}
 						break;
 					}
@@ -169,9 +176,14 @@ namespace oppvs {
 		}
 	}
 
+	void Depacketizer::attachCallback(frame_callback cb)
+	{
+		m_callback = cb;
+	}
+
 	DepacketizerThread::DepacketizerThread(Depacketizer* dep) : Thread(run, this), m_exitThread(false), p_depacketizer(dep)
 	{
-
+		m_lastPTS = 0;
 	}
 
 	DepacketizerThread::~DepacketizerThread()
@@ -182,7 +194,9 @@ namespace oppvs {
 
 	void DepacketizerThread::pushFrame(SharedIncomingStreamingFrame frame)
 	{
+		frame->delay = frame->timestamp - m_lastPTS;
 		m_queue.push(frame);
+		m_lastPTS = frame->timestamp;
 	}
 
 	void* DepacketizerThread::run(void* object)
@@ -202,8 +216,26 @@ namespace oppvs {
 				if (p_depacketizer != NULL)
 					p_depacketizer->pullFrame(frame);
 
+				if (frame->type == VP8_PAYLOAD_TYPE)
+				{
+					/*std::chrono::time_point<std::chrono::system_clock> currenttime;
+					currenttime = std::chrono::system_clock::now();
+					auto duration = currenttime.time_since_epoch();
+					auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+					printf("%lld\n", millis);*/
+
+					m_idleTime = frame->delay * 1000;
+					usleep(m_idleTime);
+					continue;
+				}
 			}
 			usleep(10000);
+			
 		}
+	}
+
+	uint32_t DepacketizerThread::getLastPTS()
+	{
+		return m_lastPTS;
 	}
 } // oppvs

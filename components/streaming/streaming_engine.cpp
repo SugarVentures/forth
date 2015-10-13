@@ -9,6 +9,7 @@ namespace oppvs
 		m_mainThread = NULL;
 		m_isRunning = false;
 		p_audioRingBuffer = NULL;
+		p_videoFrameBuffer = NULL;
 	}
 
 	StreamingEngine::~StreamingEngine()
@@ -86,6 +87,11 @@ namespace oppvs
 
 	void StreamingEngine::pushData(PixelBuffer& pf)
 	{
+		std::chrono::time_point<std::chrono::system_clock> currentTime;
+		currentTime = std::chrono::system_clock::now();
+		std::chrono::duration<double> elapsed_seconds = currentTime - m_firstTime;
+		auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(elapsed_seconds).count();
+		pf.timestamp = millis;
 		m_videoPacketizer.pushFrame(pf);
 	}
 
@@ -188,6 +194,7 @@ namespace oppvs
 		{
 			engine->setIsRunning(true);
 			engine->createMainThread();
+			engine->m_firstTime = std::chrono::system_clock::now();
 		}
 		engine->createSendingThread(stream);
 	}
@@ -210,8 +217,8 @@ namespace oppvs
 		StreamingEngine* engine = (StreamingEngine*)object;
 		if (engine->getRole() == ROLE_BROADCASTER)
 			engine->send();
-		else
-			engine->receive();
+		//else
+		//	engine->receive();
 		return NULL;
 	}
 
@@ -256,46 +263,16 @@ namespace oppvs
 
 	void StreamingEngine::receive()
 	{
-		while (!m_exitMainThread)
+		/*while (!m_exitMainThread)
 		{
-			if (m_recvPool.size() > 0)
-			{
-				IncomingStreamingFrame* frame = *m_recvPool.pop();
-				if (frame == NULL)
-					continue;
-				switch (frame->type)
-				{
-					case VP8_PAYLOAD_TYPE:					
-						for (int i = 0; i < m_serviceInfo.videoStreamInfo.noSources; i++)
-						{
-							if (m_serviceInfo.videoStreamInfo.sources[i].source == frame->sourceid)
-							{
-								PixelBuffer pf;
-								pf.width[0] = m_serviceInfo.videoStreamInfo.sources[i].width;
-								pf.height[0] = m_serviceInfo.videoStreamInfo.sources[i].height;
-								pf.stride[0] = m_serviceInfo.videoStreamInfo.sources[i].stride;
-								pf.order = m_serviceInfo.videoStreamInfo.sources[i].order;
-								pf.source = m_serviceInfo.videoStreamInfo.sources[i].source;
-								if (m_depacketizer.pullFrame(pf, frame->data) == 0)
-									m_callback(pf);
-								break;
-							}
-						}
-						break;
-					case OPUS_PAYLOAD_TYPE:
-						m_depacketizer.pullFrame(frame->data, frame->sourceid);
-						break;
-					default:
-						printf("Unkown Error\n");
-				}
-			}
-			usleep(5000);
-		}
+			
+			usleep(50000);
+		}*/
 	}
 
 	int StreamingEngine::updateStreamInfo(const ServiceInfo& info)
 	{
-		if (p_audioRingBuffer == NULL)
+		if (p_audioRingBuffer == NULL || p_videoFrameBuffer == NULL)
 		{
 			printf("Can not update stream info\n");
 			return -1;
@@ -304,8 +281,8 @@ namespace oppvs
 		std::cout << "Update stream info " << std::endl;
 		m_serviceInfo = info;
 		p_audioRingBuffer->allocate(8, 10 * 512);
-		m_depacketizer.init(m_serviceInfo, &m_recvPool, p_audioRingBuffer);
-		
+		m_depacketizer.init(&m_serviceInfo, p_videoFrameBuffer, p_audioRingBuffer);
+		m_depacketizer.attachCallback(m_callback);
 		m_streamingCallback(m_streamingUser);
 		return 0;
 	}
@@ -313,5 +290,10 @@ namespace oppvs
 	void StreamingEngine::attachBuffer(AudioRingBuffer* pbuf)
 	{
 		p_audioRingBuffer = pbuf;
+	}
+
+	void StreamingEngine::attachBuffer(VideoFrameBuffer* pbuf)
+	{
+		p_videoFrameBuffer = pbuf;
 	}
 }

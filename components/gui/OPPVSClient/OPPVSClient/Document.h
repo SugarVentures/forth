@@ -19,6 +19,7 @@
 {
     oppvs::MacAudioPlay* mPlayer;
     oppvs::AudioRingBuffer mAudioRingBuffer;
+    oppvs::VideoFrameBuffer mVideoFrameBuffer;
 }
 
 - (void) initReceiver: (NSString*)streamKey;

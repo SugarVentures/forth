@@ -49,8 +49,7 @@ namespace oppvs {
 		stop();
         if (m_converter)
             AudioConverterDispose(m_converter);
-        destroyAudioBufferList(m_inBuffer);
-        destroyAudioBufferList(m_outBuffer);
+
 		AUGraphClose(m_graph);
 		DisposeAUGraph(m_graph);
         
@@ -374,7 +373,6 @@ namespace oppvs {
         uint64_t timeStamp = player->m_ringBuffer->getStartTime();
         RingBufferError rbError = player->m_ringBuffer->fetch(*ioNumberDataPackets, player->m_encoderBuffer, timeStamp);
         
-        printf("Error: %d\n", rbError);
         if (rbError)
             return err;
         

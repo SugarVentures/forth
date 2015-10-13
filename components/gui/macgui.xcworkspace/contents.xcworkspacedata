@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../audio/audio_engine.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:OPPVSClient/OPPVSClient.xcodeproj">
    </FileRef>
    <FileRef

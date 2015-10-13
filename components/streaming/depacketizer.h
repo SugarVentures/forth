@@ -11,6 +11,7 @@
 #include "audio_opus_decoder.hpp"
 
 #include "audio_ring_buffer.h"
+#include "video_frame_buffer.h"
 
 namespace oppvs {
 	
@@ -28,6 +29,8 @@ namespace oppvs {
 	{
 		uint8_t sourceid;
 		uint16_t type;
+		uint32_t delay;
+		uint32_t timestamp;
 		SharedDynamicBufferRef data;
 	};
 
@@ -45,19 +48,24 @@ namespace oppvs {
 		DepacketizerThread* getThread(uint8_t sourceid);
 
 		AudioRingBuffer* p_audioRingBuffer;
+		VideoFrameBuffer* p_videoFrameBuffer;
+
 		uint32_t m_timestamp;
 
 		ServiceInfo* p_serviceInfo;
+		frame_callback m_callback;
 
+		int pullFrame(PixelBuffer*, SharedDynamicBufferRef);
+		int pullFrame(SharedDynamicBufferRef, uint8_t source);
 	public:
 		Depacketizer();
 		~Depacketizer();
 
-		void init(ServiceInfo*, tsqueue<IncomingStreamingFrame*>*, AudioRingBuffer* pbuf);
+		void init(ServiceInfo*, VideoFrameBuffer* pvideoBuf, AudioRingBuffer* paudioBuf);
+		void attachCallback(frame_callback cb);
 		void start();
 		void pushSegment(uint8_t* data, uint32_t len);
-		int pullFrame(PixelBuffer&, SharedDynamicBufferRef);
-		int pullFrame(SharedDynamicBufferRef, uint8_t source);
+		
 
 		void pullFrame(SharedIncomingStreamingFrame frame);
 	};
@@ -69,7 +77,7 @@ namespace oppvs {
 		~DepacketizerThread();
 
 		void pushFrame(SharedIncomingStreamingFrame);
-
+		uint32_t getLastPTS();
 	private:
 		bool m_exitThread;
 		Depacketizer* p_depacketizer;
@@ -77,6 +85,8 @@ namespace oppvs {
 		static void* run(void* object);
 
 		void processFrame();
+		uint64_t m_idleTime;
+		uint32_t m_lastPTS;
 	};
 } // oppvs
 

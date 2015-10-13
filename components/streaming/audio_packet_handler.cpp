@@ -1,7 +1,7 @@
 #include "audio_packet_handler.h"
 
 namespace oppvs {
-	AudioPacketizer::AudioPacketizer(): m_isRunning(true), p_audioBuffer(NULL)
+	AudioPacketizer::AudioPacketizer(): p_audioBuffer(NULL), m_isRunning(true)
 	{
 		p_thread = new Thread(AudioPacketizer::run, this);
 		m_timestamp = 0;
@@ -77,11 +77,14 @@ namespace oppvs {
 		if (p_audioBuffer->getNumberFrames() > AUDIO_ENCODING_FRAMES)
 		{
 			int err = p_audioBuffer->fetch(noFrames, m_inBuffer, p_audioBuffer->getStartTime());
+			if (err)
+				return;
+
 			//printf("Fetch audio from ring buffer err: %d frames: %d\n", err, noFrames);
 			int inLen = noFrames * m_size;
 			uint8_t* out = NULL;
 			int outLen = m_encoder.encode(m_inBuffer, inLen, m_source, out);
-			printf("Encode out len: %d source: %d\n", outLen, m_source);
+			//printf("Encode out len: %d source: %d\n", outLen, m_source);
 
 			int sendLength = outLen;
 			if (sendLength > OPPVS_NETWORK_PACKET_LENGTH - OPUS_MAX_HEADER_SIZE)

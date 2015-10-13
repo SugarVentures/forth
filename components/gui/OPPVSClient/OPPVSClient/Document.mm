@@ -61,6 +61,7 @@ void streamingCallback(void* user)
     streamEngine = new oppvs::StreamingEngine();
     streamEngine->registerCallback(frameCallback);
     streamEngine->attachBuffer(&mAudioRingBuffer);
+    streamEngine->attachBuffer(&mVideoFrameBuffer);
     streamEngine->registerCallback(streamingCallback, (__bridge void*)self);
     
     dispatch_queue_t queue = dispatch_queue_create("oppvs.streaming.queue", DISPATCH_QUEUE_SERIAL);

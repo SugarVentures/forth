@@ -45,7 +45,7 @@ namespace oppvs {
 		pixelbuffer->width[0] = pf.width[0];
 		pixelbuffer->height[0] = pf.height[0];
 		pixelbuffer->stride[0] = pf.stride[0];
-
+		pixelbuffer->timestamp = pf.timestamp;
 		m_framePool.push(pixelbuffer);
 	}
 
@@ -67,7 +67,8 @@ namespace oppvs {
 
 		std::shared_ptr<PixelBuffer> frame = *ptrFrame;
 		PixelBuffer pf = *frame;
-		
+		m_timestamp = pf.timestamp;
+
 		//Encoding		
 		if (m_encoder.encode(pf, &encodingLength, &data, &picID, &isKey) < 0)
 		{
@@ -113,7 +114,7 @@ namespace oppvs {
 			p_segmentPool->push(segment);
 		}
 		while (sendLength > 0);
-		m_timestamp++;
+		//m_timestamp++;
 	}
 
 	void* VideoPacketizer::run(void* object)
