@@ -87,6 +87,8 @@ namespace oppvs
 
 	void StreamingEngine::pushData(PixelBuffer& pf)
 	{
+		if (m_sendingThreads.size() == 0)
+			return;
 		std::chrono::time_point<std::chrono::system_clock> currentTime;
 		currentTime = std::chrono::system_clock::now();
 		std::chrono::duration<double> elapsed_seconds = currentTime - m_firstTime;

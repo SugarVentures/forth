@@ -68,9 +68,9 @@ namespace oppvs
 			m_controllers[i].config.g_timebase.num = 1;
 			m_controllers[i].config.g_timebase.den = 30;
 			m_controllers[i].config.rc_target_bitrate = 500;
-			if (info.sources[i].width * info.sources[i].height > 704 * 576)
+			//if (info.sources[i].width * info.sources[i].height > 704 * 576)
 				m_controllers[i].config.g_threads = 2;
-			else
+			/*else
 				m_controllers[i].config.g_threads = 1;
 			m_controllers[i].config.g_lag_in_frames = 0;	//0 - no frame lagging
 
@@ -81,7 +81,7 @@ namespace oppvs
 			m_controllers[i].config.rc_buf_sz = 1000;
 
 			m_controllers[i].config.rc_end_usage = VPX_CBR;
-			m_controllers[i].config.g_pass = VPX_RC_ONE_PASS;
+			m_controllers[i].config.g_pass = VPX_RC_ONE_PASS;*/
 
  			if (vpx_codec_enc_init(&m_controllers[i].codec, codec_interface(), &m_controllers[i].config, 0))
 		 	{
@@ -98,10 +98,10 @@ namespace oppvs
 		return ERRS_ENCODING_OK;
 	}
 
-	int VPVideoEncoder::encode(PixelBuffer& pf, uint32_t* length, uint8_t** encoded_frame, int* picID, bool* isKey)
+	int VPVideoEncoder::encode(PixelBuffer& pf, uint32_t* length, uint8_t** encoded_frame, int* picID, bool* isKey, uint32_t ts)
 	{
 		uint32_t frameIndex = 0;
-	 	int flags = 0;
+	 	int flags = VP8_EFLAG_NO_REF_LAST | VP8_EFLAG_NO_REF_ARF;
 	 	vpx_codec_iter_t iter = NULL;
 	  	const vpx_codec_cx_pkt_t *pkt = NULL;
 		vpx_codec_ctx_t *codec = NULL;

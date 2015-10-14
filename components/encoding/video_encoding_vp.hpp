@@ -27,7 +27,7 @@ namespace oppvs
 	public:
 		int init(VideoStreamInfo&);
 		int init(int width, int height);
-		int encode(PixelBuffer& pf, uint32_t *length, uint8_t** encoded_frame, int* picID, bool *isKey);	//Frame in YUV12 or I420 format
+		int encode(PixelBuffer& pf, uint32_t *length, uint8_t** encoded_frame, int* picID, bool *isKey, uint32_t ts);	//Frame in YUV12 or I420 format
 
 		int release();
 	private:

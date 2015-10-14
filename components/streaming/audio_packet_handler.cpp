@@ -5,6 +5,7 @@ namespace oppvs {
 	{
 		p_thread = new Thread(AudioPacketizer::run, this);
 		m_timestamp = 0;
+		m_firstTime = 0;
 	}
 
 	AudioPacketizer::~AudioPacketizer()
@@ -76,10 +77,12 @@ namespace oppvs {
 		uint16_t noFrames = AUDIO_ENCODING_FRAMES;
 		if (p_audioBuffer->getNumberFrames() > AUDIO_ENCODING_FRAMES)
 		{
+
 			int err = p_audioBuffer->fetch(noFrames, m_inBuffer, p_audioBuffer->getStartTime());
 			if (err)
 				return;
 
+			m_timestamp += 1;
 			//printf("Fetch audio from ring buffer err: %d frames: %d\n", err, noFrames);
 			int inLen = noFrames * m_size;
 			uint8_t* out = NULL;
@@ -99,6 +102,7 @@ namespace oppvs {
 				m_builder.reset();
 				m_builder.getStream().attach(segment, true);
 
+
 				if (m_builder.addRTPHeader(m_timestamp, m_source, OPUS_PAYLOAD_TYPE) < 0)
 				{
 					delete [] out;
@@ -112,7 +116,7 @@ namespace oppvs {
 				if (m_builder.addPayload(out, sendLength) >= 0)
 				{
 					p_segmentPool->push(segment);
-					m_timestamp++;
+					
 				}
 				delete [] out;
 			}

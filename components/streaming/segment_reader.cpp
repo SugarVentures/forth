@@ -95,7 +95,6 @@ namespace oppvs {
 
 		if (m_dataStream.size() == m_dataStream.capacity())
 		{
-			printf("Audio Frame: %zu bytes\n", m_dataStream.size());
 			return 1;
 		}
 		return 0;

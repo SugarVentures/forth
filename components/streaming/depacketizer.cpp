@@ -111,19 +111,20 @@ namespace oppvs {
 		}
 	}
 
-	int Depacketizer::pullFrame(PixelBuffer* pf, SharedDynamicBufferRef frame)
+	int Depacketizer::pullFrame(PixelBuffer& pf, SharedDynamicBufferRef frame)
 	{
-		if (m_videoDecoder.decode(*pf, frame->size(), frame->data()) < 0)
+		if (m_videoDecoder.decode(pf, frame->size(), frame->data()) < 0)
 			return -1;
 
 		return 0;
 	}
 
-	int Depacketizer::pullFrame(SharedDynamicBufferRef frame, uint8_t source)
+	int Depacketizer::pullFrame(SharedDynamicBufferRef frame, uint8_t source, uint32_t timestamp)
 	{
 		float* out = new float[AUDIO_MAX_ENCODING_PACKET_SIZE];
 		uint32_t len = m_audioDecoder.decode(frame->data(), frame->size(), source, out);
-		printf("audio out decode len %d ts: %d\n", len, m_timestamp);
+		
+		//uint64_t start = timestamp;
 		if (p_audioRingBuffer != NULL)
 		{
 			int err = p_audioRingBuffer->store(&len, out, m_timestamp);
@@ -153,7 +154,8 @@ namespace oppvs {
 						pf.stride[0] = p_serviceInfo->videoStreamInfo.sources[i].stride;
 						pf.order = p_serviceInfo->videoStreamInfo.sources[i].order;
 						pf.source = p_serviceInfo->videoStreamInfo.sources[i].source;
-						if (pullFrame(&pf, frame->data) < 0)
+						
+						if (pullFrame(pf, frame->data) < 0)
 						{
 							printf("Invalid video frame\n");
 						}
@@ -166,7 +168,7 @@ namespace oppvs {
 				}
 				break;
 			case OPUS_PAYLOAD_TYPE:
-				if (pullFrame(frame->data, frame->sourceid) < 0)
+				if (pullFrame(frame->data, frame->sourceid, frame->timestamp) < 0)
 				{
 					printf("Invalid audio frame\n");
 				}
@@ -223,8 +225,9 @@ namespace oppvs {
 					auto duration = currenttime.time_since_epoch();
 					auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
 					printf("%lld\n", millis);*/
-
-					m_idleTime = frame->delay * 1000;
+					//printf("Delay: %d\n", frame->delay);
+					//m_idleTime = frame->delay * 1000;
+					m_idleTime = 5000;
 					usleep(m_idleTime);
 					continue;
 				}

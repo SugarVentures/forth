@@ -22,6 +22,7 @@ namespace oppvs {
 		uint8_t m_channels;
 		uint32_t m_sampleRate;
 		uint32_t m_timestamp;
+		uint64_t m_firstTime;
 
 		AudioOpusEncoder m_encoder;
 		SegmentBuilder m_builder;

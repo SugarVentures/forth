@@ -72,6 +72,8 @@ namespace oppvs
 			if (corrupted) {
 				printf("corrupted\n");
 				error = -1;
+				vpx_codec_control(codec, VP8D_GET_LAST_REF_USED, &corrupted);
+				printf("ref use: %d\n", corrupted);
 				return error;
 			}
 

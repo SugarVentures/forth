@@ -55,8 +55,8 @@ namespace oppvs {
 		ServiceInfo* p_serviceInfo;
 		frame_callback m_callback;
 
-		int pullFrame(PixelBuffer*, SharedDynamicBufferRef);
-		int pullFrame(SharedDynamicBufferRef, uint8_t source);
+		int pullFrame(PixelBuffer&, SharedDynamicBufferRef);
+		int pullFrame(SharedDynamicBufferRef, uint8_t source, uint32_t ts);
 	public:
 		Depacketizer();
 		~Depacketizer();

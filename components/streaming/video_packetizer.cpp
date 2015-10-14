@@ -67,17 +67,18 @@ namespace oppvs {
 
 		std::shared_ptr<PixelBuffer> frame = *ptrFrame;
 		PixelBuffer pf = *frame;
+		//uint32_t duration = pf.timestamp - m_timestamp;
 		m_timestamp = pf.timestamp;
 
 		//Encoding		
-		if (m_encoder.encode(pf, &encodingLength, &data, &picID, &isKey) < 0)
+		if (m_encoder.encode(pf, &encodingLength, &data, &picID, &isKey, 1) < 0)
 		{
 			delete [] pf.plane[0];
 			return;
 		}
 		delete [] pf.plane[0];
 
-		//printf("Encoding Length %u Key: %d timestamp: %u\n", encodingLength, isKey, m_timestamp);
+		//printf("Encoding Length %u Key: %d timestamp: %u\n", encodingLength, isKey, 1);
 		sendLength = encodingLength;
 		uint8_t* curPos = data;
 		do
@@ -123,7 +124,7 @@ namespace oppvs {
 		while (handler->isRunning())
 		{
 			handler->pullFrame();
-			usleep(30000);
+			usleep(10000);
 		}
 		return NULL;
 	}
