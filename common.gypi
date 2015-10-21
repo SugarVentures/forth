@@ -3,7 +3,6 @@
 		'oppvs_root%': '<(DEPTH)/../'
 	},
 	'target_defaults': {
-        'default_configuration': 'Debug',
 		'conditions': [
             ['OS == "linux"', {
             	'cflags': [
@@ -18,6 +17,7 @@
     			]
             }],
             ['OS == "mac"', {
+                'default_configuration': 'Debug',
                 'configurations': {
                     'Debug': {
 
