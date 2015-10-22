@@ -2,6 +2,18 @@
 	'variables': {
 		'oppvs_root%': '<(DEPTH)/../'
 	},
+
+    'conditions': [
+        ['OS == "ios"', {
+            'xcode_settings': {
+                'SDKROOT': 'iphoneos',
+                'ARCHS': [
+                    '$(ARCHS_STANDARD)'
+                ]
+            }
+        }]
+    ],
+
 	'target_defaults': {
 		'conditions': [
             ['OS == "linux"', {
@@ -20,19 +32,26 @@
                 'default_configuration': 'Debug',
                 'configurations': {
                     'Debug': {
-
+                        'DEBUG_INFORMATION_FORMAT': 'dwarf',
                     },
                     'Release': {
-
+                        'DEBUG_INFORMATION_FORMAT': 'dwarf-with-dsym',
                     }
                 }
                 
             }],
+
             ['OS == "android"', {
                 'defines': [ 'ANDROID' ],
-            }]
-        ],
+            }],
 
+            ['OS == "ios"', {
+                'xcode_settings': {
+                    'CODE_SIGN_IDENTITY[sdk=iphoneos*': 'iPhone Developer',
+                    'SUPPORTED_PLATFORMS': 'iphonesimulator iphoneos'
+                },
+            }], # OS=="ios"
+        ],
 		
 	}
 }

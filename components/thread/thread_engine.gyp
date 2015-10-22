@@ -6,12 +6,14 @@
     "targets": [
         {
             "target_name": "thread_engine",
-            "type": 'shared_library',
+            
             'include_dirs': [
                 '../include',
             ],
             'conditions': [
                 ['OS == "mac"', {
+                    "type": 'shared_library',
+
                     "sources": [
                         "thread.hpp",
                         "thread.cpp",
@@ -24,12 +26,16 @@
                     ]         
                 }],
                 ['OS == "linux"', {
+                    "type": 'shared_library',
+
                     'sources': [
                         'thread.hpp',
                         'thread.cpp',
                     ]
                 }],
                 ['OS == "android"', {
+                    "type": 'shared_library',
+
                     'direct_dependent_settings': {
                         'include_dirs': [
                             '../include',
@@ -41,6 +47,19 @@
                         'thread.cpp',
                     ]
                 }],
+                ['OS == "ios"', {
+                    "type": 'static_library',
+
+                    'sources': [
+                        'thread.hpp',
+                        'thread.cpp',
+                        "tsqueue.hpp",
+                        "ring_buffer.h",
+                        "ring_buffer.cpp",
+                        "audio_ring_buffer.h",
+                        "audio_ring_buffer.cpp"
+                    ]
+                }]
             ]
            
         }
