@@ -27,6 +27,9 @@
                     }
                 }
                 
+            }],
+            ['OS == "android"', {
+                'defines': [ 'ANDROID' ],
             }]
         ],
 

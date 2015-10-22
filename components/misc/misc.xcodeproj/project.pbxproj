@@ -308,7 +308,46 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		4807572D1902BE8C40E84717 /* Default */ = {
+		0B69CCE895798F808DD64D11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Release;
+		};
+		1F7B255B183113CE428E240E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Debug;
+		};
+		49DA13F0FB3EEF86F8F662EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = misc;
+			};
+			name = Debug;
+		};
+		642AD3A5DB07D6C97FC47408 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = misc;
+			};
+			name = Release;
+		};
+		8BD12638EAD6B823E6BFE8C5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = All;
+			};
+			name = Release;
+		};
+		9ACCC010DF6B59F1CC3ED523 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
@@ -319,39 +358,45 @@
 				LIBRARY_SEARCH_PATHS = ../../libs;
 				PRODUCT_NAME = misc1;
 			};
-			name = Default;
+			name = Debug;
 		};
-		73B36030FECDF62CD3B7B021 /* Default */ = {
+		B5371B3B7D825C5925C56D82 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
-				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+				PRODUCT_NAME = All;
 			};
-			name = Default;
+			name = Debug;
 		};
-		B42C7C1554BE7C6AEBF5F201 /* Default */ = {
+		B8844AD2FD89C1E6713E9760 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = ../include;
 				PRODUCT_NAME = misc2;
 			};
-			name = Default;
+			name = Debug;
 		};
-		D80348986B1245FA1B647995 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = All;
-			};
-			name = Default;
-		};
-		E504180B21011C9512A71172 /* Default */ = {
+		C1B51B3BCB6269A0D25C0ECD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
-				PRODUCT_NAME = misc;
+				HEADER_SEARCH_PATHS = ../include;
+				PRODUCT_NAME = misc2;
 			};
-			name = Default;
+			name = Release;
+		};
+		CB7985C70F19E010C61511EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					../../libs/libsrtp/crypto/include,
+					../include,
+				);
+				LIBRARY_SEARCH_PATHS = ../../libs;
+				PRODUCT_NAME = misc1;
+			};
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -359,42 +404,47 @@
 		2499EC4F12F803316A3AB30A /* Build configuration list for PBXNativeTarget "libmisc1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4807572D1902BE8C40E84717 /* Default */,
+				9ACCC010DF6B59F1CC3ED523 /* Debug */,
+				CB7985C70F19E010C61511EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		719703C60D3B9B432A1E6DF2 /* Build configuration list for PBXNativeTarget "misc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E504180B21011C9512A71172 /* Default */,
+				49DA13F0FB3EEF86F8F662EB /* Debug */,
+				642AD3A5DB07D6C97FC47408 /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		AF9F50042EDBC76FD9525D8B /* Build configuration list for PBXProject "misc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				73B36030FECDF62CD3B7B021 /* Default */,
+				1F7B255B183113CE428E240E /* Debug */,
+				0B69CCE895798F808DD64D11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		D38FAF42F795EB89C63E04F8 /* Build configuration list for PBXNativeTarget "libmisc2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B42C7C1554BE7C6AEBF5F201 /* Default */,
+				B8844AD2FD89C1E6713E9760 /* Debug */,
+				C1B51B3BCB6269A0D25C0ECD /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		F39E1F2CBD78AF7CC068DBE4 /* Build configuration list for PBXAggregateTarget "All" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D80348986B1245FA1B647995 /* Default */,
+				B5371B3B7D825C5925C56D82 /* Debug */,
+				8BD12638EAD6B823E6BFE8C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

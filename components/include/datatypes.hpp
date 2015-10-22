@@ -12,7 +12,12 @@
 #include <stdio.h>
 #include <errno.h>
 #include <unistd.h>
+
+#if defined( __APPLE__ )
 #include <string>
+#else
+#include <cstring>
+#endif
 
 #define OPPVS_IDLE_TIME	500
 #define OPPVS_DEFAULT_SERVER_LISTEN_PORT 33432
