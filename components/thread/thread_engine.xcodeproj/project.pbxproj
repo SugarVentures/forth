@@ -7,22 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		101B3033324C6C555796E9DB /* audio_ring_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */; };
-		700D63D7AE2F5FFA890E69C3 /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 664245FF2A7AAA4A0CEBDF7C /* thread.cpp */; };
-		9A58B67F0B6DDB636B2900F9 /* ring_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */; };
+		F7FAF37D02FB22CE53DA499F /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 664245FF2A7AAA4A0CEBDF7C /* thread.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		18F92990A15D854AC10A1A3B /* libthread_engine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libthread_engine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ring_buffer.cpp; sourceTree = "<group>"; };
-		56A7BEF83122E6E93D3F2728 /* audio_ring_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_ring_buffer.h; sourceTree = "<group>"; };
 		664245FF2A7AAA4A0CEBDF7C /* thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread.cpp; sourceTree = "<group>"; };
-		69A036E19E16EF7C3E790468 /* ring_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ring_buffer.h; sourceTree = "<group>"; };
-		8CA144AA8CF389F6E5018D1D /* CAAtomic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAAtomic.h; sourceTree = "<group>"; };
-		AE004DD1378F0A438BFD5226 /* tsqueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = tsqueue.hpp; sourceTree = "<group>"; };
 		B5688B33306D04C73C068171 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
 		D93F42A8D93D134BAEEE5AA8 /* thread_engine.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = thread_engine.gyp; sourceTree = "<group>"; };
-		EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_ring_buffer.cpp; sourceTree = "<group>"; };
 		F2B3B2119DEE055A1E290919 /* thread.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = thread.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -40,7 +32,7 @@
 		2845B8981F9F4DF921F89516 = {
 			isa = PBXGroup;
 			children = (
-				CA0C71FBF73D131B4F273378 /* Source */,
+				CCD8702F02E38F78AE0DC816 /* Source */,
 				41956C78EBE2331033BD3DB2 /* Products */,
 				ABC5D748870E83CE29D9B32B /* Build */,
 			);
@@ -63,17 +55,11 @@
 			name = Build;
 			sourceTree = "<group>";
 		};
-		CA0C71FBF73D131B4F273378 /* Source */ = {
+		CCD8702F02E38F78AE0DC816 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				8CA144AA8CF389F6E5018D1D /* CAAtomic.h */,
-				EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */,
-				56A7BEF83122E6E93D3F2728 /* audio_ring_buffer.h */,
-				4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */,
-				69A036E19E16EF7C3E790468 /* ring_buffer.h */,
 				664245FF2A7AAA4A0CEBDF7C /* thread.cpp */,
 				F2B3B2119DEE055A1E290919 /* thread.hpp */,
-				AE004DD1378F0A438BFD5226 /* tsqueue.hpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -122,48 +108,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				700D63D7AE2F5FFA890E69C3 /* thread.cpp in Sources */,
-				9A58B67F0B6DDB636B2900F9 /* ring_buffer.cpp in Sources */,
-				101B3033324C6C555796E9DB /* audio_ring_buffer.cpp in Sources */,
+				F7FAF37D02FB22CE53DA499F /* thread.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		475EC3ECF04AB09427BEBDD2 /* Release */ = {
+		581EC851D4764A6E48ABD400 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = ANDROID;
 				HEADER_SEARCH_PATHS = ../include;
 				PRODUCT_NAME = thread_engine;
 			};
-			name = Release;
+			name = Default;
 		};
-		59442534B42E2468ED84735B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				EXECUTABLE_PREFIX = lib;
-				HEADER_SEARCH_PATHS = ../include;
-				PRODUCT_NAME = thread_engine;
-			};
-			name = Debug;
-		};
-		5A5A789B45AEA9B30395B492 /* Release */ = {
+		7A72E1259498715A09E32E19 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
 			};
-			name = Release;
-		};
-		9B435202D4AF84DC2CC05B3F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
-				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
-			};
-			name = Debug;
+			name = Default;
 		};
 /* End XCBuildConfiguration section */
 
@@ -171,20 +139,18 @@
 		6234CBE57ADABE7DABC5F888 /* Build configuration list for PBXProject "thread_engine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9B435202D4AF84DC2CC05B3F /* Debug */,
-				5A5A789B45AEA9B30395B492 /* Release */,
+				7A72E1259498715A09E32E19 /* Default */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Default;
 		};
 		ABBE316341690DBFA150A0EA /* Build configuration list for PBXNativeTarget "thread_engine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				59442534B42E2468ED84735B /* Debug */,
-				475EC3ECF04AB09427BEBDD2 /* Release */,
+				581EC851D4764A6E48ABD400 /* Default */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Default;
 		};
 /* End XCConfigurationList section */
 	};

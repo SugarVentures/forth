@@ -6,6 +6,7 @@
 #define OPPVS_THREAD_HPP
 
 #include <pthread.h>
+#include "../include/logs.h"
 
 namespace oppvs
 {
@@ -18,6 +19,8 @@ namespace oppvs
 		int create();
 		void waitUntilNextEvent();
 		void waitUntilEnding();
+		
+		static void* defaultRun(void* object);
 		virtual ~Thread();
 	private:
 		pthread_t m_threadId;

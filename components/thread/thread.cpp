@@ -1,6 +1,5 @@
 
 #include "thread.hpp"
-
 #include <stdio.h>
 
 namespace oppvs
@@ -23,7 +22,9 @@ namespace oppvs
 
 	Thread::~Thread()
 	{
+#ifndef ANDROID
 		pthread_cancel(m_threadId);
+#endif
 	}
 
 	int Thread::create()
@@ -46,6 +47,12 @@ namespace oppvs
 			pthread_join(m_threadId, &pRetValFromThread);
 		m_isValid = false;
 		m_threadId = (pthread_t)-1;
+	}
+
+	void* Thread::defaultRun(void* object)
+	{
+		LOGD("Default Run\n");
+		return NULL;
 	}
 
 }
