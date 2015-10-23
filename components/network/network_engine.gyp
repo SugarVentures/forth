@@ -53,6 +53,11 @@
                         '-lssl',
                         '-lcrypto'
                     ],
+                }],
+                ['OS == "ios"', {
+                    'defines': [
+                        '__APPLE_USE_RFC_3542'
+                    ]
                 }]
             ],
 
