@@ -48,7 +48,8 @@
             ['OS == "ios"', {
                 'xcode_settings': {
                     'CODE_SIGN_IDENTITY[sdk=iphoneos*': 'iPhone Developer',
-                    'SUPPORTED_PLATFORMS': 'iphonesimulator iphoneos'
+                    'SUPPORTED_PLATFORMS': 'iphonesimulator iphoneos',
+                    'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                 },
             }], # OS=="ios"
         ],
