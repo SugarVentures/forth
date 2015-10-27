@@ -1,0 +1,449 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		D9488CC01BDF5C3300646B70 /* Forth-iOS */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = D9488CC11BDF5C3300646B70 /* Build configuration list for PBXAggregateTarget "Forth-iOS" */;
+			buildPhases = (
+				D9488CC41BDF5C4100646B70 /* Build Static Libs */,
+				D9488CC51BDF5CC900646B70 /* Build Universal Binary */,
+				D9488CC61BDF5E8C00646B70 /* CopyFiles */,
+			);
+			dependencies = (
+				D9488CDD1BDF65EA00646B70 /* PBXTargetDependency */,
+			);
+			name = "Forth-iOS";
+			productName = "Forth-iOS";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		D9488CB81BDF5C1E00646B70 /* ForthIOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CB71BDF5C1E00646B70 /* ForthIOS.h */; };
+		D9488CBA1BDF5C1E00646B70 /* ForthIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9488CB91BDF5C1E00646B70 /* ForthIOS.mm */; };
+		D9488CC71BDF5EB800646B70 /* ForthIOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CB71BDF5C1E00646B70 /* ForthIOS.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D9488CDA1BDF65DC00646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CFD3AD4E2D811EB173B56B9E;
+			remoteInfo = streaming_engine;
+		};
+		D9488CDC1BDF65EA00646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B545DB813299B30EAF08EB67;
+			remoteInfo = streaming_engine;
+		};
+		D9488CE21BDF7FC100646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488CDE1BDF7FC100646B70 /* libyuv.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 568E3016DD2F308A82671925;
+			remoteInfo = yuv;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D9488CB21BDF5C1E00646B70 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				D9488CB81BDF5C1E00646B70 /* ForthIOS.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9488CC61BDF5E8C00646B70 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
+			dstSubfolderSpec = 0;
+			files = (
+				D9488CC71BDF5EB800646B70 /* ForthIOS.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D9488CB41BDF5C1E00646B70 /* libForthIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libForthIOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9488CB71BDF5C1E00646B70 /* ForthIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForthIOS.h; sourceTree = "<group>"; };
+		D9488CB91BDF5C1E00646B70 /* ForthIOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ForthIOS.mm; sourceTree = "<group>"; };
+		D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = streaming_engine.xcodeproj; path = ../../components/streaming/ios/streaming_engine.xcodeproj; sourceTree = "<group>"; };
+		D9488CDE1BDF7FC100646B70 /* libyuv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libyuv.xcodeproj; path = ../../libs/libyuv/ios/libyuv.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D9488CB11BDF5C1E00646B70 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D9488CAB1BDF5C1E00646B70 = {
+			isa = PBXGroup;
+			children = (
+				D9488CDE1BDF7FC100646B70 /* libyuv.xcodeproj */,
+				D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */,
+				D9488CB61BDF5C1E00646B70 /* ForthIOS */,
+				D9488CB51BDF5C1E00646B70 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D9488CB51BDF5C1E00646B70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9488CB41BDF5C1E00646B70 /* libForthIOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9488CB61BDF5C1E00646B70 /* ForthIOS */ = {
+			isa = PBXGroup;
+			children = (
+				D9488CB71BDF5C1E00646B70 /* ForthIOS.h */,
+				D9488CB91BDF5C1E00646B70 /* ForthIOS.mm */,
+			);
+			path = ForthIOS;
+			sourceTree = "<group>";
+		};
+		D9488CD71BDF65DC00646B70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9488CDB1BDF65DC00646B70 /* libstreaming_engine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9488CDF1BDF7FC100646B70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9488CE31BDF7FC100646B70 /* libyuv.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D9488CB31BDF5C1E00646B70 /* ForthIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9488CBD1BDF5C1E00646B70 /* Build configuration list for PBXNativeTarget "ForthIOS" */;
+			buildPhases = (
+				D9488CB01BDF5C1E00646B70 /* Sources */,
+				D9488CB11BDF5C1E00646B70 /* Frameworks */,
+				D9488CB21BDF5C1E00646B70 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ForthIOS;
+			productName = ForthIOS;
+			productReference = D9488CB41BDF5C1E00646B70 /* libForthIOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D9488CAC1BDF5C1E00646B70 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Cao Minh Trang";
+				TargetAttributes = {
+					D9488CB31BDF5C1E00646B70 = {
+						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = 93QE55NQPX;
+					};
+					D9488CC01BDF5C3300646B70 = {
+						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = 93QE55NQPX;
+					};
+				};
+			};
+			buildConfigurationList = D9488CAF1BDF5C1E00646B70 /* Build configuration list for PBXProject "ForthIOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D9488CAB1BDF5C1E00646B70;
+			productRefGroup = D9488CB51BDF5C1E00646B70 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D9488CDF1BDF7FC100646B70 /* Products */;
+					ProjectRef = D9488CDE1BDF7FC100646B70 /* libyuv.xcodeproj */;
+				},
+				{
+					ProductGroup = D9488CD71BDF65DC00646B70 /* Products */;
+					ProjectRef = D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D9488CB31BDF5C1E00646B70 /* ForthIOS */,
+				D9488CC01BDF5C3300646B70 /* Forth-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		D9488CDB1BDF65DC00646B70 /* libstreaming_engine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libstreaming_engine.a;
+			remoteRef = D9488CDA1BDF65DC00646B70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D9488CE31BDF7FC100646B70 /* libyuv.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libyuv.a;
+			remoteRef = D9488CE21BDF7FC100646B70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D9488CC41BDF5C4100646B70 /* Build Static Libs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Static Libs";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "xcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos\n";
+		};
+		D9488CC51BDF5CC900646B70 /* Build Universal Binary */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Universal Binary";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator.\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D9488CB01BDF5C1E00646B70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9488CBA1BDF5C1E00646B70 /* ForthIOS.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D9488CDD1BDF65EA00646B70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = streaming_engine;
+			targetProxy = D9488CDC1BDF65EA00646B70 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D9488CBB1BDF5C1E00646B70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D9488CBC1BDF5C1E00646B70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D9488CBE1BDF5C1E00646B70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					../../components/streaming,
+					../../components/include,
+					../../components/thread,
+					../../components/interface,
+					../../components/audio,
+					../../components/encoding,
+					../../components/network,
+					"/Users/caominhtrang/cerbero/dist/ios_universal/include/**",
+					"/Users/caominhtrang/cerbero/dist/ios_universal/lib/glib-2.0/include",
+					../../components/error,
+					../../libs/libyuv/include,
+					../../components/misc,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D9488CBF1BDF5C1E00646B70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					../../components/streaming,
+					../../components/include,
+					../../components/thread,
+					../../components/interface,
+					../../components/audio,
+					../../components/encoding,
+					../../components/network,
+					"/Users/caominhtrang/cerbero/dist/ios_universal/include/**",
+					"/Users/caominhtrang/cerbero/dist/ios_universal/lib/glib-2.0/include",
+					../../components/error,
+					../../libs/libyuv/include,
+					../../components/misc,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		D9488CC21BDF5C3300646B70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D9488CC31BDF5C3300646B70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D9488CAF1BDF5C1E00646B70 /* Build configuration list for PBXProject "ForthIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9488CBB1BDF5C1E00646B70 /* Debug */,
+				D9488CBC1BDF5C1E00646B70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9488CBD1BDF5C1E00646B70 /* Build configuration list for PBXNativeTarget "ForthIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9488CBE1BDF5C1E00646B70 /* Debug */,
+				D9488CBF1BDF5C1E00646B70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9488CC11BDF5C3300646B70 /* Build configuration list for PBXAggregateTarget "Forth-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9488CC21BDF5C3300646B70 /* Debug */,
+				D9488CC31BDF5C3300646B70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D9488CAC1BDF5C1E00646B70 /* Project object */;
+}

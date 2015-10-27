@@ -1,0 +1,171 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		308EDD9B43D43C94722578C0 /* audio_opus_decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D77B1ED9125F5D6DDA38ED /* audio_opus_decoder.cpp */; };
+		6EFC747DB9436D1AB2E09258 /* audio_opus_encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C26845902A6F956085C088F /* audio_opus_encoder.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5C26845902A6F956085C088F /* audio_opus_encoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_opus_encoder.cpp; sourceTree = "<group>"; };
+		7F6FB0887415EC41842CF4B0 /* audio_opus_encoder.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = audio_opus_encoder.hpp; sourceTree = "<group>"; };
+		A073B09079C2925443D0F45D /* audio_opus_decoder.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = audio_opus_decoder.hpp; sourceTree = "<group>"; };
+		A147194051591D3FA33578C6 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
+		DC13720F9DFCE3EA5184E835 /* libencoding_engine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libencoding_engine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		E402A5F4C320829C1AF65566 /* encoding_engine.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = encoding_engine.gyp; sourceTree = "<group>"; };
+		E7D77B1ED9125F5D6DDA38ED /* audio_opus_decoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_opus_decoder.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		38BF5C1481BFF9597ADB7F39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5B932500C40D17B01CD1B3CE = {
+			isa = PBXGroup;
+			children = (
+				743E33E5FD5C70ADECB7A217 /* Source */,
+				7C72D0ACD9FDC3074A1502A2 /* Products */,
+				6F8193B83D229EF80723EBA1 /* Build */,
+			);
+			sourceTree = "<group>";
+		};
+		6F8193B83D229EF80723EBA1 /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				A147194051591D3FA33578C6 /* common.gypi */,
+				E402A5F4C320829C1AF65566 /* encoding_engine.gyp */,
+			);
+			name = Build;
+			sourceTree = "<group>";
+		};
+		743E33E5FD5C70ADECB7A217 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E7D77B1ED9125F5D6DDA38ED /* audio_opus_decoder.cpp */,
+				A073B09079C2925443D0F45D /* audio_opus_decoder.hpp */,
+				5C26845902A6F956085C088F /* audio_opus_encoder.cpp */,
+				7F6FB0887415EC41842CF4B0 /* audio_opus_encoder.hpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		7C72D0ACD9FDC3074A1502A2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC13720F9DFCE3EA5184E835 /* libencoding_engine.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8ED49CB53A55D69F2749AAB7 /* encoding_engine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 224255A490EB728BDACB75F7 /* Build configuration list for PBXNativeTarget "encoding_engine" */;
+			buildPhases = (
+				F2F2E5AA20DCAA68D8F87416 /* Sources */,
+				38BF5C1481BFF9597ADB7F39 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = encoding_engine;
+			productName = encoding_engine;
+			productReference = DC13720F9DFCE3EA5184E835 /* libencoding_engine.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C4636FB505C5EC909651D227 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
+			buildConfigurationList = 3EB720EB7B7BCFB1433B9387 /* Build configuration list for PBXProject "encoding_engine" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 5B932500C40D17B01CD1B3CE;
+			projectDirPath = ../../encoding;
+			projectRoot = "";
+			targets = (
+				8ED49CB53A55D69F2749AAB7 /* encoding_engine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F2F2E5AA20DCAA68D8F87416 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EFC747DB9436D1AB2E09258 /* audio_opus_encoder.cpp in Sources */,
+				308EDD9B43D43C94722578C0 /* audio_opus_decoder.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		56E63F1E12DE645551E5AFC7 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SDKROOT = iphoneos;
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Default;
+		};
+		B42FF4FAB1E178F435657F14 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					../include,
+					../../libs/libopus/include,
+				);
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
+				PRODUCT_NAME = encoding_engine;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		224255A490EB728BDACB75F7 /* Build configuration list for PBXNativeTarget "encoding_engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B42FF4FAB1E178F435657F14 /* Default */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Default;
+		};
+		3EB720EB7B7BCFB1433B9387 /* Build configuration list for PBXProject "encoding_engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56E63F1E12DE645551E5AFC7 /* Default */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C4636FB505C5EC909651D227 /* Project object */;
+}
