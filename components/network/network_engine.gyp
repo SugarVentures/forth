@@ -6,7 +6,7 @@
     'targets': [
         {
             'target_name': 'network_engine',
-            'type': 'shared_library',
+            
             'dependencies': [
                 '../misc/misc.gyp:libmisc2',
                 '../thread/thread_engine.gyp:thread_engine',
@@ -25,6 +25,7 @@
 
             'conditions': [
                 ['OS == "mac"', {
+                    'type': 'shared_library',
                     'defines': [
                         '__APPLE_USE_RFC_3542'
                     ],
@@ -47,6 +48,7 @@
 
                 }],
                 ['OS == "linux"', {
+                    'type': 'shared_library',
                     'libraries': [
                     
                         '../../../libs/libsrtp.a',
@@ -55,6 +57,7 @@
                     ],
                 }],
                 ['OS == "ios"', {
+                    'type': 'static_library',
                     'defines': [
                         '__APPLE_USE_RFC_3542'
                     ],
