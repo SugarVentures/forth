@@ -7,9 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Constants.h"
 
 @interface ForthIOS : NSObject
+{
+@private
 
-- (void) initEngines;
+}
+
+- (void) initStreamingEngine: (NSArray*) streamInfo;
 
 @end

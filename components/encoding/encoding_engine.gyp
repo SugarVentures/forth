@@ -10,17 +10,7 @@
             'dependencies': [
 
             ],
-            'include_dirs': [
-                '../include',
-                '../error',
-                '../misc',
-                '../../libs/libsrtp/include',
-                '../../libs/libsrtp/crypto/include',
-                '../../libs/libopus/include',
-                '../../libs/libvpx',
-                '../../libs/libyuv/include'
-            ],
-
+            
             'conditions': [
                 ['OS == "mac"', {
                     'type': 'shared_library',
@@ -29,6 +19,15 @@
                     },
                     'libraries': [
                         '../../libs/libopus.a',
+                    ],
+                    'include_dirs': [
+                        '../include',
+                        '../error',
+                        '../misc',
+                        '../../libs/libsrtp/include',
+                        '../../libs/libsrtp/crypto/include',
+                        '../../libs/libopus/include',
+                        '../../libs/libyuv/include'
                     ],
 
                 }],
@@ -40,7 +39,16 @@
                 }],
                 ['OS == "ios"', {
                     'type': 'static_library',
-
+                    'include_dirs': [
+                        '../include',
+                        '../error',
+                        '../misc',
+                        '../../libs/libsrtp/include',
+                        '../../libs/libsrtp/crypto/include',
+                        '../../libs/libopus/include',
+                        '../../libs/libyuv/include',
+                        '~/cerbero/dist/ios_universal/include'
+                    ],
                 }]
             ],
 

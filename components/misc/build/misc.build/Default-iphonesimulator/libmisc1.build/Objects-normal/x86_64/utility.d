@@ -1,0 +1,23 @@
+dependencies: \
+  /Users/caominhtrang/Documents/ForthProject/forth-dev/components/misc/utility.c \
+  /Users/caominhtrang/Documents/ForthProject/forth-dev/components/misc/utility.h \
+  ../include/brg_types.h \
+  ../../libs/libsrtp/crypto/include/crypto_kernel.h \
+  ../../libs/libsrtp/crypto/include/rand_source.h \
+  ../../libs/libsrtp/crypto/include/err.h \
+  ../../libs/libsrtp/crypto/include/datatypes.h \
+  ../../libs/libsrtp/crypto/include/integers.h \
+  ../../libs/libsrtp/crypto/include/alloc.h \
+  ../../libs/libsrtp/crypto/include/prng.h \
+  ../../libs/libsrtp/crypto/include/aes.h \
+  ../../libs/libsrtp/crypto/include/gf2_8.h \
+  ../../libs/libsrtp/crypto/include/aes_icm.h \
+  ../../libs/libsrtp/crypto/include/cipher.h \
+  ../../libs/libsrtp/crypto/include/rdbx.h \
+  ../../libs/libsrtp/crypto/include/crypto.h \
+  ../../libs/libsrtp/crypto/include/crypto_types.h \
+  ../../libs/libsrtp/crypto/include/auth.h \
+  ../../libs/libsrtp/crypto/include/cryptoalg.h \
+  ../../libs/libsrtp/crypto/include/stat.h \
+  ../../libs/libsrtp/crypto/include/key.h \
+  ../../libs/libsrtp/crypto/include/sha1.h

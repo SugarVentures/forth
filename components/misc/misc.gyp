@@ -13,7 +13,15 @@
         },
         {
             "target_name": "libmisc1",
-            "type": 'shared_library',
+            'conditions': [
+                ['OS == "mac"', {
+                    'type': 'shared_library',
+                }],
+
+                ['OS == "ios"', {
+                    'type': 'static_library'
+                }],
+            ],
             'include_dirs': [
                 '../../libs/libsrtp/crypto/include',
                 '../include'

@@ -1,6 +1,7 @@
 dependencies: \
   /Users/caominhtrang/Documents/ForthProject/forth-dev/sdks/ForthIOS/ForthIOS/ForthIOS.mm \
   /Users/caominhtrang/Documents/ForthProject/forth-dev/sdks/ForthIOS/ForthIOS/ForthIOS.h \
+  /Users/caominhtrang/Documents/ForthProject/forth-dev/sdks/ForthIOS/ForthIOS/Constants.h \
   ../../components/streaming/streaming_engine.hpp \
   ../../components/include/datatypes.hpp \
   ../../components/thread/thread.hpp \

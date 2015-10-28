@@ -16,7 +16,6 @@
 				D9488CC61BDF5E8C00646B70 /* CopyFiles */,
 			);
 			dependencies = (
-				D9488CDD1BDF65EA00646B70 /* PBXTargetDependency */,
 			);
 			name = "Forth-iOS";
 			productName = "Forth-iOS";
@@ -27,6 +26,9 @@
 		D9488CB81BDF5C1E00646B70 /* ForthIOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CB71BDF5C1E00646B70 /* ForthIOS.h */; };
 		D9488CBA1BDF5C1E00646B70 /* ForthIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9488CB91BDF5C1E00646B70 /* ForthIOS.mm */; };
 		D9488CC71BDF5EB800646B70 /* ForthIOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CB71BDF5C1E00646B70 /* ForthIOS.h */; };
+		D9488CE61BDF889100646B70 /* Constants.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CE51BDF889100646B70 /* Constants.h */; settings = {ASSET_TAGS = (); }; };
+		D9488CE81BDF88FC00646B70 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D9488CE71BDF88FC00646B70 /* Constants.m */; settings = {ASSET_TAGS = (); }; };
+		D9488CE91BDF88FC00646B70 /* Constants.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CE71BDF88FC00646B70 /* Constants.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,19 +39,103 @@
 			remoteGlobalIDString = CFD3AD4E2D811EB173B56B9E;
 			remoteInfo = streaming_engine;
 		};
-		D9488CDC1BDF65EA00646B70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = B545DB813299B30EAF08EB67;
-			remoteInfo = streaming_engine;
-		};
 		D9488CE21BDF7FC100646B70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D9488CDE1BDF7FC100646B70 /* libyuv.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 568E3016DD2F308A82671925;
 			remoteInfo = yuv;
+		};
+		D9488CF01BE07BB300646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488CDE1BDF7FC100646B70 /* libyuv.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 985BD33250D9355177E4302F;
+			remoteInfo = yuv;
+		};
+		D9488CF21BE07BB800646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B545DB813299B30EAF08EB67;
+			remoteInfo = streaming_engine;
+		};
+		D9488CF81BE0ACA700646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488CF41BE0ACA700646B70 /* network_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4E25F1EEBE9DCB45514785DB;
+			remoteInfo = network_engine;
+		};
+		D9488CFA1BE0ACB500646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488CF41BE0ACA700646B70 /* network_engine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6A03BA77C2A08309394D31E0;
+			remoteInfo = network_engine;
+		};
+		D9488D001BE0AECD00646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488CFC1BE0AECD00646B70 /* encoding_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D66BAB0C49189CBA25E04F16;
+			remoteInfo = encoding_engine;
+		};
+		D9488D021BE0AEE800646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488CFC1BE0AECD00646B70 /* encoding_engine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8ED49CB53A55D69F2749AAB7;
+			remoteInfo = encoding_engine;
+		};
+		D9488D081BE0B00100646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488D041BE0B00100646B70 /* thread_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 85B29969623F068F9144E752;
+			remoteInfo = thread_engine;
+		};
+		D9488D0A1BE0B00B00646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488D041BE0B00100646B70 /* thread_engine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19A7BE6AAB8E7AFA6731878E;
+			remoteInfo = thread_engine;
+		};
+		D9488D211BE0BFB900646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8EC063B91534944B343F3ACB;
+			remoteInfo = misc;
+		};
+		D9488D231BE0BFB900646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 41628BEE7EE039C4C1422B1E;
+			remoteInfo = libmisc1;
+		};
+		D9488D251BE0BFB900646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 866A5353924FAB37589B3106;
+			remoteInfo = libmisc2;
+		};
+		D9488D271BE0BFCF00646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E7C229A56F159626EA756072;
+			remoteInfo = libmisc1;
+		};
+		D9488D291BE0BFCF00646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BE0C37C3CD9ADF617F9763D5;
+			remoteInfo = libmisc2;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -70,7 +156,18 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
+				D9488CE61BDF889100646B70 /* Constants.h in CopyFiles */,
 				D9488CC71BDF5EB800646B70 /* ForthIOS.h in CopyFiles */,
+				D9488CE91BDF88FC00646B70 /* Constants.m in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9488D0F1BE0B14400646B70 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +179,12 @@
 		D9488CB91BDF5C1E00646B70 /* ForthIOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ForthIOS.mm; sourceTree = "<group>"; };
 		D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = streaming_engine.xcodeproj; path = ../../components/streaming/ios/streaming_engine.xcodeproj; sourceTree = "<group>"; };
 		D9488CDE1BDF7FC100646B70 /* libyuv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libyuv.xcodeproj; path = ../../libs/libyuv/ios/libyuv.xcodeproj; sourceTree = "<group>"; };
+		D9488CE51BDF889100646B70 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		D9488CE71BDF88FC00646B70 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		D9488CF41BE0ACA700646B70 /* network_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = network_engine.xcodeproj; path = ../../components/network/ios/network_engine.xcodeproj; sourceTree = "<group>"; };
+		D9488CFC1BE0AECD00646B70 /* encoding_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = encoding_engine.xcodeproj; path = ../../components/encoding/ios/encoding_engine.xcodeproj; sourceTree = "<group>"; };
+		D9488D041BE0B00100646B70 /* thread_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = thread_engine.xcodeproj; path = ../../components/thread/ios/thread_engine.xcodeproj; sourceTree = "<group>"; };
+		D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = misc.xcodeproj; path = ../../components/misc/ios/misc.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +201,10 @@
 		D9488CAB1BDF5C1E00646B70 = {
 			isa = PBXGroup;
 			children = (
+				D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */,
+				D9488D041BE0B00100646B70 /* thread_engine.xcodeproj */,
+				D9488CFC1BE0AECD00646B70 /* encoding_engine.xcodeproj */,
+				D9488CF41BE0ACA700646B70 /* network_engine.xcodeproj */,
 				D9488CDE1BDF7FC100646B70 /* libyuv.xcodeproj */,
 				D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */,
 				D9488CB61BDF5C1E00646B70 /* ForthIOS */,
@@ -118,6 +225,8 @@
 			children = (
 				D9488CB71BDF5C1E00646B70 /* ForthIOS.h */,
 				D9488CB91BDF5C1E00646B70 /* ForthIOS.mm */,
+				D9488CE51BDF889100646B70 /* Constants.h */,
+				D9488CE71BDF88FC00646B70 /* Constants.m */,
 			);
 			path = ForthIOS;
 			sourceTree = "<group>";
@@ -138,6 +247,40 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		D9488CF51BE0ACA700646B70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9488CF91BE0ACA700646B70 /* libnetwork_engine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9488CFD1BE0AECD00646B70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9488D011BE0AECD00646B70 /* libencoding_engine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9488D051BE0B00100646B70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9488D091BE0B00100646B70 /* libthread_engine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9488D1B1BE0BFB900646B70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9488D221BE0BFB900646B70 /* libmisc.dylib */,
+				D9488D241BE0BFB900646B70 /* libmisc1.a */,
+				D9488D261BE0BFB900646B70 /* libmisc2.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -148,10 +291,18 @@
 				D9488CB01BDF5C1E00646B70 /* Sources */,
 				D9488CB11BDF5C1E00646B70 /* Frameworks */,
 				D9488CB21BDF5C1E00646B70 /* CopyFiles */,
+				D9488D0F1BE0B14400646B70 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D9488D281BE0BFCF00646B70 /* PBXTargetDependency */,
+				D9488D2A1BE0BFCF00646B70 /* PBXTargetDependency */,
+				D9488D0B1BE0B00B00646B70 /* PBXTargetDependency */,
+				D9488D031BE0AEE800646B70 /* PBXTargetDependency */,
+				D9488CFB1BE0ACB500646B70 /* PBXTargetDependency */,
+				D9488CF31BE07BB800646B70 /* PBXTargetDependency */,
+				D9488CF11BE07BB300646B70 /* PBXTargetDependency */,
 			);
 			name = ForthIOS;
 			productName = ForthIOS;
@@ -189,12 +340,28 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = D9488CFD1BE0AECD00646B70 /* Products */;
+					ProjectRef = D9488CFC1BE0AECD00646B70 /* encoding_engine.xcodeproj */;
+				},
+				{
 					ProductGroup = D9488CDF1BDF7FC100646B70 /* Products */;
 					ProjectRef = D9488CDE1BDF7FC100646B70 /* libyuv.xcodeproj */;
 				},
 				{
+					ProductGroup = D9488D1B1BE0BFB900646B70 /* Products */;
+					ProjectRef = D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */;
+				},
+				{
+					ProductGroup = D9488CF51BE0ACA700646B70 /* Products */;
+					ProjectRef = D9488CF41BE0ACA700646B70 /* network_engine.xcodeproj */;
+				},
+				{
 					ProductGroup = D9488CD71BDF65DC00646B70 /* Products */;
 					ProjectRef = D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */;
+				},
+				{
+					ProductGroup = D9488D051BE0B00100646B70 /* Products */;
+					ProjectRef = D9488D041BE0B00100646B70 /* thread_engine.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -218,6 +385,48 @@
 			fileType = archive.ar;
 			path = libyuv.a;
 			remoteRef = D9488CE21BDF7FC100646B70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D9488CF91BE0ACA700646B70 /* libnetwork_engine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnetwork_engine.a;
+			remoteRef = D9488CF81BE0ACA700646B70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D9488D011BE0AECD00646B70 /* libencoding_engine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libencoding_engine.a;
+			remoteRef = D9488D001BE0AECD00646B70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D9488D091BE0B00100646B70 /* libthread_engine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthread_engine.a;
+			remoteRef = D9488D081BE0B00100646B70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D9488D221BE0BFB900646B70 /* libmisc.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libmisc.dylib;
+			remoteRef = D9488D211BE0BFB900646B70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D9488D241BE0BFB900646B70 /* libmisc1.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libmisc1.a;
+			remoteRef = D9488D231BE0BFB900646B70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D9488D261BE0BFB900646B70 /* libmisc2.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libmisc2.a;
+			remoteRef = D9488D251BE0BFB900646B70 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -249,7 +458,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "SIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator.\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"";
+			shellScript = "SIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\n#Merge static libs into one\nlibraries=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/*.a\"\nsimulator_libraries=\"\"\nfor filename in ${libraries}\ndo\nsimulator_libraries=\"${simulator_libraries} ${filename}\"\ndone\n\nlibtool ${simulator_libraries} -o \"${SIMULATOR_LIBRARY_PATH}\" &&\n\nlibraries=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/*.a\"\nsimulator_libraries=\"\"\nfor filename in ${libraries}\ndo\nsimulator_libraries=\"${simulator_libraries} ${filename}\"\ndone\n\nlibtool ${simulator_libraries} -o \"${DEVICE_LIBRARY_PATH}\" &&\n\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator.\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Merge with third parties libs\nTHIRD_PARTY_LIBRARY_PATH=\"/Users/caominhtrang/cerbero/dist/ios_universal/lib\"\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libglib-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libgio-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libgobject-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libiconv.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libgmodule-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libintl.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libffi.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libz.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libcrypto.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libgthread-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libnice.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libopus.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libvpx.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -259,16 +468,47 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9488CBA1BDF5C1E00646B70 /* ForthIOS.mm in Sources */,
+				D9488CE81BDF88FC00646B70 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D9488CDD1BDF65EA00646B70 /* PBXTargetDependency */ = {
+		D9488CF11BE07BB300646B70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = yuv;
+			targetProxy = D9488CF01BE07BB300646B70 /* PBXContainerItemProxy */;
+		};
+		D9488CF31BE07BB800646B70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = streaming_engine;
-			targetProxy = D9488CDC1BDF65EA00646B70 /* PBXContainerItemProxy */;
+			targetProxy = D9488CF21BE07BB800646B70 /* PBXContainerItemProxy */;
+		};
+		D9488CFB1BE0ACB500646B70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = network_engine;
+			targetProxy = D9488CFA1BE0ACB500646B70 /* PBXContainerItemProxy */;
+		};
+		D9488D031BE0AEE800646B70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = encoding_engine;
+			targetProxy = D9488D021BE0AEE800646B70 /* PBXContainerItemProxy */;
+		};
+		D9488D0B1BE0B00B00646B70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = thread_engine;
+			targetProxy = D9488D0A1BE0B00B00646B70 /* PBXContainerItemProxy */;
+		};
+		D9488D281BE0BFCF00646B70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libmisc1;
+			targetProxy = D9488D271BE0BFCF00646B70 /* PBXContainerItemProxy */;
+		};
+		D9488D2A1BE0BFCF00646B70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libmisc2;
+			targetProxy = D9488D291BE0BFCF00646B70 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

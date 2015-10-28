@@ -87,7 +87,9 @@
                 'streaming_engine.hpp',
                 'streaming_engine.cpp',
                 'streaming_send_thread.cpp',
-                'streaming_send_thread.hpp'
+                'streaming_send_thread.hpp',
+                'video_packetizer.cpp',
+                'video_packetizer.h'
             ]
 
         }

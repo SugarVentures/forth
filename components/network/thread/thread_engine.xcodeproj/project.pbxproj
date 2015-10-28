@@ -1,0 +1,176 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		07109FD62CC95333BCF67AA1 /* audio_ring_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */; };
+		2878ABB5311A1C668596B7D7 /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 664245FF2A7AAA4A0CEBDF7C /* thread.cpp */; };
+		EFA06D6B5B7E8A935602C6D4 /* ring_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ring_buffer.cpp; sourceTree = "<group>"; };
+		56A7BEF83122E6E93D3F2728 /* audio_ring_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_ring_buffer.h; sourceTree = "<group>"; };
+		664245FF2A7AAA4A0CEBDF7C /* thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread.cpp; sourceTree = "<group>"; };
+		69A036E19E16EF7C3E790468 /* ring_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ring_buffer.h; sourceTree = "<group>"; };
+		85B29969623F068F9144E752 /* libthread_engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libthread_engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE004DD1378F0A438BFD5226 /* tsqueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = tsqueue.hpp; sourceTree = "<group>"; };
+		B5688B33306D04C73C068171 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
+		D93F42A8D93D134BAEEE5AA8 /* thread_engine.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = thread_engine.gyp; sourceTree = "<group>"; };
+		EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_ring_buffer.cpp; sourceTree = "<group>"; };
+		F2B3B2119DEE055A1E290919 /* thread.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = thread.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		36B006B8B6934347D19855E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2845B8981F9F4DF921F89516 = {
+			isa = PBXGroup;
+			children = (
+				75A5588906890790B3BD6055 /* Source */,
+				2E5B295471092E289A95A5A3 /* Products */,
+				ABC5D748870E83CE29D9B32B /* Build */,
+			);
+			sourceTree = "<group>";
+		};
+		2E5B295471092E289A95A5A3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				85B29969623F068F9144E752 /* libthread_engine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		75A5588906890790B3BD6055 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */,
+				56A7BEF83122E6E93D3F2728 /* audio_ring_buffer.h */,
+				4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */,
+				69A036E19E16EF7C3E790468 /* ring_buffer.h */,
+				664245FF2A7AAA4A0CEBDF7C /* thread.cpp */,
+				F2B3B2119DEE055A1E290919 /* thread.hpp */,
+				AE004DD1378F0A438BFD5226 /* tsqueue.hpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		ABC5D748870E83CE29D9B32B /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				B5688B33306D04C73C068171 /* common.gypi */,
+				D93F42A8D93D134BAEEE5AA8 /* thread_engine.gyp */,
+			);
+			name = Build;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		19A7BE6AAB8E7AFA6731878E /* thread_engine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABBE316341690DBFA150A0EA /* Build configuration list for PBXNativeTarget "thread_engine" */;
+			buildPhases = (
+				0974DF1347D5F8FE2D056C70 /* Sources */,
+				36B006B8B6934347D19855E3 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = thread_engine;
+			productName = thread_engine;
+			productReference = 85B29969623F068F9144E752 /* libthread_engine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B4EEF38974DF349F168CE381 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
+			buildConfigurationList = 6234CBE57ADABE7DABC5F888 /* Build configuration list for PBXProject "thread_engine" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 2845B8981F9F4DF921F89516;
+			projectDirPath = ../../thread;
+			projectRoot = "";
+			targets = (
+				19A7BE6AAB8E7AFA6731878E /* thread_engine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0974DF1347D5F8FE2D056C70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2878ABB5311A1C668596B7D7 /* thread.cpp in Sources */,
+				EFA06D6B5B7E8A935602C6D4 /* ring_buffer.cpp in Sources */,
+				07109FD62CC95333BCF67AA1 /* audio_ring_buffer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		581EC851D4764A6E48ABD400 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = ../include;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
+				PRODUCT_NAME = thread_engine;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Default;
+		};
+		7A72E1259498715A09E32E19 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SDKROOT = iphoneos;
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6234CBE57ADABE7DABC5F888 /* Build configuration list for PBXProject "thread_engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A72E1259498715A09E32E19 /* Default */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Default;
+		};
+		ABBE316341690DBFA150A0EA /* Build configuration list for PBXNativeTarget "thread_engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				581EC851D4764A6E48ABD400 /* Default */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B4EEF38974DF349F168CE381 /* Project object */;
+}
