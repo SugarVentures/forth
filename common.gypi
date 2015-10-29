@@ -1,6 +1,15 @@
 {
 	'variables': {
-		'oppvs_root%': '<(DEPTH)/../'
+		'oppvs_root%': '<(DEPTH)/../',
+        'conditions': [
+            ['OS == "ios"', {
+                'oppvs_3rdlibs_path': '<!(echo "$HOME/cerbero/dist/ios_universal")'        
+            }],
+            ['OS == "mac"', {
+                'oppvs_3rdlibs_path': '<!(echo "$HOME/cerbero/dist/darwin_x86_64")'        
+            }],
+        ],        
+        
 	},
 
     'conditions': [
