@@ -23,13 +23,7 @@
                 '../interface',
                 '../audio',
                 '../../libs/libyuv/include',
-                '../../libs/libvpx',
-                '../../libs/libopus/include',
-
-                '../../libs/libnice',
-                '../../libs/libnice/agent',
-                '/usr/local/include/glib-2.0',
-                '../../libs/libnice/include'
+                '<(oppvs_3rdlibs_path)/include'
             ],
 
             'conditions': [
@@ -41,17 +35,15 @@
                     'xcode_settings': {
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                     },
-                    'libraries': [
-                        '../../libs/libsrtp.a',
-                    ],
+                    
                     'link_settings': {
                         'libraries': [
-                            '/usr/local/lib/libgio-2.0.0.dylib',
-                            '/usr/local/lib/libgobject-2.0.0.dylib',
-                            '/usr/local/lib/libgthread-2.0.0.dylib',
-                            '/usr/local/lib/libglib-2.0.0.dylib',
-                            '/usr/local/lib/libintl.a',
-                            '../../libs/libnice.10.dylib'
+                            '<(oppvs_3rdlibs_path)/lib/libgio-2.0.0.dylib',
+                            '<(oppvs_3rdlibs_path)/lib/libgobject-2.0.0.dylib',
+                            '<(oppvs_3rdlibs_path)/lib/libgthread-2.0.0.dylib',
+                            '<(oppvs_3rdlibs_path)/lib/libglib-2.0.0.dylib',
+                            '<(oppvs_3rdlibs_path)/lib/libintl.a',
+                            '<(oppvs_3rdlibs_path)/lib/libnice.10.dylib'
                         ]
                     }
 
