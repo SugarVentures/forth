@@ -434,7 +434,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		D9488CC41BDF5C4100646B70 /* Build Static Libs */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -442,13 +442,13 @@
 			name = "Build Static Libs";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "xcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos\n";
 		};
 		D9488CC51BDF5CC900646B70 /* Build Universal Binary */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -456,7 +456,7 @@
 			name = "Build Universal Binary";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "SIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\n#Merge static libs into one\nlibraries=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/*.a\"\nsimulator_libraries=\"\"\nfor filename in ${libraries}\ndo\nsimulator_libraries=\"${simulator_libraries} ${filename}\"\ndone\n\nlibtool ${simulator_libraries} -o \"${SIMULATOR_LIBRARY_PATH}\" &&\n\nlibraries=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/*.a\"\nsimulator_libraries=\"\"\nfor filename in ${libraries}\ndo\nsimulator_libraries=\"${simulator_libraries} ${filename}\"\ndone\n\nlibtool ${simulator_libraries} -o \"${DEVICE_LIBRARY_PATH}\" &&\n\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator.\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Merge with third parties libs\nTHIRD_PARTY_LIBRARY_PATH=\"/Users/caominhtrang/cerbero/dist/ios_universal/lib\"\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libglib-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libgio-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libgobject-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libiconv.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libgmodule-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libintl.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libffi.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libz.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libcrypto.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libgthread-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libnice.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libopus.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libvpx.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"";
 		};

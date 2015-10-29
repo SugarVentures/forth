@@ -343,7 +343,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		9B7A1F5D503E78CD1722B403 /* Default */ = {
+		1AD16B7ED718FCCC331AEB5A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -351,9 +351,9 @@
 				SDKROOT = iphoneos;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
 			};
-			name = Default;
+			name = Release;
 		};
-		9C8FB832DFDB18BDE104E9B8 /* Default */ = {
+		67C9EE876A9AC43C260D7213 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
@@ -363,7 +363,29 @@
 				PRODUCT_NAME = yuv;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
-			name = Default;
+			name = Release;
+		};
+		78D2FCBEBF9360FA1DDA284D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = include;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
+				PRODUCT_NAME = yuv;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Debug;
+		};
+		C108B4EFD5907D2CE58B4D4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SDKROOT = iphoneos;
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -371,18 +393,20 @@
 		0678C576456A85C741A54CA4 /* Build configuration list for PBXNativeTarget "yuv" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9C8FB832DFDB18BDE104E9B8 /* Default */,
+				78D2FCBEBF9360FA1DDA284D /* Debug */,
+				67C9EE876A9AC43C260D7213 /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		54432C639D0E4F1C2AA31DD2 /* Build configuration list for PBXProject "libyuv" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9B7A1F5D503E78CD1722B403 /* Default */,
+				C108B4EFD5907D2CE58B4D4A /* Debug */,
+				1AD16B7ED718FCCC331AEB5A /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

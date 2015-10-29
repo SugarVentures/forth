@@ -157,7 +157,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		1575A7386EACF6F3C0D9F0F8 /* Default */ = {
+		0EB1D836D377C9960AC2E041 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -165,9 +165,19 @@
 				SDKROOT = iphoneos;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
 			};
-			name = Default;
+			name = Debug;
 		};
-		22C6EFDE1C9230E5A4A21100 /* Default */ = {
+		148FC87AA918A488B279B6EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SDKROOT = iphoneos;
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Release;
+		};
+		C61073A1F922D539DBB06F4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
@@ -196,7 +206,38 @@
 				PRODUCT_NAME = streaming_engine;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
-			name = Default;
+			name = Release;
+		};
+		D00DE5AE444CC2024796ABCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = __APPLE_USE_RFC_3542;
+				HEADER_SEARCH_PATHS = (
+					../../libs/libsrtp/include,
+					../../libs/libsrtp/crypto/include,
+					../include,
+					../misc,
+					../thread,
+					../network,
+					../encoding,
+					../error,
+					../interface,
+					../audio,
+					../../libs/libyuv/include,
+					../../libs/libvpx,
+					../../libs/libopus/include,
+					../../libs/libnice,
+					../../libs/libnice/agent,
+					"/usr/local/include/glib-2.0",
+					../../libs/libnice/include,
+				);
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
+				PRODUCT_NAME = streaming_engine;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -204,18 +245,20 @@
 		0C87B1FA54B3763E34DA9706 /* Build configuration list for PBXNativeTarget "streaming_engine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				22C6EFDE1C9230E5A4A21100 /* Default */,
+				D00DE5AE444CC2024796ABCD /* Debug */,
+				C61073A1F922D539DBB06F4C /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		96AE687A263437AD6C301A27 /* Build configuration list for PBXProject "streaming_engine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1575A7386EACF6F3C0D9F0F8 /* Default */,
+				0EB1D836D377C9960AC2E041 /* Debug */,
+				148FC87AA918A488B279B6EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

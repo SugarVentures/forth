@@ -26,7 +26,7 @@ using namespace oppvs;
 
 void frameCallback(oppvs::PixelBuffer& pf)
 {
-    printf("Receive frame\n");
+    printf("Receive streaming frame\n");
     delete [] pf.plane[0];
 }
 
@@ -34,7 +34,7 @@ void streamingCallback(void* user)
 {
 }
 
-- (void) initStreamingEngine: (NSArray*) streamInfo
+- (void) initStreamingEngine
 {
     NSLog(@"Init forth streaming engine");
 

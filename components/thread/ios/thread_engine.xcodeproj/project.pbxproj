@@ -135,7 +135,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		581EC851D4764A6E48ABD400 /* Default */ = {
+		475EC3ECF04AB09427BEBDD2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
@@ -145,9 +145,21 @@
 				PRODUCT_NAME = thread_engine;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
-			name = Default;
+			name = Release;
 		};
-		7A72E1259498715A09E32E19 /* Default */ = {
+		59442534B42E2468ED84735B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = ../include;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
+				PRODUCT_NAME = thread_engine;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Debug;
+		};
+		5A5A789B45AEA9B30395B492 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -155,7 +167,17 @@
 				SDKROOT = iphoneos;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
 			};
-			name = Default;
+			name = Release;
+		};
+		9B435202D4AF84DC2CC05B3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SDKROOT = iphoneos;
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -163,18 +185,20 @@
 		6234CBE57ADABE7DABC5F888 /* Build configuration list for PBXProject "thread_engine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7A72E1259498715A09E32E19 /* Default */,
+				9B435202D4AF84DC2CC05B3F /* Debug */,
+				5A5A789B45AEA9B30395B492 /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		ABBE316341690DBFA150A0EA /* Build configuration list for PBXNativeTarget "thread_engine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				581EC851D4764A6E48ABD400 /* Default */,
+				59442534B42E2468ED84735B /* Debug */,
+				475EC3ECF04AB09427BEBDD2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

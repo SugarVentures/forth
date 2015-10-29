@@ -15,6 +15,6 @@
 
 }
 
-- (void) initStreamingEngine: (NSArray*) streamInfo;
+- (void) initStreamingEngine;
 
 @end

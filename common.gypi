@@ -46,11 +46,21 @@
             }],
 
             ['OS == "ios"', {
+                'default_configuration': 'Debug',
+                'configurations': {
+                    'Debug': {
+                        'DEBUG_INFORMATION_FORMAT': 'dwarf',
+                    },
+                    'Release': {
+                        'DEBUG_INFORMATION_FORMAT': 'dwarf-with-dsym',
+                    }
+                },
                 'xcode_settings': {
                     'CODE_SIGN_IDENTITY[sdk=iphoneos*': 'iPhone Developer',
                     'SUPPORTED_PLATFORMS': 'iphonesimulator iphoneos',
                     'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                 },
+
             }], # OS=="ios"
         ],
 		

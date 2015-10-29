@@ -213,7 +213,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		E5A389640AA15EE5A320222A /* Default */ = {
+		0F0B4B731B0D5119D22D1C84 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
@@ -234,9 +234,9 @@
 				PRODUCT_NAME = network_engine;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
-			name = Default;
+			name = Release;
 		};
-		FDDE5933E40D577863616B48 /* Default */ = {
+		1B79B697C0849D1EF57BDDC6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -244,7 +244,40 @@
 				SDKROOT = iphoneos;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
 			};
-			name = Default;
+			name = Release;
+		};
+		322ACE49B45222B4197BAF94 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SDKROOT = iphoneos;
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Debug;
+		};
+		5C4D223DD420A1800ECB6A2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = __APPLE_USE_RFC_3542;
+				HEADER_SEARCH_PATHS = (
+					../../libs/libsrtp/include,
+					../../libs/libsrtp/crypto/include,
+					../include,
+					../misc,
+					../thread,
+					../../libs/libnice,
+					../../libs/libnice/agent,
+					"/usr/local/include/glib-2.0",
+					../../libs/libnice/include,
+				);
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
+				PRODUCT_NAME = network_engine;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -252,18 +285,20 @@
 		64319BC3CB50808CBA133CD0 /* Build configuration list for PBXProject "network_engine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FDDE5933E40D577863616B48 /* Default */,
+				322ACE49B45222B4197BAF94 /* Debug */,
+				1B79B697C0849D1EF57BDDC6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		7F24B14C5DDB48D08BBC585D /* Build configuration list for PBXNativeTarget "network_engine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E5A389640AA15EE5A320222A /* Default */,
+				5C4D223DD420A1800ECB6A2E /* Debug */,
+				0F0B4B731B0D5119D22D1C84 /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

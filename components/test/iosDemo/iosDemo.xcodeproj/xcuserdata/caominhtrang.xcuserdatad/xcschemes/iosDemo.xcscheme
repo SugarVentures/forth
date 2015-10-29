@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D9488CC01BDF5C3300646B70"
-               BuildableName = "Forth-iOS"
-               BlueprintName = "Forth-iOS"
-               ReferencedContainer = "container:ForthIOS.xcodeproj">
+               BlueprintIdentifier = "D9488DB71BE1F30D00646B70"
+               BuildableName = "iosDemo.app"
+               BlueprintName = "iosDemo"
+               ReferencedContainer = "container:iosDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,6 +29,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "D9488DB71BE1F30D00646B70"
+            BuildableName = "iosDemo.app"
+            BlueprintName = "iosDemo"
+            ReferencedContainer = "container:iosDemo.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -42,15 +51,23 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D9488CC01BDF5C3300646B70"
-            BuildableName = "Forth-iOS"
-            BlueprintName = "Forth-iOS"
-            ReferencedContainer = "container:ForthIOS.xcodeproj">
+            BlueprintIdentifier = "D9488DB71BE1F30D00646B70"
+            BuildableName = "iosDemo.app"
+            BlueprintName = "iosDemo"
+            ReferencedContainer = "container:iosDemo.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "DYLD_LIBRARY_PATH"
+            value = "/Users/caominhtrang/cerbero/dist/ios_universal/lib/"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -60,15 +77,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D9488CC01BDF5C3300646B70"
-            BuildableName = "Forth-iOS"
-            BlueprintName = "Forth-iOS"
-            ReferencedContainer = "container:ForthIOS.xcodeproj">
+            BlueprintIdentifier = "D9488DB71BE1F30D00646B70"
+            BuildableName = "iosDemo.app"
+            BlueprintName = "iosDemo"
+            ReferencedContainer = "container:iosDemo.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
