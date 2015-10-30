@@ -3,7 +3,7 @@
 #include <chrono>
 
 namespace oppvs {
-	Depacketizer::Depacketizer(): p_recvPool(NULL)
+	Depacketizer::Depacketizer(): p_recvPool(NULL), m_user(NULL)
 	{
 		m_timestamp = 0;
 	}
@@ -161,6 +161,7 @@ namespace oppvs {
 						}
 						else
 						{
+                            pf.user = m_user;
 							m_callback(pf);
 						}
 						break;
@@ -182,6 +183,12 @@ namespace oppvs {
 	{
 		m_callback = cb;
 	}
+    
+    void Depacketizer::attachCallback(frame_callback cb, void* user)
+    {
+        m_callback = cb;
+        m_user = user;
+    }
 
 	DepacketizerThread::DepacketizerThread(Depacketizer* dep) : Thread(run, this), m_exitThread(false), p_depacketizer(dep)
 	{

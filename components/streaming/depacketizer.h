@@ -57,16 +57,17 @@ namespace oppvs {
 
 		int pullFrame(PixelBuffer&, SharedDynamicBufferRef);
 		int pullFrame(SharedDynamicBufferRef, uint8_t source, uint32_t ts);
+        
+        void* m_user;
 	public:
 		Depacketizer();
 		~Depacketizer();
 
 		void init(ServiceInfo*, VideoFrameBuffer* pvideoBuf, AudioRingBuffer* paudioBuf);
-		void attachCallback(frame_callback cb);
+		void attachCallback(frame_callback cb, void* user);
+        void attachCallback(frame_callback cb);
 		void start();
 		void pushSegment(uint8_t* data, uint32_t len);
-		
-
 		void pullFrame(SharedIncomingStreamingFrame frame);
 	};
 

@@ -66,6 +66,7 @@ namespace oppvs
 		bool isRunning();
 		void setIsRunning(bool value);
 		void registerCallback(frame_callback cb);
+        void registerCallback(frame_callback cb, void* user);
 		void registerCallback(streaming_callback cb, void* user);
 		void attachBuffer(AudioRingBuffer* pbuf);
 		void attachBuffer(VideoFrameBuffer* pbuf);
@@ -89,6 +90,7 @@ namespace oppvs
 		frame_callback m_callback;
 		streaming_callback m_streamingCallback;
 		void* m_streamingUser;
+        void* m_frameUser;
 
 		ServiceInfo m_serviceInfo;	//Store information of stream: video capture sources info
 		void printServiceInfo();

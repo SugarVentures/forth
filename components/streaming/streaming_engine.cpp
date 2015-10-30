@@ -121,6 +121,12 @@ namespace oppvs
 	{
 		m_callback = cb;
 	}
+    
+    void StreamingEngine::registerCallback(frame_callback cb, void* user)
+    {
+        m_callback = cb;
+        m_frameUser = user;
+    }
 
 	void StreamingEngine::registerCallback(streaming_callback cb, void* user)
 	{
@@ -284,7 +290,7 @@ namespace oppvs
 		m_serviceInfo = info;
 		p_audioRingBuffer->allocate(8, 10 * 512);
 		m_depacketizer.init(&m_serviceInfo, p_videoFrameBuffer, p_audioRingBuffer);
-		m_depacketizer.attachCallback(m_callback);
+		m_depacketizer.attachCallback(m_callback, m_frameUser);
 		m_streamingCallback(m_streamingUser);
 		return 0;
 	}
