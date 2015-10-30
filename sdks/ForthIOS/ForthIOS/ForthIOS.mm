@@ -12,7 +12,7 @@
 
 using namespace oppvs;
 
-@interface ForthIOS()
+@interface ForthStreaming()
 {
 @private
     StreamingEngine mStreamingEngine;
@@ -20,39 +20,31 @@ using namespace oppvs;
     VideoFrameBuffer mVideoFrameBuffer;
 }
 
+- (void) streamingCallback;
+
 @end
 
-@implementation ForthIOS
+@implementation ForthStreaming
 
 void frameCallback(oppvs::PixelBuffer& pf)
 {
-    printf("Receive streaming frame\n");
+    //printf("Receive streaming frame\n");
     delete [] pf.plane[0];
+    ForthStreaming *forth = (__bridge ForthStreaming*)pf.user;
+    [[forth delegate] frameCallback:pf.plane[0] withWidth:pf.width[0] andHeight:pf.height[0] andStride:pf.stride[0]];
 }
 
 void streamingCallback(void* user)
 {
+    ForthStreaming *forth = (__bridge ForthStreaming*)user;
+    [forth streamingCallback];
 }
 
-- (void) initStreamingEngine
+- (void) startStreaming
 {
     NSLog(@"Init forth streaming engine");
 
-    
-    std::vector<VideoActiveSource> vSources;
-    VideoActiveSource source;
-    source.video_source_type = VST_WEBCAM;
-    source.rect.bottom = 0;
-    source.rect.top = 780;
-    source.rect.left = 0;
-    source.rect.right = 1280;
-    source.stride = 1280 * 4;
-    source.id = 1;
-    vSources.push_back(source);
-    std::vector<AudioActiveSource> aSources;
-    
-    //mStreamingEngine.setStreamInfo(vSources, aSources);
-    mStreamingEngine.registerCallback(frameCallback);
+    mStreamingEngine.registerCallback(frameCallback, (__bridge void*)self);
     mStreamingEngine.registerCallback(streamingCallback, (__bridge void*)self);
     mStreamingEngine.attachBuffer(&mAudioRingBuffer);
     mStreamingEngine.attachBuffer(&mVideoFrameBuffer);
@@ -68,6 +60,11 @@ void streamingCallback(void* user)
         NSLog(@"Failed to start streaming engine");
         return;
     }
+}
+
+- (void) streamingCallback
+{
+    NSLog(@"Streaming callback");
 }
 
 @end

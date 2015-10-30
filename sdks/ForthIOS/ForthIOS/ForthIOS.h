@@ -9,12 +9,19 @@
 #import <Foundation/Foundation.h>
 #import "Constants.h"
 
-@interface ForthIOS : NSObject
-{
-@private
+@protocol ForthStreamingDelegate <NSObject>
 
+- (void)frameCallback: (void*)data withWidth: (int)width andHeight: (int)height andStride: (int)stride;
+
+@end
+
+@interface ForthStreaming : NSObject
+{
+    id <ForthStreamingDelegate> _delegate;
 }
 
-- (void) initStreamingEngine;
+@property (nonatomic,strong) id delegate;
+- (void) startStreaming;
+
 
 @end
