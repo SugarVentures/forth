@@ -23,7 +23,9 @@
                 '../interface',
                 '../audio',
                 '../../libs/libyuv/include',
-                '<(oppvs_3rdlibs_path)/include'
+                '<(oppvs_3rdlibs_path)/include',
+                '<(oppvs_3rdlibs_path)/include/glib-2.0',
+                '<(oppvs_3rdlibs_path)/lib/glib-2.0/include'
             ],
 
             'conditions': [
