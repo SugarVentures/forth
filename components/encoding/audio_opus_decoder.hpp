@@ -1,8 +1,8 @@
 #ifndef OPPVS_AUDIO_OPUS_DECODER_HPP
 #define OPPVS_AUDIO_OPUS_DECODER_HPP
 
-#include "opus.h"
-#include "opus_multistream.h"
+#include "opus/opus.h"
+#include "opus/opus_multistream.h"
 
 #include "datatypes.hpp"
 #include <vector>

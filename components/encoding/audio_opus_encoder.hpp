@@ -2,8 +2,8 @@
 #define OPPVS_AUDIO_OPUS_ENCODER_HPP
 
 //Opus headers
-#include "opus_multistream.h"
-#include "opus.h"
+#include "opus/opus_multistream.h"
+#include "opus/opus.h"
 
 //Local headers
 #include "datatypes.hpp"

@@ -47,7 +47,7 @@
                         '../../libs/libsrtp/crypto/include',
                         '../../libs/libopus/include',
                         '../../libs/libyuv/include',
-                        '~/cerbero/dist/ios_universal/include'
+                        '<(oppvs_3rdlibs_path)/include'
                     ],
                 }]
             ],
