@@ -2,12 +2,16 @@
 #define OPPVS_MAC_AUDIO_CAPTURE_HPP
 
 #include "audio_capture.hpp"
-
 #include <AudioUnit/AudioUnit.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <CoreFoundation/CoreFoundation.h>
 #include "mac_utility/CAStreamBasicDescription.h"
 #include "mac_audio_resampler.hpp"
+
+#ifdef FORTH_IOS
+typedef UInt32 AudioDeviceID;
+#define kAudioUnitSubType_HALOutput kAudioUnitType_Output;
+#endif
 
 namespace oppvs {
 	class MacAudioCapture : public AudioCapture
