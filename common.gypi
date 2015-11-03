@@ -70,6 +70,8 @@
                     'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                 },
 
+                'defines': [ 'FORTH_IOS' ],
+
             }], # OS=="ios"
         ],
 		

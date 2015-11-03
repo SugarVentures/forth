@@ -2,7 +2,11 @@
 #define OPPVS_MAC_AUDIO_PLAY_HPP
 
 #import <AudioToolbox/AudioToolbox.h>
+#ifdef __OSX__
 #import <CoreAudio/CoreAudio.h>
+#else
+#import <CoreAudio/CoreAudioTypes.h>
+#endif
 #include "mac_utility/CAStreamBasicDescription.h"
 #include "mac_utility/CARingBuffer.h"
 #include "audio_play.hpp"
