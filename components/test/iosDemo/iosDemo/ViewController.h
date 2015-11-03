@@ -7,9 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ForthIOS.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<ForthStreamingDelegate>
 
+@property (weak, nonatomic) IBOutlet UITextField    *textField;
+@property (weak, nonatomic) IBOutlet UILabel        *label;
+@property (weak, nonatomic) IBOutlet UIButton       *button;
+
+@property (weak, nonatomic) IBOutlet UIView         *container;
+- (IBAction)buttonDidPress:(UIButton *)sender;
+- (IBAction)textFieldDidEnd:(UITextField *)sender;
 
 @end
 

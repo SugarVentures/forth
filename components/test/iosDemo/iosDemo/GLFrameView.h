@@ -19,5 +19,6 @@
 }
 
 - (void)setupGL;
+- (void)render: (GLubyte*)data withWidth: (GLuint)width andHeight: (GLuint)height;
 
 @end
