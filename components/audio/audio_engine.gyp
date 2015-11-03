@@ -19,7 +19,7 @@
                 '../thread/thread_engine.gyp:thread_engine',
             ],
             'conditions': [
-                ['OS == "mac"', {
+                ['OS == "mac" or OS ==  "ios" ', {
                     'xcode_settings': {
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                     },
