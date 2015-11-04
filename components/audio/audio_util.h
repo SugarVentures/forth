@@ -6,7 +6,7 @@
 
 typedef UInt32 AudioDeviceID;
 #define kAudioUnitSubType_HALOutput kAudioUnitType_Output;
-#define kAudioUnitSubType_DefaultOutput kAudioUnitSubType_GenericOutput;
+#define kAudioUnitSubType_DefaultOutput kAudioUnitSubType_RemoteIO;
 #endif
 
 
