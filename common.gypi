@@ -3,7 +3,8 @@
 		'oppvs_root%': '<(DEPTH)/../',
         'conditions': [
             ['OS == "ios"', {
-                'oppvs_3rdlibs_path': '<!(echo "$HOME/cerbero/dist/ios_universal")'        
+                'oppvs_3rdlibs_path': '<!(echo "$HOME/cerbero/dist/ios_universal")',
+                'oppvs_xcode_path': '<!(echo `xcode-select --print-path`)'  
             }],
             ['OS == "mac"', {
                 'oppvs_3rdlibs_path': '<!(echo "$HOME/cerbero/dist/darwin_x86_64")'        
