@@ -335,10 +335,6 @@ namespace oppvs {
         printFormat(m_convertFormat);
         printFormat(m_variFormat);
         
-        err = configureOutputFile(m_convertFormat);
-        if (err)
-            printf("Cannot create output file\n");
-        
 		return err;
 	}
 
@@ -382,39 +378,6 @@ namespace oppvs {
             ioData->mBuffers[0].mDataByteSize = *ioNumberDataPackets * player->m_convertFormat.mBytesPerPacket;
         }
         return err;
-    }
-    
-    OSStatus MacAudioPlay::configureOutputFile(CAStreamBasicDescription& sformat)
-    {
-        OSStatus err = noErr;
-        m_totalPos = 0;
-        CFURLRef destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
-                                                                CFSTR("/Users/caominhtrang/Desktop/testaudioout.wav"),
-                                                                kCFURLPOSIXPathStyle,
-                                                                false);
-        
-        err = AudioFileCreateWithURL(destinationURL, kAudioFileCAFType, &sformat, kAudioFileFlags_EraseFile, &fOutputAudioFile);
-        
-        checkResult(err, "Can not create audio file");
-        return err;
-    }
-    
-    void MacAudioPlay::writeCookie (AudioConverterRef converter, AudioFileID outfile)
-    {
-        // grab the cookie from the converter and write it to the file
-        UInt32 cookieSize = 0;
-        OSStatus err = AudioConverterGetPropertyInfo(converter, kAudioConverterCompressionMagicCookie, &cookieSize, NULL);
-        // if there is an error here, then the format doesn't have a cookie, so on we go
-        if (!err && cookieSize) {
-            char* cookie = new char [cookieSize];
-            
-            err = AudioConverterGetProperty(converter, kAudioConverterCompressionMagicCookie, &cookieSize, cookie);
-            checkResult(err, "Get Cookie From AudioConverter");
-            
-            /*err =*/ AudioFileSetProperty (outfile, kAudioFilePropertyMagicCookieData, cookieSize, cookie);
-            // even though some formats have cookies, some files don't take them, so we ignore the error
-            delete [] cookie;
-        }
     }
     
 

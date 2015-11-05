@@ -1,6 +1,8 @@
 #ifndef OPPVS_MAC_AUDIO_CAPTURE_HPP
 #define OPPVS_MAC_AUDIO_CAPTURE_HPP
 
+#include "audio_util.h"
+
 #include "audio_capture.hpp"
 #include <AudioUnit/AudioUnit.h>
 #import <AudioToolbox/AudioToolbox.h>
@@ -8,10 +10,6 @@
 #include "mac_utility/CAStreamBasicDescription.h"
 #include "mac_audio_resampler.hpp"
 
-#ifdef FORTH_IOS
-typedef UInt32 AudioDeviceID;
-#define kAudioUnitSubType_HALOutput kAudioUnitType_Output;
-#endif
 
 namespace oppvs {
 	class MacAudioCapture : public AudioCapture
@@ -32,10 +30,7 @@ namespace oppvs {
 		MacAudioResampler m_resampler;
         
         AudioBufferList* m_bufferList;   //Use to render audio data in recording thread
-        Float64 m_sampleRatio;          //The ratio between the device and the stream sample rate
-        UInt32 m_bufferSize;
-        char*  m_bufferData;
-                
+
         Float32 m_convertSampleRate;
 
         UInt32 m_streamBufferSize;
@@ -54,10 +49,6 @@ namespace oppvs {
 										AudioBufferList*				ioData,
 										AudioStreamPacketDescription**	outDataPacketDescription,
 										void*							inUserData);
-
-		AudioFileID fOutputAudioFile;
-		OSStatus configureOutputFile(CAStreamBasicDescription& format);
-        void writeCookie (AudioConverterRef converter, AudioFileID outfile);
         
 	};
 

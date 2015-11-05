@@ -50,8 +50,6 @@ namespace oppvs {
 		AudioUnit m_varispeedUnit;
 		AUNode m_outputNode;
 		AudioUnit m_outputUnit;
-        //AUNode m_converterNode;
-        //AudioUnit m_converterUnit;
         
 		CARingBuffer *m_buffer;
 		double m_firstInputTime;
@@ -88,11 +86,6 @@ namespace oppvs {
                                         AudioBufferList*				ioData,
                                         AudioStreamPacketDescription**	outDataPacketDescription,
                                         void*							inUserData);
-
-        UInt32 m_totalPos;
-        AudioFileID fOutputAudioFile;
-        OSStatus configureOutputFile(CAStreamBasicDescription& format);
-        void writeCookie (AudioConverterRef converter, AudioFileID outfile);
 	};
 
 } // oppvs

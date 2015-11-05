@@ -2,8 +2,8 @@
 #include "mac_audio_tool.hpp"
 
 namespace oppvs {
-    MacAudioCapture::MacAudioCapture(const AudioDevice& device) : AudioCapture(device), m_bufferList(NULL),
-    m_sampleRatio(0.0), m_bufferSize(0), m_bufferData(NULL)
+    MacAudioCapture::MacAudioCapture(const AudioDevice& device) : AudioCapture(device), m_bufferList(NULL)
+    
     {
         m_convertSampleRate = 48000;
     }
@@ -48,11 +48,6 @@ namespace oppvs {
         
 		if (m_resampler.init(m_deviceFormat, m_streamFormat) < 0)
             return -1;
-        err = configureOutputFile(m_streamFormat);
-        if (err)
-            printf("Cannot create output file\n");
-
-        writeCookie(m_resampler.getConverter(), fOutputAudioFile);
         
         m_deviceFormat.Print();
         printf("Output capture format: %d %d %d %d %d\n", m_deviceFormat.mBitsPerChannel, m_deviceFormat.mBytesPerFrame, m_deviceFormat.mChannelsPerFrame, m_deviceFormat.mBytesPerPacket, m_deviceFormat.mFramesPerPacket);
@@ -83,8 +78,6 @@ namespace oppvs {
 			if (err)
 				return -1;
 		}
-        writeCookie(m_resampler.getConverter(), fOutputAudioFile);
-		AudioFileClose(fOutputAudioFile);
 		return 0;
 	}
 
@@ -221,25 +214,37 @@ namespace oppvs {
 		CAStreamBasicDescription deviceFormat;
 		UInt32 bufferSizeFrames, propsize;		
     	UInt32 size = sizeof(CAStreamBasicDescription);
-
-    	//Get the size of the IO buffers
-    	propsize = sizeof(bufferSizeFrames);
-    	OSStatus err = AudioUnitGetProperty(m_auHAL, kAudioDevicePropertyBufferFrameSize, kAudioUnitScope_Global, 0, &bufferSizeFrames, &propsize);
-		if (err)
-			return -1;
- 
-	     //Get the input device format
-	    err = AudioUnitGetProperty (m_auHAL, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 1, &deviceFormat, &size);
-	    if (err)
-	    	return -1;
-
+        
+        OSStatus err;
+        //Get the input device format
+        err = AudioUnitGetProperty (m_auHAL, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 1, &deviceFormat, &size);
+        if (err)
+            return -1;
+        
         //Get the output format
-	    err = AudioUnitGetProperty (m_auHAL, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &m_deviceFormat, &size);
-	 	if (err)
-	 		return -1;
-
+        err = AudioUnitGetProperty (m_auHAL, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &m_deviceFormat, &size);
+        if (err)
+            return -1;
+        
         m_deviceFormat = deviceFormat;
         
+    	//Get the size of the IO buffers
+#ifndef FORTH_IOS
+    	propsize = sizeof(bufferSizeFrames);
+    	err = AudioUnitGetProperty(m_auHAL, kAudioDevicePropertyBufferFrameSize, kAudioUnitScope_Global, 0, &bufferSizeFrames, &propsize);
+		if (err)
+			return -1;
+#else
+        Float32 bufferDuration;
+        propsize = sizeof(Float32);
+        err = AudioUnitGetProperty(m_auHAL, kAudioSessionProperty_CurrentHardwareIOBufferDuration, kAudioUnitScope_Global, 0, &bufferDuration, &propsize);
+        
+        bufferSizeFrames = bufferDuration * m_deviceFormat.mSampleRate;
+        if (err)
+            return -1;
+#endif
+ 
+	     
         //set format to output scope
 	    AudioUnitSetProperty(m_auHAL, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &m_deviceFormat, sizeof(CAStreamBasicDescription));
 	    
@@ -261,39 +266,6 @@ namespace oppvs {
         
 		return 0;
 	}
-
-	OSStatus MacAudioCapture::configureOutputFile(CAStreamBasicDescription& sformat)
-	{
-		OSStatus err = noErr;
-		CFURLRef destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, 
-		                                                        CFSTR("/Users/caominhtrang/Desktop/testaudio.wav"),
-		                                                        kCFURLPOSIXPathStyle, 
-		                                                        false);
-	    
-	    err = AudioFileCreateWithURL(destinationURL, kAudioFileCAFType, &sformat, kAudioFileFlags_EraseFile, &fOutputAudioFile);
-
-        checkResult(err, "Can not create audio file");
-		return err;
-	}
-    
-    void MacAudioCapture::writeCookie (AudioConverterRef converter, AudioFileID outfile)
-    {
-        // grab the cookie from the converter and write it to the file
-        UInt32 cookieSize = 0;
-        OSStatus err = AudioConverterGetPropertyInfo(converter, kAudioConverterCompressionMagicCookie, &cookieSize, NULL);
-        // if there is an error here, then the format doesn't have a cookie, so on we go
-        if (!err && cookieSize) {
-            char* cookie = new char [cookieSize];
-            
-            err = AudioConverterGetProperty(converter, kAudioConverterCompressionMagicCookie, &cookieSize, cookie);
-            checkResult(err, "Get Cookie From AudioConverter");
-            
-            /*err =*/ AudioFileSetProperty (outfile, kAudioFilePropertyMagicCookieData, cookieSize, cookie);
-            // even though some formats have cookies, some files don't take them, so we ignore the error
-            delete [] cookie;
-        }
-    }
-
 
 	
 } // oppvs
