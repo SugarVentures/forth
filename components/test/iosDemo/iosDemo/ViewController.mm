@@ -14,6 +14,7 @@
 {
 @private
     ForthStreaming *mForth;
+    ForthPlayer *mPlayer;
 }
 
 @property (nonatomic, strong) GLFrameView *demoView;
@@ -33,8 +34,9 @@
     @autoreleasepool {
         mForth = [[ForthStreaming alloc] init];
         mForth.delegate = self;
+        
+        [mForth setupAudioPlayer];
     }
-    
     
 }
 
@@ -65,7 +67,7 @@
 - (void)frameCallback:(void *)data withWidth:(int)width andHeight:(int)height andStride:(int)stride
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.demoView render:data withWidth:width andHeight:height];
+        [self.demoView render:(GLubyte*)data withWidth:width andHeight:height];
     });
 }
 @end

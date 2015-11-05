@@ -7,12 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import "ForthIOS.h"
 
 @interface AppDelegate ()
 {
 @private
-    ForthIOS *mForth;
+
 }
 @end
 
@@ -20,8 +19,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    mForth = [[ForthIOS alloc] init];
-    [mForth initStreamingEngine];
     return YES;
 }
 
@@ -45,6 +42,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    NSLog(@"Exit");
 }
 
 @end
