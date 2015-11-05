@@ -8,7 +8,7 @@
             'target_name': 'encoding_engine',
             
             'dependencies': [
-
+                '../../libs/libyuv/libyuv.gyp:yuv',
             ],
             
             'conditions': [
@@ -18,23 +18,22 @@
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                     },
                     'libraries': [
-                        '../../libs/libopus.a',
+                        '<(oppvs_3rdlibs_path)/lib/libopus.a',
+                        '<(oppvs_3rdlibs_path)/lib/libvpx.a'
                     ],
                     'include_dirs': [
                         '../include',
                         '../error',
                         '../misc',
-                        '../../libs/libsrtp/include',
-                        '../../libs/libsrtp/crypto/include',
-                        '../../libs/libopus/include',
-                        '../../libs/libyuv/include'
+                        '<(oppvs_3rdlibs_path)/include',
+                        '../../libs/libyuv/include',
                     ],
 
                 }],
                 ['OS == "linux"', {
                     'type': 'shared_library',
                     'libraries': [
-                        '../../../libs/libopus.a',
+                        '<(oppvs_3rdlibs_path)/lib/libopus.a',
                     ],
                 }],
                 ['OS == "ios"', {
@@ -43,11 +42,8 @@
                         '../include',
                         '../error',
                         '../misc',
-                        '../../libs/libsrtp/include',
-                        '../../libs/libsrtp/crypto/include',
-                        '../../libs/libopus/include',
                         '../../libs/libyuv/include',
-                        '<(oppvs_3rdlibs_path)/include'
+                        '<(oppvs_3rdlibs_path)/include',
                     ],
                 }]
             ],

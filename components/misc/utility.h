@@ -12,8 +12,8 @@ extern "C"
 {
 #endif
 
-#include "crypto_kernel.h"
-#include "sha1.h"
+#include "srtp/crypto_kernel.h"
+#include "srtp/sha1.h"
 
 
 void printHashCode(const void* msg, int len);
