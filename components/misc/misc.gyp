@@ -23,7 +23,7 @@
                 }],
             ],
             'include_dirs': [
-                '../../libs/libsrtp/crypto/include',
+                '<(oppvs_3rdlibs_path)/include',
                 '../include'
             ],
             'libraries': [

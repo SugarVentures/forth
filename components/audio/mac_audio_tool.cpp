@@ -119,8 +119,12 @@ namespace oppvs {
 		for (UInt32 i = 0; i < ioData->mNumberBuffers; i++)
         {
 			//memset(ioData->mBuffers[i].mData, 0, ioData->mBuffers[i].mDataByteSize);
+#ifndef FORTH_IOS
             ioData->mBuffers[i].mData = NULL;
             ioData->mBuffers[i].mDataByteSize = 0;
+#else       
+            memset(ioData->mBuffers[i].mData, 0, ioData->mBuffers[i].mDataByteSize);
+#endif
         }
 	}
     

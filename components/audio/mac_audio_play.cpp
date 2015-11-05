@@ -188,7 +188,7 @@ namespace oppvs {
 	{
 		UInt32 size = sizeof(AudioDeviceID);;
 	    OSStatus err = noErr;
-	    	    
+#ifndef FORTH_IOS
 	    AudioObjectPropertyAddress theAddress = { kAudioHardwarePropertyDefaultOutputDevice,
 	                                              kAudioObjectPropertyScopeGlobal,
 	                                              kAudioObjectPropertyElementMaster };
@@ -206,7 +206,7 @@ namespace oppvs {
 								  0, 
 								  &deviceid, 
 								  sizeof(deviceid));
-								
+#endif
 		return err;
 	}
 
@@ -219,7 +219,7 @@ namespace oppvs {
 	{
 		OSStatus err = noErr;
 		MacAudioPlay* player = (MacAudioPlay*)inRefCon;
-        double rate = 1.0;
+        double rate = 48000.0/44100.0;
 		//printf("AudioPlay: sample time: %f Frames: %d at %f\n", TimeStamp->mSampleTime, inNumberFrames, CFAbsoluteTimeGetCurrent());
         
 		if (player->getFirstInputTime() < 0.)
@@ -239,7 +239,7 @@ namespace oppvs {
 			{
 				player->m_firstOutputTime = TimeStamp->mSampleTime;
                 double delta = player->m_firstInputTime - player->m_firstOutputTime;
-				printf("in time: %f out time: %f delta: %f\n", player->m_firstInputTime, player->m_firstOutputTime, delta);
+				//printf("in time: %f out time: %f delta: %f\n", player->m_firstInputTime, player->m_firstOutputTime, delta);
 
 				//player->m_offset = 1175.0; //Fix for now
                 player->m_offset = 0.0;
@@ -297,7 +297,7 @@ namespace oppvs {
         
         //Get the lower number of channels
         variFormat.mChannelsPerFrame = (outputFormat.mChannelsPerFrame < m_inputNumChannels) ? outputFormat.mChannelsPerFrame : m_inputNumChannels;
-        variFormat.mSampleRate = m_inputSampleRate;
+        variFormat.mSampleRate = 44100.0;
         
 		err = AudioUnitSetProperty(m_varispeedUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &variFormat, propertySize);
         checkResult(err, "AudioUnitSetProperty: m_varispeedUnit");

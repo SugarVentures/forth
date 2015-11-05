@@ -1,13 +1,13 @@
 //
-//  ForthIOS.h
+//  ForthStreaming.h
 //  ForthIOS
 //
-//  Created by Cao Minh Trang on 10/27/15.
+//  Created by Cao Minh Trang on 11/4/15.
 //  Copyright © 2015 Cao Minh Trang. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "Constants.h"
+#ifndef ForthStreaming_h
+#define ForthStreaming_h
 
 @protocol ForthStreamingDelegate <NSObject>
 
@@ -22,6 +22,9 @@
 
 @property (nonatomic,strong) id delegate;
 - (void) startStreaming;
-
+- (void) setupAudioPlayer;
 
 @end
+
+
+#endif /* ForthStreaming_h */

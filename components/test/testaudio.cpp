@@ -176,7 +176,6 @@ void audioCallback(GenericAudioBufferList& ab)
     }
     
     oppvs::RingBufferError err = ringBuffer->store(&noFrames, ab.buffers[0].data, ab.sampleTime);
-    printf("Store error: %d wrote frames: %d Time: %f\n", err, noFrames, CFAbsoluteTimeGetCurrent());
 
 
 	/*int len = pencoder->encode(in, 1, (float*)out);
@@ -213,7 +212,7 @@ int main(int argc, char const *argv[])
 	engine.getListAudioDevices(devices, false);
 	engine.printAudioDeviceList();
 
-	uint32_t deviceid = 175;
+	uint32_t deviceid = 40;
 	if (engine.init() < 0)
 		return -1;
 

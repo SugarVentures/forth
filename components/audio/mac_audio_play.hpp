@@ -1,8 +1,10 @@
 #ifndef OPPVS_MAC_AUDIO_PLAY_HPP
 #define OPPVS_MAC_AUDIO_PLAY_HPP
 
+#include "audio_util.h"
+
 #import <AudioToolbox/AudioToolbox.h>
-#ifdef __OSX__
+#ifndef FORTH_IOS
 #import <CoreAudio/CoreAudio.h>
 #else
 #import <CoreAudio/CoreAudioTypes.h>

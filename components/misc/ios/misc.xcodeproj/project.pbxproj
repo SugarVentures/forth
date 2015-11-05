@@ -333,6 +333,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -344,6 +345,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -362,8 +364,9 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
 				HEADER_SEARCH_PATHS = (
-					../../libs/libsrtp/crypto/include,
+					/Users/caominhtrang/cerbero/dist/ios_universal/include,
 					../include,
 				);
 				LIBRARY_SEARCH_PATHS = ../../libs;
@@ -385,6 +388,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
 				HEADER_SEARCH_PATHS = ../include;
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc2;
@@ -397,6 +401,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
 				HEADER_SEARCH_PATHS = ../include;
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc2;
@@ -409,8 +414,9 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
 				HEADER_SEARCH_PATHS = (
-					../../libs/libsrtp/crypto/include,
+					/Users/caominhtrang/cerbero/dist/ios_universal/include,
 					../include,
 				);
 				LIBRARY_SEARCH_PATHS = ../../libs;
