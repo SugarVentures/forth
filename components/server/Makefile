@@ -10,18 +10,22 @@ CFLAGS = -Wall -g -fPIC -std=c++11
 LDFLAGS = -L$(rootDir)/../../libs/
 LIBS = -lnetworkengine -lthreadengine
 
-SRCS = signaling_server_subthread.cpp signaling_server_thread.cpp signaling_server.cpp signaling_server_main.cpp
-OBJS = $(subst .cpp,.o,$(SRCS))
+SIG_SRCS = signaling_server_subthread.cpp signaling_server_thread.cpp signaling_server.cpp signaling_server_main.cpp
+SIG_OBJS = $(subst .cpp,.o,$(SIG_SRCS))
 
+FORWD_SRCS = forwarding_server.cpp forwarding_server_main.cpp
+FORWD_OBJS = $(subst .cpp,.o,$(FORWD_SRCS))
 
 
 rootDir = .
 
-all: sig_server
+all: sig_server forwarding_server
 
-sig_server: $(OBJS)
-	$(CXX) $(INCDIR) $(LDFLAGS) -o sig_server $(OBJS) $(LIBS)
+sig_server: $(SIG_OBJS)
+	$(CXX) $(INCDIR) $(LDFLAGS) -o sig_server $(SIG_OBJS) $(LIBS)
 
+forwarding_server: $(FORWD_OBJS)
+	$(CXX) $(INCDIR) $(LDFLAGS) -o forwarding_server $(FORWD_OBJS) $(LIBS)
 
 %.o: %.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -c -o $@ $<	
