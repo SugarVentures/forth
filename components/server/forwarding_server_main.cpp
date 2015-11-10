@@ -44,24 +44,26 @@ void waitForAppExitSignal()
 
 int main(int argc, char* argv[])
 {
-	if (argc < 3)
+	if (argc < 2)
 	{
 		std::cout << "Please enter primary server address: [local address] [public address]" << std::endl;
 		return -1;
 	}
 
 	char* localAddress = argv[1];
-	char* publicAddress = argv[2];
 
 	signal(SIGPIPE, SIG_IGN);
     
     initAppExitListener();
 	
 	oppvs::ForwardingServer server;
+    oppvs::ForwardingServerConfiguration config;
+    config.addressListen.setIP(oppvs::IPAddress(localAddress));
+    config.addressListen.setPort(oppvs::DEFAULT_FORWARDING_SERVER_PORT);
 	std::cout << "Start server" << std::endl;
 
 
-	server.init();
+	server.init(config);
 	server.start();
 	waitForAppExitSignal();
     server.shutdown();

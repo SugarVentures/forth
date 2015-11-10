@@ -7,13 +7,13 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../erro
 
 CFLAGS = -Wall -g -fPIC -std=c++11
 
-LDFLAGS = -L$(rootDir)/../../libs/
+LDFLAGS += -Wl -L$(rootDir)/../../libs/
 LIBS = -lnetworkengine -lthreadengine
 
 SIG_SRCS = signaling_server_subthread.cpp signaling_server_thread.cpp signaling_server.cpp signaling_server_main.cpp
 SIG_OBJS = $(subst .cpp,.o,$(SIG_SRCS))
 
-FORWD_SRCS = forwarding_server.cpp forwarding_server_main.cpp
+FORWD_SRCS = forwarding_server_subthread.cpp forwarding_server_thread.cpp forwarding_server.cpp forwarding_server_main.cpp
 FORWD_OBJS = $(subst .cpp,.o,$(FORWD_SRCS))
 
 
@@ -25,7 +25,7 @@ sig_server: $(SIG_OBJS)
 	$(CXX) $(INCDIR) $(LDFLAGS) -o sig_server $(SIG_OBJS) $(LIBS)
 
 forwarding_server: $(FORWD_OBJS)
-	$(CXX) $(INCDIR) $(LDFLAGS) -o forwarding_server $(FORWD_OBJS) $(LIBS)
+	$(CXX) $(INCDIR) $(LDFLAGS)  $(FORWD_OBJS) $(LIBS) -o forwarding_server
 
 %.o: %.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -c -o $@ $<	
