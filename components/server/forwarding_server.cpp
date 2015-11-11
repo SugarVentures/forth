@@ -22,6 +22,7 @@ namespace oppvs {
 		printf("Add socket for forwarding server: %s\n", psock->getLocalAddress().toString().c_str());
 
 		ForwardingServerThread* thread = new ForwardingServerThread();
+		thread->init(psock);
 		m_threads.push_back(thread);
 	}
 		
@@ -84,7 +85,6 @@ namespace oppvs {
 			printf("Binding error %s\n", strerror(errno));
 			return -1;
 		}
-
 		
 		return 0;
 	}

@@ -3,7 +3,7 @@
 
 #include "thread.hpp"
 #include "physical_socket.hpp"
-
+#include "dynamic_buffer.hpp"
 
 namespace oppvs {
 	class ForwardingServerSubThread : public Thread
@@ -15,13 +15,23 @@ namespace oppvs {
 		void signalForStop();
 		void waitForStopAndClose();
 
-		void run();
+		int init(PhysicalSocket* socket, int sockfd, const SocketAddress &remote);
+		void start();
+
 	private:
 		PhysicalSocket* m_socket;
 		int m_sockfd;
 		bool m_exitThread;
+		SocketAddress m_remoteAddress;
+
+		SharedDynamicBufferRef m_incomingBuffer;
 
 		static void* threadExecuteFunction(void* param);
+		void run();
+
+		void allocBuffers();
+		void releaseBuffers();
+		void handleMessage();
 	};
 } // oppvs
 

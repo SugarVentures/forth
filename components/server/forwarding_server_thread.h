@@ -17,7 +17,7 @@ namespace oppvs {
 		ForwardingServerThread();
 		~ForwardingServerThread();
 
-		int init(PhysicalSocket* sockets, std::string* streamkey, int* bsock);
+		int init(PhysicalSocket* psocket);
 		int run();
 		int start();
 
@@ -32,9 +32,6 @@ namespace oppvs {
 		static void* threadExecuteFunction(void* param);
 
 		bool m_exitThread;
-
-		std::string* m_streamKey;
-		int* m_broadcaster;
 
 	};
 	

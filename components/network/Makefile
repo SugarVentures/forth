@@ -12,7 +12,7 @@ INCDIR += -I$(rootDir)/../../libs/libnice -I$(rootDir)/../../libs/libnice/agent 
 		  -I$(rootDir)/../thread
 
 
-NICELDFLAGS = -L/usr/local/lib
+NICELDFLAGS = -L/Users/caominhtrang/cerbero/dist/darwin_x86_64/lib
 NICELIBS = -lgio-2.0 -lgobject-2.0 -lgthread-2.0 -lglib-2.0 -lintl -lnice.10
 
 

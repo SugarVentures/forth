@@ -26,9 +26,41 @@ namespace oppvs {
 		return NULL;
 	}
 
+	int ForwardingServerThread::init(PhysicalSocket* psocket)
+	{
+		if (psocket == nullptr)
+		{
+			printf("Invalid socket\n");
+			return -1;
+		}
+		if (psocket->isValid())
+		{
+			m_listenSockets.push_back(psocket);
+		}
+		m_exitThread = false;
+		return 0;
+	}
+
 	int ForwardingServerThread::run()
 	{
-		
+		size_t noSockets = m_listenSockets.size();
+		if (noSockets == 0)
+			return -1;
+		PhysicalSocket* psocket = m_listenSockets[0];
+		psocket->Listen();
+		SocketAddress remoteAddress;
+		while (!m_exitThread)
+		{
+			int sockfd = psocket->Accept(remoteAddress);
+			if (sockfd < 0)
+				continue;
+
+			printf("Accept connection from client: %s \n", remoteAddress.toString().c_str());
+			ForwardingServerSubThread *thread = new ForwardingServerSubThread();
+			thread->init(psocket, sockfd, remoteAddress);
+			thread->start();
+			m_threads.push_back(thread);
+		}
 
 		return 0;
 	}
@@ -41,7 +73,6 @@ namespace oppvs {
 
 	int ForwardingServerThread::signalForStop(bool postMessages)
 	{
-		printf("Size : %lu\n", m_threads.size());
 		for(unsigned i = 0; i < m_threads.size(); ++i) {
 			ForwardingServerSubThread* thread = m_threads[i];
 			if (thread != NULL)
@@ -63,9 +94,11 @@ namespace oppvs {
 
 	int ForwardingServerThread::waitForStopAndClose()
 	{
-		for (unsigned i = 0; i < m_listenSockets.size(); i++)
+		while (m_listenSockets.size() > 0)
 		{
-			m_listenSockets[i]->Close();
+			PhysicalSocket* ps = m_listenSockets.back();
+			ps->Close();
+			m_listenSockets.pop_back();
 		}
 		waitUntilEnding();
 		m_listenSockets.clear();
