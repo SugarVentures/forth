@@ -7,7 +7,7 @@ namespace oppvs {
 
 	ForwardingServerSubThread::~ForwardingServerSubThread()
 	{
-		
+		releaseBuffers();
 	}
 
 	int ForwardingServerSubThread::init(PhysicalSocket* socket, int sockfd, const SocketAddress &remote)
@@ -16,6 +16,7 @@ namespace oppvs {
 		m_sockfd = sockfd;
 		m_remoteAddress = remote;
 		m_exitThread = false;
+		allocBuffers();
 		return 0;
 	}
 
@@ -47,7 +48,7 @@ namespace oppvs {
 
 			if (rcvlen <= 0)
 			{
-				printf("Error in receiving packets %d\n", errno);
+				printf("Error in receiving packets %s\n", strerror(errno));
 				break;
 			}
 
