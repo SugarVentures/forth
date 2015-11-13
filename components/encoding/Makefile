@@ -1,18 +1,20 @@
 
+include ../../Makefile.inc
 CXX = g++
 CX = gcc
 RM = rm -f
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error  \
 		-I$(rootDir)/../../libs/libyuv/include \
-		-I$(rootDir)/../../libs/libvpx \
 		-I$(rootDir)/../../libs/libsrtp/crypto/include  \
 		-I$(rootDir)/../misc \
-		-I$(rootDir)/../../libs/libopus/include
+
+INCDIR += -I$(INCLUDE_PATHS)
 
 CFLAGS = -Wall -g -std=c++11
 
 LDFLAGS = -L$(rootDir)/../../libs
+LDFLAGS += -L$(LIB_PATHS)
 LIBS = -lyuv -lvpx -lsrtp -lmisc -lopus
 
 OBJLIBS = libencodingengine.so
