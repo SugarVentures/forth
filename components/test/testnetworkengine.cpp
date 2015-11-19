@@ -3,6 +3,7 @@
 */
 
 #include "../interface/network.hpp"
+
 #include <iostream>
 
 #include <signal.h> //Ctrl C catch

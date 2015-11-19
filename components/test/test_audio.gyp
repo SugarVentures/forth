@@ -12,11 +12,11 @@
                 '../audio',
                 '../thread',
                 '../encoding',
-                '../../libs/libopus/include'
+                '<(oppvs_3rdlibs_path)/include',
             ],
             'dependencies': [
                 '../thread/thread_engine.gyp:thread_engine',
-                '../audio/audio_engine.gyp:libaudio_engine',
+                '../audio/audio_engine.gyp:audio_engine',
                 '../encoding/encoding_engine.gyp:encoding_engine'
             ],
             

@@ -1,6 +1,4 @@
-
-CXX = g++
-RM = rm -f
+include ../../Makefile.inc
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../thread -I$(rootDir)/../misc \
 		-I$(rootDir)/../../libs/libsrtp/include -I$(rootDir)/../../libs/libsrtp/crypto/include  \
@@ -10,14 +8,11 @@ INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface -I$(rootDir)/../threa
 		-I$(rootDir)/../streaming \
 		-I$(rootDir)/../server -I$(rootDir)/../client  \
 		-I$(rootDir)/../audio \
-		-I$(rootDir)/../../libs/libopus/include \
-		-I$(rootDir)/../../libs/libsamplerate/src
+		
 
-INCDIR += -I$(rootDir)/../../libs/libnice -I$(rootDir)/../../libs/libnice/agent \
-		  -I/usr/local/include/glib-2.0 \
-		  -I$(rootDir)/../../libs/libnice/include
+INCDIR += -I$(INCLUDE_PATHS) -I$(LIB_PATHS)/glib-2.0/include -I$(INCLUDE_PATHS)/glib-2.0
 
-NICELDFLAGS = -L$(rootDir)/../../libs
+NICELDFLAGS = -L$(LIB_PATHS)
 NICELIBS = -lnetworkengine -lstreaming
 
 CFLAGS	= -Wall -g -fPIC -std=c++11
@@ -26,8 +21,7 @@ VIDEOLDFLAGS = -L$(rootDir)/../../libs
 VIDEOLIBS = -lvideoengine -lstreaming -lyuv
 
 NETWORKLDFLAGS = -L$(rootDir)/../../libs
-#NETWORKLIBS = -lnetworkengine -lstreaming -lyuv -lencodingengine -lserver -lclient
-NETWORKLIBS = -lnetworkengine -lserver -lclient
+NETWORKLIBS = -lnetworkengine -lserver -lclient -lsrtp -lcrypto
 
 ENCODINGFLAGS = -L$(rootDir)/../../libs -L/Users/caominhtrang/Downloads/libvpx
 ENCODINGLIBS = -lyuv -lvpx
@@ -43,7 +37,7 @@ resample_CPPFLAGS = -DSPX_RESAMPLE_EXPORT= -DRANDOM_PREFIX=oppvs -DOUTSIDE_SPEEX
 rootDir = .
 
 #all: testvideoengine testnetworkengine teststream testvp teststun testbuffer testdatastream proclib
-all: testaudio proclib
+all: testforwarding testnetworkengine proclib
 
 testvideoengine: $(OBJS)
 	$(CXX) $(INCDIR) $(CFLAGS) $(VIDEOLDFLAGS) $(VIDEOLIBS) $(OBJS) -o testvideoengine
@@ -99,6 +93,12 @@ testaudio: testaudio.o
 
 testaudio.o: testaudio.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) $(resample_CPPFLAGS) -o $@ -c $<
+
+testforwarding: testforwarding.o
+	$(CXX)  $(INCDIR) $(CFLAGS) $(NETWORKLDFLAGS) $< $(NETWORKLIBS) -o $@ 
+
+testforwarding.o: testforwardingserver.cpp
+	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
 
 proclib:
 	cp $(rootDir)/../video/*.so $(rootDir)
