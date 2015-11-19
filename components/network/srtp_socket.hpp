@@ -6,14 +6,14 @@
 #define OPPVS_SRTP_SOCKET_HPP
 
 /* SRTP modules */
-#include "srtp.h"
-#include "rtp_priv.h"
+#include "srtp/srtp.h"
+#include "srtp/rtp_priv.h"
 
 
 extern "C"
 {
-	#include "crypto_kernel.h"
-	#include "sha1.h"
+	#include "srtp/crypto_kernel.h"
+	#include "srtp/sha1.h"
 
 	
 }
