@@ -1,14 +1,17 @@
 //
-//  ForthIOS.m
+//  ForthStreaming.m
 //  ForthIOS
 //
-//  Created by Cao Minh Trang on 10/27/15.
+//  Created by Cao Minh Trang on 11/4/15.
 //  Copyright © 2015 Cao Minh Trang. All rights reserved.
 //
 
-#import "ForthIOS.h"
+#import <Foundation/Foundation.h>
+
+#import "ForthStreaming.h"
 
 #include "streaming_engine.hpp"
+#include "mac_audio_play.hpp"
 
 using namespace oppvs;
 
@@ -18,6 +21,7 @@ using namespace oppvs;
     StreamingEngine mStreamingEngine;
     AudioRingBuffer mAudioRingBuffer;
     VideoFrameBuffer mVideoFrameBuffer;
+    MacAudioPlay* mPlayer;
 }
 
 - (void) streamingCallback;
@@ -43,7 +47,7 @@ void streamingCallback(void* user)
 - (void) startStreaming
 {
     NSLog(@"Init forth streaming engine");
-
+    
     mStreamingEngine.registerCallback(frameCallback, (__bridge void*)self);
     mStreamingEngine.registerCallback(streamingCallback, (__bridge void*)self);
     mStreamingEngine.attachBuffer(&mAudioRingBuffer);
@@ -64,7 +68,23 @@ void streamingCallback(void* user)
 
 - (void) streamingCallback
 {
-    NSLog(@"Streaming callback");
+    mPlayer->start();
+    mPlayer->setFirstInputTime(0.0);
+}
+
+- (void) setupAudioPlayer
+{
+    AudioDevice output(0);
+    mPlayer = new MacAudioPlay(output, 48000, 2);
+    
+    if (mPlayer->init() < 0)
+    {
+        NSLog(@"Cannot init audio player");
+        return;
+    }
+    
+    mPlayer->attachBuffer(&mAudioRingBuffer);
+
 }
 
 @end

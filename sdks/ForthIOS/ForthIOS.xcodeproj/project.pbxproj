@@ -23,15 +23,34 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		D9488CB81BDF5C1E00646B70 /* ForthIOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CB71BDF5C1E00646B70 /* ForthIOS.h */; };
-		D9488CBA1BDF5C1E00646B70 /* ForthIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9488CB91BDF5C1E00646B70 /* ForthIOS.mm */; };
-		D9488CC71BDF5EB800646B70 /* ForthIOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CB71BDF5C1E00646B70 /* ForthIOS.h */; };
-		D9488CE61BDF889100646B70 /* Constants.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CE51BDF889100646B70 /* Constants.h */; settings = {ASSET_TAGS = (); }; };
-		D9488CE81BDF88FC00646B70 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D9488CE71BDF88FC00646B70 /* Constants.m */; settings = {ASSET_TAGS = (); }; };
-		D9488CE91BDF88FC00646B70 /* Constants.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CE71BDF88FC00646B70 /* Constants.m */; settings = {ASSET_TAGS = (); }; };
+		D9091AFD1BE9B43200AE988B /* ForthPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9091AFC1BE9B43200AE988B /* ForthPlayer.mm */; };
+		D9488CE81BDF88FC00646B70 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D9488CE71BDF88FC00646B70 /* Constants.m */; };
+		D9514E641BE9F6440016CF8E /* ForthStreaming.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9514E631BE9F6440016CF8E /* ForthStreaming.mm */; };
+		D96B32381BFDB08D00CE8694 /* ForthIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D9488CB71BDF5C1E00646B70 /* ForthIOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D96B32391BFDB09700CE8694 /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = D9488CE51BDF889100646B70 /* Constants.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		D96B323A1BFDB09A00CE8694 /* ForthPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = D9091AFB1BE9B35C00AE988B /* ForthPlayer.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		D96B323B1BFDB09D00CE8694 /* ForthStreaming.h in Headers */ = {isa = PBXBuildFile; fileRef = D9514E651BE9F6620016CF8E /* ForthStreaming.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		D96B323C1BFDB12400CE8694 /* ForthIOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CB71BDF5C1E00646B70 /* ForthIOS.h */; };
+		D96B323D1BFDB12400CE8694 /* Constants.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CE51BDF889100646B70 /* Constants.h */; };
+		D96B323E1BFDB12400CE8694 /* ForthPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9091AFB1BE9B35C00AE988B /* ForthPlayer.h */; };
+		D96B323F1BFDB12400CE8694 /* ForthStreaming.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9514E651BE9F6620016CF8E /* ForthStreaming.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D9091AF71BE9B27D00AE988B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9091AF31BE9B27D00AE988B /* audio_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E2AFB5B9DD105CB1ED96C373;
+			remoteInfo = audio_engine;
+		};
+		D9091AF91BE9B28500AE988B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9091AF31BE9B27D00AE988B /* audio_engine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 07F24BD9DA0D6517AE684640;
+			remoteInfo = audio_engine;
+		};
 		D9488CDA1BDF65DC00646B70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */;
@@ -146,7 +165,6 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				D9488CB81BDF5C1E00646B70 /* ForthIOS.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,27 +174,21 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
-				D9488CE61BDF889100646B70 /* Constants.h in CopyFiles */,
-				D9488CC71BDF5EB800646B70 /* ForthIOS.h in CopyFiles */,
-				D9488CE91BDF88FC00646B70 /* Constants.m in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D9488D0F1BE0B14400646B70 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
+				D96B323C1BFDB12400CE8694 /* ForthIOS.h in CopyFiles */,
+				D96B323D1BFDB12400CE8694 /* Constants.h in CopyFiles */,
+				D96B323E1BFDB12400CE8694 /* ForthPlayer.h in CopyFiles */,
+				D96B323F1BFDB12400CE8694 /* ForthStreaming.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D9091AF31BE9B27D00AE988B /* audio_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = audio_engine.xcodeproj; path = ../../components/audio/ios/audio_engine.xcodeproj; sourceTree = "<group>"; };
+		D9091AFB1BE9B35C00AE988B /* ForthPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForthPlayer.h; sourceTree = "<group>"; };
+		D9091AFC1BE9B43200AE988B /* ForthPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ForthPlayer.mm; sourceTree = "<group>"; };
 		D9488CB41BDF5C1E00646B70 /* libForthIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libForthIOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9488CB71BDF5C1E00646B70 /* ForthIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForthIOS.h; sourceTree = "<group>"; };
-		D9488CB91BDF5C1E00646B70 /* ForthIOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ForthIOS.mm; sourceTree = "<group>"; };
 		D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = streaming_engine.xcodeproj; path = ../../components/streaming/ios/streaming_engine.xcodeproj; sourceTree = "<group>"; };
 		D9488CDE1BDF7FC100646B70 /* libyuv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libyuv.xcodeproj; path = ../../libs/libyuv/ios/libyuv.xcodeproj; sourceTree = "<group>"; };
 		D9488CE51BDF889100646B70 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -185,6 +197,8 @@
 		D9488CFC1BE0AECD00646B70 /* encoding_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = encoding_engine.xcodeproj; path = ../../components/encoding/ios/encoding_engine.xcodeproj; sourceTree = "<group>"; };
 		D9488D041BE0B00100646B70 /* thread_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = thread_engine.xcodeproj; path = ../../components/thread/ios/thread_engine.xcodeproj; sourceTree = "<group>"; };
 		D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = misc.xcodeproj; path = ../../components/misc/ios/misc.xcodeproj; sourceTree = "<group>"; };
+		D9514E631BE9F6440016CF8E /* ForthStreaming.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ForthStreaming.mm; sourceTree = "<group>"; };
+		D9514E651BE9F6620016CF8E /* ForthStreaming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForthStreaming.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,9 +212,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D9091AF41BE9B27D00AE988B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9091AF81BE9B27D00AE988B /* libaudio_engine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		D9488CAB1BDF5C1E00646B70 = {
 			isa = PBXGroup;
 			children = (
+				D9091AF31BE9B27D00AE988B /* audio_engine.xcodeproj */,
 				D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */,
 				D9488D041BE0B00100646B70 /* thread_engine.xcodeproj */,
 				D9488CFC1BE0AECD00646B70 /* encoding_engine.xcodeproj */,
@@ -224,9 +247,12 @@
 			isa = PBXGroup;
 			children = (
 				D9488CB71BDF5C1E00646B70 /* ForthIOS.h */,
-				D9488CB91BDF5C1E00646B70 /* ForthIOS.mm */,
 				D9488CE51BDF889100646B70 /* Constants.h */,
 				D9488CE71BDF88FC00646B70 /* Constants.m */,
+				D9091AFB1BE9B35C00AE988B /* ForthPlayer.h */,
+				D9091AFC1BE9B43200AE988B /* ForthPlayer.mm */,
+				D9514E651BE9F6620016CF8E /* ForthStreaming.h */,
+				D9514E631BE9F6440016CF8E /* ForthStreaming.mm */,
 			);
 			path = ForthIOS;
 			sourceTree = "<group>";
@@ -283,6 +309,20 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		D96B32371BFDB08200CE8694 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D96B32381BFDB08D00CE8694 /* ForthIOS.h in Headers */,
+				D96B32391BFDB09700CE8694 /* Constants.h in Headers */,
+				D96B323A1BFDB09A00CE8694 /* ForthPlayer.h in Headers */,
+				D96B323B1BFDB09D00CE8694 /* ForthStreaming.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		D9488CB31BDF5C1E00646B70 /* ForthIOS */ = {
 			isa = PBXNativeTarget;
@@ -291,11 +331,12 @@
 				D9488CB01BDF5C1E00646B70 /* Sources */,
 				D9488CB11BDF5C1E00646B70 /* Frameworks */,
 				D9488CB21BDF5C1E00646B70 /* CopyFiles */,
-				D9488D0F1BE0B14400646B70 /* CopyFiles */,
+				D96B32371BFDB08200CE8694 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D9091AFA1BE9B28500AE988B /* PBXTargetDependency */,
 				D9488D281BE0BFCF00646B70 /* PBXTargetDependency */,
 				D9488D2A1BE0BFCF00646B70 /* PBXTargetDependency */,
 				D9488D0B1BE0B00B00646B70 /* PBXTargetDependency */,
@@ -340,6 +381,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = D9091AF41BE9B27D00AE988B /* Products */;
+					ProjectRef = D9091AF31BE9B27D00AE988B /* audio_engine.xcodeproj */;
+				},
+				{
 					ProductGroup = D9488CFD1BE0AECD00646B70 /* Products */;
 					ProjectRef = D9488CFC1BE0AECD00646B70 /* encoding_engine.xcodeproj */;
 				},
@@ -373,6 +418,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		D9091AF81BE9B27D00AE988B /* libaudio_engine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libaudio_engine.a;
+			remoteRef = D9091AF71BE9B27D00AE988B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D9488CDB1BDF65DC00646B70 /* libstreaming_engine.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -434,7 +486,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		D9488CC41BDF5C4100646B70 /* Build Static Libs */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -442,13 +494,13 @@
 			name = "Build Static Libs";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "xcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator\n\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos\n";
 		};
 		D9488CC51BDF5CC900646B70 /* Build Universal Binary */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -456,7 +508,7 @@
 			name = "Build Universal Binary";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "SIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\" &&\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" &&\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\" &&\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\" &&\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\" &&\n\n#Merge static libs into one\nlibraries=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/*.a\"\nsimulator_libraries=\"\"\nfor filename in ${libraries}\ndo\nsimulator_libraries=\"${simulator_libraries} ${filename}\"\ndone\n\nlibtool ${simulator_libraries} -o \"${SIMULATOR_LIBRARY_PATH}\" &&\n\nlibraries=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/*.a\"\nsimulator_libraries=\"\"\nfor filename in ${libraries}\ndo\nsimulator_libraries=\"${simulator_libraries} ${filename}\"\ndone\n\nlibtool ${simulator_libraries} -o \"${DEVICE_LIBRARY_PATH}\" &&\n\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator.\nlipo \"${SIMULATOR_LIBRARY_PATH}\" \"${DEVICE_LIBRARY_PATH}\" -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Merge with third parties libs\nTHIRD_PARTY_LIBRARY_PATH=\"/Users/caominhtrang/cerbero/dist/ios_universal/lib\"\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libglib-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libgio-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libgobject-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libiconv.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libgmodule-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libintl.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libffi.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libz.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libcrypto.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libgthread-2.0.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libnice.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libopus.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\nlibtool \"${THIRD_PARTY_LIBRARY_PATH}/libvpx.a\" \"${UNIVERSAL_LIBRARY_PATH}\" -o \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"";
 		};
@@ -467,14 +519,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9488CBA1BDF5C1E00646B70 /* ForthIOS.mm in Sources */,
+				D9514E641BE9F6440016CF8E /* ForthStreaming.mm in Sources */,
 				D9488CE81BDF88FC00646B70 /* Constants.m in Sources */,
+				D9091AFD1BE9B43200AE988B /* ForthPlayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		D9091AFA1BE9B28500AE988B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = audio_engine;
+			targetProxy = D9091AF91BE9B28500AE988B /* PBXContainerItemProxy */;
+		};
 		D9488CF11BE07BB300646B70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = yuv;
@@ -541,6 +599,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"FORTH_IOS=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -550,7 +609,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -586,6 +645,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -594,6 +654,7 @@
 		D9488CBE1BDF5C1E00646B70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "FORTH_IOS=1";
 				HEADER_SEARCH_PATHS = (
 					../../components/streaming,
 					../../components/include,
@@ -617,6 +678,7 @@
 		D9488CBF1BDF5C1E00646B70 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "FORTH_IOS=1";
 				HEADER_SEARCH_PATHS = (
 					../../components/streaming,
 					../../components/include,
@@ -640,6 +702,8 @@
 		D9488CC21BDF5C3300646B70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				"GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS[arch=*]" = "";
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -648,6 +712,7 @@
 		D9488CC31BDF5C3300646B70 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

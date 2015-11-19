@@ -7,54 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D9091AFF1BE9B85100AE988B /* libaudio_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9091AFE1BE9B85100AE988B /* libaudio_engine.a */; };
 		D9488DBD1BE1F30D00646B70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9488DBC1BE1F30D00646B70 /* main.m */; };
 		D9488DC01BE1F30D00646B70 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9488DBF1BE1F30D00646B70 /* AppDelegate.mm */; };
 		D9488DC31BE1F30D00646B70 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9488DC21BE1F30D00646B70 /* ViewController.mm */; };
 		D9488DC61BE1F30D00646B70 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9488DC41BE1F30D00646B70 /* Main.storyboard */; };
 		D9488DC81BE1F30D00646B70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9488DC71BE1F30D00646B70 /* Assets.xcassets */; };
 		D9488DCB1BE1F30D00646B70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9488DC91BE1F30D00646B70 /* LaunchScreen.storyboard */; };
-		D9488E051BE1F8CF00646B70 /* libthread_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E041BE1F8CF00646B70 /* libthread_engine.a */; };
-		D9488E071BE1F8DB00646B70 /* libstreaming_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E061BE1F8DB00646B70 /* libstreaming_engine.a */; };
-		D9488E0E1BE1F8E700646B70 /* libencoding_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E081BE1F8E700646B70 /* libencoding_engine.a */; };
-		D9488E101BE1F8E700646B70 /* libmisc1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E0A1BE1F8E700646B70 /* libmisc1.a */; };
-		D9488E111BE1F8E700646B70 /* libmisc2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E0B1BE1F8E700646B70 /* libmisc2.a */; };
-		D9488E121BE1F8E700646B70 /* libnetwork_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E0C1BE1F8E700646B70 /* libnetwork_engine.a */; };
-		D9488E131BE1F8E700646B70 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E0D1BE1F8E700646B70 /* libyuv.a */; };
-		D9488E231BE1F9E400646B70 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E1B1BE1F9E400646B70 /* libvpx.a */; };
-		D9488E2F1BE1FB1D00646B70 /* libglib-2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E2A1BE1FB1D00646B70 /* libglib-2.0.a */; };
-		D9488E301BE1FB1D00646B70 /* libgmodule-2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E2B1BE1FB1D00646B70 /* libgmodule-2.0.a */; };
-		D9488E311BE1FB1D00646B70 /* libgobject-2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E2C1BE1FB1D00646B70 /* libgobject-2.0.a */; };
-		D9488E321BE1FB1D00646B70 /* libnice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E2D1BE1FB1D00646B70 /* libnice.a */; };
-		D9488E341BE1FB3E00646B70 /* libopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E331BE1FB3E00646B70 /* libopus.a */; };
-		D9488E361BE1FCB700646B70 /* libgio-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E351BE1FCB700646B70 /* libgio-2.0.0.dylib */; };
-		D9488E381BE1FCDB00646B70 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488E371BE1FCDB00646B70 /* libiconv.2.dylib */; };
-		D9514E451BE9E11C0016CF8E /* libForthIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9488DDE1BE1F32D00646B70 /* libForthIOS.a */; };
 		D9514E5E1BE9E5490016CF8E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9514E5D1BE9E5490016CF8E /* AudioToolbox.framework */; };
+		D96B32411BFDB3D700CE8694 /* Forth-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D96B32401BFDB3D700CE8694 /* Forth-iOS.framework */; };
 		D9841BB61BE3679A00003A99 /* GLFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9841BB51BE3679A00003A99 /* GLFrameView.m */; };
 		D9841BC41BE3703700003A99 /* matrixUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D9841BC01BE3703700003A99 /* matrixUtil.c */; };
 		D9841BC51BE3703700003A99 /* vectorUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D9841BC21BE3703700003A99 /* vectorUtil.c */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		D9488DDD1BE1F32D00646B70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9488DD21BE1F32C00646B70 /* ForthIOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D9488CB41BDF5C1E00646B70;
-			remoteInfo = ForthIOS;
-		};
-		D9514E411BE9E07B0016CF8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9488DD21BE1F32C00646B70 /* ForthIOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D9488CB31BDF5C1E00646B70;
-			remoteInfo = ForthIOS;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		D9091AFE1BE9B85100AE988B /* libaudio_engine.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libaudio_engine.a; path = "../../audio/build/Debug-iphoneos/libaudio_engine.a"; sourceTree = "<group>"; };
 		D9488DB81BE1F30D00646B70 /* iosDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9488DBC1BE1F30D00646B70 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D9488DBE1BE1F30D00646B70 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -65,24 +31,8 @@
 		D9488DC71BE1F30D00646B70 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D9488DCA1BE1F30D00646B70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D9488DCC1BE1F30D00646B70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D9488DD21BE1F32C00646B70 /* ForthIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ForthIOS.xcodeproj; path = ../../../sdks/ForthIOS/ForthIOS.xcodeproj; sourceTree = "<group>"; };
-		D9488E041BE1F8CF00646B70 /* libthread_engine.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libthread_engine.a; path = "../../thread/build/Debug-iphoneos/libthread_engine.a"; sourceTree = "<group>"; };
-		D9488E061BE1F8DB00646B70 /* libstreaming_engine.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libstreaming_engine.a; path = "../../streaming/build/Debug-iphoneos/libstreaming_engine.a"; sourceTree = "<group>"; };
-		D9488E081BE1F8E700646B70 /* libencoding_engine.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libencoding_engine.a; path = "../../encoding/build/Debug-iphoneos/libencoding_engine.a"; sourceTree = "<group>"; };
-		D9488E091BE1F8E700646B70 /* libmisc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisc.dylib; path = "../../misc/build/Debug-iphoneos/libmisc.dylib"; sourceTree = "<group>"; };
-		D9488E0A1BE1F8E700646B70 /* libmisc1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmisc1.a; path = "../../misc/build/Debug-iphoneos/libmisc1.a"; sourceTree = "<group>"; };
-		D9488E0B1BE1F8E700646B70 /* libmisc2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmisc2.a; path = "../../misc/build/Debug-iphoneos/libmisc2.a"; sourceTree = "<group>"; };
-		D9488E0C1BE1F8E700646B70 /* libnetwork_engine.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnetwork_engine.a; path = "../../network/build/Debug-iphoneos/libnetwork_engine.a"; sourceTree = "<group>"; };
-		D9488E0D1BE1F8E700646B70 /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyuv.a; path = "../../../libs/libyuv/build/Debug-iphoneos/libyuv.a"; sourceTree = "<group>"; };
-		D9488E1B1BE1F9E400646B70 /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvpx.a; path = ../../../../../../cerbero/dist/ios_universal/lib/libvpx.a; sourceTree = "<group>"; };
-		D9488E2A1BE1FB1D00646B70 /* libglib-2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libglib-2.0.a"; path = "../../../../../../cerbero/dist/ios_universal/lib/libglib-2.0.a"; sourceTree = "<group>"; };
-		D9488E2B1BE1FB1D00646B70 /* libgmodule-2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgmodule-2.0.a"; path = "../../../../../../cerbero/dist/ios_universal/lib/libgmodule-2.0.a"; sourceTree = "<group>"; };
-		D9488E2C1BE1FB1D00646B70 /* libgobject-2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgobject-2.0.a"; path = "../../../../../../cerbero/dist/ios_universal/lib/libgobject-2.0.a"; sourceTree = "<group>"; };
-		D9488E2D1BE1FB1D00646B70 /* libnice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnice.a; path = ../../../../../../cerbero/dist/ios_universal/lib/libnice.a; sourceTree = "<group>"; };
-		D9488E331BE1FB3E00646B70 /* libopus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libopus.a; path = ../../../../../../cerbero/dist/ios_universal/lib/libopus.a; sourceTree = "<group>"; };
-		D9488E351BE1FCB700646B70 /* libgio-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgio-2.0.0.dylib"; path = "../../../../../../cerbero/dist/ios_universal/lib/libgio-2.0.0.dylib"; sourceTree = "<group>"; };
-		D9488E371BE1FCDB00646B70 /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = ../../../../../../cerbero/dist/ios_universal/lib/libiconv.2.dylib; sourceTree = "<group>"; };
 		D9514E5D1BE9E5490016CF8E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		D96B32401BFDB3D700CE8694 /* Forth-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Forth-iOS.framework"; path = "../../../../../../Library/Developer/Xcode/DerivedData/ForthIOS-cfjhwdtapoqsvjcegmtfsqfprxad/Build/Products/Release-iphoneuniversal/Forth-iOS.framework"; sourceTree = "<group>"; };
 		D9841BB41BE3679A00003A99 /* GLFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLFrameView.h; sourceTree = "<group>"; };
 		D9841BB51BE3679A00003A99 /* GLFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLFrameView.m; sourceTree = "<group>"; };
 		D9841BBF1BE3703700003A99 /* glUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glUtil.h; sourceTree = "<group>"; };
@@ -97,24 +47,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D96B32411BFDB3D700CE8694 /* Forth-iOS.framework in Frameworks */,
 				D9514E5E1BE9E5490016CF8E /* AudioToolbox.framework in Frameworks */,
-				D9514E451BE9E11C0016CF8E /* libForthIOS.a in Frameworks */,
-				D9091AFF1BE9B85100AE988B /* libaudio_engine.a in Frameworks */,
-				D9488E381BE1FCDB00646B70 /* libiconv.2.dylib in Frameworks */,
-				D9488E361BE1FCB700646B70 /* libgio-2.0.0.dylib in Frameworks */,
-				D9488E341BE1FB3E00646B70 /* libopus.a in Frameworks */,
-				D9488E2F1BE1FB1D00646B70 /* libglib-2.0.a in Frameworks */,
-				D9488E301BE1FB1D00646B70 /* libgmodule-2.0.a in Frameworks */,
-				D9488E311BE1FB1D00646B70 /* libgobject-2.0.a in Frameworks */,
-				D9488E321BE1FB1D00646B70 /* libnice.a in Frameworks */,
-				D9488E231BE1F9E400646B70 /* libvpx.a in Frameworks */,
-				D9488E0E1BE1F8E700646B70 /* libencoding_engine.a in Frameworks */,
-				D9488E101BE1F8E700646B70 /* libmisc1.a in Frameworks */,
-				D9488E111BE1F8E700646B70 /* libmisc2.a in Frameworks */,
-				D9488E121BE1F8E700646B70 /* libnetwork_engine.a in Frameworks */,
-				D9488E131BE1F8E700646B70 /* libyuv.a in Frameworks */,
-				D9488E071BE1F8DB00646B70 /* libstreaming_engine.a in Frameworks */,
-				D9488E051BE1F8CF00646B70 /* libthread_engine.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,8 +58,8 @@
 		D9488DAF1BE1F30D00646B70 = {
 			isa = PBXGroup;
 			children = (
+				D96B32401BFDB3D700CE8694 /* Forth-iOS.framework */,
 				D9488E261BE1FA1400646B70 /* Libs */,
-				D9488DD21BE1F32C00646B70 /* ForthIOS.xcodeproj */,
 				D9488DBA1BE1F30D00646B70 /* iosDemo */,
 				D9488DB91BE1F30D00646B70 /* Products */,
 			);
@@ -170,35 +104,10 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		D9488DD31BE1F32C00646B70 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D9488DDE1BE1F32D00646B70 /* libForthIOS.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		D9488E261BE1FA1400646B70 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
 				D9514E5D1BE9E5490016CF8E /* AudioToolbox.framework */,
-				D9091AFE1BE9B85100AE988B /* libaudio_engine.a */,
-				D9488E371BE1FCDB00646B70 /* libiconv.2.dylib */,
-				D9488E351BE1FCB700646B70 /* libgio-2.0.0.dylib */,
-				D9488E331BE1FB3E00646B70 /* libopus.a */,
-				D9488E2A1BE1FB1D00646B70 /* libglib-2.0.a */,
-				D9488E2B1BE1FB1D00646B70 /* libgmodule-2.0.a */,
-				D9488E2C1BE1FB1D00646B70 /* libgobject-2.0.a */,
-				D9488E2D1BE1FB1D00646B70 /* libnice.a */,
-				D9488E1B1BE1F9E400646B70 /* libvpx.a */,
-				D9488E081BE1F8E700646B70 /* libencoding_engine.a */,
-				D9488E091BE1F8E700646B70 /* libmisc.dylib */,
-				D9488E0A1BE1F8E700646B70 /* libmisc1.a */,
-				D9488E0B1BE1F8E700646B70 /* libmisc2.a */,
-				D9488E0C1BE1F8E700646B70 /* libnetwork_engine.a */,
-				D9488E0D1BE1F8E700646B70 /* libyuv.a */,
-				D9488E061BE1F8DB00646B70 /* libstreaming_engine.a */,
-				D9488E041BE1F8CF00646B70 /* libthread_engine.a */,
 			);
 			name = Libs;
 			sourceTree = "<group>";
@@ -217,7 +126,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D9514E421BE9E07B0016CF8E /* PBXTargetDependency */,
 			);
 			name = iosDemo;
 			productName = iosDemo;
@@ -250,28 +158,12 @@
 			mainGroup = D9488DAF1BE1F30D00646B70;
 			productRefGroup = D9488DB91BE1F30D00646B70 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = D9488DD31BE1F32C00646B70 /* Products */;
-					ProjectRef = D9488DD21BE1F32C00646B70 /* ForthIOS.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				D9488DB71BE1F30D00646B70 /* iosDemo */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		D9488DDE1BE1F32D00646B70 /* libForthIOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libForthIOS.a;
-			remoteRef = D9488DDD1BE1F32D00646B70 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D9488DB61BE1F30D00646B70 /* Resources */ = {
@@ -301,14 +193,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		D9514E421BE9E07B0016CF8E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ForthIOS;
-			targetProxy = D9514E411BE9E07B0016CF8E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D9488DC41BE1F30D00646B70 /* Main.storyboard */ = {
@@ -350,6 +234,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -394,6 +279,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -417,11 +303,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				HEADER_SEARCH_PATHS = "/Users/caominhtrang/Documents/ForthProject/forth-dev/sdks/ForthIOS/ForthIOS";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Users/caominhtrang/Library/Developer/Xcode/DerivedData/ForthIOS-cfjhwdtapoqsvjcegmtfsqfprxad/Build/Products/Release-iphoneuniversal/**";
+				HEADER_SEARCH_PATHS = "/Users/caominhtrang/Library/Developer/Xcode/DerivedData/ForthIOS-cfjhwdtapoqsvjcegmtfsqfprxad/Build/Products/Release-iphoneuniversal/Forth-iOS.framework/Versions/A/Headers";
 				INFOPLIST_FILE = iosDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = /Users/caominhtrang/cerbero/dist/ios_universal/lib/;
-				OTHER_LDFLAGS = "";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-lresolv";
 				PRODUCT_BUNDLE_IDENTIFIER = Sugar.iosDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -432,12 +320,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Users/caominhtrang/Library/Developer/Xcode/DerivedData/ForthIOS-cfjhwdtapoqsvjcegmtfsqfprxad/Build/Products/Release-iphoneuniversal/**";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
-				HEADER_SEARCH_PATHS = "/Users/caominhtrang/Documents/ForthProject/forth-dev/sdks/ForthIOS/ForthIOS";
+				HEADER_SEARCH_PATHS = "/Users/caominhtrang/Library/Developer/Xcode/DerivedData/ForthIOS-cfjhwdtapoqsvjcegmtfsqfprxad/Build/Products/Release-iphoneuniversal/Forth-iOS.framework/Versions/A/Headers";
 				INFOPLIST_FILE = iosDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = /Users/caominhtrang/cerbero/dist/ios_universal/lib/;
-				OTHER_LDFLAGS = "";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-lresolv";
 				PRODUCT_BUNDLE_IDENTIFIER = Sugar.iosDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
