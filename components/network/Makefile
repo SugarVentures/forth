@@ -9,7 +9,7 @@ INCDIR += -I$(INCLUDE_PATHS) -I$(LIB_PATHS)/glib-2.0/include -I$(INCLUDE_PATHS)/
 
 
 NICELDFLAGS = -L$(LIB_PATHS)
-NICELIBS = -lgio-2.0 -lgobject-2.0 -lgthread-2.0 -lglib-2.0 -lintl -lnice.10
+NICELIBS = -lgio-2.0 -lgobject-2.0 -lgthread-2.0 -lglib-2.0 -lintl -lnice
 
 
 CFLAGS = -Wall -g -fPIC -std=c++11
