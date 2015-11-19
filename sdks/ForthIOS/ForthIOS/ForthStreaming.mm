@@ -33,7 +33,6 @@ using namespace oppvs;
 void frameCallback(oppvs::PixelBuffer& pf)
 {
     //printf("Receive streaming frame\n");
-    delete [] pf.plane[0];
     ForthStreaming *forth = (__bridge ForthStreaming*)pf.user;
     [[forth delegate] frameCallback:pf.plane[0] withWidth:pf.width[0] andHeight:pf.height[0] andStride:pf.stride[0]];
 }

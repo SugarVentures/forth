@@ -9,6 +9,8 @@
 #import "GLFrameView.h"
 #import "glUtil.h"
 
+#include <iostream>
+
 @interface GLFrameView ()
 {
     //The pixel dimensions of the CAEAGLLayer
@@ -147,7 +149,7 @@ static const GLbyte indices[] = {
     // Create a program object
     progName = glCreateProgram();
     
-    sourceString = malloc(strlen(vShader) + versionStringSize);
+    sourceString = (GLchar*)malloc(strlen(vShader) + versionStringSize);
     sprintf(sourceString, "#version %d\n%s", version, vShader);
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, (const GLchar**)&(sourceString), NULL);
@@ -177,7 +179,7 @@ static const GLbyte indices[] = {
     glAttachShader(progName, vertexShader);
     glDeleteShader(vertexShader);
     
-    sourceString = malloc(strlen(fShader) + versionStringSize);
+    sourceString = (GLchar*)malloc(strlen(fShader) + versionStringSize);
     sprintf(sourceString, "#version %d\n%s", version, fShader);
     GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragShader, 1, (const GLchar**)&(sourceString), NULL);
@@ -277,6 +279,8 @@ static const GLbyte indices[] = {
                  GL_BGRA,
                  GL_UNSIGNED_BYTE,
                  data);
+    
+    delete [] data;
         
     glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(indices[0]), GL_UNSIGNED_BYTE, 0);
     

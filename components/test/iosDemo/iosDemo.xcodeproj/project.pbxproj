@@ -15,7 +15,7 @@
 		D9488DCB1BE1F30D00646B70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9488DC91BE1F30D00646B70 /* LaunchScreen.storyboard */; };
 		D9514E5E1BE9E5490016CF8E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9514E5D1BE9E5490016CF8E /* AudioToolbox.framework */; };
 		D96B32411BFDB3D700CE8694 /* Forth-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D96B32401BFDB3D700CE8694 /* Forth-iOS.framework */; };
-		D9841BB61BE3679A00003A99 /* GLFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9841BB51BE3679A00003A99 /* GLFrameView.m */; };
+		D9841BB61BE3679A00003A99 /* GLFrameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9841BB51BE3679A00003A99 /* GLFrameView.mm */; };
 		D9841BC41BE3703700003A99 /* matrixUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D9841BC01BE3703700003A99 /* matrixUtil.c */; };
 		D9841BC51BE3703700003A99 /* vectorUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D9841BC21BE3703700003A99 /* vectorUtil.c */; };
 /* End PBXBuildFile section */
@@ -34,7 +34,7 @@
 		D9514E5D1BE9E5490016CF8E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D96B32401BFDB3D700CE8694 /* Forth-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Forth-iOS.framework"; path = "../../../../../../Library/Developer/Xcode/DerivedData/ForthIOS-cfjhwdtapoqsvjcegmtfsqfprxad/Build/Products/Release-iphoneuniversal/Forth-iOS.framework"; sourceTree = "<group>"; };
 		D9841BB41BE3679A00003A99 /* GLFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLFrameView.h; sourceTree = "<group>"; };
-		D9841BB51BE3679A00003A99 /* GLFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLFrameView.m; sourceTree = "<group>"; };
+		D9841BB51BE3679A00003A99 /* GLFrameView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLFrameView.mm; sourceTree = "<group>"; };
 		D9841BBF1BE3703700003A99 /* glUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glUtil.h; sourceTree = "<group>"; };
 		D9841BC01BE3703700003A99 /* matrixUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = matrixUtil.c; sourceTree = "<group>"; };
 		D9841BC11BE3703700003A99 /* matrixUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrixUtil.h; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 				D9488DCC1BE1F30D00646B70 /* Info.plist */,
 				D9488DBB1BE1F30D00646B70 /* Supporting Files */,
 				D9841BB41BE3679A00003A99 /* GLFrameView.h */,
-				D9841BB51BE3679A00003A99 /* GLFrameView.m */,
+				D9841BB51BE3679A00003A99 /* GLFrameView.mm */,
 			);
 			path = iosDemo;
 			sourceTree = "<group>";
@@ -188,7 +188,7 @@
 				D9488DC01BE1F30D00646B70 /* AppDelegate.mm in Sources */,
 				D9488DBD1BE1F30D00646B70 /* main.m in Sources */,
 				D9841BC41BE3703700003A99 /* matrixUtil.c in Sources */,
-				D9841BB61BE3679A00003A99 /* GLFrameView.m in Sources */,
+				D9841BB61BE3679A00003A99 /* GLFrameView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
