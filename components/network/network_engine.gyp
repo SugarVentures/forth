@@ -12,15 +12,12 @@
                 '../thread/thread_engine.gyp:thread_engine',
             ],
             'include_dirs': [
-                '../../libs/libsrtp/include',
-                '../../libs/libsrtp/crypto/include',
                 '../include',
                 '../misc',
                 '../thread',
-                '../../libs/libnice',
-                '../../libs/libnice/agent',
-                '/usr/local/include/glib-2.0',
-                '../../libs/libnice/include'
+                '<(oppvs_3rdlibs_path)/include',
+                '<(oppvs_3rdlibs_path)/include/glib-2.0',
+                '<(oppvs_3rdlibs_path)/lib/glib-2.0/include',
             ],
 
             'conditions': [
@@ -34,17 +31,14 @@
                     },
                     'libraries': [
                         '../../libs/libsrtp.a',
+                        '<(oppvs_3rdlibs_path)/lib/libsrtp.dylib',
+                        '<(oppvs_3rdlibs_path)/lib/libgio-2.0.0.dylib',
+                        '<(oppvs_3rdlibs_path)/lib/libgobject-2.0.0.dylib',
+                        '<(oppvs_3rdlibs_path)/lib/libgthread-2.0.0.dylib',
+                        '<(oppvs_3rdlibs_path)/lib/libglib-2.0.0.dylib',
+                        '<(oppvs_3rdlibs_path)/lib/libintl.dylib',
+                        '<(oppvs_3rdlibs_path)/lib/libnice.dylib'
                     ],
-                    'link_settings': {
-                        'libraries': [
-                            '/usr/local/lib/libgio-2.0.0.dylib',
-                            '/usr/local/lib/libgobject-2.0.0.dylib',
-                            '/usr/local/lib/libgthread-2.0.0.dylib',
-                            '/usr/local/lib/libglib-2.0.0.dylib',
-                            '/usr/local/lib/libintl.a',
-                            '../../libs/libnice.10.dylib'
-                        ]
-                    }
 
                 }],
                 ['OS == "linux"', {
