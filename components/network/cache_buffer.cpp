@@ -1,7 +1,7 @@
 #include "cache_buffer.h"
 
 namespace oppvs {
-	CacheBuffer::CacheBuffer()
+	CacheBuffer::CacheBuffer(): m_startTime(-1), m_endTime(-1)
 	{
 
 	}
@@ -26,6 +26,10 @@ namespace oppvs {
 
 	int CacheBuffer::add(uint64_t timestamp, SharedDynamicBufferRef data)
 	{
+		if (!checkTimeBoundary(timestamp))
+		{
+			return -1;
+		}
 		CacheBufferIterator iter;
 		CacheBufferReverseIterator riter;
 		iter = m_map.upper_bound(timestamp);
@@ -63,5 +67,17 @@ namespace oppvs {
 			}
 		}
 		return 0;
+	}
+
+	void CacheBuffer::updateTimeBoundary(uint64_t timestamp)
+	{
+
+	}
+
+	bool CacheBuffer::checkTimeBoundary(uint64_t timestamp)
+	{
+		if (timestamp < m_startTime)
+			return false;
+		return true;
 	}
 } // oppvs

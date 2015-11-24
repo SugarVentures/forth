@@ -43,9 +43,16 @@ namespace oppvs {
 		void printMap();
 	private:
 		std::map<uint64_t, CacheItem> m_map;
+		int64_t m_startTime;
+		int64_t m_endTime;
+
+		bool checkTimeBoundary(uint64_t timestamp);
+		void updateTimeBoundary(uint64_t timestamp);
 
 		typedef std::map<uint64_t, CacheItem>::iterator CacheBufferIterator;
 		typedef std::map<uint64_t, CacheItem>::reverse_iterator CacheBufferReverseIterator;
+
+		const static int MAX_CACHE_TIME_DURATION = 5;	//5 seconds 
 	};
 } // oppvs
 
