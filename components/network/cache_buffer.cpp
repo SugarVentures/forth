@@ -13,71 +13,93 @@ namespace oppvs {
 
 	size_t CacheBuffer::size()
 	{
-		return m_map.size();
+		return m_data.size();
 	}
 
-	void CacheBuffer::printMap()
+	void CacheBuffer::printBuffer()
 	{
-		for (const auto &p : m_map) {
-            printf("m[%d]\n", p.first);
-            p.second.print();
+		printf("Current duration: %lld %lld\n", m_startTime, m_endTime);
+		for (const auto &p : m_data) {
+            p.print();
         }
 	}
 
-	int CacheBuffer::add(uint64_t timestamp, SharedDynamicBufferRef data)
+	int CacheBuffer::add(int64_t timestamp, SharedDynamicBufferRef data)
 	{
+		printf("Add item ts: %lld\n", timestamp);
 		if (!checkTimeBoundary(timestamp))
 		{
+			printf("Timestamp is out of boundary\n");
 			return -1;
 		}
-		CacheBufferIterator iter;
-		CacheBufferReverseIterator riter;
-		iter = m_map.upper_bound(timestamp);
-		if (iter == m_map.end())
+		
+		CacheBufferIterator iter = upperBound(timestamp);
+		if (iter == m_data.end())
 		{
-			CacheItem item(data);
-			if (m_map.size() == 0)
+			if (m_data.size() > 0)
 			{
-				printf("Insert new item to begin\n");
-				m_map.insert(m_map.begin(), std::make_pair(timestamp, data));
+				CacheBufferReverseIterator riter = m_data.rbegin();
+				if (riter->getTimestamp() == timestamp)
+					riter->add(data);
+				else
+				{
+					CacheItem item(timestamp, data);
+					m_data.push_back(item);
+					updateTimeBoundary(timestamp);		
+				}
 			}
 			else
 			{
-				printf("Insert to last position\n");
-				riter = m_map.rbegin();
-				riter++;
+				CacheItem item(timestamp, data);
+				m_data.push_back(item);
 
-				m_map.insert(riter.base(), std::make_pair(timestamp, data));
+				updateTimeBoundary(timestamp);
 			}
+			
 		}
 		else
 		{
-			//The new item is in the middle
-			printf("The item is in the middle\n");
-			iter--;
-			if (iter->first == timestamp)
+			printf("Found ts: %d\n", iter->getTimestamp());
+			--iter;
+			if (iter->getTimestamp() == timestamp)
 			{
-				CacheItem& item = iter->second;
-				item.add(data);
+				iter->add(data);
 			}
 			else
 			{
-				printf("Insert to position %lu\n", iter->first);
-				m_map.insert(iter, std::make_pair(timestamp, data));
+				CacheItem item(timestamp, data);
+				m_data.emplace(iter + 1, item);
 			}
+			printf("Found ts: %d\n", iter->getTimestamp());
 		}
 		return 0;
 	}
 
-	void CacheBuffer::updateTimeBoundary(uint64_t timestamp)
+	void CacheBuffer::updateTimeBoundary(int64_t timestamp)
 	{
+		if (timestamp > m_endTime)
+			m_endTime = timestamp;
+
+		if (m_startTime == -1)
+			m_startTime = timestamp;
+
 
 	}
 
-	bool CacheBuffer::checkTimeBoundary(uint64_t timestamp)
+	bool CacheBuffer::checkTimeBoundary(int64_t timestamp)
 	{
 		if (timestamp < m_startTime)
 			return false;
 		return true;
+	}
+
+	CacheBuffer::CacheBufferIterator CacheBuffer::find(int64_t timestamp)
+	{		
+		return std::find_if(m_data.begin(), m_data.end(), MatchCachePredicate(timestamp, 0));
+	}
+
+	CacheBuffer::CacheBufferIterator CacheBuffer::upperBound(int64_t timestamp)
+	{
+		return std::find_if(m_data.begin(), m_data.end(), MatchCachePredicate(timestamp, 1));	
 	}
 } // oppvs

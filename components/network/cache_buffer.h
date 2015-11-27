@@ -9,14 +9,20 @@ namespace oppvs {
 	class CacheItem
 	{
 	private:
+		int64_t m_timestamp;
 		std::vector<SharedDynamicBufferRef> m_data;
 
 	public:
 		CacheItem() = default;
-		CacheItem(const SharedDynamicBufferRef& input_data)
+		CacheItem(int64_t ts, const SharedDynamicBufferRef& input_data): m_timestamp(ts)
 		{
 			m_data.clear();
 			m_data.push_back(input_data);
+		}
+
+		int64_t getTimestamp() const
+		{
+			return m_timestamp;
 		}
 
 		void add(const SharedDynamicBufferRef& input_data)
@@ -26,33 +32,56 @@ namespace oppvs {
 
 		void print() const
 		{
+			printf("Timestamp: %lld\n", m_timestamp);
 			for (const auto &p : m_data)
-				printf("Item %d\n", p->size());
+				printf("Item %zu\n", p->size());
 		}
 	};
 
+	class MatchCachePredicate
+	{
+		int64_t m_timestamp;
+		int m_comparisonType;	//0: equal, 1: >
+	public:
+		MatchCachePredicate(int64_t timestamp, int64_t type) : m_timestamp(timestamp), m_comparisonType(type) {}
+		bool operator()(const CacheItem& item) const
+		{
+			if (m_comparisonType == 0)
+				return item.getTimestamp() == m_timestamp;
+			else
+				return item.getTimestamp() > m_timestamp;
+		}
+	};
+
+
 	class CacheBuffer
 	{
+	private:
+		typedef std::vector<CacheItem>::iterator CacheBufferIterator;
+		typedef std::vector<CacheItem>::reverse_iterator CacheBufferReverseIterator;
+
+		const static int MAX_CACHE_TIME_DURATION = 5;	//5 seconds 
+
 	public:
 		CacheBuffer();
 		~CacheBuffer();
 
-		int add(uint64_t timestamp, SharedDynamicBufferRef data);
+		int add(int64_t timestamp, SharedDynamicBufferRef data);
+		CacheBufferIterator find(int64_t timestamp);
+		CacheBufferIterator upperBound(int64_t timestamp);
+
 		size_t size();
 
-		void printMap();
+		void printBuffer();
 	private:
-		std::map<uint64_t, CacheItem> m_map;
+		std::vector<CacheItem> m_data;
 		int64_t m_startTime;
 		int64_t m_endTime;
 
-		bool checkTimeBoundary(uint64_t timestamp);
-		void updateTimeBoundary(uint64_t timestamp);
 
-		typedef std::map<uint64_t, CacheItem>::iterator CacheBufferIterator;
-		typedef std::map<uint64_t, CacheItem>::reverse_iterator CacheBufferReverseIterator;
-
-		const static int MAX_CACHE_TIME_DURATION = 5;	//5 seconds 
+		bool checkTimeBoundary(int64_t timestamp);
+		void updateTimeBoundary(int64_t timestamp);
+		
 	};
 } // oppvs
 
