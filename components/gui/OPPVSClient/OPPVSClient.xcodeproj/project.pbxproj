@@ -28,28 +28,10 @@
 		D9FD72FE1B86FF9E00AF2E71 /* libmisccpp.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */; };
 		D9FD72FF1B86FFA400AF2E71 /* libmisccpp.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D9FD73021B87006100AF2E71 /* libthreadengine.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73001B87005C00AF2E71 /* libthreadengine.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD73041B87011800AF2E71 /* libnice.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73031B87011800AF2E71 /* libnice.10.dylib */; };
-		D9FD73051B87011E00AF2E71 /* libnice.10.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73031B87011800AF2E71 /* libnice.10.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D9FD73071B87024700AF2E71 /* libencodingengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73061B87024700AF2E71 /* libencodingengine.so */; };
 		D9FD73081B87024D00AF2E71 /* libencodingengine.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73061B87024700AF2E71 /* libencodingengine.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD730B1B8702A600AF2E71 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73091B8702A600AF2E71 /* libvpx.a */; };
 		D9FD730C1B8702A600AF2E71 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD730A1B8702A600AF2E71 /* libyuv.a */; };
-		D9FD730D1B8702AD00AF2E71 /* libvpx.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73091B8702A600AF2E71 /* libvpx.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D9FD730E1B8702AD00AF2E71 /* libyuv.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD730A1B8702A600AF2E71 /* libyuv.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD73111B870CE100AF2E71 /* libgio-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD730F1B870CE100AF2E71 /* libgio-2.0.0.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D9FD73121B870CE100AF2E71 /* libglib-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73101B870CE100AF2E71 /* libglib-2.0.0.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D9FD73161B870D1600AF2E71 /* libgobject-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73131B870D1600AF2E71 /* libgobject-2.0.0.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D9FD73171B870D1600AF2E71 /* libgthread-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73141B870D1600AF2E71 /* libgthread-2.0.0.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D9FD73181B870D1600AF2E71 /* libintl.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73151B870D1600AF2E71 /* libintl.8.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D9FD73191B870D2D00AF2E71 /* libgobject-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73131B870D1600AF2E71 /* libgobject-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD731A1B870D2D00AF2E71 /* libgthread-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73141B870D1600AF2E71 /* libgthread-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD731B1B870D2D00AF2E71 /* libintl.8.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73151B870D1600AF2E71 /* libintl.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD731C1B870D2D00AF2E71 /* libgio-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD730F1B870CE100AF2E71 /* libgio-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD731D1B870D2D00AF2E71 /* libglib-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73101B870CE100AF2E71 /* libglib-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD731F1B8711E100AF2E71 /* libgmodule-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD731E1B8711E100AF2E71 /* libgmodule-2.0.0.dylib */; };
-		D9FD73211B87126900AF2E71 /* libffi.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73201B87126900AF2E71 /* libffi.6.dylib */; };
-		D9FD73221B8712AF00AF2E71 /* libffi.6.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73201B87126900AF2E71 /* libffi.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD73231B8712AF00AF2E71 /* libgmodule-2.0.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD731E1B8711E100AF2E71 /* libgmodule-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,17 +52,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				D982F60B1BCCAEDA004D679F /* libaudioengine.so in CopyFiles */,
-				D9FD73221B8712AF00AF2E71 /* libffi.6.dylib in CopyFiles */,
-				D9FD73231B8712AF00AF2E71 /* libgmodule-2.0.0.dylib in CopyFiles */,
-				D9FD73191B870D2D00AF2E71 /* libgobject-2.0.0.dylib in CopyFiles */,
-				D9FD731A1B870D2D00AF2E71 /* libgthread-2.0.0.dylib in CopyFiles */,
-				D9FD731B1B870D2D00AF2E71 /* libintl.8.dylib in CopyFiles */,
-				D9FD731C1B870D2D00AF2E71 /* libgio-2.0.0.dylib in CopyFiles */,
-				D9FD731D1B870D2D00AF2E71 /* libglib-2.0.0.dylib in CopyFiles */,
-				D9FD730D1B8702AD00AF2E71 /* libvpx.a in CopyFiles */,
 				D9FD730E1B8702AD00AF2E71 /* libyuv.a in CopyFiles */,
 				D9FD73081B87024D00AF2E71 /* libencodingengine.so in CopyFiles */,
-				D9FD73051B87011E00AF2E71 /* libnice.10.dylib in CopyFiles */,
 				D9FD73021B87006100AF2E71 /* libthreadengine.so in CopyFiles */,
 				D9FD72FF1B86FFA400AF2E71 /* libmisccpp.so in CopyFiles */,
 				D9FD72FC1B86FEBA00AF2E71 /* libmisc.so in CopyFiles */,
@@ -115,17 +88,8 @@
 		D9FD72F91B86FBEC00AF2E71 /* libmisc.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisc.so; path = ../../../libs/libmisc.so; sourceTree = "<group>"; };
 		D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisccpp.so; path = ../../../libs/libmisccpp.so; sourceTree = "<group>"; };
 		D9FD73001B87005C00AF2E71 /* libthreadengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libthreadengine.so; path = ../../../libs/libthreadengine.so; sourceTree = "<group>"; };
-		D9FD73031B87011800AF2E71 /* libnice.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnice.10.dylib; path = ../../../libs/libnice.10.dylib; sourceTree = "<group>"; };
 		D9FD73061B87024700AF2E71 /* libencodingengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libencodingengine.so; path = ../../../libs/libencodingengine.so; sourceTree = "<group>"; };
-		D9FD73091B8702A600AF2E71 /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvpx.a; path = ../../../libs/libvpx.a; sourceTree = "<group>"; };
 		D9FD730A1B8702A600AF2E71 /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyuv.a; path = ../../../libs/libyuv.a; sourceTree = "<group>"; };
-		D9FD730F1B870CE100AF2E71 /* libgio-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgio-2.0.0.dylib"; path = "/usr/local/lib/libgio-2.0.0.dylib"; sourceTree = "<absolute>"; };
-		D9FD73101B870CE100AF2E71 /* libglib-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libglib-2.0.0.dylib"; path = "/usr/local/lib/libglib-2.0.0.dylib"; sourceTree = "<absolute>"; };
-		D9FD73131B870D1600AF2E71 /* libgobject-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgobject-2.0.0.dylib"; path = "/usr/local/lib/libgobject-2.0.0.dylib"; sourceTree = "<absolute>"; };
-		D9FD73141B870D1600AF2E71 /* libgthread-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgthread-2.0.0.dylib"; path = "/usr/local/lib/libgthread-2.0.0.dylib"; sourceTree = "<absolute>"; };
-		D9FD73151B870D1600AF2E71 /* libintl.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libintl.8.dylib; path = /usr/local/lib/libintl.8.dylib; sourceTree = "<absolute>"; };
-		D9FD731E1B8711E100AF2E71 /* libgmodule-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgmodule-2.0.0.dylib"; path = "/usr/local/lib/libgmodule-2.0.0.dylib"; sourceTree = "<absolute>"; };
-		D9FD73201B87126900AF2E71 /* libffi.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libffi.6.dylib; path = /usr/local/lib/libffi.6.dylib; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,20 +99,11 @@
 			files = (
 				D982F60C1BCCAF3B004D679F /* libaudioengine.so in Frameworks */,
 				D982F6091BCCAE68004D679F /* libthreadengine.so in Frameworks */,
-				D9FD73211B87126900AF2E71 /* libffi.6.dylib in Frameworks */,
-				D9FD731F1B8711E100AF2E71 /* libgmodule-2.0.0.dylib in Frameworks */,
-				D9FD73161B870D1600AF2E71 /* libgobject-2.0.0.dylib in Frameworks */,
-				D9FD73171B870D1600AF2E71 /* libgthread-2.0.0.dylib in Frameworks */,
-				D9FD73181B870D1600AF2E71 /* libintl.8.dylib in Frameworks */,
-				D9FD73111B870CE100AF2E71 /* libgio-2.0.0.dylib in Frameworks */,
-				D9FD73121B870CE100AF2E71 /* libglib-2.0.0.dylib in Frameworks */,
 				D9FD73071B87024700AF2E71 /* libencodingengine.so in Frameworks */,
 				D9FD72FE1B86FF9E00AF2E71 /* libmisccpp.so in Frameworks */,
 				D9FD730C1B8702A600AF2E71 /* libyuv.a in Frameworks */,
 				D93A2C911B099FC800587EB4 /* libOPPVSRendering.dylib in Frameworks */,
-				D9FD73041B87011800AF2E71 /* libnice.10.dylib in Frameworks */,
 				D9FD72FA1B86FBEC00AF2E71 /* libmisc.so in Frameworks */,
-				D9FD730B1B8702A600AF2E71 /* libvpx.a in Frameworks */,
 				D970FADA1B00BD40005AF09E /* libnetworkengine.so in Frameworks */,
 				D970FAD81B00B82D005AF09E /* libstreaming.so in Frameworks */,
 			);
@@ -230,17 +185,8 @@
 			children = (
 				D982F60A1BCCAEDA004D679F /* libaudioengine.so */,
 				D982F6081BCCAE68004D679F /* libthreadengine.so */,
-				D9FD73201B87126900AF2E71 /* libffi.6.dylib */,
-				D9FD731E1B8711E100AF2E71 /* libgmodule-2.0.0.dylib */,
-				D9FD73131B870D1600AF2E71 /* libgobject-2.0.0.dylib */,
-				D9FD73141B870D1600AF2E71 /* libgthread-2.0.0.dylib */,
-				D9FD73151B870D1600AF2E71 /* libintl.8.dylib */,
-				D9FD730F1B870CE100AF2E71 /* libgio-2.0.0.dylib */,
-				D9FD73101B870CE100AF2E71 /* libglib-2.0.0.dylib */,
-				D9FD73091B8702A600AF2E71 /* libvpx.a */,
 				D9FD730A1B8702A600AF2E71 /* libyuv.a */,
 				D9FD73061B87024700AF2E71 /* libencodingengine.so */,
-				D9FD73031B87011800AF2E71 /* libnice.10.dylib */,
 				D9FD73001B87005C00AF2E71 /* libthreadengine.so */,
 				D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */,
 				D9FD72F91B86FBEC00AF2E71 /* libmisc.so */,
@@ -496,8 +442,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					../../include,
-					../../../libs/libsrtp/crypto/include,
-					../../../libs/libsrtp/include,
 					../../interface,
 					../../thread,
 					../../streaming,
@@ -505,13 +449,12 @@
 					../OPPVSRendering/OPPVSRendering,
 					../../../libs/libyuv/include,
 					../../encoding,
-					../../../libs/libvpx,
 					../../error,
-					"../../../libs/libnice/**",
 					../../network,
-					"/usr/local/include/glib-2.0",
 					../../audio,
-					"../../../libs/libopus/**",
+					"~/cerbero/dist/darwin_x86_64/include",
+					"~/cerbero/dist/darwin_x86_64/include/glib-2.0",
+					"~/cerbero/dist/darwin_x86_64/lib/glib-2.0/include",
 				);
 				INFOPLIST_FILE = OPPVSClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -520,7 +463,6 @@
 					../../../libs,
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug",
-					/usr/local/lib,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Sugar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -537,8 +479,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					../../include,
-					../../../libs/libsrtp/crypto/include,
-					../../../libs/libsrtp/include,
 					../../interface,
 					../../thread,
 					../../streaming,
@@ -546,13 +486,12 @@
 					../OPPVSRendering/OPPVSRendering,
 					../../../libs/libyuv/include,
 					../../encoding,
-					../../../libs/libvpx,
 					../../error,
-					"../../../libs/libnice/**",
 					../../network,
-					"/usr/local/include/glib-2.0",
 					../../audio,
-					"../../../libs/libopus/**",
+					"~/cerbero/dist/darwin_x86_64/include",
+					"~/cerbero/dist/darwin_x86_64/include/glib-2.0",
+					"~/cerbero/dist/darwin_x86_64/lib/glib-2.0/include",
 				);
 				INFOPLIST_FILE = OPPVSClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -561,7 +500,6 @@
 					../../../libs,
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug",
-					/usr/local/lib,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Sugar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
