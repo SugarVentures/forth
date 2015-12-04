@@ -124,10 +124,8 @@ namespace oppvs {
 	{
 		std::vector<GSList*> candidates;
 
-	    for (unsigned int i = cands.size(); i > 0;)
+	    for (unsigned int i = 0; i < cands.size(); i++)
 	    {
-	        i--;
-
 	        NiceCandidateType type;
 	        if (IceCandidateTypeName[NICE_CANDIDATE_TYPE_HOST] == cands[i].type)
 	            type = NICE_CANDIDATE_TYPE_HOST;
@@ -143,7 +141,13 @@ namespace oppvs {
 	        candidate->transport = NICE_CANDIDATE_TRANSPORT_UDP;
 
 	        nice_address_init(&candidate->addr);
-	        nice_address_set_from_string(&candidate->addr, cands[i].ip.c_str());
+
+	        if (!nice_address_set_from_string(&candidate->addr, cands[i].ip.c_str()))
+	        {
+	        	nice_candidate_free(candidate);
+	        	printf("Failed to parse address\n");
+	        	break;
+	        }
 	        nice_address_set_port(&candidate->addr, cands[i].port);
 
 	        if (cands[i].rel_addr != "")
@@ -165,8 +169,8 @@ namespace oppvs {
 	        {
 	            if (j == candidates_size)
 	            {
-	                candidates.push_back(NULL);
-	                candidates[j] = g_slist_prepend(candidates[j], candidate);
+	                GSList* rc = g_slist_prepend(NULL, candidate);
+	                candidates.push_back(rc);
 	            }
 	            else
 	            {
@@ -178,6 +182,7 @@ namespace oppvs {
 	                }
 	            }
 	        }
+	        
 	    }
 
 	    return candidates;
@@ -185,7 +190,9 @@ namespace oppvs {
 
 	void IceStream::send(uint16_t size, uint8_t* data, guint component_id)
 	{
-		nice_agent_send(m_agent, m_streamID, component_id, size, (gchar*)data);
+		int ret = nice_agent_send(m_agent, m_streamID, component_id, size, (gchar*)data);
+		if (ret < 0)
+			printf("Send failed %d\n", ret);
 	}
 
     

@@ -147,6 +147,7 @@ namespace oppvs {
     void IceManager::cb_new_selected_pair(NiceAgent *agent, guint stream_id, guint component_id,
                                       gchar *lfoundation, gchar *rfoundation, gpointer user_data)
     {
+    	std::cout << "SIGNAL: selected pair " << lfoundation << " " << rfoundation << "\n";
     	IceManager* manager = (IceManager*)user_data;
     	IceStream* stream = manager->getStreamByID(stream_id);
     	if (stream != NULL)
@@ -223,6 +224,7 @@ namespace oppvs {
     	IceStream* stream = getStreamByID(1);
 		stream->setRemoteCredentials(m_remoteUsername, m_remotePassword);
 		stream->setRemoteCandidates(m_remoteCandidates);
+
     }
 
 } // oppvs
