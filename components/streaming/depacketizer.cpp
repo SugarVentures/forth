@@ -12,7 +12,7 @@ namespace oppvs {
 	{
 		m_videoDecoder.release();
 		for(unsigned i = 0; i < m_readers.size(); ++i) {
-			IncomingStreamingMessage* msg = m_readers.back();
+			IncomingStreamingMessageController* msg = m_readers.back();
 			delete msg->thread;
 			m_readers.pop_back();
 		}
@@ -27,14 +27,14 @@ namespace oppvs {
 			m_audioDecoder.init(info->audioStreamInfo);
 		
 		for(unsigned i = 0; i < info->videoStreamInfo.noSources; ++i) {
-			IncomingStreamingMessage* msg = new IncomingStreamingMessage();
+			IncomingStreamingMessageController* msg = new IncomingStreamingMessageController();
 			msg->sourceid = info->videoStreamInfo.sources[i].source;
 			msg->thread = new DepacketizerThread(this);
 			msg->thread->create();
 			m_readers.push_back(msg);
 		}
 		for(unsigned i = 0; i < info->audioStreamInfo.noSources; ++i) {
-			IncomingStreamingMessage* msg = new IncomingStreamingMessage();
+			IncomingStreamingMessageController* msg = new IncomingStreamingMessageController();
 			msg->sourceid = info->audioStreamInfo.sources[i].source;
 			msg->thread = new DepacketizerThread(this);
 			msg->thread->create();
@@ -73,6 +73,8 @@ namespace oppvs {
 		if (len < RTP_HEADER_SIZE)
 			return;
 
+
+
 		memcpy(&timestamp, data, 4);
 		timestamp = ntohl(timestamp);
 		memcpy(&sourceid, data + 4, 1);
@@ -80,9 +82,19 @@ namespace oppvs {
 		type = ntohs(type);
 		//printf("timestamp %u len: %u source: %d type: %d\n", timestamp, len, sourceid, type);
 		
-		SegmentReader* reader = getReader(sourceid);
-		if (reader == NULL)
+		IncomingStreamingMessageController* controller = getController(sourceid);
+		if (controller == nullptr)
+		{
+			assert("No corresponding controller to handle the received segment");
 			return;
+		}
+
+		SegmentReader* reader = &controller->reader;
+		if (reader == nullptr)
+		{
+			assert("No corresponding reader to handle the received segment");
+			return;	
+		}
 	
 		int ret = -1;
 		switch (type)
@@ -106,8 +118,16 @@ namespace oppvs {
 			frame->type = type;
 			frame->data = reader->getBuffer();
 			frame->timestamp = timestamp;
-			DepacketizerThread* thread = getThread(sourceid);
+
+			DepacketizerThread* thread = controller->thread;
+			if (thread == nullptr)
+			{
+				assert("No corresponding thread to handle the frame");
+				return;
+			}
+			
 			thread->pushFrame(frame);
+
 		}
 	}
 
@@ -190,6 +210,15 @@ namespace oppvs {
         m_user = user;
     }
 
+    IncomingStreamingMessageController* Depacketizer::getController(uint8_t sourceid)
+	{
+		for(unsigned i = 0; i < m_readers.size(); ++i) {
+			if (m_readers[i]->sourceid == sourceid)
+				return m_readers[i];
+		}
+		return nullptr;
+	}
+
 	DepacketizerThread::DepacketizerThread(Depacketizer* dep) : Thread(run, this), m_exitThread(false), p_depacketizer(dep)
 	{
 		m_lastPTS = 0;
@@ -248,4 +277,6 @@ namespace oppvs {
 	{
 		return m_lastPTS;
 	}
+
+
 } // oppvs

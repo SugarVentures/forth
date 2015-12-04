@@ -13,16 +13,24 @@
 #include "audio_ring_buffer.h"
 #include "video_frame_buffer.h"
 
+#include "cache_buffer.h"
+
 namespace oppvs {
 	
 
 	class DepacketizerThread;
 
-	struct IncomingStreamingMessage
+	struct IncomingStreamingMessageController
 	{
 		uint8_t sourceid;
 		SegmentReader reader;
 		DepacketizerThread* thread;
+		CacheBuffer cache;
+
+		IncomingStreamingMessageController()
+		{
+			thread = nullptr;
+		}
 	};
 
 	struct IncomingStreamingFrame
@@ -41,11 +49,12 @@ namespace oppvs {
 		VPVideoDecoder m_videoDecoder;
 		AudioOpusDecoder m_audioDecoder;
 
-		std::vector<IncomingStreamingMessage*> m_readers;
+		std::vector<IncomingStreamingMessageController*> m_readers;
 		tsqueue<IncomingStreamingFrame*>* p_recvPool;
 
 		SegmentReader* getReader(uint8_t sourceid);
 		DepacketizerThread* getThread(uint8_t sourceid);
+		IncomingStreamingMessageController* getController(uint8_t sourceid);
 
 		AudioRingBuffer* p_audioRingBuffer;
 		VideoFrameBuffer* p_videoFrameBuffer;
@@ -59,6 +68,8 @@ namespace oppvs {
 		int pullFrame(SharedDynamicBufferRef, uint8_t source, uint32_t ts);
         
         void* m_user;
+
+
 	public:
 		Depacketizer();
 		~Depacketizer();
