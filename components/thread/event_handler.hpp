@@ -3,37 +3,32 @@
 
 #include <functional>
 #include "datatypes.hpp"
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+
+#include "thread.hpp"
 
 namespace oppvs {
+
+	const int MESSAGE_CACHE_CLEAN = 0x0001;
+	bool m_hasMessage = false;
 	
 	class EventHandler {
 	private:
-		/* data */
+		Thread* p_thread;
+		std::mutex m_mutex;
+		std::condition_variable m_conditionVariable;
+
+		
+
+		static void* run(void* object);
+		void runImpl();
 	public:
-		template<typename T>
-		void addHandler(std::function<T(void)> callback)
-		{
-			callback();
-		}
-
-		template<typename T, typename... Params>
-		void addHandler(std::function<T(Params...)> callback, Params... args)
-		{
-			callback(std::forward<Params>(args)...);
-		}
-
-		template<typename T, typename... Params>
-		void addHandler(std::function<T(Params&...)> callback, Params&... args)
-		{
-			callback(std::forward<Params>(args)...);
-		}
-
-		using fp = void (*)(void);
-		void addHandler(fp f)
-		{
-			addHandler(std::function<void()>(f));
-		}
-
+		EventHandler();
+		~EventHandler();
+		void registerEvent();
+		void start();
 	};
 } // oppvs
 

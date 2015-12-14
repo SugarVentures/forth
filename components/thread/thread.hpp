@@ -20,6 +20,7 @@ namespace oppvs
 		~Thread();
 
 		int create();
+		void join();
 		void waitUntilEnding();
 		static void* defaultRun(void* object);
 	private:

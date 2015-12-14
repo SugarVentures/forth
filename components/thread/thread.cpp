@@ -32,6 +32,11 @@ namespace oppvs
 
 	void Thread::waitUntilEnding()
 	{
+		join();
+	}
+
+	void Thread::join()
+	{
 		if (m_thread.joinable())
 		{
 			m_thread.join();
