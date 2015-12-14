@@ -5,7 +5,8 @@
 #ifndef OPPVS_THREAD_HPP
 #define OPPVS_THREAD_HPP
 
-#include <pthread.h>
+//#include <pthread.h>
+#include <thread>
 #include "../include/logs.h"
 
 namespace oppvs
@@ -15,18 +16,16 @@ namespace oppvs
 	{
 	public:
 		Thread() {}
-		Thread(thread_routine routine, void* param);		
+		Thread(thread_routine routine, void* param);
+		~Thread();
+
 		int create();
-		void waitUntilNextEvent();
 		void waitUntilEnding();
-		
 		static void* defaultRun(void* object);
-		virtual ~Thread();
 	private:
-		pthread_t m_threadId;
+		std::thread m_thread;
 		thread_routine m_routine;
 		void* m_params;
-		bool m_isValid;
 	};
 }
 

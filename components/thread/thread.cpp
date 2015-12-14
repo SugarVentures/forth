@@ -17,36 +17,25 @@ namespace oppvs
 	{
 		m_routine = routine;
 		m_params = params;
-		m_isValid = false;
 	}
 
 	Thread::~Thread()
 	{
-#ifndef ANDROID
-		pthread_cancel(m_threadId);
-#endif
+		waitUntilEnding();
 	}
 
 	int Thread::create()
 	{
-		int error = pthread_create(&m_threadId, NULL, m_routine, m_params);
-		//print_thread_id(m_threadId);
-		m_isValid = true;
-		return error;
-	}
-
-	void Thread::waitUntilNextEvent()
-	{
-
+		m_thread = std::thread(m_routine, m_params);
+		return 0;
 	}
 
 	void Thread::waitUntilEnding()
 	{
-		void* pRetValFromThread = NULL;
-		if (m_isValid)
-			pthread_join(m_threadId, &pRetValFromThread);
-		m_isValid = false;
-		m_threadId = (pthread_t)-1;
+		if (m_thread.joinable())
+		{
+			m_thread.join();
+		}
 	}
 
 	void* Thread::defaultRun(void* object)

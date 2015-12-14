@@ -3,7 +3,7 @@ CXX = g++
 RM = rm -f
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error 
-CFLAGS = -Wall -g -fPIC
+CFLAGS = -Wall -g -fPIC -std=c++11
 
 OBJLIBS = libthreadengine.so
 
