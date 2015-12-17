@@ -2,8 +2,10 @@
 #define OPPVS_CACHE_BUFFER_H
 
 #include "data_stream.hpp"
-#include <map>
+#include "thread.hpp"
+#include "event_handler.hpp"
 #include <vector>
+#include <mutex>
 
 namespace oppvs {
 	class CacheItem
@@ -60,7 +62,7 @@ namespace oppvs {
 		typedef std::vector<CacheItem>::iterator CacheBufferIterator;
 		typedef std::vector<CacheItem>::reverse_iterator CacheBufferReverseIterator;
 
-		const static int MAX_CACHE_TIME_DURATION = 5;	//5 seconds 
+		const static int MAX_CACHE_TIME_DURATION = 50;	
 
 	public:
 		CacheBuffer();
@@ -69,16 +71,25 @@ namespace oppvs {
 		int add(int64_t timestamp, SharedDynamicBufferRef data);
 		CacheBufferIterator find(int64_t timestamp);
 		CacheBufferIterator upperBound(int64_t timestamp);
+		int remove(size_t n);
+		void remove(void* param);
 
 		size_t size();
 
 		void printBuffer();
+		void attachHandler(EventHandler* handler);
 	private:
 		std::vector<CacheItem> m_data;
-		int64_t m_startTime;
-		int64_t m_endTime;
 
 
+		std::atomic<int64_t> m_startTime;
+		std::atomic<int64_t> m_endTime;
+
+		std::atomic<bool> m_isRemoving;
+
+		std::mutex m_mutex;
+
+		EventHandler* mp_eventHandler;
 		bool checkTimeBoundary(int64_t timestamp);
 		void updateTimeBoundary(int64_t timestamp);
 		

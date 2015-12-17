@@ -13,6 +13,18 @@
 #include "thread.hpp"
 #include "tsqueue.hpp"
 
+template< class Function, class... Args>
+std::future<typename std::result_of<Function(Args...)>::type> async( Function&& f, Args&&... args ) 
+{
+    typedef typename std::result_of<Function(Args...)>::type R;
+    auto bound_task = std::bind(std::forward<Function>(f), std::forward<Args>(args)...);
+    std::packaged_task<R()> task(std::move(bound_task));
+    auto ret = task.get_future();
+    std::thread t(std::move(task));
+    t.detach();
+    return ret;   
+}
+
 namespace oppvs {
 
 	const int EVENT_SIGNAL_STOP = 0x0000;
@@ -31,7 +43,6 @@ namespace oppvs {
 	private:
 		Thread* p_thread;
 		std::mutex m_mutex;
-		std::mutex m_writeMutex;
 		std::condition_variable m_conditionVariable;
 
 		callbackFunctionType cbFunction;
