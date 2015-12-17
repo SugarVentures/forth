@@ -3,11 +3,12 @@
 
 #include <functional>
 #include "datatypes.hpp"
-#include <thread>
+
 #include <mutex>
 #include <condition_variable>
 #include <vector>
 #include <atomic>
+#include <future>
 
 #include "thread.hpp"
 #include "tsqueue.hpp"
@@ -15,19 +16,15 @@
 namespace oppvs {
 
 	const int EVENT_SIGNAL_STOP = 0x0000;
-	const int MESSAGE_CACHE_CLEAN = 0x0001;
+	const int EVENT_SIGNAL_EXECUTE = 0x0001;
 
-	typedef std::function<int(const std::string&)> callbackFunctionType;
-
-	struct Event
-	{
-		int eventId;
-		callbackFunctionType cbFunction;
-	};
+	typedef std::function<void(void* params)> callbackFunctionType;
 
 	struct ActiveEvent
 	{
 		int signal;
+		callbackFunctionType cb;
+		void* params;
 	};
 	
 	class EventHandler {
@@ -38,21 +35,19 @@ namespace oppvs {
 		std::condition_variable m_conditionVariable;
 
 		callbackFunctionType cbFunction;
-		std::vector<Event> m_eventsList;
 		tsqueue<ActiveEvent> m_activeEventsList;
+
+		std::vector<std::future<void>> m_futures;
 
 		static void* run(void* object);
 		void runImpl();
-
-		std::atomic<int> m_numEvents;
 
 		int processSignal();
 
 	public:
 		EventHandler();
 		~EventHandler();
-		void registerEvent(callbackFunctionType);
-		void sendSignal();
+		void sendSignal(int signal, callbackFunctionType cb, void* param);
 		void start();
 		void stop();
 	};

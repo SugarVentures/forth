@@ -1,7 +1,7 @@
 #include "event_handler.hpp"
 
 namespace oppvs {
-	EventHandler::EventHandler(): m_numEvents(0)
+	EventHandler::EventHandler()
 	{
 		p_thread = new Thread(EventHandler::run, this);
 	}
@@ -43,24 +43,13 @@ namespace oppvs {
 		m_conditionVariable.notify_one();
 	}
 
-	void EventHandler::registerEvent(callbackFunctionType fnc)
-	{
-		cbFunction = fnc;
-		int localNumEvents = m_numEvents++;
-		printf("current id: %d\n", localNumEvents);
-		Event event;
-		event.eventId = localNumEvents;
-		event.cbFunction = fnc;
-		{
-			std::lock_guard<std::mutex> lk(m_writeMutex);
-			m_eventsList.push_back(event);
-		}
-	}
-
-	void EventHandler::sendSignal()
+	void EventHandler::sendSignal(int sig, callbackFunctionType cb, void* param)
 	{
 		printf("Receive signal\n");
 		ActiveEvent event;
+		event.signal = sig;
+		event.cb = cb;
+		event.params = param;
 		m_activeEventsList.push(event);
 		m_conditionVariable.notify_one();
 	}
@@ -70,10 +59,18 @@ namespace oppvs {
 		while (m_activeEventsList.size() > 0)
 		{
 			std::shared_ptr<ActiveEvent> event = m_activeEventsList.pop();
-			printf("Hello\n");
 			if (event->signal == EVENT_SIGNAL_STOP)
 				return 1;
+
+			if (event->signal == EVENT_SIGNAL_EXECUTE)
+			{
+				m_futures.push_back(std::async(event->cb, event->params));	
+			}
 		}
+		for (auto &e : m_futures) {
+			e.get();
+		}
+		m_futures.clear();
 		return 0;
 	}
 } // oppvs
