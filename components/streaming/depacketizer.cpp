@@ -46,24 +46,6 @@ namespace oppvs {
 		p_serviceInfo = info;
 	}
 
-	SegmentReader* Depacketizer::getReader(uint8_t sourceid)
-	{
-		for(unsigned i = 0; i < m_readers.size(); ++i) {
-			if (m_readers[i]->sourceid == sourceid)
-				return &m_readers[i]->reader;
-		}
-		return NULL;
-	}
-
-	DepacketizerThread* Depacketizer::getThread(uint8_t sourceid)
-	{
-		for(unsigned i = 0; i < m_readers.size(); ++i) {
-			if (m_readers[i]->sourceid == sourceid)
-				return m_readers[i]->thread;
-		}
-		return NULL;	
-	}
-
 	void Depacketizer::pushSegment(uint8_t* data, uint32_t len)
 	{
 		uint32_t timestamp = 0;
@@ -128,6 +110,8 @@ namespace oppvs {
 			
 			thread->pushFrame(frame);
 
+			//Push frame to cache
+			controller->cache.add(timestamp, frame->data);
 		}
 	}
 

@@ -16,7 +16,6 @@
 #include "cache_buffer.h"
 
 namespace oppvs {
-	
 
 	class DepacketizerThread;
 
@@ -52,8 +51,6 @@ namespace oppvs {
 		std::vector<IncomingStreamingMessageController*> m_readers;
 		tsqueue<IncomingStreamingFrame*>* p_recvPool;
 
-		SegmentReader* getReader(uint8_t sourceid);
-		DepacketizerThread* getThread(uint8_t sourceid);
 		IncomingStreamingMessageController* getController(uint8_t sourceid);
 
 		AudioRingBuffer* p_audioRingBuffer;
