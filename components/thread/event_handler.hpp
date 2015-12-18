@@ -68,8 +68,7 @@ namespace oppvs {
 		static EventHandler* getInstance();
 	};
 
-	bool EventHandler::instanceFlag = false;
-	EventHandler* EventHandler::single = NULL;
+	
 } // oppvs
 
 #endif // OPPVS_EVENT_HANDLER_HPP

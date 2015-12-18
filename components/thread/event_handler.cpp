@@ -1,6 +1,9 @@
 #include "event_handler.hpp"
 
 namespace oppvs {
+	bool EventHandler::instanceFlag = false;
+	EventHandler* EventHandler::single = NULL;
+	
 	EventHandler::EventHandler(): m_isRunning(false)
 	{
 		p_thread = new Thread(EventHandler::run, this);
