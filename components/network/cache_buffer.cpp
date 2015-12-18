@@ -3,7 +3,7 @@
 namespace oppvs {
 	CacheBuffer::CacheBuffer(): m_startTime(-1), m_endTime(-1), m_isRemoving(false), mp_eventHandler(nullptr)
 	{
-
+		mp_eventHandler = EventHandler::getInstance();
 	}
 
 	CacheBuffer::~CacheBuffer()
@@ -134,16 +134,11 @@ namespace oppvs {
 			m_startTime = timestamp;
 		}
 
-		printf("Remote %ld item in %ld\n", n, m_data.size());
+		printf("Remove %ld item in %ld\n", n, m_data.size());
 		m_data.erase(m_data.begin(), m_data.begin() + std::min(n, m_data.size()));
 		
 		m_startTime = m_data[0].getTimestamp();
 		return 0;
 	}
 
-	void CacheBuffer::attachHandler(EventHandler* handler)
-	{
-		ASSERT(handler != nullptr);
-		mp_eventHandler = handler;
-	}
 } // oppvs

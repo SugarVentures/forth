@@ -77,7 +77,6 @@ namespace oppvs {
 		size_t size();
 
 		void printBuffer();
-		void attachHandler(EventHandler* handler);
 	private:
 		std::vector<CacheItem> m_data;
 
