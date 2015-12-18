@@ -41,27 +41,35 @@ namespace oppvs {
 	
 	class EventHandler {
 	private:
+		static bool instanceFlag;
+		static EventHandler* single;
+
 		Thread* p_thread;
 		std::mutex m_mutex;
 		std::condition_variable m_conditionVariable;
 
-		callbackFunctionType cbFunction;
 		tsqueue<ActiveEvent> m_activeEventsList;
-
 		std::vector<std::future<void>> m_futures;
 
-		static void* run(void* object);
-		void runImpl();
+		bool m_isRunning;
 
+		static void* run(void* object);
+		void runImpl();				
 		int processSignal();
 
-	public:
 		EventHandler();
+	public:
+		
 		~EventHandler();
 		void sendSignal(int signal, callbackFunctionType cb, void* param);
 		void start();
 		void stop();
+
+		static EventHandler* getInstance();
 	};
+
+	bool EventHandler::instanceFlag = false;
+	EventHandler* EventHandler::single = NULL;
 } // oppvs
 
 #endif // OPPVS_EVENT_HANDLER_HPP

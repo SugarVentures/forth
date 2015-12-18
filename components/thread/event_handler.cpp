@@ -1,7 +1,7 @@
 #include "event_handler.hpp"
 
 namespace oppvs {
-	EventHandler::EventHandler()
+	EventHandler::EventHandler(): m_isRunning(false)
 	{
 		p_thread = new Thread(EventHandler::run, this);
 	}
@@ -9,6 +9,23 @@ namespace oppvs {
 	EventHandler::~EventHandler()
 	{
 		delete p_thread;
+		instanceFlag = false;
+	}
+
+	EventHandler* EventHandler::getInstance()
+	{
+		if (!instanceFlag)
+		{
+			single = new EventHandler();
+			instanceFlag = true;
+			single->start();
+			return single;
+		}
+		else
+		{
+			single->start();
+			return single;
+		}
 	}
 
 	void* EventHandler::run(void* object)
@@ -24,15 +41,20 @@ namespace oppvs {
 		{
 			std::unique_lock<std::mutex> lk(m_mutex);
 			m_conditionVariable.wait(lk, [this]{return (m_activeEventsList.size() > 0);});
-			printf("Wake up\n");
+			printf("Wake up. There is new event.\n");
 			if (processSignal() == 1)
 				break;
 		}
+		m_isRunning = true;
 	}	
 
 	void EventHandler::start()
 	{
-	    p_thread->create();
+		if (!m_isRunning)
+		{
+		    p_thread->create();
+		    m_isRunning = true;
+		}
 	}
 
 	void EventHandler::stop()
@@ -45,7 +67,7 @@ namespace oppvs {
 
 	void EventHandler::sendSignal(int sig, callbackFunctionType cb, void* param)
 	{
-		printf("Receive signal\n");
+		printf("Receive signal %d\n", sig);
 		ActiveEvent event;
 		event.signal = sig;
 		event.cb = cb;
