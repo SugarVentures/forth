@@ -26,6 +26,7 @@ namespace oppvs {
 		thread->attachCallback([this](const std::string& sk, int sockfd, const ServiceInfo& info) { return updateStream(sk, sockfd, info); });
 		thread->attachCallback([this](const std::string& sk, int* psockfd, ServiceInfo& info) { return getStreamInfo(sk, psockfd, info); });
 		thread->attachCallback([this](int sockfd) { return removeStream(sockfd); });
+		thread->attachCallback([this](const std::string& sk, int sockfd, const AvailableDuration& dur) { return registerPeer(sk, sockfd); });
 	}
 
 	int SignalingServer::addSocket(const SocketAddress& addressListen, const SocketAddress& addressAdvertised)
@@ -136,6 +137,7 @@ namespace oppvs {
 		SignalingStreamInfo* pstream = findStream(streamKey);
 		if (!pstream)
 			return -1;
+		printf("size of peer lists %lld\n", pstream->peerList.size());
 
 		*psockfd = pstream->peerList[pstream->peerList.size() - 1];
 		info = pstream->serviceInfo;
@@ -147,6 +149,28 @@ namespace oppvs {
 		if (sockfd < 0)
 			return -1;
 		//Need to rewrite
+		return 0;
+	}
+
+	int SignalingServer::registerPeer(const std::string& streamKey, int sockfd)
+	{
+		printf("Register peer\n");
+		SignalingStreamInfo* pstream = findStream(streamKey);
+		if (!pstream)
+			return -1;
+		else
+		{
+			std::vector<int>::iterator found = std::find(pstream->peerList.begin(), pstream->peerList.end(), sockfd);
+			if (found != pstream->peerList.end())
+			{
+				printf("Found sockfd. Do nothing\n");
+			}
+			else
+			{
+				printf("Not found sockfd. Add sock\n");
+				pstream->peerList.push_back(sockfd);
+			}	
+		}
 		return 0;
 	}
 } // oppvs

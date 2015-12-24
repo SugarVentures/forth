@@ -57,6 +57,7 @@ namespace oppvs {
 		int updateStream(const std::string& streamKey, int sockfd, const ServiceInfo& info);
 		int getStreamInfo(const std::string& streamKey, int* psockfd, ServiceInfo& info);
 		int removeStream(int sockfd);
+		int registerPeer(const std::string& streamKey, int sockfd);
 
 	private:
 		SignalingServerConfiguration m_config;

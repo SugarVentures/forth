@@ -149,6 +149,10 @@ namespace oppvs {
 				break;
 			case SignalingPeerRegister:
 				std::cout << "Receive Peer Register" << std::endl;
+				AvailableDuration duration;
+				if (m_cbPeerRegister(m_messageReader.getStreamKey(), m_sockfd, duration) < 0)
+					return;
+				break;
 		}
 
 		
@@ -244,6 +248,11 @@ namespace oppvs {
 	void SignalingServerSubThread::attachCallback(callbackDisconnect cb)
 	{
 		m_cbDisconnect = cb;
+	}
+
+	void SignalingServerSubThread::attachCallback(callbackPeerRegister cb)
+	{
+		m_cbPeerRegister = cb;
 	}
 
 } // oppvs

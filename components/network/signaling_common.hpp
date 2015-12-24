@@ -78,6 +78,7 @@ namespace oppvs {
 	typedef std::function<int(const std::string&, int*, ServiceInfo&)> callbackStreamRequest;
 	typedef std::function<int(const ServiceInfo&)> callbackStreamResponse;
 	typedef std::function<int(int sockfd)> callbackDisconnect;
+	typedef std::function<int(const std::string&, int, const AvailableDuration&)> callbackPeerRegister;
 } // oppvs
 
 #endif // OPPVS_SIGNALING_COMMON_HPP

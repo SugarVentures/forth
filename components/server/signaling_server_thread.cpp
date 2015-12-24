@@ -65,6 +65,7 @@ namespace oppvs {
 			thread->attachCallback(m_cbStreamRegister);
 			thread->attachCallback(m_cbStreamRequest);
 			thread->attachCallback(m_cbDisconnect);
+			thread->attachCallback(m_cbPeerRegister);
 			thread->start();
 			m_threads.push_back(thread);
 		}
@@ -122,5 +123,10 @@ namespace oppvs {
 	void SignalingServerThread::attachCallback(callbackDisconnect cb)
 	{
 		m_cbDisconnect = cb;
-	}	
+	}
+
+	void SignalingServerThread::attachCallback(callbackPeerRegister cb)
+	{
+		m_cbPeerRegister = cb;
+	}
 } // oppvs
