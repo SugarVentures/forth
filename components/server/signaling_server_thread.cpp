@@ -20,7 +20,7 @@ namespace oppvs {
 		m_threads.clear();
 	}
 
-	int SignalingServerThread::init(PhysicalSocket* socket, std::string* streamkey, int* broadcaster)
+	int SignalingServerThread::init(PhysicalSocket* socket)
 	{
 		if (!socket)
 		{
@@ -35,8 +35,6 @@ namespace oppvs {
 		}
 		m_exitThread = false;
 
-		m_streamKey = streamkey;
-		m_broadcaster = broadcaster;
 		return 0;
 	}
 

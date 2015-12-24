@@ -24,6 +24,7 @@ namespace oppvs {
 		SignalingIceResponse = 0x03,
 		SignalingStreamRequest = 0x04,
 		SignalingStreamResponse = 0x05,
+		SignalingPeerRegister = 0x06,
 		SignalingInvalid = 0x00
 	};
 
@@ -48,6 +49,9 @@ namespace oppvs {
 	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_AUDIO_CHANNELS = 0x0011;
 	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_AUDIO_SAMPLE_RATE = 0x0012;
 
+	const static uint16_t SIGNALING_ATTRIBUTE_DURATION_START = 0x0013;
+	const static uint16_t SIGNALING_ATTRIBUTE_DURATION_END = 0x0014;
+
 	inline SignalingMessageType convertToSignalingMessageType(uint16_t value)
 	{
 		switch (value)
@@ -62,6 +66,8 @@ namespace oppvs {
 				return SignalingStreamRequest;
 			case 5:
 				return SignalingStreamResponse;
+			case 6:
+				return SignalingPeerRegister;
 			default:
 				return SignalingInvalid;
 		}

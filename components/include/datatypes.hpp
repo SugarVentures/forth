@@ -263,6 +263,12 @@ namespace oppvs {
 	const int OPUS_MAX_HEADER_SIZE = OPUS_PAYLOAD_HEADER_SIZE + RTP_HEADER_SIZE;
 
 	const int DEFAULT_FORWARDING_SERVER_PORT = 31313;
+
+	struct AvailableDuration
+	{
+		uint32_t start;
+		uint32_t end;
+	};
 }
 
 

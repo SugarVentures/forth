@@ -147,6 +147,8 @@ namespace oppvs {
 				sendResponse(broadcasterfd);
 			}
 				break;
+			case SignalingPeerRegister:
+				std::cout << "Receive Peer Register" << std::endl;
 		}
 
 		

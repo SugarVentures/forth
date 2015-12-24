@@ -32,6 +32,8 @@ namespace oppvs {
 		int addVideoSources(const VideoStreamInfo&);
 		int addAudioSources(const AudioStreamInfo&);
 
+		int addDuration(const AvailableDuration&);
+
 	private:
 		DataStream m_dataStream;
 

@@ -25,6 +25,8 @@ namespace oppvs {
 		int sendStreamRegister(const std::string& streamKey, const ServiceInfo& info);
 		int sendStreamRequest(const std::string& username, const std::string& password, 
 			const std::vector<IceCandidate>& candidates);
+		int sendPeerRegister();
+
 		void waitResponse();
 		void signalForStop();
 

@@ -116,6 +116,23 @@ namespace oppvs {
 		return sendSignal();
 	}
 
+	int SignalingManager::sendPeerRegister()
+	{
+		m_messageBuilder.reset();
+		if (m_messageBuilder.addMessageType(SignalingPeerRegister) < 0)
+			return -1;
+		if (m_messageBuilder.addStreamKey(m_streamKey) < 0)
+			return -1;
+
+		AvailableDuration dur;
+		dur.start = 0;
+		dur.end = 0;
+
+		if (m_messageBuilder.addDuration(dur) < 0)
+			return -1;
+		return sendSignal();
+	}
+
 	int SignalingManager::sendSignal()
 	{
 		SharedDynamicBufferRef buffer;

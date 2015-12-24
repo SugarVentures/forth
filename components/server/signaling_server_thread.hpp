@@ -19,7 +19,7 @@ namespace oppvs {
 		SignalingServerThread();
 		~SignalingServerThread();
 
-		int init(PhysicalSocket* sockets, std::string* streamkey, int* bsock);
+		int init(PhysicalSocket* socket);
 		int run();
 		int start();
 
@@ -37,9 +37,6 @@ namespace oppvs {
 		static void* threadExecuteFunction(void* param);
 
 		bool m_exitThread;
-
-		std::string* m_streamKey;
-		int* m_broadcaster;
 
 		callbackStreamRegister m_cbStreamRegister;
 		callbackStreamRequest m_cbStreamRequest;

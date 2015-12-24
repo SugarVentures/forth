@@ -253,4 +253,21 @@ namespace oppvs {
 		printf("Added audio source\n");
 		return 0;
 	}
+
+	int SignalingMessageBuilder::addDuration(const AvailableDuration& dur)
+	{
+		int ret = 0;
+		int currentPos = m_dataStream.getPosition();
+
+		uint32_t start = htonl(dur.start);
+		uint32_t end = htonl(dur.end);
+
+		if ((ret = addAttribute(SIGNALING_ATTRIBUTE_DURATION_START, &start, 4)) < 0)
+			return -1;
+		if ((ret = addAttribute(SIGNALING_ATTRIBUTE_DURATION_END, &end, 4)) < 0)
+			return -1;
+
+		printf("Added duration %u %u\n", dur.start, dur.end);
+		return 0;
+	}
 } // oppvs

@@ -82,7 +82,6 @@ namespace oppvs {
 	{
     	if (m_dataStream.setAbsolutePosition(SIGNALING_HEADER_SIZE) < 0)
     		return -1;
-    	
     	if (m_messageType == SignalingIceResponse || m_messageType == SignalingStreamRequest)
     	{
     		std::string username, password;
@@ -133,7 +132,7 @@ namespace oppvs {
     			m_candidates.push_back(candidate);
     		}
     	}
-    	else if (m_messageType == SignalingStreamRegister || SignalingStreamResponse)
+    	else if (m_messageType == SignalingStreamRegister || m_messageType == SignalingStreamResponse)
     	{
     		uint8_t noVideoSources = 0;
     		uint8_t noAudioSources = 0;

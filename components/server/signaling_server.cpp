@@ -22,7 +22,7 @@ namespace oppvs {
 
 		SignalingServerThread* thread = new SignalingServerThread();
 		m_threads.push_back(thread);
-		thread->init(&m_socket, &m_streamKey, &m_broadcaster);
+		thread->init(&m_socket);
 		thread->attachCallback([this](const std::string& sk, int sockfd, const ServiceInfo& info) { return updateStream(sk, sockfd, info); });
 		thread->attachCallback([this](const std::string& sk, int* psockfd, ServiceInfo& info) { return getStreamInfo(sk, psockfd, info); });
 		thread->attachCallback([this](int sockfd) { return removeStream(sockfd); });
@@ -90,12 +90,6 @@ namespace oppvs {
 		return 0;
 	}
 
-	void SignalingServer::setStreamKey(const std::string& streamKey)
-	{
-		printf("Set stream key %s\n", streamKey.c_str());
-		m_streamKey = streamKey;
-	}
-
 	int SignalingServer::updateStream(const std::string& streamkey, int sockfd, const ServiceInfo& info)
 	{
 		printf("Update stream %s %d\n", streamkey.c_str(), sockfd);
@@ -105,14 +99,23 @@ namespace oppvs {
 			printf("Not found stream. Add new\n");
 			SignalingStreamInfo stream;
 			stream.streamKey = streamkey;
-			stream.sockFD = sockfd;
+			stream.peerList.push_back(sockfd);
 			stream.serviceInfo = info;
 			m_streams.push_back(stream);
 		}
 		else
 		{
 			printf("Found the stream. Update.\n" );
-			pstream->sockFD = sockfd;
+			std::vector<int>::iterator found = std::find(pstream->peerList.begin(), pstream->peerList.end(), sockfd);
+			if (found != pstream->peerList.end())
+			{
+				printf("Found sockfd. Do nothing\n");
+			}
+			else
+			{
+				printf("Not found sockfd. Add sock\n");
+				pstream->peerList.push_back(sockfd);
+			}
 			pstream->serviceInfo = info;
 		}
 		return 0;
@@ -133,7 +136,8 @@ namespace oppvs {
 		SignalingStreamInfo* pstream = findStream(streamKey);
 		if (!pstream)
 			return -1;
-		*psockfd = pstream->sockFD;
+
+		*psockfd = pstream->peerList[pstream->peerList.size() - 1];
 		info = pstream->serviceInfo;
 		return 0;
 	}
@@ -142,19 +146,7 @@ namespace oppvs {
 	{
 		if (sockfd < 0)
 			return -1;
-		std::vector<SignalingStreamInfo>::iterator it = m_streams.begin();
-		while (it != m_streams.end())
-		{
-			SignalingStreamInfo stream = *it;
-			if (stream.sockFD == sockfd)
-			{
-				printf("Delete stream: %s\n", stream.streamKey.c_str());
-				it = m_streams.erase(it);
-				break;
-			}
-			else
-				++it;
-		}
+		//Need to rewrite
 		return 0;
 	}
 } // oppvs
