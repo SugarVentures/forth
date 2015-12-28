@@ -219,9 +219,9 @@ namespace oppvs {
     	m_remoteCandidates = candidates;
     }
 
-    void IceManager::establishPeerConnection()
+    void IceManager::establishPeerConnection(guint streamid)
     {
-    	IceStream* stream = getStreamByID(1);
+    	IceStream* stream = getStreamByID(streamid);
 		stream->setRemoteCredentials(m_remoteUsername, m_remotePassword);
 		stream->setRemoteCandidates(m_remoteCandidates);
 

@@ -28,7 +28,7 @@ namespace oppvs {
 		int removeStream(guint streamid);
 
 		void setPeerInfo(const std::string& username, const std::string& password, std::vector<IceCandidate>& candidates);
-		void establishPeerConnection();
+		void establishPeerConnection(guint streamid = 1);
 
 		void attachCallbackEvent(callbackCandidateGatheringDone cb, void* object);
 		void attachCallbackEvent(callbackNewSubscriber cb, void* object);
