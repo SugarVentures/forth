@@ -23,16 +23,13 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		D9091AFD1BE9B43200AE988B /* ForthPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9091AFC1BE9B43200AE988B /* ForthPlayer.mm */; };
 		D9488CE81BDF88FC00646B70 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D9488CE71BDF88FC00646B70 /* Constants.m */; };
 		D9514E641BE9F6440016CF8E /* ForthStreaming.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9514E631BE9F6440016CF8E /* ForthStreaming.mm */; };
 		D96B32381BFDB08D00CE8694 /* ForthIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D9488CB71BDF5C1E00646B70 /* ForthIOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D96B32391BFDB09700CE8694 /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = D9488CE51BDF889100646B70 /* Constants.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D96B323A1BFDB09A00CE8694 /* ForthPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = D9091AFB1BE9B35C00AE988B /* ForthPlayer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D96B323B1BFDB09D00CE8694 /* ForthStreaming.h in Headers */ = {isa = PBXBuildFile; fileRef = D9514E651BE9F6620016CF8E /* ForthStreaming.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D96B323C1BFDB12400CE8694 /* ForthIOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CB71BDF5C1E00646B70 /* ForthIOS.h */; };
 		D96B323D1BFDB12400CE8694 /* Constants.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CE51BDF889100646B70 /* Constants.h */; };
-		D96B323E1BFDB12400CE8694 /* ForthPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9091AFB1BE9B35C00AE988B /* ForthPlayer.h */; };
 		D96B323F1BFDB12400CE8694 /* ForthStreaming.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9514E651BE9F6620016CF8E /* ForthStreaming.h */; };
 /* End PBXBuildFile section */
 
@@ -176,7 +173,6 @@
 			files = (
 				D96B323C1BFDB12400CE8694 /* ForthIOS.h in CopyFiles */,
 				D96B323D1BFDB12400CE8694 /* Constants.h in CopyFiles */,
-				D96B323E1BFDB12400CE8694 /* ForthPlayer.h in CopyFiles */,
 				D96B323F1BFDB12400CE8694 /* ForthStreaming.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -185,8 +181,6 @@
 
 /* Begin PBXFileReference section */
 		D9091AF31BE9B27D00AE988B /* audio_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = audio_engine.xcodeproj; path = ../../components/audio/ios/audio_engine.xcodeproj; sourceTree = "<group>"; };
-		D9091AFB1BE9B35C00AE988B /* ForthPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForthPlayer.h; sourceTree = "<group>"; };
-		D9091AFC1BE9B43200AE988B /* ForthPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ForthPlayer.mm; sourceTree = "<group>"; };
 		D9488CB41BDF5C1E00646B70 /* libForthIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libForthIOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9488CB71BDF5C1E00646B70 /* ForthIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForthIOS.h; sourceTree = "<group>"; };
 		D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = streaming_engine.xcodeproj; path = ../../components/streaming/ios/streaming_engine.xcodeproj; sourceTree = "<group>"; };
@@ -249,8 +243,6 @@
 				D9488CB71BDF5C1E00646B70 /* ForthIOS.h */,
 				D9488CE51BDF889100646B70 /* Constants.h */,
 				D9488CE71BDF88FC00646B70 /* Constants.m */,
-				D9091AFB1BE9B35C00AE988B /* ForthPlayer.h */,
-				D9091AFC1BE9B43200AE988B /* ForthPlayer.mm */,
 				D9514E651BE9F6620016CF8E /* ForthStreaming.h */,
 				D9514E631BE9F6440016CF8E /* ForthStreaming.mm */,
 			);
@@ -316,7 +308,6 @@
 			files = (
 				D96B32381BFDB08D00CE8694 /* ForthIOS.h in Headers */,
 				D96B32391BFDB09700CE8694 /* Constants.h in Headers */,
-				D96B323A1BFDB09A00CE8694 /* ForthPlayer.h in Headers */,
 				D96B323B1BFDB09D00CE8694 /* ForthStreaming.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,7 +512,6 @@
 			files = (
 				D9514E641BE9F6440016CF8E /* ForthStreaming.mm in Sources */,
 				D9488CE81BDF88FC00646B70 /* Constants.m in Sources */,
-				D9091AFD1BE9B43200AE988B /* ForthPlayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,7 +653,8 @@
 					../../components/audio,
 					../../components/encoding,
 					../../components/network,
-					"/Users/caominhtrang/cerbero/dist/ios_universal/include/**",
+					/Users/caominhtrang/cerbero/dist/ios_universal/include,
+					"/Users/caominhtrang/cerbero/dist/ios_universal/include/glib-2.0",
 					"/Users/caominhtrang/cerbero/dist/ios_universal/lib/glib-2.0/include",
 					../../components/error,
 					../../libs/libyuv/include,
@@ -687,7 +678,8 @@
 					../../components/audio,
 					../../components/encoding,
 					../../components/network,
-					"/Users/caominhtrang/cerbero/dist/ios_universal/include/**",
+					/Users/caominhtrang/cerbero/dist/ios_universal/include,
+					"/Users/caominhtrang/cerbero/dist/ios_universal/include/glib-2.0",
 					"/Users/caominhtrang/cerbero/dist/ios_universal/lib/glib-2.0/include",
 					../../components/error,
 					../../libs/libyuv/include,

@@ -22,6 +22,8 @@ using namespace oppvs;
     AudioRingBuffer mAudioRingBuffer;
     VideoFrameBuffer mVideoFrameBuffer;
     MacAudioPlay* mPlayer;
+    
+    std::string mServerAddress;
 }
 
 - (void) streamingCallback;
@@ -43,7 +45,7 @@ void streamingCallback(void* user)
     [forth streamingCallback];
 }
 
-- (void) startStreaming
+- (void) startStreaming: (NSString*)streamKey
 {
     NSLog(@"Init forth streaming engine");
     
@@ -51,13 +53,13 @@ void streamingCallback(void* user)
     mStreamingEngine.registerCallback(streamingCallback, (__bridge void*)self);
     mStreamingEngine.attachBuffer(&mAudioRingBuffer);
     mStreamingEngine.attachBuffer(&mVideoFrameBuffer);
-    if (mStreamingEngine.init(ROLE_VIEWER, STUN_SERVER_ADDRESS, TURN_SERVER_ADDRESS, TURN_SERVER_USER, TURN_SERVER_PASS, SIGN_SERVER_ADDRESS, SIGN_SERVER_PORT) < 0)
+    if (mStreamingEngine.init(ROLE_VIEWER, mServerAddress, mServerAddress, TURN_SERVER_USER, TURN_SERVER_PASS, mServerAddress, SIGN_SERVER_PORT) < 0)
     {
         NSLog(@"Failed to init streaming engine");
         return;
     }
     
-    std::string strStreamKey("7116f0d7-5c27-44e6-8aa4-bc4ddeea9935");
+    std::string strStreamKey([streamKey UTF8String]);
     if (mStreamingEngine.start(strStreamKey) < 0)
     {
         NSLog(@"Failed to start streaming engine");
@@ -84,6 +86,26 @@ void streamingCallback(void* user)
     
     mPlayer->attachBuffer(&mAudioRingBuffer);
 
+}
+
+- (id) init:(NSString *)serverAddress
+{
+    self = [super init];
+    if (self)
+    {
+        mServerAddress = std::string([serverAddress UTF8String]);
+        return self;
+    }
+    return self;
+}
+
+- (id) init
+{
+    self = [super init];
+    if (self) {
+        mServerAddress = STUN_SERVER_ADDRESS;
+    }
+    return self;
 }
 
 @end

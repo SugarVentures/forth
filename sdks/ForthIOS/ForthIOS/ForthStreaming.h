@@ -21,8 +21,10 @@
 }
 
 @property (nonatomic,strong) id delegate;
-- (void) startStreaming;
+- (void) startStreaming: (NSString*)streamKey;
 - (void) setupAudioPlayer;
+- (id) init: (NSString*)serverAddress;
+- (id) init;
 
 @end
 
