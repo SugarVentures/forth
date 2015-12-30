@@ -14,7 +14,6 @@
 {
 @private
     ForthStreaming *mForth;
-    ForthPlayer *mPlayer;
 }
 
 @property (nonatomic, strong) GLFrameView *demoView;
@@ -31,8 +30,10 @@
     self.demoView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.container addSubview:self.demoView];
     
+    
+    self.textField.text = @"7116f0d7-5c27-44e6-8aa4-bc4ddeea9935";
     @autoreleasepool {
-        mForth = [[ForthStreaming alloc] init];
+        mForth = [[ForthStreaming alloc] init: @"192.168.1.9"];
         mForth.delegate = self;
         
         [mForth setupAudioPlayer];
@@ -55,7 +56,7 @@
     //log to console
     NSLog(@"log string to log %@", stringToPrint);
     [self.demoView setupGL];
-    [mForth startStreaming];
+    [mForth startStreaming: stringToPrint];
     
 }
 
