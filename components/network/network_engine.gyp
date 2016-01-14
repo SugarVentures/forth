@@ -30,8 +30,8 @@
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                     },
                     'libraries': [
-                        '../../libs/libsrtp.a',
                         '<(oppvs_3rdlibs_path)/lib/libsrtp.dylib',
+                        '<(oppvs_3rdlibs_path)/lib/libcrypto.dylib',
                         '<(oppvs_3rdlibs_path)/lib/libgio-2.0.0.dylib',
                         '<(oppvs_3rdlibs_path)/lib/libgobject-2.0.0.dylib',
                         '<(oppvs_3rdlibs_path)/lib/libgthread-2.0.0.dylib',
