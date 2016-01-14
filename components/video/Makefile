@@ -14,7 +14,7 @@ FRAMEWORKS = -framework Foundation -framework AVFoundation -framework CoreGraphi
  -framework IOSurface
 
 LDFLAGS = -L$(rootDir)/../../libs
-LIBS = -lencodingengine -lyuv -lvpx
+LIBS = 
 
 OBJLIBS = libvideoengine.so
 
