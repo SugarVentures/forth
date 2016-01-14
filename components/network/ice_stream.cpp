@@ -126,6 +126,11 @@ namespace oppvs {
 
 	    for (unsigned int i = 0; i < cands.size(); i++)
 	    {
+	    	//Fix temporarily because libnice failed in case of ipv6
+	    	//Ignore candidate has ipv6 address
+	    	if (cands[i].ip.length() > 20)
+	    		continue;
+
 	        NiceCandidateType type;
 	        if (IceCandidateTypeName[NICE_CANDIDATE_TYPE_HOST] == cands[i].type)
 	            type = NICE_CANDIDATE_TYPE_HOST;
