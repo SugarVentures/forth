@@ -27,7 +27,8 @@
                 '../include'
             ],
             'libraries': [
-                '../../libs/libsrtp.a'
+                '<(oppvs_3rdlibs_path)/lib/libsrtp.dylib',
+                '<(oppvs_3rdlibs_path)/lib/libcrypto.dylib',
             ],
             "sources": [
                 "md5.h",

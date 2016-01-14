@@ -13,7 +13,9 @@
             'conditions': [
                 ['OS == "mac"', {
                     "type": 'shared_library',
-
+                    'xcode_settings': {
+                        'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
+                    },
                     "sources": [
                         "thread.hpp",
                         "thread.cpp",
@@ -22,7 +24,9 @@
                         "ring_buffer.cpp",
                         "CAAtomic.h",
                         "audio_ring_buffer.h",
-                        "audio_ring_buffer.cpp"
+                        "audio_ring_buffer.cpp",
+                        'event_handler.hpp',
+                        'event_handler.cpp'
                     ]         
                 }],
                 ['OS == "linux"', {
@@ -59,7 +63,9 @@
                         "audio_ring_buffer.h",
                         "audio_ring_buffer.cpp",
                         'video_frame_buffer.h',
-                        'video_frame_buffer.cpp'
+                        'video_frame_buffer.cpp',
+                        'event_handler.hpp',
+                        'event_handler.cpp'
                     ]
                 }]
             ]

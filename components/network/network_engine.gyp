@@ -80,6 +80,7 @@
                 'ice_common.hpp',
                 'ice_manager.hpp',
                 'ice_stream.hpp',
+                'cache_buffer.hpp',
 
                 #sources
                  'client_socket.cpp',
@@ -97,7 +98,8 @@
                 'signaling_message_builder.cpp',
                 'signaling_message_reader.cpp',
                 'ice_manager.cpp',
-                'ice_stream.cpp'
+                'ice_stream.cpp',
+                'cache_buffer.cpp'
             ]
 
         }

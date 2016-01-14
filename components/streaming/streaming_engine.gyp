@@ -9,6 +9,9 @@
             
             'dependencies': [
                 '../network/network_engine.gyp:network_engine',
+                '../encoding/encoding_engine.gyp:encoding_engine',
+                '../thread/thread_engine.gyp:thread_engine',
+                '../misc/misc.gyp:libmisc1',
             ],
             'include_dirs': [
                 '../../libs/libsrtp/include',
