@@ -91,13 +91,13 @@ static GLint default_frame_buffer = 0;
     
     if ([self isInitialized] == true)
     {
-        //[self setup];
-        glGenBuffers(2, pbo);
+        [self setup];
+        //glGenBuffers(2, pbo);
         self.initialized = false;
         
     };
-    [self generatePBO];
-    /*glUseProgram(progName);
+    //[self generatePBO];
+    glUseProgram(progName);
     // This call is crucial, to ensure we are working with the correct context
     CGLSetCurrentContext(glContext);
     
@@ -107,7 +107,7 @@ static GLint default_frame_buffer = 0;
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texName);
-    glPixelStorei(GL_UNPACK_ROW_LENGTH, frameWidth);
+    //glPixelStorei(GL_UNPACK_ROW_LENGTH, frameWidth);
     glTexSubImage2D(GL_TEXTURE_2D,
                     0,
                     0,
@@ -131,7 +131,8 @@ static GLint default_frame_buffer = 0;
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArrayAPPLE(0);
     
-    glBindTexture(GL_TEXTURE_2D, 0);*/
+    glBindTexture(GL_TEXTURE_2D, 0);
+    /*
     pboIndex = (pboIndex + 1) % 2;
     GLuint pboNextIndex = (pboIndex + 1) % 2;
 
@@ -188,7 +189,7 @@ static GLint default_frame_buffer = 0;
     glDisable(GL_TEXTURE_RECTANGLE_ARB);
     glShadeModel(GL_FLAT);
     
-    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
+    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0);*/
     // Call super to finalize the drawing. By default all it does is call glFlush().
     [super drawInCGLContext:glContext pixelFormat:pixelFormat forLayerTime:timeInterval displayTime:timeStamp];
 }

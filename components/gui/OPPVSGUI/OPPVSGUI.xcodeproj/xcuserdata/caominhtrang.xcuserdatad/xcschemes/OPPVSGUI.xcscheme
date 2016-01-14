@@ -88,8 +88,18 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "DYLD_LIBRARY_PATH"
-            value = "${SRCROOT}/../../../libs"
+            value = "$(HOME)/cerbero/dist/darwin_x86_64/lib:$(HOME)/Documents/ForthProject/forth-dev/libs"
             isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = ""
+            value = ""
+            isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = ""
+            value = ""
+            isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
       <AdditionalOptions>

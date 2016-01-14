@@ -15,21 +15,10 @@
 		D9250F451AC558DB00858FF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9250F431AC558DB00858FF5 /* Main.storyboard */; };
 		D9250F511AC558DB00858FF5 /* OPPVSClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */; };
 		D93A2C911B099FC800587EB4 /* libOPPVSRendering.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */; };
-		D970FAD81B00B82D005AF09E /* libstreaming.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D970FAD71B00B82D005AF09E /* libstreaming.so */; };
-		D970FADA1B00BD40005AF09E /* libnetworkengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D970FAD91B00BD40005AF09E /* libnetworkengine.so */; };
-		D982F6091BCCAE68004D679F /* libthreadengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D982F6081BCCAE68004D679F /* libthreadengine.so */; };
-		D982F60B1BCCAEDA004D679F /* libaudioengine.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D982F60A1BCCAEDA004D679F /* libaudioengine.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D982F60C1BCCAF3B004D679F /* libaudioengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D982F60A1BCCAEDA004D679F /* libaudioengine.so */; };
+		D9A6568D1C47D91400F678E5 /* libaudio_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A6568B1C47D91400F678E5 /* libaudio_engine.dylib */; };
+		D9A6568E1C47D91400F678E5 /* libstreaming_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A6568C1C47D91400F678E5 /* libstreaming_engine.dylib */; };
+		D9A656901C47D95B00F678E5 /* libthread_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A6568F1C47D95B00F678E5 /* libthread_engine.dylib */; };
 		D9FD72F51B86F92500AF2E71 /* libOPPVSRendering.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD72F71B86FA5200AF2E71 /* libnetworkengine.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D970FAD91B00BD40005AF09E /* libnetworkengine.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD72F81B86FA5200AF2E71 /* libstreaming.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D970FAD71B00B82D005AF09E /* libstreaming.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD72FA1B86FBEC00AF2E71 /* libmisc.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD72F91B86FBEC00AF2E71 /* libmisc.so */; };
-		D9FD72FC1B86FEBA00AF2E71 /* libmisc.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD72F91B86FBEC00AF2E71 /* libmisc.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD72FE1B86FF9E00AF2E71 /* libmisccpp.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */; };
-		D9FD72FF1B86FFA400AF2E71 /* libmisccpp.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD73021B87006100AF2E71 /* libthreadengine.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73001B87005C00AF2E71 /* libthreadengine.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD73071B87024700AF2E71 /* libencodingengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD73061B87024700AF2E71 /* libencodingengine.so */; };
-		D9FD73081B87024D00AF2E71 /* libencodingengine.so in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD73061B87024700AF2E71 /* libencodingengine.so */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D9FD730C1B8702A600AF2E71 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD730A1B8702A600AF2E71 /* libyuv.a */; };
 		D9FD730E1B8702AD00AF2E71 /* libyuv.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD730A1B8702A600AF2E71 /* libyuv.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -51,14 +40,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D982F60B1BCCAEDA004D679F /* libaudioengine.so in CopyFiles */,
 				D9FD730E1B8702AD00AF2E71 /* libyuv.a in CopyFiles */,
-				D9FD73081B87024D00AF2E71 /* libencodingengine.so in CopyFiles */,
-				D9FD73021B87006100AF2E71 /* libthreadengine.so in CopyFiles */,
-				D9FD72FF1B86FFA400AF2E71 /* libmisccpp.so in CopyFiles */,
-				D9FD72FC1B86FEBA00AF2E71 /* libmisc.so in CopyFiles */,
-				D9FD72F71B86FA5200AF2E71 /* libnetworkengine.so in CopyFiles */,
-				D9FD72F81B86FA5200AF2E71 /* libstreaming.so in CopyFiles */,
 				D9FD72F51B86F92500AF2E71 /* libOPPVSRendering.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -81,14 +63,9 @@
 		D9250F4F1AC558DB00858FF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPPVSClientTests.m; sourceTree = "<group>"; };
 		D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOPPVSRendering.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libOPPVSRendering.dylib"; sourceTree = "<group>"; };
-		D970FAD71B00B82D005AF09E /* libstreaming.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming.so; path = ../../../libs/libstreaming.so; sourceTree = "<group>"; };
-		D970FAD91B00BD40005AF09E /* libnetworkengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetworkengine.so; path = ../../../libs/libnetworkengine.so; sourceTree = "<group>"; };
-		D982F6081BCCAE68004D679F /* libthreadengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libthreadengine.so; path = ../../thread/libthreadengine.so; sourceTree = "<group>"; };
-		D982F60A1BCCAEDA004D679F /* libaudioengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaudioengine.so; path = ../../../libs/libaudioengine.so; sourceTree = "<group>"; };
-		D9FD72F91B86FBEC00AF2E71 /* libmisc.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisc.so; path = ../../../libs/libmisc.so; sourceTree = "<group>"; };
-		D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisccpp.so; path = ../../../libs/libmisccpp.so; sourceTree = "<group>"; };
-		D9FD73001B87005C00AF2E71 /* libthreadengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libthreadengine.so; path = ../../../libs/libthreadengine.so; sourceTree = "<group>"; };
-		D9FD73061B87024700AF2E71 /* libencodingengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libencodingengine.so; path = ../../../libs/libencodingengine.so; sourceTree = "<group>"; };
+		D9A6568B1C47D91400F678E5 /* libaudio_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaudio_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libaudio_engine.dylib"; sourceTree = "<group>"; };
+		D9A6568C1C47D91400F678E5 /* libstreaming_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libstreaming_engine.dylib"; sourceTree = "<group>"; };
+		D9A6568F1C47D95B00F678E5 /* libthread_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libthread_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libthread_engine.dylib"; sourceTree = "<group>"; };
 		D9FD730A1B8702A600AF2E71 /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyuv.a; path = ../../../libs/libyuv.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,15 +74,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D982F60C1BCCAF3B004D679F /* libaudioengine.so in Frameworks */,
-				D982F6091BCCAE68004D679F /* libthreadengine.so in Frameworks */,
-				D9FD73071B87024700AF2E71 /* libencodingengine.so in Frameworks */,
-				D9FD72FE1B86FF9E00AF2E71 /* libmisccpp.so in Frameworks */,
+				D9A656901C47D95B00F678E5 /* libthread_engine.dylib in Frameworks */,
+				D9A6568D1C47D91400F678E5 /* libaudio_engine.dylib in Frameworks */,
+				D9A6568E1C47D91400F678E5 /* libstreaming_engine.dylib in Frameworks */,
 				D9FD730C1B8702A600AF2E71 /* libyuv.a in Frameworks */,
 				D93A2C911B099FC800587EB4 /* libOPPVSRendering.dylib in Frameworks */,
-				D9FD72FA1B86FBEC00AF2E71 /* libmisc.so in Frameworks */,
-				D970FADA1B00BD40005AF09E /* libnetworkengine.so in Frameworks */,
-				D970FAD81B00B82D005AF09E /* libstreaming.so in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,16 +156,11 @@
 		D9FD73241B8ABEC800AF2E71 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D982F60A1BCCAEDA004D679F /* libaudioengine.so */,
-				D982F6081BCCAE68004D679F /* libthreadengine.so */,
+				D9A6568F1C47D95B00F678E5 /* libthread_engine.dylib */,
+				D9A6568B1C47D91400F678E5 /* libaudio_engine.dylib */,
+				D9A6568C1C47D91400F678E5 /* libstreaming_engine.dylib */,
 				D9FD730A1B8702A600AF2E71 /* libyuv.a */,
-				D9FD73061B87024700AF2E71 /* libencodingengine.so */,
-				D9FD73001B87005C00AF2E71 /* libthreadengine.so */,
-				D9FD72FD1B86FF9E00AF2E71 /* libmisccpp.so */,
-				D9FD72F91B86FBEC00AF2E71 /* libmisc.so */,
 				D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */,
-				D970FAD91B00BD40005AF09E /* libnetworkengine.so */,
-				D970FAD71B00B82D005AF09E /* libstreaming.so */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

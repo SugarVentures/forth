@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../audio/mac/audio_engine.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../streaming/mac/streaming_engine.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:OPPVSClient/OPPVSClient.xcodeproj">
    </FileRef>
    <FileRef

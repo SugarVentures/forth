@@ -68,6 +68,7 @@ NSString* kCSName = @"CSName";
     // Start updating the audio level meter
     [self setAudioLevelTimer:[NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(updateAudioLevels:) userInfo:nil repeats:YES]];
     
+    [streamKey setStringValue:@"7116f0d7-5c27-44e6-8aa4-bc4ddeea9935"];
 }
 
 - (void)setRepresentedObject:(id)representedObject {

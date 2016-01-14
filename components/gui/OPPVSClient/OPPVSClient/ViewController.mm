@@ -38,6 +38,7 @@
     [hostPreviewLayer setLayer:previewView];*/
     
     listSources = [[NSMutableArray alloc] init];
+    [streamKey setStringValue:@"7116f0d7-5c27-44e6-8aa4-bc4ddeea9935"];
 }
 
 - (void)viewWillAppear
