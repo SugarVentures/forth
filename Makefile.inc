@@ -1,5 +1,5 @@
-INCLUDE_PATHS = /Users/caominhtrang/cerbero/dist/darwin_x86_64/include
-LIB_PATHS = /Users/caominhtrang/cerbero/dist/darwin_x86_64/lib
+INCLUDE_PATHS = $(HOME)/cerbero/dist/darwin_x86_64/include
+LIB_PATHS = $(HOME)/cerbero/dist/darwin_x86_64/lib
 
 CXX = g++
 CX = gcc
