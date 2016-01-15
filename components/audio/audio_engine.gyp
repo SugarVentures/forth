@@ -25,6 +25,7 @@
                     'type': 'shared_library',
                     'xcode_settings': {
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
+                        'INSTALL_PATH': '@executable_path/../Frameworks',
                     },
                     'include_dirs': [
                         'System/Library/Frameworks/CoreFoundation.Framework/Headers',

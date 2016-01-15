@@ -28,6 +28,7 @@
                     ],
                     'xcode_settings': {
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
+                        'INSTALL_PATH': '@executable_path/../Frameworks',
                     },
                     'libraries': [
                         '<(oppvs_3rdlibs_path)/lib/libsrtp.dylib',

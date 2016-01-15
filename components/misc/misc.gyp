@@ -16,6 +16,10 @@
             'conditions': [
                 ['OS == "mac"', {
                     'type': 'shared_library',
+                    'xcode_settings': {
+                        'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
+                        'INSTALL_PATH': '@executable_path/../Frameworks',
+                    },
                 }],
 
                 ['OS == "ios"', {
@@ -45,6 +49,10 @@
             'conditions': [
                 ['OS == "mac"', {
                     'type': 'shared_library',
+                    'xcode_settings': {
+                        'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
+                        'INSTALL_PATH': '@executable_path/../Frameworks',
+                    },
                 }],
 
                 ['OS == "ios"', {

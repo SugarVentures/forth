@@ -13,6 +13,9 @@
 	        'conditions': [
                 ['OS == "mac"', {
                     'type': 'shared_library',
+                    'xcode_settings': {
+                        'INSTALL_PATH': '@executable_path/../Frameworks',
+                    },
                 }],
                 ['OS == "linux"', {
                     'type': 'shared_library',
