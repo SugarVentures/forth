@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D910EC711C4CF529000EE6F4 /* libaudio_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC681C4CF529000EE6F4 /* libaudio_engine.dylib */; };
+		D910EC721C4CF529000EE6F4 /* libencoding_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC691C4CF529000EE6F4 /* libencoding_engine.dylib */; };
+		D910EC731C4CF529000EE6F4 /* libmisc1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC6A1C4CF529000EE6F4 /* libmisc1.dylib */; };
+		D910EC741C4CF529000EE6F4 /* libmisc2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC6B1C4CF529000EE6F4 /* libmisc2.dylib */; };
+		D910EC751C4CF529000EE6F4 /* libnetwork_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC6C1C4CF529000EE6F4 /* libnetwork_engine.dylib */; };
+		D910EC761C4CF529000EE6F4 /* libOPPVSRendering.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC6D1C4CF529000EE6F4 /* libOPPVSRendering.dylib */; };
+		D910EC771C4CF529000EE6F4 /* libstreaming_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC6E1C4CF529000EE6F4 /* libstreaming_engine.dylib */; };
+		D910EC781C4CF529000EE6F4 /* libthread_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC6F1C4CF529000EE6F4 /* libthread_engine.dylib */; };
+		D910EC791C4CF529000EE6F4 /* libyuv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC701C4CF529000EE6F4 /* libyuv.dylib */; };
 		D9250F381AC558DB00858FF5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F371AC558DB00858FF5 /* AppDelegate.m */; };
 		D9250F3A1AC558DB00858FF5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F391AC558DB00858FF5 /* main.m */; };
 		D9250F3D1AC558DB00858FF5 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9250F3C1AC558DB00858FF5 /* ViewController.mm */; };
@@ -14,13 +23,6 @@
 		D9250F421AC558DB00858FF5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9250F411AC558DB00858FF5 /* Images.xcassets */; };
 		D9250F451AC558DB00858FF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9250F431AC558DB00858FF5 /* Main.storyboard */; };
 		D9250F511AC558DB00858FF5 /* OPPVSClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */; };
-		D93A2C911B099FC800587EB4 /* libOPPVSRendering.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */; };
-		D9A6568D1C47D91400F678E5 /* libaudio_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A6568B1C47D91400F678E5 /* libaudio_engine.dylib */; };
-		D9A6568E1C47D91400F678E5 /* libstreaming_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A6568C1C47D91400F678E5 /* libstreaming_engine.dylib */; };
-		D9A656901C47D95B00F678E5 /* libthread_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A6568F1C47D95B00F678E5 /* libthread_engine.dylib */; };
-		D9FD72F51B86F92500AF2E71 /* libOPPVSRendering.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9FD730C1B8702A600AF2E71 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FD730A1B8702A600AF2E71 /* libyuv.a */; };
-		D9FD730E1B8702AD00AF2E71 /* libyuv.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9FD730A1B8702A600AF2E71 /* libyuv.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,14 +42,21 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D9FD730E1B8702AD00AF2E71 /* libyuv.a in CopyFiles */,
-				D9FD72F51B86F92500AF2E71 /* libOPPVSRendering.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D910EC681C4CF529000EE6F4 /* libaudio_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaudio_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libaudio_engine.dylib"; sourceTree = "<group>"; };
+		D910EC691C4CF529000EE6F4 /* libencoding_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libencoding_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libencoding_engine.dylib"; sourceTree = "<group>"; };
+		D910EC6A1C4CF529000EE6F4 /* libmisc1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisc1.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libmisc1.dylib"; sourceTree = "<group>"; };
+		D910EC6B1C4CF529000EE6F4 /* libmisc2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisc2.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libmisc2.dylib"; sourceTree = "<group>"; };
+		D910EC6C1C4CF529000EE6F4 /* libnetwork_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetwork_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libnetwork_engine.dylib"; sourceTree = "<group>"; };
+		D910EC6D1C4CF529000EE6F4 /* libOPPVSRendering.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOPPVSRendering.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libOPPVSRendering.dylib"; sourceTree = "<group>"; };
+		D910EC6E1C4CF529000EE6F4 /* libstreaming_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libstreaming_engine.dylib"; sourceTree = "<group>"; };
+		D910EC6F1C4CF529000EE6F4 /* libthread_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libthread_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libthread_engine.dylib"; sourceTree = "<group>"; };
+		D910EC701C4CF529000EE6F4 /* libyuv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libyuv.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libyuv.dylib"; sourceTree = "<group>"; };
 		D9250F311AC558DB00858FF5 /* OPPVSClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPPVSClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9250F351AC558DB00858FF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9250F361AC558DB00858FF5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -62,11 +71,6 @@
 		D9250F4A1AC558DB00858FF5 /* OPPVSClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OPPVSClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9250F4F1AC558DB00858FF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPPVSClientTests.m; sourceTree = "<group>"; };
-		D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOPPVSRendering.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libOPPVSRendering.dylib"; sourceTree = "<group>"; };
-		D9A6568B1C47D91400F678E5 /* libaudio_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaudio_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libaudio_engine.dylib"; sourceTree = "<group>"; };
-		D9A6568C1C47D91400F678E5 /* libstreaming_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libstreaming_engine.dylib"; sourceTree = "<group>"; };
-		D9A6568F1C47D95B00F678E5 /* libthread_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libthread_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libthread_engine.dylib"; sourceTree = "<group>"; };
-		D9FD730A1B8702A600AF2E71 /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyuv.a; path = ../../../libs/libyuv.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,11 +78,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9A656901C47D95B00F678E5 /* libthread_engine.dylib in Frameworks */,
-				D9A6568D1C47D91400F678E5 /* libaudio_engine.dylib in Frameworks */,
-				D9A6568E1C47D91400F678E5 /* libstreaming_engine.dylib in Frameworks */,
-				D9FD730C1B8702A600AF2E71 /* libyuv.a in Frameworks */,
-				D93A2C911B099FC800587EB4 /* libOPPVSRendering.dylib in Frameworks */,
+				D910EC711C4CF529000EE6F4 /* libaudio_engine.dylib in Frameworks */,
+				D910EC721C4CF529000EE6F4 /* libencoding_engine.dylib in Frameworks */,
+				D910EC731C4CF529000EE6F4 /* libmisc1.dylib in Frameworks */,
+				D910EC741C4CF529000EE6F4 /* libmisc2.dylib in Frameworks */,
+				D910EC751C4CF529000EE6F4 /* libnetwork_engine.dylib in Frameworks */,
+				D910EC761C4CF529000EE6F4 /* libOPPVSRendering.dylib in Frameworks */,
+				D910EC771C4CF529000EE6F4 /* libstreaming_engine.dylib in Frameworks */,
+				D910EC781C4CF529000EE6F4 /* libthread_engine.dylib in Frameworks */,
+				D910EC791C4CF529000EE6F4 /* libyuv.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,11 +164,15 @@
 		D9FD73241B8ABEC800AF2E71 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D9A6568F1C47D95B00F678E5 /* libthread_engine.dylib */,
-				D9A6568B1C47D91400F678E5 /* libaudio_engine.dylib */,
-				D9A6568C1C47D91400F678E5 /* libstreaming_engine.dylib */,
-				D9FD730A1B8702A600AF2E71 /* libyuv.a */,
-				D93A2C901B099FC800587EB4 /* libOPPVSRendering.dylib */,
+				D910EC681C4CF529000EE6F4 /* libaudio_engine.dylib */,
+				D910EC691C4CF529000EE6F4 /* libencoding_engine.dylib */,
+				D910EC6A1C4CF529000EE6F4 /* libmisc1.dylib */,
+				D910EC6B1C4CF529000EE6F4 /* libmisc2.dylib */,
+				D910EC6C1C4CF529000EE6F4 /* libnetwork_engine.dylib */,
+				D910EC6D1C4CF529000EE6F4 /* libOPPVSRendering.dylib */,
+				D910EC6E1C4CF529000EE6F4 /* libstreaming_engine.dylib */,
+				D910EC6F1C4CF529000EE6F4 /* libthread_engine.dylib */,
+				D910EC701C4CF529000EE6F4 /* libyuv.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -273,12 +285,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "
-
-
-
-
-";
+			shellScript = "";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -428,13 +435,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../../../libs,
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Sugar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SKIP_INSTALL = NO;
 			};
 			name = Debug;
 		};
@@ -465,13 +472,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../../../libs,
 					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Sugar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SKIP_INSTALL = NO;
 			};
 			name = Release;
 		};

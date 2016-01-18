@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D910EC5F1C4CF518000EE6F4 /* libaudio_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC561C4CF518000EE6F4 /* libaudio_engine.dylib */; };
+		D910EC601C4CF518000EE6F4 /* libencoding_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC571C4CF518000EE6F4 /* libencoding_engine.dylib */; };
+		D910EC611C4CF518000EE6F4 /* libmisc1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC581C4CF518000EE6F4 /* libmisc1.dylib */; };
+		D910EC621C4CF518000EE6F4 /* libmisc2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC591C4CF518000EE6F4 /* libmisc2.dylib */; };
+		D910EC631C4CF518000EE6F4 /* libnetwork_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC5A1C4CF518000EE6F4 /* libnetwork_engine.dylib */; };
+		D910EC641C4CF518000EE6F4 /* libOPPVSRendering.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC5B1C4CF518000EE6F4 /* libOPPVSRendering.dylib */; };
+		D910EC651C4CF518000EE6F4 /* libstreaming_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC5C1C4CF518000EE6F4 /* libstreaming_engine.dylib */; };
+		D910EC661C4CF518000EE6F4 /* libthread_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC5D1C4CF518000EE6F4 /* libthread_engine.dylib */; };
+		D910EC671C4CF518000EE6F4 /* libyuv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC5E1C4CF518000EE6F4 /* libyuv.dylib */; };
 		D92220361AC2BA310069116D /* libvideoengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D92220351AC2BA310069116D /* libvideoengine.so */; };
 		D9230F361BC5362500518664 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = D9230F351BC5362500518664 /* Util.m */; };
 		D924C6C91AB7DC2500586413 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6C81AB7DC2500586413 /* OpenGL.framework */; };
@@ -22,9 +31,6 @@
 		D97FC5561AB2EA4D00E3988E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D97FC5551AB2EA4D00E3988E /* Images.xcassets */; };
 		D97FC5591AB2EA4D00E3988E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D97FC5571AB2EA4D00E3988E /* Main.storyboard */; };
 		D97FC5651AB2EA4D00E3988E /* OPPVSGUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FC5641AB2EA4D00E3988E /* OPPVSGUITests.m */; };
-		D9A6567E1C47BA3B00F678E5 /* libstreaming_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A6567D1C47BA3B00F678E5 /* libstreaming_engine.dylib */; };
-		D9A656841C47D60B00F678E5 /* libaudio_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A656831C47D60B00F678E5 /* libaudio_engine.dylib */; };
-		D9C89FE31B0310EE008A6E48 /* libOPPVSRendering.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9C89FE21B0310EE008A6E48 /* libOPPVSRendering.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +48,7 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 6;
+			dstSubfolderSpec = 10;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,6 +56,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D910EC561C4CF518000EE6F4 /* libaudio_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaudio_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libaudio_engine.dylib"; sourceTree = "<group>"; };
+		D910EC571C4CF518000EE6F4 /* libencoding_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libencoding_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libencoding_engine.dylib"; sourceTree = "<group>"; };
+		D910EC581C4CF518000EE6F4 /* libmisc1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisc1.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libmisc1.dylib"; sourceTree = "<group>"; };
+		D910EC591C4CF518000EE6F4 /* libmisc2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmisc2.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libmisc2.dylib"; sourceTree = "<group>"; };
+		D910EC5A1C4CF518000EE6F4 /* libnetwork_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetwork_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libnetwork_engine.dylib"; sourceTree = "<group>"; };
+		D910EC5B1C4CF518000EE6F4 /* libOPPVSRendering.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOPPVSRendering.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libOPPVSRendering.dylib"; sourceTree = "<group>"; };
+		D910EC5C1C4CF518000EE6F4 /* libstreaming_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libstreaming_engine.dylib"; sourceTree = "<group>"; };
+		D910EC5D1C4CF518000EE6F4 /* libthread_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libthread_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libthread_engine.dylib"; sourceTree = "<group>"; };
+		D910EC5E1C4CF518000EE6F4 /* libyuv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libyuv.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libyuv.dylib"; sourceTree = "<group>"; };
 		D92220351AC2BA310069116D /* libvideoengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvideoengine.so; path = ../../../libs/libvideoengine.so; sourceTree = "<group>"; };
 		D9230F341BC5362500518664 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		D9230F351BC5362500518664 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
@@ -75,10 +90,6 @@
 		D97FC55E1AB2EA4D00E3988E /* OPPVSGUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OPPVSGUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97FC5631AB2EA4D00E3988E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D97FC5641AB2EA4D00E3988E /* OPPVSGUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPPVSGUITests.m; sourceTree = "<group>"; };
-		D9A656541C47B45B00F678E5 /* libnetwork_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnetwork_engine.dylib; path = ../../network/build/Debug/libnetwork_engine.dylib; sourceTree = "<group>"; };
-		D9A6567D1C47BA3B00F678E5 /* libstreaming_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libstreaming_engine.dylib"; sourceTree = "<group>"; };
-		D9A656831C47D60B00F678E5 /* libaudio_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaudio_engine.dylib; path = ../../audio/build/Debug/libaudio_engine.dylib; sourceTree = "<group>"; };
-		D9C89FE21B0310EE008A6E48 /* libOPPVSRendering.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libOPPVSRendering.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,10 +97,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9A656841C47D60B00F678E5 /* libaudio_engine.dylib in Frameworks */,
-				D9A6567E1C47BA3B00F678E5 /* libstreaming_engine.dylib in Frameworks */,
+				D910EC5F1C4CF518000EE6F4 /* libaudio_engine.dylib in Frameworks */,
+				D910EC601C4CF518000EE6F4 /* libencoding_engine.dylib in Frameworks */,
+				D910EC611C4CF518000EE6F4 /* libmisc1.dylib in Frameworks */,
+				D910EC621C4CF518000EE6F4 /* libmisc2.dylib in Frameworks */,
+				D910EC631C4CF518000EE6F4 /* libnetwork_engine.dylib in Frameworks */,
+				D910EC641C4CF518000EE6F4 /* libOPPVSRendering.dylib in Frameworks */,
+				D910EC651C4CF518000EE6F4 /* libstreaming_engine.dylib in Frameworks */,
+				D910EC661C4CF518000EE6F4 /* libthread_engine.dylib in Frameworks */,
+				D910EC671C4CF518000EE6F4 /* libyuv.dylib in Frameworks */,
 				D93DD5FF1B04818100591808 /* IOKit.framework in Frameworks */,
-				D9C89FE31B0310EE008A6E48 /* libOPPVSRendering.dylib in Frameworks */,
 				D92220361AC2BA310069116D /* libvideoengine.so in Frameworks */,
 				D924C6CD1AB83E6600586413 /* CoreGraphics.framework in Frameworks */,
 				D924C6CB1AB805B100586413 /* QuartzCore.framework in Frameworks */,
@@ -110,11 +127,16 @@
 		D9277A3C1AF0C07B00669ABF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D9A656831C47D60B00F678E5 /* libaudio_engine.dylib */,
-				D9A6567D1C47BA3B00F678E5 /* libstreaming_engine.dylib */,
-				D9A656541C47B45B00F678E5 /* libnetwork_engine.dylib */,
+				D910EC561C4CF518000EE6F4 /* libaudio_engine.dylib */,
+				D910EC571C4CF518000EE6F4 /* libencoding_engine.dylib */,
+				D910EC581C4CF518000EE6F4 /* libmisc1.dylib */,
+				D910EC591C4CF518000EE6F4 /* libmisc2.dylib */,
+				D910EC5A1C4CF518000EE6F4 /* libnetwork_engine.dylib */,
+				D910EC5B1C4CF518000EE6F4 /* libOPPVSRendering.dylib */,
+				D910EC5C1C4CF518000EE6F4 /* libstreaming_engine.dylib */,
+				D910EC5D1C4CF518000EE6F4 /* libthread_engine.dylib */,
+				D910EC5E1C4CF518000EE6F4 /* libyuv.dylib */,
 				D93DD5FE1B04818100591808 /* IOKit.framework */,
-				D9C89FE21B0310EE008A6E48 /* libOPPVSRendering.dylib */,
 				D924C6C81AB7DC2500586413 /* OpenGL.framework */,
 				D924C6CA1AB805B100586413 /* QuartzCore.framework */,
 				D924C6CC1AB83E6600586413 /* CoreGraphics.framework */,
