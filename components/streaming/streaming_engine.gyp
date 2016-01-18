@@ -14,8 +14,6 @@
                 '../misc/misc.gyp:libmisc1',
             ],
             'include_dirs': [
-                '../../libs/libsrtp/include',
-                '../../libs/libsrtp/crypto/include',
                 '../include',
                 '../misc',
                 '../thread',
@@ -57,10 +55,7 @@
                 ['OS == "linux"', {
                     'type': 'shared_library',
                     'libraries': [
-                    
-                        '../../../libs/libsrtp.a',
                         '-lssl',
-                        '-lcrypto'
                     ],
                 }],
                 ['OS == "ios"', {

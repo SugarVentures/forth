@@ -23,17 +23,14 @@
                 }],
 
                 ['OS == "ios"', {
-                    'type': 'static_library'
+                    'type': 'static_library',
                 }],
             ],
             'include_dirs': [
                 '<(oppvs_3rdlibs_path)/include',
                 '../include'
             ],
-            'libraries': [
-                '<(oppvs_3rdlibs_path)/lib/libsrtp.dylib',
-                '<(oppvs_3rdlibs_path)/lib/libcrypto.dylib',
-            ],
+            
             "sources": [
                 "md5.h",
                 "md5.c",
