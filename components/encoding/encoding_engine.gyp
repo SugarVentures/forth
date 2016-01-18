@@ -7,13 +7,12 @@
         {
             'target_name': 'encoding_engine',
             
-            'dependencies': [
-                '../../libs/libyuv/libyuv.gyp:yuv',
-            ],
-            
             'conditions': [
                 ['OS == "mac"', {
                     'type': 'shared_library',
+                    'dependencies': [
+                        '../../libs/libyuv/libyuv.gyp:yuv',
+                    ],
                     'xcode_settings': {
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                         'INSTALL_PATH': '@executable_path/../Frameworks',

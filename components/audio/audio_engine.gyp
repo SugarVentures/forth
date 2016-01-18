@@ -15,10 +15,6 @@
                 '../../libs/libsrtp/include',
                 '../../libs/libsrtp/crypto/include',
             ],
-            'dependencies': [
-                '../thread/thread_engine.gyp:thread_engine',
-            ],
-
 
             'conditions': [
                 ['OS == "mac"', {
@@ -38,6 +34,10 @@
                             '$(SDKROOT)/System/Library/Frameworks/CoreAudio.framework',
                         ]
                     },
+                    'dependencies': [
+                        '../thread/thread_engine.gyp:thread_engine',
+                    ],
+
 
                     'sources': [
                         'audio_util.h',

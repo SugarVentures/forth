@@ -7,12 +7,6 @@
         {
             'target_name': 'streaming_engine',
             
-            'dependencies': [
-                '../network/network_engine.gyp:network_engine',
-                '../encoding/encoding_engine.gyp:encoding_engine',
-                '../thread/thread_engine.gyp:thread_engine',
-                '../misc/misc.gyp:libmisc1',
-            ],
             'include_dirs': [
                 '../include',
                 '../misc',
@@ -39,6 +33,13 @@
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                         'INSTALL_PATH': '@executable_path/../Frameworks',
                     },
+
+                    'dependencies': [
+                        '../network/network_engine.gyp:network_engine',
+                        '../encoding/encoding_engine.gyp:encoding_engine',
+                        '../thread/thread_engine.gyp:thread_engine',
+                        '../misc/misc.gyp:libmisc1',
+                    ],
                     
                     'link_settings': {
                         'libraries': [
