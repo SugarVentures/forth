@@ -61,10 +61,10 @@ namespace oppvs {
 	        NiceCandidate* cand = (NiceCandidate*)cands[i]->data;
 	        guint comp_id = cand->component_id;
 
-	        std::cout << "Selecting for component " << comp_id << "..." << std::endl;
+	        std::cout << "Selecting for component " << comp_id << " of stream " << m_streamID << "..." << std::endl;
 	        if (nice_agent_set_remote_candidates(m_agent, m_streamID, comp_id, cands[i]) < 1)
 	        	std::cout << "Failed to set remote candidates of stream " << m_streamID << std::endl;
-
+	        
 	        g_slist_free_full(cands[i], (GDestroyNotify)&nice_candidate_free);
 	    }
 	}
@@ -127,7 +127,7 @@ namespace oppvs {
 	    for (unsigned int i = 0; i < cands.size(); i++)
 	    {
 	    	//Fix temporarily because libnice failed in case of ipv6
-	    	//Ignore candidate has ipv6 address
+	    	//Ignore candidate whose address is ipv6
 	    	if (cands[i].ip.length() > 20)
 	    		continue;
 
@@ -168,7 +168,7 @@ namespace oppvs {
 	        std::strncpy(candidate->foundation, cands[i].foundation.c_str(), NICE_CANDIDATE_MAX_FOUNDATION);
 	        candidate->foundation[NICE_CANDIDATE_MAX_FOUNDATION - 1] = 0;
 	        
-	        unsigned int candidates_size = candidates.size();
+	        size_t candidates_size = candidates.size();
 
 	        for (unsigned int j = 0; j <= candidates_size; j++)
 	        {

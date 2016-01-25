@@ -129,12 +129,12 @@ namespace oppvs {
 		}
 		if (m_data.size() > n)
 		{
-			printf("Need to update timestamp\n");
+			//printf("Need to update timestamp\n");
 			int64_t timestamp = m_data[n].getTimestamp();
 			m_startTime = timestamp;
 		}
 
-		printf("Remove %ld item in %ld\n", n, m_data.size());
+		//printf("Remove %ld item in %ld\n", n, m_data.size());
 		m_data.erase(m_data.begin(), m_data.begin() + std::min(n, m_data.size()));
 		
 		m_startTime = m_data[0].getTimestamp();

@@ -36,6 +36,7 @@ namespace oppvs {
 	{
 		m_stunServer = stun;
 		m_turnServer = turn;
+
 		g_networking_init();
 
 		m_globalMainLoop = g_main_loop_new(NULL, FALSE);
@@ -61,8 +62,6 @@ namespace oppvs {
 		g_signal_connect(m_agent, "new-selected-pair", G_CALLBACK(cb_new_selected_pair), (gpointer)this);
 		g_signal_connect(m_agent, "component-state-changed", G_CALLBACK(cb_component_state_changed), (gpointer)this);
 
-		m_globalMainLoopThread = new Thread(IceManager::runGlobalMainloop, (void*)m_globalMainLoop);
-		m_globalMainLoopThread->create();
   		return 0;
 	}
 
@@ -126,7 +125,7 @@ namespace oppvs {
 
 	void IceManager::cb_candidate_gathering_done(NiceAgent *agent, guint stream_id, gpointer user_data)
 	{
-		std::cout << "Gather candidate done" << std::endl;
+		std::cout << "Gather candidate done (stream " << stream_id << ")" << std::endl;
 		IceManager* manager = (IceManager*)user_data;
 		IceStream* stream = manager->getStreamByID(stream_id);
 		GSList *cands = NULL;
@@ -138,7 +137,7 @@ namespace oppvs {
    			g_slist_free_full(cands, (GDestroyNotify)&nice_candidate_free);
 
    			if (manager->cbCandidateGatheringDoneObject != NULL)
-	   			manager->cbCandidateGatheringDoneEvent(manager->cbCandidateGatheringDoneObject, (void*)manager,
+	   			manager->cbCandidateGatheringDoneEvent(manager->cbCandidateGatheringDoneObject, (void*)manager, stream_id, 
 	   				stream->getLocalUsername(), stream->getLocalPassword(), candidates);
    		}
 
@@ -182,7 +181,8 @@ namespace oppvs {
     		}
     	}
     	else if (state == NICE_COMPONENT_STATE_FAILED) {
-    		
+    		IceManager* icemgr = (IceManager*)data;
+    		icemgr->release();
   		}
     }
 
@@ -190,7 +190,7 @@ namespace oppvs {
     {
     	std::cout<< "Run global Ice main loop" << std::endl;
     	GMainLoop *global_mainloop = (GMainLoop *)arg;
-    	g_main_loop_run(global_mainloop);
+    	g_main_loop_run(global_mainloop);    	
     	return NULL;
     }
 
@@ -222,9 +222,18 @@ namespace oppvs {
     void IceManager::establishPeerConnection(guint streamid)
     {
     	IceStream* stream = getStreamByID(streamid);
-		stream->setRemoteCredentials(m_remoteUsername, m_remotePassword);
-		stream->setRemoteCandidates(m_remoteCandidates);
+    	if (stream)
+    	{
+    		std::cout << "Establish Peer Connection" << std::endl;
+			stream->setRemoteCredentials(m_remoteUsername, m_remotePassword);
+			stream->setRemoteCandidates(m_remoteCandidates);
+		}
+    }
 
+    void IceManager::runLoop()
+    {
+    	m_globalMainLoopThread = new Thread(IceManager::runGlobalMainloop, (void*)m_globalMainLoop);
+		m_globalMainLoopThread->create();
     }
 
 } // oppvs
