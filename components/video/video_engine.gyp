@@ -31,7 +31,9 @@
                         'video_engine.hpp',
                         'video_capture.hpp',
                         'ios_video_capture.hpp',
-                        'ios_video_capture.cpp'
+                        'ios_video_capture.cpp',
+                        'ios_video_capture_interface.h',
+                        'ios_video_avfoundation_capture.mm'
                     ]
                 }]
             ],
