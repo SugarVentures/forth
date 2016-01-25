@@ -1,6 +1,9 @@
 #ifndef OPPVS_VIDEO_CAPTURE_HPP
 #define OPPVS_VIDEO_CAPTURE_HPP
 
+#include "datatypes.hpp"
+#include <vector>
+
 namespace oppvs {
 	typedef struct WindowRect {
 		uint32_t left;
