@@ -13,6 +13,7 @@ namespace oppvs {
         
         void setupCaptureSession(VideoActiveSource* source);
         void startCaptureSession(VideoActiveSource& source);
+        void* getSession(VideoActiveSource& source);
 	};
 } // oppvs
 

@@ -14,6 +14,7 @@ namespace oppvs {
 		void setup();
         void start();
         void stop();
+        void* getSession();
 	};
 } // oppvs
 

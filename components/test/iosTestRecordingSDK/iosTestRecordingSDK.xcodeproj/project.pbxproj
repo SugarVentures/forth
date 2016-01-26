@@ -16,6 +16,9 @@
 		D913AF9E1C5744D9005EAD2C /* libvideo_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D913AF9D1C563896005EAD2C /* libvideo_engine.a */; };
 		D913AFA01C574FEC005EAD2C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D913AF9F1C574FEC005EAD2C /* AVFoundation.framework */; };
 		D913AFA21C576BB6005EAD2C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D913AFA11C576BB6005EAD2C /* CoreMedia.framework */; };
+		D913AFAE1C577DD8005EAD2C /* GLFrameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = D913AFA71C577DD8005EAD2C /* GLFrameView.mm */; };
+		D913AFAF1C577DD8005EAD2C /* matrixUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D913AFA91C577DD8005EAD2C /* matrixUtil.c */; };
+		D913AFB01C577DD8005EAD2C /* vectorUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D913AFAC1C577DD8005EAD2C /* vectorUtil.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,13 @@
 		D913AF981C563896005EAD2C /* video_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = video_engine.xcodeproj; path = ../../video/ios/video_engine.xcodeproj; sourceTree = "<group>"; };
 		D913AF9F1C574FEC005EAD2C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D913AFA11C576BB6005EAD2C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		D913AFA61C577DD8005EAD2C /* GLFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GLFrameView.h; path = ../../iosDemo/iosDemo/GLFrameView.h; sourceTree = "<group>"; };
+		D913AFA71C577DD8005EAD2C /* GLFrameView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GLFrameView.mm; path = ../../iosDemo/iosDemo/GLFrameView.mm; sourceTree = "<group>"; };
+		D913AFA81C577DD8005EAD2C /* glUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = glUtil.h; path = ../../iosDemo/iosDemo/glUtil.h; sourceTree = "<group>"; };
+		D913AFA91C577DD8005EAD2C /* matrixUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = matrixUtil.c; path = ../../iosDemo/iosDemo/matrixUtil.c; sourceTree = "<group>"; };
+		D913AFAA1C577DD8005EAD2C /* matrixUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = matrixUtil.h; path = ../../iosDemo/iosDemo/matrixUtil.h; sourceTree = "<group>"; };
+		D913AFAC1C577DD8005EAD2C /* vectorUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vectorUtil.c; path = ../../iosDemo/iosDemo/vectorUtil.c; sourceTree = "<group>"; };
+		D913AFAD1C577DD8005EAD2C /* vectorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vectorUtil.h; path = ../../iosDemo/iosDemo/vectorUtil.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +90,13 @@
 		D913AF801C563861005EAD2C /* iosTestRecordingSDK */ = {
 			isa = PBXGroup;
 			children = (
+				D913AFA61C577DD8005EAD2C /* GLFrameView.h */,
+				D913AFA71C577DD8005EAD2C /* GLFrameView.mm */,
+				D913AFA81C577DD8005EAD2C /* glUtil.h */,
+				D913AFA91C577DD8005EAD2C /* matrixUtil.c */,
+				D913AFAA1C577DD8005EAD2C /* matrixUtil.h */,
+				D913AFAC1C577DD8005EAD2C /* vectorUtil.c */,
+				D913AFAD1C577DD8005EAD2C /* vectorUtil.h */,
 				D913AF841C563861005EAD2C /* AppDelegate.h */,
 				D913AF851C563861005EAD2C /* AppDelegate.m */,
 				D913AF871C563861005EAD2C /* ViewController.h */,
@@ -196,8 +213,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D913AFB01C577DD8005EAD2C /* vectorUtil.c in Sources */,
 				D913AF891C563861005EAD2C /* ViewController.mm in Sources */,
+				D913AFAE1C577DD8005EAD2C /* GLFrameView.mm in Sources */,
 				D913AF861C563861005EAD2C /* AppDelegate.m in Sources */,
+				D913AFAF1C577DD8005EAD2C /* matrixUtil.c in Sources */,
 				D913AF831C563861005EAD2C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

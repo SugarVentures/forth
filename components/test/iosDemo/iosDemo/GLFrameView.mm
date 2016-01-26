@@ -92,6 +92,7 @@ static const GLbyte indices[] = {
         
         _texName = 0;
     }
+
     return self;
 }
 

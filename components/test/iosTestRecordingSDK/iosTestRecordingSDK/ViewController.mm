@@ -9,11 +9,14 @@
 #import "ViewController.h"
 #include "ios_video_engine.hpp"
 #import <AVFoundation/AVFoundation.h>
+#import "GLFrameView.h"
 
 @interface ViewController ()
 {
     oppvs::IosVideoEngine* mVideoEngine;
 }
+
+@property (nonatomic, strong) GLFrameView *demoView;
 
 - (void)initEngine;
 @end
@@ -24,9 +27,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    CGRect demoFrame = CGRectMake(10, 10, _container.frame.size.width - 20, _container.frame.size.height - 20);
+    
+    self.demoView = [[GLFrameView alloc] initWithFrame:demoFrame];
+    self.demoView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.container addSubview:self.demoView];
+    
+    [self.demoView setupGL];
     [self initEngine];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,7 +48,17 @@ void frameCallback(oppvs::PixelBuffer& pf)
 {
     if (pf.nbytes == 0)
         return;
-    printf("Frame callback\n");
+    
+    uint8_t* data = new uint8_t[pf.nbytes];
+    memcpy(data, pf.plane[0], pf.nbytes);
+    oppvs::ControllerLinker *controller = (oppvs::ControllerLinker*)pf.user;
+    if (controller)
+    {
+        GLFrameView* view = (__bridge GLFrameView*)controller->render;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [view render:(GLubyte*)data withWidth:pf.width[0] andHeight:pf.height[0]];
+        });
+    }
 }
 
 
@@ -80,12 +98,14 @@ void frameCallback(oppvs::PixelBuffer& pf)
     
     oppvs::VideoActiveSource *activeSource;
     oppvs::ControllerLinker *controller = new oppvs::ControllerLinker();
+    controller->render = (__bridge void*)self.demoView;
     
     activeSource = mVideoEngine->addSource(type, source, 24, sourceRect, renderRect, (void*)controller, (int)index);
     if (activeSource)
     {
         mVideoEngine->setupCaptureSession(activeSource);
         mVideoEngine->startCaptureSession(*activeSource);
+        
     }
     else
         NSLog(@"Failed to add capture source");

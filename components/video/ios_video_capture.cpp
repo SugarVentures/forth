@@ -28,4 +28,9 @@ namespace oppvs {
     {
         oppvs_stop_video_recording(m_cap);
     }
+    
+    void* IosVideoCapture::getSession()
+    {
+        return oppvs_get_session(m_cap);
+    }
 } // oppvs

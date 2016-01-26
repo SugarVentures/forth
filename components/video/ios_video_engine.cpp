@@ -23,5 +23,9 @@ namespace oppvs {
         source.capture->start();
     }
 
-
+    void* IosVideoEngine::getSession(VideoActiveSource& source)
+    {
+        IosVideoCapture* capture = (IosVideoCapture*)source.capture;
+        capture->getSession();
+    }
 } // oppvs

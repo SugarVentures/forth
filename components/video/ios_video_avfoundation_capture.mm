@@ -12,7 +12,6 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
 @interface IosVideoAVFoundationCapture : NSObject<AVCaptureVideoDataOutputSampleBufferDelegate>
 {
 @private
-	AVCaptureSession *session;
     dispatch_queue_t sessionQueue;
 	AVCaptureDeviceInput *videoDeviceInput;
 	AVCaptureVideoDataOutput *videoDataOutput;
@@ -32,12 +31,15 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
     oppvs::VideoActiveSource *sourceInfo;
 }
 
+@property (nonatomic, strong) AVCaptureSession* session;
+
 - (id)init;
 - (void) openCaptureDevice: (CGRect) rect : (int) pixelformat : (int) fps;
 - (void) setSource: (oppvs::VideoActiveSource*) source;
 - (void) setCallback: (oppvs::frame_callback) fc fromuser: (void*) u;
 - (void) startRecording;
 - (void) stopRecording;
+
 @end
 
 @implementation IosVideoAVFoundationCapture {
@@ -52,6 +54,8 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
         NSLog(@"Init av foundation capture engine\n");
         is_pixel_buffer_set = 0;
     }
+    
+    self.session = nil;
     videoDeviceInput = nil;
     videoDataOutput = nil;
     return self;
@@ -61,8 +65,8 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
 {
     NSLog(@"Setup capture session");
     // Create session
-    session = [[AVCaptureSession alloc] init];
-    if(session == nil) {
+    self.session = [[AVCaptureSession alloc] init];
+    if(self.session == nil) {
         printf("Error: cannot create the capture session.\n");
         return;
     }
@@ -127,10 +131,10 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
             NSLog( @"Could not create video device input: %@", error );
         }
         
-        [session beginConfiguration];
+        [self.session beginConfiguration];
         
-        if ( [session canAddInput:input] ) {
-            [session addInput:input];
+        if ( [self.session canAddInput:input] ) {
+            [self.session addInput:input];
             videoDeviceInput = input;
 
         }
@@ -141,14 +145,14 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
 
         AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
         output.alwaysDiscardsLateVideoFrames = YES;
-        if ([session canAddOutput:output])
+        if ([self.session canAddOutput:output])
         {
             pixelBufferOptions = [NSDictionary dictionaryWithObjectsAndKeys:
                                   [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA], (id)kCVPixelBufferPixelFormatTypeKey,
                                   nil];
             
             [output setVideoSettings:pixelBufferOptions];
-            [session addOutput:output];
+            [self.session addOutput:output];
             AVCaptureConnection *connection = [output connectionWithMediaType:AVMediaTypeVideo];
             if ([connection isVideoStabilizationSupported])
                 [connection preferredVideoStabilizationMode];
@@ -158,7 +162,7 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
             [videoDataOutput setSampleBufferDelegate:self queue:queue];
             dispatch_release(queue);
         }
-        [session commitConfiguration];
+        [self.session commitConfiguration];
     } );
 }
 
@@ -240,14 +244,14 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
 
 - (void)startRecording
 {
-    [session startRunning];
+    [self.session startRunning];
 }
 
 - (void)stopRecording
 {
-    if ([session isRunning] == YES)
+    if ([self.session isRunning] == YES)
     {
-        [session stopRunning];
+        [self.session stopRunning];
         return;
     }
 }
@@ -304,6 +308,10 @@ void oppvs_start_video_recording(void* cap) {
 
 void oppvs_stop_video_recording(void* cap) {
     return [(id)cap stopRecording];
+}
+
+void* oppvs_get_session(void* cap) {
+    return [(id)cap session];
 }
 
 @end
