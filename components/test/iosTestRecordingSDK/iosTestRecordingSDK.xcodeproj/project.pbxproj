@@ -15,6 +15,7 @@
 		D913AF911C563861005EAD2C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D913AF8F1C563861005EAD2C /* LaunchScreen.storyboard */; };
 		D913AF9E1C5744D9005EAD2C /* libvideo_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D913AF9D1C563896005EAD2C /* libvideo_engine.a */; };
 		D913AFA01C574FEC005EAD2C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D913AF9F1C574FEC005EAD2C /* AVFoundation.framework */; };
+		D913AFA21C576BB6005EAD2C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D913AFA11C576BB6005EAD2C /* CoreMedia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		D913AF921C563861005EAD2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D913AF981C563896005EAD2C /* video_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = video_engine.xcodeproj; path = ../../video/ios/video_engine.xcodeproj; sourceTree = "<group>"; };
 		D913AF9F1C574FEC005EAD2C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D913AFA11C576BB6005EAD2C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D913AFA21C576BB6005EAD2C /* CoreMedia.framework in Frameworks */,
 				D913AFA01C574FEC005EAD2C /* AVFoundation.framework in Frameworks */,
 				D913AF9E1C5744D9005EAD2C /* libvideo_engine.a in Frameworks */,
 			);
@@ -58,6 +61,7 @@
 		D913AF751C563861005EAD2C = {
 			isa = PBXGroup;
 			children = (
+				D913AFA11C576BB6005EAD2C /* CoreMedia.framework */,
 				D913AF9F1C574FEC005EAD2C /* AVFoundation.framework */,
 				D913AF981C563896005EAD2C /* video_engine.xcodeproj */,
 				D913AF801C563861005EAD2C /* iosTestRecordingSDK */,

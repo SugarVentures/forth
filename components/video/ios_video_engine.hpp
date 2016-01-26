@@ -10,6 +10,9 @@ namespace oppvs {
 	public:
         IosVideoEngine(frame_callback cb, void* user);
 		void getListCaptureDevices(std::vector<VideoCaptureDevice>& result);
+        
+        void setupCaptureSession(VideoActiveSource* source);
+        void startCaptureSession(VideoActiveSource& source);
 	};
 } // oppvs
 

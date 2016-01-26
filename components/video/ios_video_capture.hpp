@@ -2,6 +2,7 @@
 #define OPPVS_IOS_VIDEO_CAPTURE_HPP
 
 #include "video_capture.hpp"
+#include "ios_video_capture_interface.h"
 
 namespace oppvs {
 	class IosVideoCapture : public VideoCapture
@@ -11,6 +12,8 @@ namespace oppvs {
 		~IosVideoCapture();
 
 		void setup();
+        void start();
+        void stop();
 	};
 } // oppvs
 

@@ -25,6 +25,8 @@
                         'libraries': [
                             '$(SDKROOT)/System/Library/Frameworks/CoreFoundation.framework',
                             '$(SDKROOT)/System/Library/Frameworks/AVFoundation.framework',
+                            '$(SDKROOT)/System/Library/Frameworks/UIKit.framework',
+                            '$(SDKROOT)/System/Library/Frameworks/CoreMedia.framework',
                         ]
                     },
 
