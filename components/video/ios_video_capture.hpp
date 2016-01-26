@@ -7,7 +7,7 @@ namespace oppvs {
 	class IosVideoCapture : public VideoCapture
 	{
 	public:
-		IosVideoCapture();
+		IosVideoCapture(frame_callback cbf, void* user, VideoActiveSource* source);
 		~IosVideoCapture();
 
 		void setup();
