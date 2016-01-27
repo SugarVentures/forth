@@ -23,6 +23,16 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		D925359D1C588F8B00911E24 /* ForthBroadcaster.h in Headers */ = {isa = PBXBuildFile; fileRef = D925359B1C588F8B00911E24 /* ForthBroadcaster.h */; };
+		D925359E1C588F8B00911E24 /* ForthBroadcaster.mm in Sources */ = {isa = PBXBuildFile; fileRef = D925359C1C588F8B00911E24 /* ForthBroadcaster.mm */; };
+		D92535C71C58AA6F00911E24 /* GLFrameView.h in Headers */ = {isa = PBXBuildFile; fileRef = D92535C41C58AA6F00911E24 /* GLFrameView.h */; };
+		D92535C81C58AA6F00911E24 /* GLFrameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = D92535C51C58AA6F00911E24 /* GLFrameView.mm */; };
+		D92535C91C58AA6F00911E24 /* glUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = D92535C61C58AA6F00911E24 /* glUtil.h */; };
+		D92535CE1C58AD4300911E24 /* ForthViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D92535CC1C58AD4300911E24 /* ForthViewController.h */; };
+		D92535CF1C58AD4300911E24 /* ForthViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D92535CD1C58AD4300911E24 /* ForthViewController.mm */; };
+		D92535D01C58ADCF00911E24 /* ForthViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D92535CC1C58AD4300911E24 /* ForthViewController.h */; };
+		D92535D11C58ADED00911E24 /* ForthBroadcaster.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D925359B1C588F8B00911E24 /* ForthBroadcaster.h */; };
+		D92535D21C58B76A00911E24 /* GLFrameView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D92535C41C58AA6F00911E24 /* GLFrameView.h */; };
 		D9488CE81BDF88FC00646B70 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D9488CE71BDF88FC00646B70 /* Constants.m */; };
 		D9514E641BE9F6440016CF8E /* ForthStreaming.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9514E631BE9F6440016CF8E /* ForthStreaming.mm */; };
 		D96B32381BFDB08D00CE8694 /* ForthIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D9488CB71BDF5C1E00646B70 /* ForthIOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -47,6 +57,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 07F24BD9DA0D6517AE684640;
 			remoteInfo = audio_engine;
+		};
+		D92535D71C58BBFD00911E24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D92535D31C58BBFD00911E24 /* video_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 456E667F09670CA81BB71D19;
+			remoteInfo = video_engine;
+		};
+		D92535E11C58BC4200911E24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D92535D31C58BBFD00911E24 /* video_engine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 29933D8CBB47E76E03C0EC52;
+			remoteInfo = video_engine;
 		};
 		D9488CDA1BDF65DC00646B70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -171,7 +195,10 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
+				D92535D21C58B76A00911E24 /* GLFrameView.h in CopyFiles */,
+				D92535D11C58ADED00911E24 /* ForthBroadcaster.h in CopyFiles */,
 				D96B323C1BFDB12400CE8694 /* ForthIOS.h in CopyFiles */,
+				D92535D01C58ADCF00911E24 /* ForthViewController.h in CopyFiles */,
 				D96B323D1BFDB12400CE8694 /* Constants.h in CopyFiles */,
 				D96B323F1BFDB12400CE8694 /* ForthStreaming.h in CopyFiles */,
 			);
@@ -181,6 +208,14 @@
 
 /* Begin PBXFileReference section */
 		D9091AF31BE9B27D00AE988B /* audio_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = audio_engine.xcodeproj; path = ../../components/audio/ios/audio_engine.xcodeproj; sourceTree = "<group>"; };
+		D925359B1C588F8B00911E24 /* ForthBroadcaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForthBroadcaster.h; sourceTree = "<group>"; };
+		D925359C1C588F8B00911E24 /* ForthBroadcaster.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ForthBroadcaster.mm; sourceTree = "<group>"; };
+		D92535C41C58AA6F00911E24 /* GLFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLFrameView.h; sourceTree = "<group>"; };
+		D92535C51C58AA6F00911E24 /* GLFrameView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLFrameView.mm; sourceTree = "<group>"; };
+		D92535C61C58AA6F00911E24 /* glUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glUtil.h; sourceTree = "<group>"; };
+		D92535CC1C58AD4300911E24 /* ForthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForthViewController.h; sourceTree = "<group>"; };
+		D92535CD1C58AD4300911E24 /* ForthViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ForthViewController.mm; sourceTree = "<group>"; };
+		D92535D31C58BBFD00911E24 /* video_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = video_engine.xcodeproj; path = ../../components/video/ios/video_engine.xcodeproj; sourceTree = "<group>"; };
 		D9488CB41BDF5C1E00646B70 /* libForthIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libForthIOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9488CB71BDF5C1E00646B70 /* ForthIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForthIOS.h; sourceTree = "<group>"; };
 		D9488CD61BDF65DC00646B70 /* streaming_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = streaming_engine.xcodeproj; path = ../../components/streaming/ios/streaming_engine.xcodeproj; sourceTree = "<group>"; };
@@ -214,9 +249,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		D92535D41C58BBFD00911E24 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D92535D81C58BBFD00911E24 /* libvideo_engine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		D9488CAB1BDF5C1E00646B70 = {
 			isa = PBXGroup;
 			children = (
+				D92535D31C58BBFD00911E24 /* video_engine.xcodeproj */,
 				D9091AF31BE9B27D00AE988B /* audio_engine.xcodeproj */,
 				D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */,
 				D9488D041BE0B00100646B70 /* thread_engine.xcodeproj */,
@@ -240,11 +284,18 @@
 		D9488CB61BDF5C1E00646B70 /* ForthIOS */ = {
 			isa = PBXGroup;
 			children = (
+				D92535C41C58AA6F00911E24 /* GLFrameView.h */,
+				D92535CC1C58AD4300911E24 /* ForthViewController.h */,
+				D92535CD1C58AD4300911E24 /* ForthViewController.mm */,
+				D92535C51C58AA6F00911E24 /* GLFrameView.mm */,
+				D92535C61C58AA6F00911E24 /* glUtil.h */,
 				D9488CB71BDF5C1E00646B70 /* ForthIOS.h */,
 				D9488CE51BDF889100646B70 /* Constants.h */,
 				D9488CE71BDF88FC00646B70 /* Constants.m */,
 				D9514E651BE9F6620016CF8E /* ForthStreaming.h */,
 				D9514E631BE9F6440016CF8E /* ForthStreaming.mm */,
+				D925359B1C588F8B00911E24 /* ForthBroadcaster.h */,
+				D925359C1C588F8B00911E24 /* ForthBroadcaster.mm */,
 			);
 			path = ForthIOS;
 			sourceTree = "<group>";
@@ -306,7 +357,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D92535C71C58AA6F00911E24 /* GLFrameView.h in Headers */,
 				D96B32381BFDB08D00CE8694 /* ForthIOS.h in Headers */,
+				D92535CE1C58AD4300911E24 /* ForthViewController.h in Headers */,
+				D925359D1C588F8B00911E24 /* ForthBroadcaster.h in Headers */,
+				D92535C91C58AA6F00911E24 /* glUtil.h in Headers */,
 				D96B32391BFDB09700CE8694 /* Constants.h in Headers */,
 				D96B323B1BFDB09D00CE8694 /* ForthStreaming.h in Headers */,
 			);
@@ -327,6 +382,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D92535E21C58BC4200911E24 /* PBXTargetDependency */,
 				D9091AFA1BE9B28500AE988B /* PBXTargetDependency */,
 				D9488D281BE0BFCF00646B70 /* PBXTargetDependency */,
 				D9488D2A1BE0BFCF00646B70 /* PBXTargetDependency */,
@@ -399,6 +455,10 @@
 					ProductGroup = D9488D051BE0B00100646B70 /* Products */;
 					ProjectRef = D9488D041BE0B00100646B70 /* thread_engine.xcodeproj */;
 				},
+				{
+					ProductGroup = D92535D41C58BBFD00911E24 /* Products */;
+					ProjectRef = D92535D31C58BBFD00911E24 /* video_engine.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -414,6 +474,13 @@
 			fileType = archive.ar;
 			path = libaudio_engine.a;
 			remoteRef = D9091AF71BE9B27D00AE988B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D92535D81C58BBFD00911E24 /* libvideo_engine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libvideo_engine.a;
+			remoteRef = D92535D71C58BBFD00911E24 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D9488CDB1BDF65DC00646B70 /* libstreaming_engine.a */ = {
@@ -510,8 +577,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D92535CF1C58AD4300911E24 /* ForthViewController.mm in Sources */,
 				D9514E641BE9F6440016CF8E /* ForthStreaming.mm in Sources */,
 				D9488CE81BDF88FC00646B70 /* Constants.m in Sources */,
+				D925359E1C588F8B00911E24 /* ForthBroadcaster.mm in Sources */,
+				D92535C81C58AA6F00911E24 /* GLFrameView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +592,11 @@
 			isa = PBXTargetDependency;
 			name = audio_engine;
 			targetProxy = D9091AF91BE9B28500AE988B /* PBXContainerItemProxy */;
+		};
+		D92535E21C58BC4200911E24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = video_engine;
+			targetProxy = D92535E11C58BC4200911E24 /* PBXContainerItemProxy */;
 		};
 		D9488CF11BE07BB300646B70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -659,6 +734,7 @@
 					../../components/error,
 					../../libs/libyuv/include,
 					../../components/misc,
+					../../components/video,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -684,6 +760,7 @@
 					../../components/error,
 					../../libs/libyuv/include,
 					../../components/misc,
+					../../components/video,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -15,12 +15,12 @@
 
 using namespace oppvs;
 
+
 @interface ForthStreaming()
 {
 @private
     StreamingEngine mStreamingEngine;
     AudioRingBuffer mAudioRingBuffer;
-    VideoFrameBuffer mVideoFrameBuffer;
     MacAudioPlay* mPlayer;
     
     std::string mServerAddress;
@@ -52,7 +52,6 @@ void streamingCallback(void* user)
     mStreamingEngine.registerCallback(frameCallback, (__bridge void*)self);
     mStreamingEngine.registerCallback(streamingCallback, (__bridge void*)self);
     mStreamingEngine.attachBuffer(&mAudioRingBuffer);
-    mStreamingEngine.attachBuffer(&mVideoFrameBuffer);
     if (mStreamingEngine.init(ROLE_VIEWER, mServerAddress, mServerAddress, TURN_SERVER_USER, TURN_SERVER_PASS, mServerAddress, SIGN_SERVER_PORT) < 0)
     {
         NSLog(@"Failed to init streaming engine");

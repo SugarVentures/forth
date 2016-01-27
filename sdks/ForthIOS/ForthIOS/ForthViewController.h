@@ -13,5 +13,6 @@
 
 @property (nonatomic, strong) GLFrameView *frameView;
 
+- (void) startCaptureSession;
 
 @end
