@@ -102,7 +102,7 @@ namespace oppvs {
 
 		virtual ~VideoCapture() {}
 		virtual void setup() {}
-		virtual void start() {}
+        virtual int start() { return 0; }
 		virtual void stop()	{}
 		virtual void updateConfiguration(const VideoActiveSource& source) {}
 

@@ -19,9 +19,9 @@ namespace oppvs {
         oppvs_setup_capture_session(m_cap, m_source);
 	}
     
-    void IosVideoCapture::start()
+    int IosVideoCapture::start()
     {
-        oppvs_start_video_recording(m_cap);
+        return oppvs_start_video_recording(m_cap);
     }
     
     void IosVideoCapture::stop()
@@ -29,8 +29,8 @@ namespace oppvs {
         oppvs_stop_video_recording(m_cap);
     }
     
-    void* IosVideoCapture::getSession()
+    void IosVideoCapture::updateConfiguration(const VideoActiveSource& source)
     {
-        return oppvs_get_session(m_cap);
+        oppvs_update_configuration(m_cap, source);
     }
 } // oppvs

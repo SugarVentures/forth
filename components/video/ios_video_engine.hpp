@@ -4,6 +4,7 @@
 #include "video_engine.hpp"
 #include "ios_video_capture_interface.h"
 
+
 namespace oppvs {
 	class IosVideoEngine : public VideoEngine
 	{
@@ -12,8 +13,10 @@ namespace oppvs {
 		void getListCaptureDevices(std::vector<VideoCaptureDevice>& result);
         
         void setupCaptureSession(VideoActiveSource* source);
-        void startCaptureSession(VideoActiveSource& source);
-        void* getSession(VideoActiveSource& source);
+        int startCaptureSession(VideoActiveSource& source);
+        void stopCaptureSession(const VideoActiveSource& source);
+        
+        void updateConfiguration(const VideoActiveSource& source);
 	};
 } // oppvs
 

@@ -28,7 +28,7 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
 
     int is_pixel_buffer_set;
     int pixel_format;
-    oppvs::VideoActiveSource *sourceInfo;
+    oppvs::VideoActiveSource sourceInfo;
 }
 
 @property (nonatomic, strong) AVCaptureSession* session;
@@ -37,9 +37,9 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
 - (void) openCaptureDevice: (CGRect) rect : (int) pixelformat : (int) fps;
 - (void) setSource: (oppvs::VideoActiveSource*) source;
 - (void) setCallback: (oppvs::frame_callback) fc fromuser: (void*) u;
-- (void) startRecording;
+- (int) startRecording;
 - (void) stopRecording;
-
+- (void) updateConfiguration: (const oppvs::VideoActiveSource&) source;
 @end
 
 @implementation IosVideoAVFoundationCapture {
@@ -110,11 +110,8 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
         if ( setupResult != AVCamSetupResultSuccess ) {
             return;
         }
-        
-        std::string str ("0");
-        std::size_t found = sourceInfo->video_source_id.find(str);
-        
-        if (found != std::string::npos)
+                
+        if (sourceInfo.video_source_id.compare("1"))
         {
             position = AVCaptureDevicePositionBack;
         }
@@ -155,7 +152,14 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
             [self.session addOutput:output];
             AVCaptureConnection *connection = [output connectionWithMediaType:AVMediaTypeVideo];
             if ([connection isVideoStabilizationSupported])
-                [connection preferredVideoStabilizationMode];
+                connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeAuto;
+            
+            if ([connection isVideoOrientationSupported])
+            {
+                AVCaptureVideoOrientation orientation = AVCaptureVideoOrientationPortrait;
+                [connection setVideoOrientation:orientation];
+            }
+
             videoDataOutput = output;
             
             dispatch_queue_t queue = dispatch_queue_create("oppvs.videocapture.queue", DISPATCH_QUEUE_SERIAL);
@@ -206,9 +210,9 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
             pixel_buffer.nbytes = pixel_buffer.stride[0] * pixel_buffer.height[0];
             
             
-            sourceInfo->rect.right = sourceInfo->rect.left + pixel_buffer.width[0];
-            sourceInfo->rect.top = sourceInfo->rect.bottom + pixel_buffer.height[0];
-            sourceInfo->stride = pixel_buffer.stride[0];
+            sourceInfo.rect.right = sourceInfo.rect.left + pixel_buffer.width[0];
+            sourceInfo.rect.top = sourceInfo.rect.bottom + pixel_buffer.height[0];
+            sourceInfo.stride = pixel_buffer.stride[0];
         }
         is_pixel_buffer_set = 1;
     }
@@ -242,9 +246,29 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
     CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
 }
 
-- (void)startRecording
+- (int)startRecording
 {
-    [self.session startRunning];
+    dispatch_async( sessionQueue, ^{
+        switch ( setupResult )
+        {
+            case AVCamSetupResultSuccess:
+            {
+                [self.session startRunning];
+                
+            }
+            case AVCamSetupResultCameraNotAuthorized:
+            {
+
+                break;
+            }
+            case AVCamSetupResultSessionConfigurationFailed:
+            {
+
+                break;
+            }
+        }
+    } );
+    return setupResult;
 }
 
 - (void)stopRecording
@@ -252,13 +276,14 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
     if ([self.session isRunning] == YES)
     {
         [self.session stopRunning];
+        NSLog(@"Stop");
         return;
     }
 }
 
 - (void) setSource: (oppvs::VideoActiveSource*) source;
 {
-    sourceInfo = source;
+    sourceInfo = *source;
     pixel_buffer.source = source->id;
 }
 
@@ -266,6 +291,60 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
     callback_frame = fc;
     callback_user = u;
     pixel_buffer.user = u;
+}
+
+- (void)updateConfiguration:(const oppvs::VideoActiveSource &)source
+{
+    if (self.session)
+    {
+        
+        if (sourceInfo.video_source_id.compare(source.video_source_id) != 0)
+        {
+            dispatch_async( sessionQueue, ^{
+                AVCaptureDevice *currentVideoDevice = videoDeviceInput.device;
+                AVCaptureDevicePosition preferredPosition = AVCaptureDevicePositionUnspecified;
+                AVCaptureDevicePosition currentPosition = currentVideoDevice.position;
+                
+                switch ( currentPosition )
+                {
+                    case AVCaptureDevicePositionUnspecified:
+                    case AVCaptureDevicePositionFront:
+                        preferredPosition = AVCaptureDevicePositionBack;
+                        break;
+                    case AVCaptureDevicePositionBack:
+                        preferredPosition = AVCaptureDevicePositionFront;
+                        break;
+                }
+                
+                AVCaptureDevice *device = [IosVideoAVFoundationCapture deviceWithMediaType:AVMediaTypeVideo preferringPosition:preferredPosition];
+                AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
+                
+                [self.session beginConfiguration];
+                // Remove the existing device input first, since using the front and back camera simultaneously is not supported.
+                [self.session removeInput:videoDeviceInput];
+                
+                if ( [self.session canAddInput:input] ) {
+                    [self.session addInput:input];
+                    videoDeviceInput = input;
+                }
+                else
+                {
+                    [self.session addInput:videoDeviceInput];
+                }
+                
+                AVCaptureConnection *connection = [videoDataOutput connectionWithMediaType:AVMediaTypeVideo];
+                if ( connection.isVideoStabilizationSupported ) {
+                    connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeAuto;
+                }
+                [self.session commitConfiguration];
+                
+                is_pixel_buffer_set = 0;
+            } );
+        }
+        
+    }
+    
+    sourceInfo = source;
 }
 
 + (AVCaptureDevice *)deviceWithMediaType:(NSString *)mediaType preferringPosition:(AVCaptureDevicePosition)position
@@ -302,7 +381,7 @@ int oppvs_setup_capture_session(void* cap, oppvs::VideoActiveSource* source) {
     return 0;
 }
 
-void oppvs_start_video_recording(void* cap) {
+int oppvs_start_video_recording(void* cap) {
     return [(id)cap startRecording];
 }
 
@@ -310,8 +389,8 @@ void oppvs_stop_video_recording(void* cap) {
     return [(id)cap stopRecording];
 }
 
-void* oppvs_get_session(void* cap) {
-    return [(id)cap session];
+void oppvs_update_configuration(void* cap, const oppvs::VideoActiveSource& source) {
+    return [(id)cap updateConfiguration:source];
 }
 
 @end

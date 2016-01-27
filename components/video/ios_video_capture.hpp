@@ -4,6 +4,7 @@
 #include "video_capture.hpp"
 #include "ios_video_capture_interface.h"
 
+
 namespace oppvs {
 	class IosVideoCapture : public VideoCapture
 	{
@@ -12,9 +13,9 @@ namespace oppvs {
 		~IosVideoCapture();
 
 		void setup();
-        void start();
+        int start();
         void stop();
-        void* getSession();
+        void updateConfiguration(const VideoActiveSource& source);
 	};
 } // oppvs
 

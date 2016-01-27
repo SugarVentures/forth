@@ -369,6 +369,7 @@
 				D913AF971C563861005EAD2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

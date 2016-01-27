@@ -39,7 +39,8 @@ namespace oppvs {
 		virtual void setupCaptureSessions() {}
 
 		virtual void setupCaptureSession(VideoActiveSource* source) {}
-		virtual void startCaptureSession(VideoActiveSource& source) {}
+        virtual int startCaptureSession(VideoActiveSource& source) { return 0; }
+        virtual void stopCaptureSession(const VideoActiveSource& source) {}
 
 		virtual void startRecording() {}
 		virtual void stopRecording() {}
@@ -98,6 +99,11 @@ namespace oppvs {
 		{
 			return active_sources;
 		}
+        
+        VideoActiveSource* getSource()
+        {
+            return &active_sources[0];
+        }
 
 	private:
 		const static uint8_t MAX_ACTIVE_SOURCES = 5;

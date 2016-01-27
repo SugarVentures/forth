@@ -11,6 +11,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "GLFrameView.h"
 
+NSMutableData*   FrameStorage;
+
 @interface ViewController ()
 {
     oppvs::IosVideoEngine* mVideoEngine;
@@ -35,11 +37,25 @@
     
     [self.demoView setupGL];
     [self initEngine];
+    
+    FrameStorage = [[NSMutableData alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    if (mVideoEngine)
+    {
+        oppvs::VideoActiveSource* activeSource = mVideoEngine->getSource();
+        if (activeSource)
+            mVideoEngine->stopCaptureSession(*activeSource);
+    }
+    
+    [super viewDidDisappear:animated];
 }
 
 #pragma mark Callback functions
@@ -49,14 +65,18 @@ void frameCallback(oppvs::PixelBuffer& pf)
     if (pf.nbytes == 0)
         return;
     
-    uint8_t* data = new uint8_t[pf.nbytes];
-    memcpy(data, pf.plane[0], pf.nbytes);
+    if ((UInt32)[FrameStorage length] < pf.nbytes)
+    {
+        [FrameStorage increaseLengthBy:pf.nbytes - [FrameStorage length]];
+    }
+    [FrameStorage replaceBytesInRange:NSMakeRange(0, pf.nbytes) withBytes:pf.plane[0] length:pf.nbytes];
+    
     oppvs::ControllerLinker *controller = (oppvs::ControllerLinker*)pf.user;
     if (controller)
     {
         GLFrameView* view = (__bridge GLFrameView*)controller->render;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [view render:(GLubyte*)data withWidth:pf.width[0] andHeight:pf.height[0]];
+            [view render:(GLubyte*)[FrameStorage bytes] withWidth:pf.width[0] andHeight:pf.height[0]];
         });
     }
 }
@@ -67,24 +87,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     void* user;
     mVideoEngine = new oppvs::IosVideoEngine(frameCallback, user);
     
-    //Get information of capture devices
-    std::vector<oppvs::VideoCaptureDevice> videoDevices;
-    mVideoEngine->getListCaptureDevices(videoDevices);
-    
-    NSString* source;
-    if (videoDevices.size() > 0)
-    {
-        for (std::vector<oppvs::VideoCaptureDevice>::const_iterator it = videoDevices.begin(); it != videoDevices.end(); ++it)
-        {
-            NSString *deviceName = [NSString stringWithCString:it->device_name.c_str()
-                                                      encoding:[NSString defaultCStringEncoding]];
-            NSString *deviceId = [NSString stringWithCString:it->device_id.c_str()
-                                                    encoding:[NSString defaultCStringEncoding]];
-            NSLog(@"%@ %@", deviceName, deviceId);
-            source = deviceId;
-        }
-    }
-    
+    NSString* source = @"1"; //Back Camera
     CGRect rect;
     [self addVideoSource:source hasType:oppvs::VST_WEBCAM sourceRect:rect renderRect:rect withViewID:nil atIndex:0];
     
@@ -96,16 +99,49 @@ void frameCallback(oppvs::PixelBuffer& pf)
     oppvs::window_rect_t sourceRect = createFromCGRect(srect);
     oppvs::window_rect_t renderRect = createFromCGRect(rrect);
     
-    oppvs::VideoActiveSource *activeSource;
     oppvs::ControllerLinker *controller = new oppvs::ControllerLinker();
     controller->render = (__bridge void*)self.demoView;
     
-    activeSource = mVideoEngine->addSource(type, source, 24, sourceRect, renderRect, (void*)controller, (int)index);
+    oppvs::VideoActiveSource* activeSource = mVideoEngine->addSource(type, source, 24, sourceRect, renderRect, (void*)controller, (int)index);
     if (activeSource)
     {
         mVideoEngine->setupCaptureSession(activeSource);
-        mVideoEngine->startCaptureSession(*activeSource);
-        
+        int error = mVideoEngine->startCaptureSession(*activeSource);
+        switch (error) {
+            case 0:
+            {
+                break;
+            }
+            case -1:
+            {
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    NSString *message = NSLocalizedString( @"ForthTV doesn't have permission to use the camera, please change privacy settings", @"Alert message when the user has denied access to the camera" );
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"ForthTV" message:message preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"OK", @"Alert OK button" ) style:UIAlertActionStyleCancel handler:nil];
+                    [alertController addAction:cancelAction];
+                    // Provide quick access to Settings.
+                    UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Settings", @"Alert button to open Settings" ) style:UIAlertActionStyleDefault handler:^( UIAlertAction *action ) {
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                    }];
+                    [alertController addAction:settingsAction];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                } );
+                break;
+            }
+            case -2:
+            {
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    NSString *message = NSLocalizedString( @"Unable to capture media", @"Alert message when something goes wrong during capture session configuration" );
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"ForthTV" message:message preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"OK", @"Alert OK button" ) style:UIAlertActionStyleCancel handler:nil];
+                    [alertController addAction:cancelAction];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                } );
+                break;
+            }
+            default:
+                break;
+        }
     }
     else
         NSLog(@"Failed to add capture source");
@@ -124,4 +160,24 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
     return out;
 }
 
+#pragma mark Actions
+
+- (IBAction)switchCamera:(id)sender {
+
+    oppvs::VideoActiveSource* activeSource;
+    if (mVideoEngine)
+    {
+        activeSource = mVideoEngine->getSource();
+        if (activeSource)
+        {
+            if (activeSource->video_source_id.compare("0") == 0)
+                activeSource->video_source_id = "1";
+            else
+                activeSource->video_source_id = "0";
+        
+            mVideoEngine->updateConfiguration(*activeSource);
+        }
+    }
+    
+}
 @end

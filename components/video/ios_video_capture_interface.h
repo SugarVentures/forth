@@ -12,11 +12,10 @@ int oppvs_get_list_video_sources(void* cap, std::vector<oppvs::VideoCaptureDevic
 
 void* oppvs_vc_av_alloc();
 int oppvs_setup_capture_session(void* cap, oppvs::VideoActiveSource* source);
-void oppvs_start_video_recording(void* cap);
+int oppvs_start_video_recording(void* cap);
 void oppvs_stop_video_recording(void* cap);
 void oppvs_av_set_callback(void* cap, oppvs::frame_callback fc, void* user);   /* Set the callback function which will receive the frames. */
-void oppvs_update_configuration(void* cap, oppvs::VideoActiveSource& source);
-void* oppvs_get_session(void* cap);
+void oppvs_update_configuration(void* cap, const oppvs::VideoActiveSource& source);
 
 #ifdef __cplusplus
 }

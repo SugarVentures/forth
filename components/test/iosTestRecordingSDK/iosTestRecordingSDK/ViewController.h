@@ -11,6 +11,8 @@
 @interface ViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIView  *container;
+- (IBAction)switchCamera:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *switchCameraButton;
 
 @end
 
