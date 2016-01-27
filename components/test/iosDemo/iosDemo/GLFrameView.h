@@ -19,6 +19,7 @@
 }
 
 - (void)setupGL;
+- (void)render: (GLubyte*)data withWidth: (GLuint)width andHeight: (GLuint)height freeWhenDone: (bool)flag;
 - (void)render: (GLubyte*)data withWidth: (GLuint)width andHeight: (GLuint)height;
 
 @end

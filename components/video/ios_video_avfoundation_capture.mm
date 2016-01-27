@@ -166,6 +166,8 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
             [videoDataOutput setSampleBufferDelegate:self queue:queue];
             dispatch_release(queue);
         }
+        
+        [self.session setSessionPreset:AVCaptureSessionPreset640x480];
         [self.session commitConfiguration];
     } );
 }

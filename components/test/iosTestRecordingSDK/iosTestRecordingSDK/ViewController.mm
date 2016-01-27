@@ -69,13 +69,13 @@ void frameCallback(oppvs::PixelBuffer& pf)
     {
         [FrameStorage increaseLengthBy:pf.nbytes - [FrameStorage length]];
     }
-    [FrameStorage replaceBytesInRange:NSMakeRange(0, pf.nbytes) withBytes:pf.plane[0] length:pf.nbytes];
+    [FrameStorage replaceBytesInRange:NSMakeRange(0, pf.nbytes) withBytes:pf.plane[0] length:pf.nbytes];    
     
     oppvs::ControllerLinker *controller = (oppvs::ControllerLinker*)pf.user;
     if (controller)
     {
         GLFrameView* view = (__bridge GLFrameView*)controller->render;
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             [view render:(GLubyte*)[FrameStorage bytes] withWidth:pf.width[0] andHeight:pf.height[0]];
         });
     }
