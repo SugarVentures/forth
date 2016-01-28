@@ -1,5 +1,5 @@
 //
-//  ForthViewController.h
+//  ForthBroadcasterController.h
 //  ForthIOS
 //
 //  Created by Cao Minh Trang on 1/27/16.
@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "GLFrameView.h"
 
-@interface ForthViewController : UIViewController
+@interface ForthBroadcasterController : UIViewController
 
 @property (nonatomic, strong) GLFrameView *frameView;
 
-- (void) startCaptureSession;
+- (int) startCaptureSession;
+- (void) startStreaming: (NSString*)streamKey atServer: (NSString*)serverAddress;
 
 @end
