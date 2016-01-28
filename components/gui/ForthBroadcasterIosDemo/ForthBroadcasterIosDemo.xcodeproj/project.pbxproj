@@ -1,0 +1,332 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D92535AF1C58A67300911E24 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D92535AE1C58A67300911E24 /* main.m */; };
+		D92535B21C58A67300911E24 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D92535B11C58A67300911E24 /* AppDelegate.m */; };
+		D92535B51C58A67300911E24 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D92535B41C58A67300911E24 /* ViewController.mm */; };
+		D92535B81C58A67300911E24 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D92535B61C58A67300911E24 /* Main.storyboard */; };
+		D92535BA1C58A67300911E24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D92535B91C58A67300911E24 /* Assets.xcassets */; };
+		D92535BD1C58A67300911E24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D92535BB1C58A67300911E24 /* LaunchScreen.storyboard */; };
+		D92535CB1C58ABF300911E24 /* Forth-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D92535CA1C58ABF300911E24 /* Forth-iOS.framework */; };
+		D92535E81C58CC1A00911E24 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D92535E71C58CC1A00911E24 /* AVFoundation.framework */; };
+		D92535EC1C58CC4400911E24 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D92535EB1C58CC4400911E24 /* CoreMedia.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D92535AA1C58A67300911E24 /* ForthBroadcasterIosDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ForthBroadcasterIosDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D92535AE1C58A67300911E24 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D92535B01C58A67300911E24 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D92535B11C58A67300911E24 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D92535B31C58A67300911E24 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		D92535B41C58A67300911E24 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		D92535B71C58A67300911E24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D92535B91C58A67300911E24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D92535BC1C58A67300911E24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D92535BE1C58A67300911E24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D92535CA1C58ABF300911E24 /* Forth-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Forth-iOS.framework"; path = "../../../../../../Library/Developer/Xcode/DerivedData/ForthIOS-cfjhwdtapoqsvjcegmtfsqfprxad/Build/Products/Release-iphoneuniversal/Forth-iOS.framework"; sourceTree = "<group>"; };
+		D92535E71C58CC1A00911E24 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D92535E91C58CC2C00911E24 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		D92535EB1C58CC4400911E24 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D92535A71C58A67300911E24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D92535EC1C58CC4400911E24 /* CoreMedia.framework in Frameworks */,
+				D92535E81C58CC1A00911E24 /* AVFoundation.framework in Frameworks */,
+				D92535CB1C58ABF300911E24 /* Forth-iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D92535A11C58A67300911E24 = {
+			isa = PBXGroup;
+			children = (
+				D92535EB1C58CC4400911E24 /* CoreMedia.framework */,
+				D92535E91C58CC2C00911E24 /* CoreFoundation.framework */,
+				D92535E71C58CC1A00911E24 /* AVFoundation.framework */,
+				D92535CA1C58ABF300911E24 /* Forth-iOS.framework */,
+				D92535AC1C58A67300911E24 /* ForthBroadcasterIosDemo */,
+				D92535AB1C58A67300911E24 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D92535AB1C58A67300911E24 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D92535AA1C58A67300911E24 /* ForthBroadcasterIosDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D92535AC1C58A67300911E24 /* ForthBroadcasterIosDemo */ = {
+			isa = PBXGroup;
+			children = (
+				D92535B01C58A67300911E24 /* AppDelegate.h */,
+				D92535B11C58A67300911E24 /* AppDelegate.m */,
+				D92535B31C58A67300911E24 /* ViewController.h */,
+				D92535B41C58A67300911E24 /* ViewController.mm */,
+				D92535B61C58A67300911E24 /* Main.storyboard */,
+				D92535B91C58A67300911E24 /* Assets.xcassets */,
+				D92535BB1C58A67300911E24 /* LaunchScreen.storyboard */,
+				D92535BE1C58A67300911E24 /* Info.plist */,
+				D92535AD1C58A67300911E24 /* Supporting Files */,
+			);
+			path = ForthBroadcasterIosDemo;
+			sourceTree = "<group>";
+		};
+		D92535AD1C58A67300911E24 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D92535AE1C58A67300911E24 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D92535A91C58A67300911E24 /* ForthBroadcasterIosDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D92535C11C58A67300911E24 /* Build configuration list for PBXNativeTarget "ForthBroadcasterIosDemo" */;
+			buildPhases = (
+				D92535A61C58A67300911E24 /* Sources */,
+				D92535A71C58A67300911E24 /* Frameworks */,
+				D92535A81C58A67300911E24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ForthBroadcasterIosDemo;
+			productName = ForthBroadcasterIosDemo;
+			productReference = D92535AA1C58A67300911E24 /* ForthBroadcasterIosDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D92535A21C58A67300911E24 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Cao Minh Trang";
+				TargetAttributes = {
+					D92535A91C58A67300911E24 = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 93QE55NQPX;
+					};
+				};
+			};
+			buildConfigurationList = D92535A51C58A67300911E24 /* Build configuration list for PBXProject "ForthBroadcasterIosDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D92535A11C58A67300911E24;
+			productRefGroup = D92535AB1C58A67300911E24 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D92535A91C58A67300911E24 /* ForthBroadcasterIosDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D92535A81C58A67300911E24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D92535BD1C58A67300911E24 /* LaunchScreen.storyboard in Resources */,
+				D92535BA1C58A67300911E24 /* Assets.xcassets in Resources */,
+				D92535B81C58A67300911E24 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D92535A61C58A67300911E24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D92535B51C58A67300911E24 /* ViewController.mm in Sources */,
+				D92535B21C58A67300911E24 /* AppDelegate.m in Sources */,
+				D92535AF1C58A67300911E24 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D92535B61C58A67300911E24 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D92535B71C58A67300911E24 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D92535BB1C58A67300911E24 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D92535BC1C58A67300911E24 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D92535BF1C58A67300911E24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D92535C01C58A67300911E24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D92535C21C58A67300911E24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Users/caominhtrang/Library/Developer/Xcode/DerivedData/ForthIOS-cfjhwdtapoqsvjcegmtfsqfprxad/Build/Products/Release-iphoneuniversal";
+				HEADER_SEARCH_PATHS = "/Users/caominhtrang/Library/Developer/Xcode/DerivedData/ForthIOS-cfjhwdtapoqsvjcegmtfsqfprxad/Build/Products/Release-iphoneuniversal/Forth-iOS.framework/Versions/A/Headers";
+				INFOPLIST_FILE = ForthBroadcasterIosDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-lresolv";
+				PRODUCT_BUNDLE_IDENTIFIER = Sugar.ForthBroadcasterIosDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D92535C31C58A67300911E24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Users/caominhtrang/Library/Developer/Xcode/DerivedData/ForthIOS-cfjhwdtapoqsvjcegmtfsqfprxad/Build/Products/Release-iphoneuniversal";
+				HEADER_SEARCH_PATHS = "/Users/caominhtrang/Library/Developer/Xcode/DerivedData/ForthIOS-cfjhwdtapoqsvjcegmtfsqfprxad/Build/Products/Release-iphoneuniversal/Forth-iOS.framework/Versions/A/Headers";
+				INFOPLIST_FILE = ForthBroadcasterIosDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-lresolv";
+				PRODUCT_BUNDLE_IDENTIFIER = Sugar.ForthBroadcasterIosDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D92535A51C58A67300911E24 /* Build configuration list for PBXProject "ForthBroadcasterIosDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D92535BF1C58A67300911E24 /* Debug */,
+				D92535C01C58A67300911E24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D92535C11C58A67300911E24 /* Build configuration list for PBXNativeTarget "ForthBroadcasterIosDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D92535C21C58A67300911E24 /* Debug */,
+				D92535C31C58A67300911E24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D92535A21C58A67300911E24 /* Project object */;
+}

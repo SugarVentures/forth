@@ -15,15 +15,21 @@
 
 @implementation ViewController
 
+BOOL mIsRunning;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGRect demoFrame = CGRectMake(10, 10, self.previewView.frame.size.width - 20, self.previewView.frame.size.height - 20);
+    CGRect demoFrame = CGRectMake(0, 0, self.previewView.frame.size.width, self.previewView.frame.size.height);
     self.frameView = [[GLFrameView alloc] initWithFrame: demoFrame];
     self.frameView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
     [self.previewView addSubview:self.frameView];
     [self.frameView setupGL];
+    
+    [self startCaptureSession];
+    
+    mIsRunning = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,4 +37,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)startStreaming:(id)sender {
+    [self startStreaming:@"7116f0d7-5c27-44e6-8aa4-bc4ddeea9935" atServer:@"192.168.1.9"];
+}
 @end
