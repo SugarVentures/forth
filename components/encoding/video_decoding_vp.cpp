@@ -70,17 +70,17 @@ namespace oppvs
 	    	int corrupted = 0;
 	    	vpx_codec_control(codec, VP8D_GET_FRAME_CORRUPTED, &corrupted);
 			if (corrupted) {
-				printf("corrupted\n");
-				error = -1;
+				//printf("corrupted\n");
+				error = 0;
 				vpx_codec_control(codec, VP8D_GET_LAST_REF_USED, &corrupted);
-				printf("ref use: %d\n", corrupted);
-				return error;
+				//printf("ref use: %d\n", corrupted);
+				//return error;
 			}
 
 			//printf("%d %d %d %d\n", img->w, img->d_w, img->stride[1], img->stride[2]);
 	      	if (updateImage(pf, img) < 0)
 	      	{
-	      		return -1;
+	      		//return -1;
 	      	}
 	     	++frame_cnt;
 	     	//printf("Frame count: %u len: %u\n", frame_cnt, length);
