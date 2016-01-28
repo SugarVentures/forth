@@ -19,6 +19,7 @@
 #include "streaming_send_thread.hpp"
 #include "video_frame_buffer.h"
 
+
 #include <vector>
 #include <chrono>
 
@@ -38,11 +39,11 @@ namespace oppvs
 		StreamingRole role;
 	};
 
-	const std::string STUN_SERVER_ADDRESS("192.168.0.101");
-	const std::string TURN_SERVER_ADDRESS("192.168.0.101");
+	const std::string STUN_SERVER_ADDRESS("192.168.1.9");
+	const std::string TURN_SERVER_ADDRESS("192.168.1.9");
 	const std::string TURN_SERVER_USER("turn");
 	const std::string TURN_SERVER_PASS("password");
-	const std::string SIGN_SERVER_ADDRESS("192.168.0.101");
+	const std::string SIGN_SERVER_ADDRESS("192.168.1.9");
 	const static int SIGN_SERVER_PORT = 33333;
 
 	typedef void (*streaming_callback)(void* user);
@@ -62,6 +63,7 @@ namespace oppvs
 		uint32_t getSSRC() { return m_ssrc;}
 
 		void setStreamInfo(const std::vector<VideoActiveSource>& videoSources, const std::vector<AudioActiveSource>& audioSources);
+        void setStreamInfo(const std::vector<VideoActiveSource>& videoSources);
 
 		bool isRunning();
 		void setIsRunning(bool value);

@@ -6,6 +6,7 @@ namespace oppvs {
 	Depacketizer::Depacketizer(): p_recvPool(NULL), m_user(NULL)
 	{
 		m_timestamp = 0;
+		p_segmentPool = NULL;
 	}
 
 	Depacketizer::~Depacketizer()
@@ -18,7 +19,7 @@ namespace oppvs {
 		}
 	}
 
-	void Depacketizer::init(ServiceInfo* info, VideoFrameBuffer* pvideoBuf, AudioRingBuffer* paudioBuf)
+	void Depacketizer::init(ServiceInfo* info, VideoFrameBuffer* pvideoBuf, AudioRingBuffer* paudioBuf, tsqueue<SharedDynamicBufferRef>* psendPool)
 	{
 		if (info->videoStreamInfo.noSources > 0)
 			m_videoDecoder.init(info->videoStreamInfo);
@@ -44,6 +45,7 @@ namespace oppvs {
 		p_videoFrameBuffer = pvideoBuf;
 		p_audioRingBuffer = paudioBuf;
 		p_serviceInfo = info;
+		p_segmentPool = psendPool;
 	}
 
 	void Depacketizer::pushSegment(uint8_t* data, uint32_t len)
@@ -54,8 +56,6 @@ namespace oppvs {
 
 		if (len < RTP_HEADER_SIZE)
 			return;
-
-
 
 		memcpy(&timestamp, data, 4);
 		timestamp = ntohl(timestamp);
@@ -109,10 +109,16 @@ namespace oppvs {
 			}
 			
 			thread->pushFrame(frame);
-
-			//Push frame to cache
-			controller->cache.add(timestamp, frame->data);
+			
 		}
+
+		//Push to send pool
+		/*if (p_segmentPool)
+		{
+			SharedDynamicBufferRef segment = SharedDynamicBufferRef(new DynamicBuffer());
+			segment->setData(data, len);
+			p_segmentPool->push(segment);
+		}*/
 	}
 
 	int Depacketizer::pullFrame(PixelBuffer& pf, SharedDynamicBufferRef frame)

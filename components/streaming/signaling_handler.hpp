@@ -25,6 +25,8 @@ namespace oppvs {
 		void* 					callbackOnReceiveObject;
 
 		callbackStreamResponse	m_cbStreamResponse;
+
+		bool hasStreamRequestSent;
 	public:
 		SignalingHandler();
 		~SignalingHandler();
@@ -34,9 +36,10 @@ namespace oppvs {
 		int start(const std::string& streamKey);
 		int sendStreamRequest(std::string username, std::string password, std::vector<IceCandidate>& candidates);
 		void prepareConnection(std::string& username, std::string& password, std::vector<IceCandidate>& candidates);
+		int sendPeerRegister();
 		
 		static void* run(void* object);
-		static void callbackCandidateGatheringDone(void* object, void* icemgr, std::string username, std::string password, std::vector<IceCandidate>& candidates);
+		static void callbackCandidateGatheringDone(void* object, void* icemgr, uint32_t streamid, std::string username, std::string password, std::vector<IceCandidate>& candidates);
 		static void callbackOnIceResponse(void* object, std::string& username, std::string& password, std::vector<IceCandidate>& candidates);
 		static void callbackNewSubscriberImpl(void* object, IceStream* stream);
 		static void callbackOnReceiveImpl(void* object, uint8_t* data, uint32_t);

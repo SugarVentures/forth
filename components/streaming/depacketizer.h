@@ -13,7 +13,7 @@
 #include "audio_ring_buffer.h"
 #include "video_frame_buffer.h"
 
-#include "cache_buffer.h"
+#include "cache_buffer.hpp"
 
 namespace oppvs {
 
@@ -66,12 +66,12 @@ namespace oppvs {
         
         void* m_user;
 
-
+        tsqueue<SharedDynamicBufferRef>* p_segmentPool;
 	public:
 		Depacketizer();
 		~Depacketizer();
 
-		void init(ServiceInfo*, VideoFrameBuffer* pvideoBuf, AudioRingBuffer* paudioBuf);
+		void init(ServiceInfo*, VideoFrameBuffer* pvideoBuf, AudioRingBuffer* paudioBuf, tsqueue<SharedDynamicBufferRef>* psendPool);
 		void attachCallback(frame_callback cb, void* user);
         void attachCallback(frame_callback cb);
 		void start();

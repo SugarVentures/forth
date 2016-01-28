@@ -1,5 +1,8 @@
 #include "streaming_engine.hpp"
 
+//Fix for crash memory in vasprintf in glib
+#define NDEBUG
+
 namespace oppvs
 {
 	
@@ -133,6 +136,30 @@ namespace oppvs
 		m_streamingCallback = cb;
 		m_streamingUser = user;
 	}
+    
+    void StreamingEngine::setStreamInfo(const std::vector<VideoActiveSource>& videoSources)
+    {
+        m_serviceInfo.type = ST_VIDEO_STREAMING;
+        m_serviceInfo.key = m_ssrc;
+        VideoStreamInfo* vsi = &m_serviceInfo.videoStreamInfo;
+        if (videoSources.size() > 0)
+        {
+            vsi->noSources = videoSources.size();
+            vsi->sources = new VideoSourceInfo[vsi->noSources];
+            
+            std::vector<VideoActiveSource>::const_iterator it;
+            int i = 0;
+            for (it = videoSources.begin(); it != videoSources.end(); ++it)
+            {
+                vsi->sources[i].source = it->id;
+                vsi->sources[i].order = it->order;
+                vsi->sources[i].width = it->rect.right - it->rect.left;
+                vsi->sources[i].height = it->rect.top - it->rect.bottom;
+                vsi->sources[i].stride = it->stride;
+                i++;
+            }
+        }
+    }
 
 	void StreamingEngine::setStreamInfo(const std::vector<VideoActiveSource>& videoSources, const std::vector<AudioActiveSource>& audioSources)
 	{
@@ -250,11 +277,11 @@ namespace oppvs
 		StreamingEngine* engine = (StreamingEngine*)object;
 		if (engine->getRole() == ROLE_VIEWER)
 		{
-			if (!engine->isRunning())
+			/*if (!engine->isRunning())
 			{
 				engine->setIsRunning(true);
 				engine->createMainThread();
-			}
+			}*/
 			engine->receive(data, len);
 		}
 	}
@@ -280,7 +307,7 @@ namespace oppvs
 
 	int StreamingEngine::updateStreamInfo(const ServiceInfo& info)
 	{
-		if (p_audioRingBuffer == NULL || p_videoFrameBuffer == NULL)
+		if (p_audioRingBuffer == NULL)
 		{
 			printf("Can not update stream info\n");
 			return -1;
@@ -289,9 +316,12 @@ namespace oppvs
 		std::cout << "Update stream info " << std::endl;
 		m_serviceInfo = info;
 		p_audioRingBuffer->allocate(8, 10 * 512);
-		m_depacketizer.init(&m_serviceInfo, p_videoFrameBuffer, p_audioRingBuffer);
+		m_depacketizer.init(&m_serviceInfo, p_videoFrameBuffer, p_audioRingBuffer, &m_sendPool);
 		m_depacketizer.attachCallback(m_callback, m_frameUser);
+
 		m_streamingCallback(m_streamingUser);
+
+		//m_signaler.sendPeerRegister();
 		return 0;
 	}
 
