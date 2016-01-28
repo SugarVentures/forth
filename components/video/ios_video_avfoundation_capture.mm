@@ -29,6 +29,7 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
     int is_pixel_buffer_set;
     int pixel_format;
     oppvs::VideoActiveSource sourceInfo;
+    oppvs::VideoActiveSource* pSourceInfo;
 }
 
 @property (nonatomic, strong) AVCaptureSession* session;
@@ -51,7 +52,6 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
     self = [super init];
     if (self)
     {
-        NSLog(@"Init av foundation capture engine\n");
         is_pixel_buffer_set = 0;
     }
     
@@ -63,7 +63,6 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
 
 - (void)openCaptureDevice:(CGRect)rect :(int)pixelformat :(int)fps
 {
-    NSLog(@"Setup capture session");
     // Create session
     self.session = [[AVCaptureSession alloc] init];
     if(self.session == nil) {
@@ -156,7 +155,7 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
             
             if ([connection isVideoOrientationSupported])
             {
-                AVCaptureVideoOrientation orientation = AVCaptureVideoOrientationPortrait;
+                AVCaptureVideoOrientation orientation = AVCaptureVideoOrientationLandscapeRight;
                 [connection setVideoOrientation:orientation];
             }
 
@@ -211,10 +210,10 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
             pixel_buffer.stride[0] = CVPixelBufferGetBytesPerRow(imageBuffer);
             pixel_buffer.nbytes = pixel_buffer.stride[0] * pixel_buffer.height[0];
             
-            
-            sourceInfo.rect.right = sourceInfo.rect.left + pixel_buffer.width[0];
-            sourceInfo.rect.top = sourceInfo.rect.bottom + pixel_buffer.height[0];
-            sourceInfo.stride = pixel_buffer.stride[0];
+            //Update VideoActiveSource
+            pSourceInfo->rect.right = pSourceInfo->rect.left + pixel_buffer.width[0];
+            pSourceInfo->rect.top = pSourceInfo->rect.bottom + pixel_buffer.height[0];
+            pSourceInfo->stride = pixel_buffer.stride[0];
         }
         is_pixel_buffer_set = 1;
     }
@@ -278,7 +277,6 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
     if ([self.session isRunning] == YES)
     {
         [self.session stopRunning];
-        NSLog(@"Stop");
         return;
     }
 }
@@ -286,6 +284,7 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
 - (void) setSource: (oppvs::VideoActiveSource*) source;
 {
     sourceInfo = *source;
+    pSourceInfo = source;
     pixel_buffer.source = source->id;
 }
 

@@ -4,7 +4,6 @@ namespace oppvs {
     IosVideoCapture::IosVideoCapture(frame_callback cbf, void* user, VideoActiveSource* source) :
     VideoCapture(cbf, user, source)
 	{
-        printf("Init video capture\n");
         m_cap = oppvs_vc_av_alloc();
         oppvs_av_set_callback(m_cap, cbf, user);
 	}

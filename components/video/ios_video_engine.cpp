@@ -3,7 +3,6 @@
 namespace oppvs {
     IosVideoEngine::IosVideoEngine(frame_callback cb, void* user) : VideoEngine(cb, user)
     {
-        printf("Init video engine\n");
         info = oppvs_vc_info_alloc();
     }
     
