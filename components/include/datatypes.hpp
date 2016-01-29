@@ -195,7 +195,24 @@ namespace oppvs {
 		VideoStreamInfo()
 		{
 			noSources = 0;
+            sources = NULL;
 		}
+        
+        VideoStreamInfo& operator = (const VideoStreamInfo& info)
+        {
+            noSources = info.noSources;
+            if (noSources > 0)
+            {
+                if (sources != NULL)
+                    delete [] sources;
+                sources = new VideoSourceInfo[noSources];
+                for (int i = 0; i < noSources; i++)
+                {
+                    sources[i] = info.sources[i];
+                }
+            }
+            return *this;
+        }
 	};
 
 	const uint8_t AUDIO_TYPE_VOIP = 1;	//Voice signals
@@ -225,7 +242,25 @@ namespace oppvs {
 		AudioStreamInfo()
 		{
 			noSources = 0;
+            sources = NULL;
 		}
+        
+        AudioStreamInfo& operator = (const AudioStreamInfo& info)
+        {
+            noSources = info.noSources;
+            if (noSources > 0)
+            {
+                if (sources != NULL)
+                    delete [] sources;
+                sources = new AudioSourceInfo[noSources];
+                for (int i = 0; i < noSources; i++)
+                {
+                    sources[i] = info.sources[i];
+                }
+            }
+            return *this;
+
+        }
 	};
 
 	struct ServiceInfo
@@ -235,7 +270,18 @@ namespace oppvs {
 		uint64_t startTimeStamp;		//Timestamp to start stream in global time
 		VideoStreamInfo videoStreamInfo;
 		AudioStreamInfo audioStreamInfo;
+        
+        ServiceInfo& operator = (const ServiceInfo& si)
+        {
+            type = si.type;
+            key = si.key;
+            startTimeStamp = si.startTimeStamp;
+            videoStreamInfo = si.videoStreamInfo;
+            audioStreamInfo = si.audioStreamInfo;
+            return *this;
+        }
 	};
+    
 
 	struct OpusHeader
     {
