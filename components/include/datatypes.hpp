@@ -200,11 +200,12 @@ namespace oppvs {
         
         VideoStreamInfo& operator = (const VideoStreamInfo& info)
         {
+        	if (noSources > 0 && sources)
+        		delete [] sources;
+
             noSources = info.noSources;
             if (noSources > 0)
             {
-                if (sources != NULL)
-                    delete [] sources;
                 sources = new VideoSourceInfo[noSources];
                 for (int i = 0; i < noSources; i++)
                 {
@@ -247,11 +248,11 @@ namespace oppvs {
         
         AudioStreamInfo& operator = (const AudioStreamInfo& info)
         {
+        	if (noSources > 0 && sources)
+        		delete [] sources;
             noSources = info.noSources;
             if (noSources > 0)
             {
-                if (sources != NULL)
-                    delete [] sources;
                 sources = new AudioSourceInfo[noSources];
                 for (int i = 0; i < noSources; i++)
                 {
