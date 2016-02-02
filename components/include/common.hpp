@@ -47,6 +47,13 @@ namespace oppvs
 		}
 		return result;
 	}
+
+	inline void printHash(char* data, int length)
+	{
+        std::string str(data, length);
+        std::size_t str_hash = std::hash<std::string>{}(str);
+        printf("Hash: %lu\n", str_hash);
+	}
 }
 
 #endif
