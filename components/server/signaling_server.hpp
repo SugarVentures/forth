@@ -20,6 +20,7 @@ namespace oppvs {
 	struct SignalingStreamInfo
 	{
 		std::string streamKey;
+		int broadcaster;
 		std::vector<int> peerList;
 
 		std::vector<IceCandidate> iceCandidates;

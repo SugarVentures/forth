@@ -100,6 +100,7 @@ namespace oppvs {
 			printf("Not found stream. Add new\n");
 			SignalingStreamInfo stream;
 			stream.streamKey = streamkey;
+			stream.broadcaster = sockfd;
 			stream.peerList.push_back(sockfd);
 			stream.serviceInfo = info;
 			m_streams.push_back(stream);
@@ -107,17 +108,10 @@ namespace oppvs {
 		else
 		{
 			printf("Found the stream. Update.\n" );
-			std::vector<int>::iterator found = std::find(pstream->peerList.begin(), pstream->peerList.end(), sockfd);
-			if (found != pstream->peerList.end())
-			{
-				printf("Found sockfd. Do nothing\n");
-			}
-			else
-			{
-				printf("Not found sockfd. Add sock\n");
-				pstream->peerList.push_back(sockfd);
-			}
+			pstream->broadcaster = sockfd;
 			pstream->serviceInfo = info;
+			pstream->peerList.clear();
+			pstream->peerList.push_back(sockfd);
 		}
 		return 0;
 	}
@@ -149,6 +143,19 @@ namespace oppvs {
 		if (sockfd < 0)
 			return -1;
 		//Need to rewrite
+		std::vector<SignalingStreamInfo>::iterator it = m_streams.begin();
+		while (it != m_streams.end())
+		{
+			SignalingStreamInfo stream = *it;
+			if (stream.broadcaster == sockfd)
+			{
+				printf("Delete stream: %s\n", stream.streamKey.c_str());
+				it = m_streams.erase(it);
+				break;
+			}
+			else
+				++it;
+		}
 		return 0;
 	}
 
