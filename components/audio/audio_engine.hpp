@@ -29,7 +29,7 @@ namespace oppvs {
 			std::vector<AudioDevice>::const_iterator it;
 			for (it = m_listAudioDevices.begin(); it != m_listAudioDevices.end(); ++it)
 			{
-				printf("Source id %d Name: %s Channels: %d Rate: %u\n", it->getDeviceID(), it->getDeviceName().c_str(), 
+				printf("Source id %d Name: %s Type: %s Orientation: %s Channels: %d Rate: %u\n", it->getDeviceID(), it->getDeviceName().c_str(), it->getType().c_str(), it->getOrientation().c_str(), 
 					it->getNumberChannels(), it->getSampleRate());
 			}
 		}

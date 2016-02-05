@@ -19,6 +19,15 @@ namespace  oppvs {
 
 	}
 
+	AudioDevice::AudioDevice(uint32_t id, const std::string& deviceName, const std::string& deviceType, 
+			const std::string& deviceOrientation, int noChannels, uint32_t sampleRate) :
+		m_deviceID(id), m_deviceName(deviceName), m_deviceType(deviceType),
+		m_orientation(deviceOrientation), m_numberChannels(noChannels),
+		m_sampleRate(sampleRate)
+	{
+
+	}
+
 	AudioDevice::~AudioDevice()
 	{
 
@@ -37,6 +46,16 @@ namespace  oppvs {
 	const std::string& AudioDevice::getManufacturer() const
 	{
 		return m_manufacturer;
+	}
+
+	const std::string& AudioDevice::getType() const
+	{
+		return m_deviceType;
+	}
+
+	const std::string& AudioDevice::getOrientation() const
+	{
+		return m_orientation;
 	}
 
 	int AudioDevice::getNumberChannels() const

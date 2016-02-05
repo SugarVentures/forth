@@ -1,5 +1,9 @@
 #include "mac_audio_engine.hpp"
 
+#ifdef FORTH_IOS
+#include "ios_audio_interface.h"
+#endif
+
 namespace oppvs {
 	MacAudioEngine::MacAudioEngine()
 	{
@@ -14,6 +18,7 @@ namespace oppvs {
 	void MacAudioEngine::getListAudioDevices(std::vector<AudioDevice>& result, bool input)
 	{
 		resetAudioDeviceList();
+#ifndef FORTH_IOS
 		AudioObjectPropertyAddress propertyAddress = {
 	        kAudioHardwarePropertyDevices,
 	        kAudioObjectPropertyScopeGlobal,
@@ -148,7 +153,9 @@ namespace oppvs {
 	        AudioDevice aDevice(audioDevices[i], strDeviceName, strDeviceManu, safetyOffset, bufferSizeFrames, totalChannels, sampleRate);
 	        m_listAudioDevices.push_back(aDevice);
 	    }
-
+#else
+        ::getListAudioDevices(m_listAudioDevices, input);
+#endif
 	    result = m_listAudioDevices;
 	}
 

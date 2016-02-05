@@ -93,7 +93,13 @@
                         'mac_utility/CAStreamBasicDescription.cpp',
                         'mac_utility/CAStreamBasicDescription.h',
                         'mac_utility/CARingBuffer.cpp',
-                        'mac_utility/CARingBuffer.h'
+                        'mac_utility/CARingBuffer.h',
+                        'ios_audio_interface.h',
+                        'ios_audio.mm',
+                        'mac_audio_engine.hpp',
+                        'mac_audio_engine.cpp',
+                        'mac_audio_capture.hpp',
+                        'mac_audio_capture.cpp'
                     ]
                 }]
             ],
