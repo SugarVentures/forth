@@ -5,6 +5,8 @@
 #include <string>
 
 namespace oppvs {
+	const int SAMPLES_PER_CHANNELS = 512;
+
 	class AudioDevice
 	{
 	public:

@@ -184,8 +184,8 @@ namespace oppvs
 				asi->sources[i].source = it->id;
 				asi->sources[i].type = AUDIO_TYPE_MIXED;
 				asi->sources[i].format = AUDIO_FORMAT_FLOAT;
-				asi->sources[i].numberChannels = 2;
-				asi->sources[i].samplePerChannels = 512;
+				asi->sources[i].numberChannels = it->numberChannels;
+				asi->sources[i].samplePerChannels = it->samplePerChannels;
 				asi->sources[i].sampleRate = it->sampleRate;
 				i++;
 			}

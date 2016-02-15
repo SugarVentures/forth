@@ -176,7 +176,7 @@ namespace oppvs {
 			return -1;
 		}
 
-		AudioActiveSource* psrc = addSource(deviceid, device.getSampleRate());
+		AudioActiveSource* psrc = addSource(deviceid, device.getSampleRate(), 2, SAMPLES_PER_CHANNELS);
 		if (psrc == NULL)
 		{
 			printf("Can not add the audio device\n");

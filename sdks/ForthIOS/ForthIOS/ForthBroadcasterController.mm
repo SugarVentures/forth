@@ -10,11 +10,13 @@
 
 #include "ios_video_engine.hpp"
 #include "streaming_engine.hpp"
+#include "ios_audio_engine.hpp"
 #import <AVFoundation/AVFoundation.h>
 
 @interface ForthBroadcasterController ()
 {
     oppvs::IosVideoEngine* mVideoEngine;
+    oppvs::IosAudioEngine* mAudioEngine;
     oppvs::ControllerLinker* controller;
     oppvs::StreamingEngine mStreamingEngine;
 }
@@ -22,6 +24,7 @@
 @end
 
 NSMutableData*   FrameStorage;
+bool isValid = false;
 
 @implementation ForthBroadcasterController
 
@@ -50,6 +53,7 @@ NSMutableData*   FrameStorage;
 - (int) startCaptureSession
 {
     void* user;
+    int error = 0;
     mVideoEngine = new oppvs::IosVideoEngine(frameCallback, user);
     
     std::string source = "0"; //Back Camera
@@ -64,22 +68,44 @@ NSMutableData*   FrameStorage;
     controller->render = (__bridge void*)self.frameView;
     controller->streamer = &mStreamingEngine;
     
-    oppvs::VideoActiveSource* activeSource = mVideoEngine->addSource(oppvs::VST_WEBCAM, source, 24, sourceRect, sourceRect, (void*)controller, 0);
+    oppvs::VideoActiveSource* activeVideoSource = mVideoEngine->addSource(oppvs::VST_WEBCAM, source, 24, sourceRect, sourceRect, (void*)controller, 0);
     
-    if (activeSource)
+    if (activeVideoSource)
     {
-        mVideoEngine->setupCaptureSession(activeSource);
-        return mVideoEngine->startCaptureSession(*activeSource);
+        mVideoEngine->setupCaptureSession(activeVideoSource);
+        error = mVideoEngine->startCaptureSession(*activeVideoSource);
+    }
+    else {
+        error = -1;
+    }
+    
+    mAudioEngine = new oppvs::IosAudioEngine();
+    mAudioEngine->callbackAudio = audioCallback;
+    mAudioEngine->init();
+    std::vector<oppvs::AudioDevice> devices;
+    mAudioEngine->getListAudioDevices(devices, true);
+    if (devices.size() > 0)
+        mAudioEngine->addNewCapture(0, (void*)controller);
+    else
+        error = -2;
+    
+    if (error == 0)
+    {
+        isValid = true;
     }
     else
-        return 0;
+    {
+        delete mVideoEngine;
+        delete  mAudioEngine;
+    }
+    return error;
 }
 
 - (void)startStreaming:(NSString *)streamKey atServer:(NSString *)serverAddress
 {
-    if (mVideoEngine)
+    if (isValid)
     {
-        mStreamingEngine.setStreamInfo(mVideoEngine->getVideoActiveSources());
+        mStreamingEngine.setStreamInfo(mVideoEngine->getVideoActiveSources(), mAudioEngine->getAudioActiveSources());
         
         dispatch_queue_t queue = dispatch_queue_create("oppvs.streaming.queue", DISPATCH_QUEUE_SERIAL);
         dispatch_async(queue, ^{
@@ -130,6 +156,22 @@ void frameCallback(oppvs::PixelBuffer& pf)
             }
         }
 
+    }
+}
+
+void audioCallback(oppvs::GenericAudioBufferList& ab)
+{
+    oppvs::ControllerLinker* controller = (oppvs::ControllerLinker*)ab.user;
+    if (controller)
+    {
+        oppvs::StreamingEngine* streamer = (oppvs::StreamingEngine*)controller->streamer;
+        if (streamer)
+        {
+            if (streamer->isRunning())
+            {
+                streamer->pushData(ab);
+            }
+        }
     }
 }
 

@@ -45,22 +45,22 @@ namespace oppvs {
 
         m_streamFormat.mSampleRate = m_convertSampleRate;
         m_streamFormat.mFormatID = kAudioFormatLinearPCM;
-        m_streamFormat.mBitsPerChannel = 32;
         m_streamFormat.mFormatFlags = kAudioFormatFlagIsFloat | kAudioFormatFlagIsPacked;
         m_streamFormat.mFramesPerPacket = 1;
         m_streamFormat.mChannelsPerFrame = 2;
+        m_streamFormat.mBitsPerChannel = 32;
         m_streamFormat.mBytesPerFrame = sizeof(Float32) * m_streamFormat.mChannelsPerFrame;
         m_streamFormat.mBytesPerPacket = m_streamFormat.mFramesPerPacket * m_streamFormat.mBytesPerFrame;
         
 		if (m_resampler.init(m_deviceFormat, m_streamFormat) < 0)
             return -1;
         
-        /*m_deviceFormat.Print();
+        m_deviceFormat.Print();
         printf("Output capture format: %d %d %d %d %d\n", m_deviceFormat.mBitsPerChannel, m_deviceFormat.mBytesPerFrame, m_deviceFormat.mChannelsPerFrame, m_deviceFormat.mBytesPerPacket, m_deviceFormat.mFramesPerPacket);
         
         m_streamFormat.Print();
         printf("Output file format: %d %d %d %d %d\n", m_streamFormat.mBitsPerChannel, m_streamFormat.mBytesPerFrame, m_streamFormat.mChannelsPerFrame, m_streamFormat.mBytesPerPacket, m_streamFormat.mFramesPerPacket);
-        */
+        
         //Setup Stream Buffer
         m_streamBufferSize = 32768;
         m_streamBuffer = new char[m_streamBufferSize];

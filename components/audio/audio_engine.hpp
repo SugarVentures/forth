@@ -12,6 +12,8 @@ namespace oppvs {
 		uint8_t id;
 		uint32_t deviceId;
 		uint64_t sampleRate;
+		uint8_t numberChannels;
+		uint16_t samplePerChannels;
 		AudioCapture* capture;
 	};
 
@@ -63,7 +65,7 @@ namespace oppvs {
 			m_listAudioDevices.clear();
 		}
 
-		AudioActiveSource* addSource(uint32_t deviceid, uint64_t sampleRate)
+		AudioActiveSource* addSource(uint32_t deviceid, uint64_t sampleRate, uint8_t noChannels, uint16_t samplePerChannels)
 		{
 			if (m_activeSources.size() >= MAX_ACTIVE_SOURCES)
 			{
@@ -76,6 +78,8 @@ namespace oppvs {
 			src.id = m_activeSourceIndex;
 			src.deviceId = deviceid;
 			src.sampleRate = sampleRate;
+			src.numberChannels = noChannels;
+			src.samplePerChannels = samplePerChannels;
 			m_activeSources.push_back(src);
 			return &m_activeSources.back();
 		}
