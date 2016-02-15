@@ -38,7 +38,7 @@ namespace oppvs {
         
 		int createAudioOutputUnit();
 		void enableIO();
-		int setInputDevice(AudioDeviceID deviceid);
+		int setInputDevice();
 		void setupCallback();
 		int setupBuffer();
 

@@ -8,7 +8,9 @@
 extern "C" {
 #endif
 
+void prepareAudioSession();
 void getListAudioDevices(std::vector<oppvs::AudioDevice>& result, bool input);
+void setAudioCaptureDevice(const std::string& type, const std::string& orientation);
 
 #ifdef __cplusplus
 }

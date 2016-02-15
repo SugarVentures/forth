@@ -1,11 +1,16 @@
 #include "mac_audio_capture.hpp"
 #include "mac_audio_tool.hpp"
 
+#ifdef FORTH_IOS
+#include "ios_audio_interface.h"
+#endif
+
 namespace oppvs {
     MacAudioCapture::MacAudioCapture(const AudioDevice& device) : AudioCapture(device), m_bufferList(NULL)
     
     {
         m_convertSampleRate = 48000;
+        m_streamBuffer = nullptr;
     }
     
 	MacAudioCapture::~MacAudioCapture()
@@ -14,6 +19,7 @@ namespace oppvs {
 		if (m_auHAL)
 			AudioComponentInstanceDispose(m_auHAL);
         destroyAudioBufferList(m_bufferList);
+        delete [] m_streamBuffer;
 	}
 
 	int MacAudioCapture::init()
@@ -24,7 +30,7 @@ namespace oppvs {
 			return -1;
 		enableIO();
 
-		if (setInputDevice(m_device.getDeviceID()) < 0)
+		if (setInputDevice() < 0)
 			return -1;
 		setupCallback();
 		OSStatus err = noErr;
@@ -49,12 +55,12 @@ namespace oppvs {
 		if (m_resampler.init(m_deviceFormat, m_streamFormat) < 0)
             return -1;
         
-        m_deviceFormat.Print();
+        /*m_deviceFormat.Print();
         printf("Output capture format: %d %d %d %d %d\n", m_deviceFormat.mBitsPerChannel, m_deviceFormat.mBytesPerFrame, m_deviceFormat.mChannelsPerFrame, m_deviceFormat.mBytesPerPacket, m_deviceFormat.mFramesPerPacket);
         
         m_streamFormat.Print();
         printf("Output file format: %d %d %d %d %d\n", m_streamFormat.mBitsPerChannel, m_streamFormat.mBytesPerFrame, m_streamFormat.mChannelsPerFrame, m_streamFormat.mBytesPerPacket, m_streamFormat.mFramesPerPacket);
-        
+        */
         //Setup Stream Buffer
         m_streamBufferSize = 32768;
         m_streamBuffer = new char[m_streamBufferSize];
@@ -72,7 +78,7 @@ namespace oppvs {
 
 	int MacAudioCapture::stop()
 	{
-		if (m_auHAL != NULL)
+		if (m_auHAL)
 		{
 			OSStatus err = AudioOutputUnitStop(m_auHAL);
 			if (err)
@@ -88,8 +94,11 @@ namespace oppvs {
 	    AudioComponentDescription description;
 	    
 	    description.componentType = kAudioUnitType_Output;
+#ifndef FORTH_IOS
 	    description.componentSubType = kAudioUnitSubType_HALOutput;
-	    
+#else
+        description.componentSubType = kAudioUnitSubType_DefaultOutput;
+#endif
 	    description.componentManufacturer = kAudioUnitManufacturer_Apple;
 	    description.componentFlags = 0;
 	    description.componentFlagsMask = 0;
@@ -113,14 +122,20 @@ namespace oppvs {
 	    AudioUnitSetProperty(m_auHAL, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Output, 0, &enableIO, sizeof(enableIO));
 	}
 
-	int MacAudioCapture::setInputDevice(AudioDeviceID deviceid)
+	int MacAudioCapture::setInputDevice()
 	{
+#ifndef FORTH_IOS
 		UInt32 size;
 		OSStatus err = noErr;
 		size = sizeof(AudioDeviceID);
+        AudioDeviceID deviceid = m_device.getDeviceID();
 		err = AudioUnitSetProperty(m_auHAL, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &deviceid, sizeof(deviceid));
+
 		if (err)
 			return -1;
+#else
+        ::setAudioCaptureDevice(m_device.getType(), m_device.getOrientation());
+#endif
 		return 0;
 	}
 
@@ -131,7 +146,7 @@ namespace oppvs {
         //No record data then returns
         if (inNumberFrames == 0)
             return noErr;
-     
+
         MacAudioCapture* capture = (MacAudioCapture*)inRefCon;
         OSStatus err = noErr;
         
@@ -145,7 +160,7 @@ namespace oppvs {
         convertBufferList.mBuffers[0].mDataByteSize = capture->m_streamBufferSize;
         convertBufferList.mBuffers[0].mData = capture->m_streamBuffer;
         memset(convertBufferList.mBuffers[0].mData, 0, capture->m_streamBufferSize);
-        
+
         //Convert data
         UInt32 ioOutputDataPackets = 0;
         capture->m_pos = 0;
@@ -227,7 +242,6 @@ namespace oppvs {
             return -1;
         
         m_deviceFormat = deviceFormat;
-        
     	//Get the size of the IO buffers
 #ifndef FORTH_IOS
     	propsize = sizeof(bufferSizeFrames);
@@ -235,13 +249,7 @@ namespace oppvs {
 		if (err)
 			return -1;
 #else
-        Float32 bufferDuration;
-        propsize = sizeof(Float32);
-        err = AudioUnitGetProperty(m_auHAL, kAudioSessionProperty_CurrentHardwareIOBufferDuration, kAudioUnitScope_Global, 0, &bufferDuration, &propsize);
-        
-        bufferSizeFrames = bufferDuration * m_deviceFormat.mSampleRate;
-        if (err)
-            return -1;
+        bufferSizeFrames = 512*2;
 #endif
  
 	     

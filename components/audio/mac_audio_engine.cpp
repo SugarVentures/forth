@@ -161,7 +161,9 @@ namespace oppvs {
 
 	int MacAudioEngine::init()
 	{
-		
+#ifdef FORTH_IOS
+		::prepareAudioSession();
+#endif		
 		return 0;
 	}
 
