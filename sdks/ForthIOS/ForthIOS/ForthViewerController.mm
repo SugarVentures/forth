@@ -8,6 +8,7 @@
 
 #import "ForthViewerController.h"
 #include "streaming_engine.hpp"
+#include "ios_audio_play.hpp"
 
 using namespace oppvs;
 
@@ -15,6 +16,7 @@ using namespace oppvs;
 {
     StreamingEngine mStreamingEngine;
     AudioRingBuffer mAudioRingBuffer;
+    IosAudioPlay*   mAudioPlay;
 }
 @end
 
@@ -22,7 +24,16 @@ using namespace oppvs;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    mAudioPlay = new IosAudioPlay(0, 48000, 2);
+    mAudioPlay->attachBuffer(&mAudioRingBuffer);
+    
+    if (mAudioPlay->init() < 0)
+    {
+        NSLog(@"Cannot init audio player");
+        delete mAudioPlay;
+        mAudioPlay = nil;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,6 +64,15 @@ using namespace oppvs;
     }
 }
 
+- (void)startAudioPlayer
+{
+    if (mAudioPlay)
+    {
+        mAudioPlay->start();
+        mAudioPlay->setFirstInputTime(0.0);
+    }
+}
+
 #pragma mark Callback functions
 void frameCallback(oppvs::PixelBuffer& pf)
 {
@@ -68,6 +88,8 @@ void frameCallback(oppvs::PixelBuffer& pf)
 
 void streamingCallback(void* user)
 {
+    ForthViewerController* view = (__bridge ForthViewerController*)user;
+    [view startAudioPlayer];
 }
 
 @end
