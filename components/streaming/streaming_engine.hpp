@@ -64,6 +64,7 @@ namespace oppvs
 
 		void setStreamInfo(const std::vector<VideoActiveSource>& videoSources, const std::vector<AudioActiveSource>& audioSources);
         void setStreamInfo(const std::vector<VideoActiveSource>& videoSources);
+        void setStreamInfo(const std::vector<AudioActiveSource>& audioSources);
 
 		bool isRunning();
 		void setIsRunning(bool value);
@@ -120,6 +121,10 @@ namespace oppvs
 
 		std::chrono::time_point<std::chrono::system_clock> m_firstTime;
 		StreamingRole getRole();
+
+		void setCommonInfo();
+		void setVideoInfo(const std::vector<VideoActiveSource>& videoSources);
+		void setAudioInfo(const std::vector<AudioActiveSource>& audioSources);
 	};
 
 }

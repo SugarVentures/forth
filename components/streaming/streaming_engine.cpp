@@ -22,6 +22,11 @@ namespace oppvs
 			delete [] m_serviceInfo.videoStreamInfo.sources;			
 		}
 
+		if (m_serviceInfo.audioStreamInfo.noSources > 0)
+		{			
+			delete [] m_serviceInfo.audioStreamInfo.sources;			
+		}
+
 		//Close and release sending threads
 		for (int i = 0; i < m_sendingThreads.size(); i++)
 		{
@@ -136,12 +141,16 @@ namespace oppvs
 		m_streamingCallback = cb;
 		m_streamingUser = user;
 	}
-    
-    void StreamingEngine::setStreamInfo(const std::vector<VideoActiveSource>& videoSources)
-    {
-        m_serviceInfo.type = ST_VIDEO_STREAMING;
+
+	void StreamingEngine::setCommonInfo()
+	{
+		m_serviceInfo.type = ST_VIDEO_STREAMING;
         m_serviceInfo.key = m_ssrc;
-        VideoStreamInfo* vsi = &m_serviceInfo.videoStreamInfo;
+	}
+
+	void StreamingEngine::setVideoInfo(const std::vector<VideoActiveSource>& videoSources)
+	{
+		VideoStreamInfo* vsi = &m_serviceInfo.videoStreamInfo;
         if (videoSources.size() > 0)
         {
             vsi->noSources = videoSources.size();
@@ -159,30 +168,10 @@ namespace oppvs
                 i++;
             }
         }
-    }
+	}
 
-	void StreamingEngine::setStreamInfo(const std::vector<VideoActiveSource>& videoSources, const std::vector<AudioActiveSource>& audioSources)
+	void StreamingEngine::setAudioInfo(const std::vector<AudioActiveSource>& audioSources)
 	{
-		m_serviceInfo.type = ST_VIDEO_STREAMING;
-		m_serviceInfo.key = m_ssrc;
-		VideoStreamInfo* vsi = &m_serviceInfo.videoStreamInfo;
-		if (videoSources.size() > 0)
-		{
-			vsi->noSources = videoSources.size();
-			vsi->sources = new VideoSourceInfo[vsi->noSources];		
-
-			std::vector<VideoActiveSource>::const_iterator it;
-			int i = 0;
-			for (it = videoSources.begin(); it != videoSources.end(); ++it)
-			{
-				vsi->sources[i].source = it->id;
-				vsi->sources[i].order = it->order;
-				vsi->sources[i].width = it->rect.right - it->rect.left;
-				vsi->sources[i].height = it->rect.top - it->rect.bottom;
-				vsi->sources[i].stride = it->stride;
-				i++;
-			}
-		}
 		AudioStreamInfo* asi = &m_serviceInfo.audioStreamInfo;
 		if (audioSources.size() > 0)
 		{
@@ -201,6 +190,25 @@ namespace oppvs
 				i++;
 			}
 		}
+	}
+    
+    void StreamingEngine::setStreamInfo(const std::vector<VideoActiveSource>& videoSources)
+    {
+        setCommonInfo();
+        setVideoInfo(videoSources);        
+    }
+
+    void StreamingEngine::setStreamInfo(const std::vector<AudioActiveSource>& audioSources)
+    {
+    	setCommonInfo();
+    	setAudioInfo(audioSources);
+    }
+
+	void StreamingEngine::setStreamInfo(const std::vector<VideoActiveSource>& videoSources, const std::vector<AudioActiveSource>& audioSources)
+	{
+		setCommonInfo();
+		setVideoInfo(videoSources);
+		setAudioInfo(audioSources);
 	}
 
 	void StreamingEngine::printServiceInfo()
@@ -250,7 +258,7 @@ namespace oppvs
 	void* StreamingEngine::runMainThreadFunction(void* object)
 	{
 		StreamingEngine* engine = (StreamingEngine*)object;
-		if (engine->getRole() == ROLE_BROADCASTER)
+		//if (engine->getRole() == ROLE_BROADCASTER)
 			engine->send();
 		//else
 		//	engine->receive();
@@ -321,7 +329,7 @@ namespace oppvs
 
 		m_streamingCallback(m_streamingUser);
 
-		//m_signaler.sendPeerRegister();
+		m_signaler.sendPeerRegister();
 		return 0;
 	}
 
