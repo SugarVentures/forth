@@ -37,6 +37,8 @@
 }
 
 - (IBAction)playStreaming:(id)sender {
-    [self startStreaming:self.streamKey.text atServer:@"192.168.1.9"];
+    //NSString* serverAddress = @"52.76.92.162";
+    NSString* serverAddress = @"192.168.1.9";
+    [self startStreaming:self.streamKey.text atServer:serverAddress];
 }
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D923F9E21C71DD8400211A92 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D923F9E11C71DD8400211A92 /* AudioToolbox.framework */; };
 		D92536331C59CC0500911E24 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D92536321C59CC0500911E24 /* main.m */; };
 		D92536361C59CC0500911E24 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D92536351C59CC0500911E24 /* AppDelegate.m */; };
 		D92536391C59CC0500911E24 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D92536381C59CC0500911E24 /* ViewController.mm */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D923F9E11C71DD8400211A92 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D925362E1C59CC0500911E24 /* ForthViewerIosDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ForthViewerIosDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92536321C59CC0500911E24 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D92536341C59CC0500911E24 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -35,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D923F9E21C71DD8400211A92 /* AudioToolbox.framework in Frameworks */,
 				D92536491C59D21E00911E24 /* Forth-iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -45,6 +48,7 @@
 		D92536251C59CC0500911E24 = {
 			isa = PBXGroup;
 			children = (
+				D923F9E11C71DD8400211A92 /* AudioToolbox.framework */,
 				D92536481C59D21E00911E24 /* Forth-iOS.framework */,
 				D92536301C59CC0500911E24 /* ForthViewerIosDemo */,
 				D925362F1C59CC0500911E24 /* Products */,
@@ -313,6 +317,7 @@
 				D92536471C59CC0500911E24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

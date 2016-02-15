@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D923F9D61C71BA1700211A92 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D923F9D51C71BA1700211A92 /* AudioToolbox.framework */; };
 		D92535AF1C58A67300911E24 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D92535AE1C58A67300911E24 /* main.m */; };
 		D92535B21C58A67300911E24 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D92535B11C58A67300911E24 /* AppDelegate.m */; };
 		D92535B51C58A67300911E24 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D92535B41C58A67300911E24 /* ViewController.mm */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D923F9D51C71BA1700211A92 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D92535AA1C58A67300911E24 /* ForthBroadcasterIosDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ForthBroadcasterIosDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92535AE1C58A67300911E24 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D92535B01C58A67300911E24 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -31,7 +33,6 @@
 		D92535BE1C58A67300911E24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D92535CA1C58ABF300911E24 /* Forth-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Forth-iOS.framework"; path = "../../../../../../Library/Developer/Xcode/DerivedData/ForthIOS-cfjhwdtapoqsvjcegmtfsqfprxad/Build/Products/Release-iphoneuniversal/Forth-iOS.framework"; sourceTree = "<group>"; };
 		D92535E71C58CC1A00911E24 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		D92535E91C58CC2C00911E24 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		D92535EB1C58CC4400911E24 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -40,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D923F9D61C71BA1700211A92 /* AudioToolbox.framework in Frameworks */,
 				D92535EC1C58CC4400911E24 /* CoreMedia.framework in Frameworks */,
 				D92535E81C58CC1A00911E24 /* AVFoundation.framework in Frameworks */,
 				D92535CB1C58ABF300911E24 /* Forth-iOS.framework in Frameworks */,
@@ -52,8 +54,8 @@
 		D92535A11C58A67300911E24 = {
 			isa = PBXGroup;
 			children = (
+				D923F9D51C71BA1700211A92 /* AudioToolbox.framework */,
 				D92535EB1C58CC4400911E24 /* CoreMedia.framework */,
-				D92535E91C58CC2C00911E24 /* CoreFoundation.framework */,
 				D92535E71C58CC1A00911E24 /* AVFoundation.framework */,
 				D92535CA1C58ABF300911E24 /* Forth-iOS.framework */,
 				D92535AC1C58A67300911E24 /* ForthBroadcasterIosDemo */,
@@ -325,6 +327,7 @@
 				D92535C31C58A67300911E24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

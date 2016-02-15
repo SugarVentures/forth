@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ForthViewController.h"
+#import "ForthBroadcasterController.h"
 
-@interface ViewController : ForthViewController
+@interface ViewController : ForthBroadcasterController
 @property (strong, nonatomic) IBOutlet UIView *previewView;
 
 @property (strong, nonatomic) IBOutlet UIButton *streamButton;

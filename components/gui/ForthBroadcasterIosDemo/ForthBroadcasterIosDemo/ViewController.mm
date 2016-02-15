@@ -38,6 +38,9 @@ BOOL mIsRunning;
 }
 
 - (IBAction)startStreaming:(id)sender {
-    [self startStreaming:@"7116f0d7-5c27-44e6-8aa4-bc4ddeea9935" atServer:@"192.168.1.9"];
+    //NSString* serverAddress = @"52.76.92.162";
+    NSString* serverAddress = @"192.168.1.9";
+    [self startStreaming:@"7116f0d7-5c27-44e6-8aa4-bc4ddeea9935" atServer:serverAddress];
+    self.streamButton.enabled = NO;
 }
 @end
