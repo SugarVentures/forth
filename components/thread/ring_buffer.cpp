@@ -1,5 +1,4 @@
 #include "ring_buffer.h"
-#include "CAAtomic.h"
 #include <algorithm>
 
 namespace oppvs {
@@ -90,7 +89,7 @@ namespace oppvs {
 	{
 		if (inLen == 0)
 			return RingBufferError_OK;
-		if (data == NULL & inLen > 0)
+		if ((data == NULL) && (inLen > 0))
 		{
 			return RingBufferError_InvalidArgument;
 		}
