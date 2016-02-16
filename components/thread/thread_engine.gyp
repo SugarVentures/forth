@@ -46,10 +46,19 @@
                             '../include',
                         ],
                     },
-
+                    'cflags': [
+                        '-std=c++11'
+                    ],
                     'sources': [
                         'thread.hpp',
                         'thread.cpp',
+                        'tsqueue.hpp',
+                        'ring_buffer.h',
+                        'ring_buffercpp',
+                        'audio_ring_buffer.h',
+                        'audio_ring_buffer.cpp',
+                        'event_handler.hpp',
+                        'event_handler.cpp'
                     ]
                 }],
                 ['OS == "ios"', {
