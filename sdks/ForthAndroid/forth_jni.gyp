@@ -19,10 +19,12 @@
         
         'dependencies':[
             '<(DEPTH)/thread/thread_engine.gyp:*',
+            '<(DEPTH)/misc/misc.gyp:*',
+            '<(DEPTH)/network/network_engine.gyp:*'
         ],
         
         'sources':[
-            './jni/threadengine-jni.cpp',
+            './jni/forth-jni.cpp',
         ],
         
         

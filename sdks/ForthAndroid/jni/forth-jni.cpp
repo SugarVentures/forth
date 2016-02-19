@@ -1,18 +1,20 @@
-#include <jni.h>
+#include "forth.h"
 
+#include "logs.h"
+#include "ice_manager.hpp"
 
-#include "thread.hpp"
-
-#define LIB_PUBLIC __attribute__ ((visibility ("default"))) 
-
-using namespace oppvs;
-
-extern "C" LIB_PUBLIC jstring Java_com_example_caominhtrang_myapplication_ThreadEngine_getString(JNIEnv* env, jobject thiz)
+namespace oppvs
 {
-	Thread* thread;
-	thread = new Thread(Thread::defaultRun, NULL);
-	thread->create();
-	delete thread;
+	void test()
+	{
+		std::string address("192.168.1.9");
+		IceServerInfo stunServer(address, DEFAULT_STUN_PORT, "", "");
+		IceServerInfo turnServer(address, DEFAULT_STUN_PORT, "turn", "password");
 
-	return env->NewStringUTF("Hello");
-}
+		oppvs::IceManager* icemgr = new oppvs::IceManager();
+		int ret = icemgr->init(stunServer, turnServer, 0);
+		LOGD("Ret: %d\n", ret);
+ 
+	}
+} //oppvs
+
