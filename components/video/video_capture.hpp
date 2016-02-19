@@ -3,6 +3,7 @@
 
 #include "datatypes.hpp"
 #include <vector>
+#include <string>
 
 namespace oppvs {
 	typedef struct WindowRect {

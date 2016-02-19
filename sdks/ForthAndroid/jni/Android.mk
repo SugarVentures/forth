@@ -19,6 +19,18 @@ define all-cpp-files-inNetwork
 $(call all-cpp-files-indir,../../../components/network)
 endef
 
+define all-cpp-files-inYUV
+$(call all-cpp-files-indir,../../../libs/libyuv/source)
+endef
+
+define all-cpp-files-inEncoding
+$(call all-cpp-files-indir,../../../components/encoding)
+endef
+
+define all-cpp-files-inStreaming
+$(call all-cpp-files-indir,../../../components/streaming)
+endef
+
 
 include common.mk
 
@@ -29,10 +41,13 @@ LOCAL_SRC_FILES	:= forth-jni.cpp
 LOCAL_SRC_FILES += $(call all-cpp-files-inThread)
 LOCAL_SRC_FILES += $(call all-cpp-files-inMisc)
 LOCAL_SRC_FILES += $(call all-cpp-files-inNetwork)
+LOCAL_SRC_FILES += $(call all-cpp-files-inYUV)
+LOCAL_SRC_FILES += $(call all-cpp-files-inEncoding)
+LOCAL_SRC_FILES += $(call all-cpp-files-inStreaming)
 
 TARGET_PLATFORM := android-16
 
-#LOCAL_LDLIBS	+= -std=gnu++11 -llog -pthread
+LOCAL_LDLIBS	+= -std=gnu++11 -llog -pthread
 
 LOCAL_CFLAGS	+= -Wall
 
@@ -40,6 +55,12 @@ LOCAL_C_INCLUDES += ../../../components/include
 LOCAL_C_INCLUDES += ../../../components/thread
 LOCAL_C_INCLUDES += ../../../components/misc
 LOCAL_C_INCLUDES += ../../../components/network
+LOCAL_C_INCLUDES += ../../../components/encoding
+LOCAL_C_INCLUDES += ../../../components/error
+LOCAL_C_INCLUDES += ../../../libs/libyuv/include
+LOCAL_C_INCLUDES += ../../../components/streaming
+LOCAL_C_INCLUDES += ../../../components/video
+LOCAL_C_INCLUDES += ../../../components/audio
 LOCAL_C_INCLUDES += /Users/caominhtrang/cerbero/dist/android_armv7/include
 LOCAL_C_INCLUDES += /Users/caominhtrang/cerbero/dist/android_armv7/include/glib-2.0
 LOCAL_C_INCLUDES += /Users/caominhtrang/cerbero/dist/android_armv7/lib/glib-2.0/include
