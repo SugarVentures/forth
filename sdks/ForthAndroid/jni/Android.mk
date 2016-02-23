@@ -3,7 +3,7 @@ LOCAL_PATH := $(call my-dir)
 define all-cpp-files-indir
 $(patsubst ./%,%, \
 	$(shell cd $(LOCAL_PATH) ; \
-		find $(1) -name "*.cpp" -o -name "*.c" -and -not -name ".*") \
+		find $(1) -name "*.cpp" -o -name "*.c" -o -name "*.cc" -and -not -name ".*") \
 )
 endef
 
@@ -47,7 +47,7 @@ LOCAL_SRC_FILES += $(call all-cpp-files-inStreaming)
 
 TARGET_PLATFORM := android-16
 
-LOCAL_LDLIBS	+= -std=gnu++11 -llog -pthread
+#LOCAL_LDLIBS	+= -std=gnu++11 -llog -pthread
 
 LOCAL_CFLAGS	+= -Wall
 
@@ -65,6 +65,6 @@ LOCAL_C_INCLUDES += /Users/caominhtrang/cerbero/dist/android_armv7/include
 LOCAL_C_INCLUDES += /Users/caominhtrang/cerbero/dist/android_armv7/include/glib-2.0
 LOCAL_C_INCLUDES += /Users/caominhtrang/cerbero/dist/android_armv7/lib/glib-2.0/include
 
-LOCAL_STATIC_LIBRARIES := iconv glib-2.0 ffi intl gio-2.0 gobject-2.0 gmodule-2.0 gthread-2.0 z nice srtp crypto
+LOCAL_STATIC_LIBRARIES := iconv glib-2.0 ffi intl gio-2.0 gobject-2.0 gmodule-2.0 gthread-2.0 z nice srtp crypto vpx opus
 
 include $(BUILD_STATIC_LIBRARY)

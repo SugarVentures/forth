@@ -1,6 +1,7 @@
 #include "signaling_manager.hpp"
 #include <errno.h>
 #include <iostream>
+#include "logs.h"
 
 namespace oppvs {
 	SignalingManager::SignalingManager(const SocketAddress& address): m_serverAddress(address), m_interrupt(false)
@@ -18,6 +19,7 @@ namespace oppvs {
 		if (m_socket.Create(AF_INET, SOCK_STREAM, 0) < 0)
 		{
 			std::cout << "Open socket error "  << strerror(errno) << std::endl;
+			LOGD("Open socket error\n");
 			return -1;
 		}
 		SocketAddress localAddress;
@@ -34,7 +36,7 @@ namespace oppvs {
 		}
 		std::cout << "Address for signaling: " << m_socket.getLocalAddress().toString() << std::endl;
 		//m_socket.setReceiveTimeOut(OPPVS_NETWORK_MAX_WAIT_TIME);
-
+		LOGD("Address for signaling: %s\n", m_socket.getLocalAddress().toString().c_str());
 		//Init buffer for response
 		m_incomingBuffer = SharedDynamicBufferRef(new DynamicBuffer());
 		m_incomingBuffer->setSize(MAX_SIGNALING_MESSAGE_SIZE);
