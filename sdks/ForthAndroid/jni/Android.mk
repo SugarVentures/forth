@@ -37,7 +37,7 @@ include common.mk
 
 include $(CLEAR_VARS)
 LOCAL_MODULE	:= forthsdk
-LOCAL_SRC_FILES	:= forth-jni.cpp
+LOCAL_SRC_FILES	:= forth_viewer.cpp forth_renderer.cpp
 LOCAL_SRC_FILES += $(call all-cpp-files-inThread)
 LOCAL_SRC_FILES += $(call all-cpp-files-inMisc)
 LOCAL_SRC_FILES += $(call all-cpp-files-inNetwork)
