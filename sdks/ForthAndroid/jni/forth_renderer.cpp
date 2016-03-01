@@ -69,7 +69,7 @@ namespace oppvs {
 	    0, 2, 3
 	};
 
-	GLuint loadShader(GLenum shaderType, const char* pSource) {
+	GLuint ForthRenderer::loadShader(GLenum shaderType, const char* pSource) {
 	    GLuint shader = glCreateShader(shaderType);
 	    if (shader) {
 	        glShaderSource(shader, 1, &pSource, NULL);
@@ -95,7 +95,7 @@ namespace oppvs {
 	    return shader;
 	}
 
-	GLuint createProgram(const char* pVertexSource, const char* pFragmentSource) {
+	GLuint ForthRenderer::createProgram(const char* pVertexSource, const char* pFragmentSource) {
 	    GLuint vertexShader = loadShader(GL_VERTEX_SHADER, pVertexSource);
 	    if (!vertexShader) {
 	        return 0;
@@ -228,8 +228,12 @@ namespace oppvs {
 
 	void ForthRenderer::render()
 	{
-		glViewport(0, 0, m_viewWidth, m_viewHeight);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glUseProgram(m_gProgram);
+		checkGlError("glUseProgram");
 		
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_texName);
 		glTexImage2D(GL_TEXTURE_2D,
 		             0,
@@ -241,13 +245,7 @@ namespace oppvs {
 		             GL_UNSIGNED_BYTE,
 		             m_data);
 
-		checkGlError("glTexImage2D");
-
-		glUseProgram(m_gProgram);
-		checkGlError("glUseProgram");
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_texName);		
+		checkGlError("glTexImage2D");	
 
 		glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 		checkGlError("glVertexAttribPointer");

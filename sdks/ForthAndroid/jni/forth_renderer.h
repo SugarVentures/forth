@@ -41,6 +41,8 @@ namespace oppvs {
 	    void buildTexture();
 	    void loadVBO();
 
+	    GLuint loadShader(GLenum shaderType, const char* pSource);
+	    GLuint createProgram(const char* pVertexSource, const char* pFragmentSource);
 	};
 	
 } // oppvs
