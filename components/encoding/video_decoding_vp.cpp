@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "utility.h"
+#include "logs.h"
 
 namespace oppvs
 {
@@ -25,12 +26,12 @@ namespace oppvs
 			m_controllers[i].source = info.sources[i].source;
 			if (vpx_codec_dec_init(&m_controllers[i].codec, codec_interface(), NULL, 0))
 			{
- 				printf("Init failed\n");
+ 				LOGD("Init failed\n");
  				m_controllers[i].state = false;
  			}
  			else
  			{
- 				printf("Init codec successfully\n");
+ 				LOGD("Init codec successfully\n");
  				m_controllers[i].state = true;
  			}
 		}
@@ -59,8 +60,6 @@ namespace oppvs
 			return -1;
 		}
 
-		//printHashCode(frame, length);
-
 		if (vpx_codec_decode(codec, frame, (unsigned int)length, NULL, 0) != VPX_CODEC_OK)
 		{
     		printf("Failed to decode frame.\n");
@@ -70,9 +69,9 @@ namespace oppvs
 	    	int corrupted = 0;
 	    	vpx_codec_control(codec, VP8D_GET_FRAME_CORRUPTED, &corrupted);
 			if (corrupted) {
-				//printf("corrupted\n");
+				LOGD("corrupted\n");
 				error = 0;
-				vpx_codec_control(codec, VP8D_GET_LAST_REF_USED, &corrupted);
+				//vpx_codec_control(codec, VP8D_GET_LAST_REF_USED, &corrupted);
 				//printf("ref use: %d\n", corrupted);
 				//return error;
 			}
@@ -92,11 +91,21 @@ namespace oppvs
 	{
 
 		pf.plane[0] = new uint8[pf.stride[0]*pf.height[0]];
-		int result = libyuv::I420ToARGB(img->planes[0], img->stride[0],
+		int result = 0;
+		
+#ifndef ANDROID
+		result = libyuv::I420ToARGB(img->planes[0], img->stride[0],
 	               img->planes[1], img->stride[1],
 	               img->planes[2], img->stride[2],
 	               pf.plane[0], pf.stride[0],
 	               pf.width[0], pf.height[0]);
+#else
+		result = libyuv::I420ToABGR(img->planes[0], img->stride[0],
+	               img->planes[1], img->stride[1],
+	               img->planes[2], img->stride[2],
+	               pf.plane[0], pf.stride[0],
+	               pf.width[0], pf.height[0]);
+#endif
 		pf.nbytes = pf.stride[0] * pf.height[0];
 		return result;
 	}
