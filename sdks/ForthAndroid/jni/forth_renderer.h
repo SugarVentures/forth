@@ -6,6 +6,7 @@
 
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
+#include <EGL/egl.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,11 +16,14 @@ namespace oppvs {
 	class ForthRenderer
 	{
 	public:
+		ForthRenderer();
 		~ForthRenderer();
 		int init();
 		int setup(int w, int h);
 		void renderFrame(GLubyte* data, GLuint w, GLuint h, bool flag);
 		void render();
+
+		void setContext(EGLContext context, EGLDisplay display, EGLConfig config);
 	private:
 		GLuint m_gProgram;
 
@@ -36,7 +40,12 @@ namespace oppvs {
 	    GLuint m_frameWidth;
 	    GLuint m_frameHeight;
 
-	    uint8_t* m_data;
+	    EGLContext m_context;
+	    EGLDisplay m_display;
+	    EGLConfig m_eglConfig;
+	    EGLContext m_textureContext;
+
+	    bool m_isNeededBuildTexture;
 
 	    void buildTexture();
 	    void loadVBO();

@@ -15,6 +15,13 @@ namespace oppvs {
 	    }
 	}
 
+	static void checkEglError(const char *prompt) {
+        int error;
+        while ((error = eglGetError()) != EGL_SUCCESS) {
+            LOGD("%s: EGL error: 0x%x", prompt, error);
+        }
+    }
+
 	const char* frameVertexShader = {
 	    "uniform mat4 model_matrix;\n"
 	    "uniform vec4 pos;\n"
@@ -68,6 +75,11 @@ namespace oppvs {
 	    0, 1, 2,
 	    0, 2, 3
 	};
+
+	ForthRenderer::ForthRenderer()
+	{
+		m_isNeededBuildTexture = false;	
+	}
 
 	GLuint ForthRenderer::loadShader(GLenum shaderType, const char* pSource) {
 	    GLuint shader = glCreateShader(shaderType);
@@ -135,8 +147,6 @@ namespace oppvs {
 
 	ForthRenderer::~ForthRenderer()
 	{
-		if (m_data)
-			delete [] m_data;
 	}
 
 	void ForthRenderer::buildTexture()
@@ -153,6 +163,8 @@ namespace oppvs {
 	    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	    
 	}
 
 	void ForthRenderer::loadVBO()
@@ -193,7 +205,6 @@ namespace oppvs {
 
 	    loadVBO();
 
-	    m_data = NULL;
 		return 0;
 	}
 
@@ -205,6 +216,7 @@ namespace oppvs {
 	    LOGD("w %d h %d", w, h);
 	    m_viewWidth = w;
 	    m_viewHeight = h;
+
 		return 0;
 	}
 
@@ -213,27 +225,13 @@ namespace oppvs {
 		if (!data)
 			return;
 
-		if (!m_data)
-			m_data = new uint8_t[w*h*4];
-		
-		memcpy(m_data, data, w*h*4);
-		m_frameWidth = w;
-		m_frameHeight = h;
-
-		if (flag) {
-		    delete [] data;
+		if (m_frameWidth != w && m_frameHeight != h)
+		{
+			m_frameWidth = w;
+			m_frameHeight = h;
+			m_isNeededBuildTexture = true;
 		}
-
-	}
-
-	void ForthRenderer::render()
-	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glUseProgram(m_gProgram);
-		checkGlError("glUseProgram");
 		
-		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_texName);
 		glTexImage2D(GL_TEXTURE_2D,
 		             0,
@@ -243,9 +241,42 @@ namespace oppvs {
 		             0,
 		             GL_RGBA,
 		             GL_UNSIGNED_BYTE,
-		             m_data);
+		             data);
 
 		checkGlError("glTexImage2D");	
+
+		if (flag) {
+		    delete [] data;
+		}
+
+	}
+
+	void ForthRenderer::render()
+	{
+		glViewport(0, 0, m_viewWidth, m_viewHeight);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		if (m_isNeededBuildTexture)
+		{
+			glBindTexture(GL_TEXTURE_2D, m_texName);
+			glTexImage2D(GL_TEXTURE_2D,
+		             0,
+		             GL_RGBA,
+		             m_frameWidth,
+		             m_frameHeight,
+		             0,
+		             GL_RGBA,
+		             GL_UNSIGNED_BYTE,
+		             NULL);
+	    	checkGlError("glTexImage2D");
+	    	m_isNeededBuildTexture = false;
+		}
+
+		glUseProgram(m_gProgram);
+		checkGlError("glUseProgram");
+		
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_texName);
 
 		glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 		checkGlError("glVertexAttribPointer");
@@ -258,6 +289,30 @@ namespace oppvs {
 
 		glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(indices[0]), GL_UNSIGNED_BYTE, 0);
 		checkGlError("glDrawElements");
+		
+	}
+
+	void ForthRenderer::setContext(EGLContext context, EGLDisplay display, EGLConfig config)
+	{
+		m_context = context;
+		m_display = display;
+		m_eglConfig = config;
+		int pbufferAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2,
+                EGL_NONE };
+
+        if (eglGetCurrentContext() == EGL_NO_CONTEXT)
+        {
+			m_textureContext = eglCreateContext(m_display, m_eglConfig, m_context, pbufferAttribs);
+			checkEglError("eglCreateContext");
+			int pbufferAttribs1[] = { EGL_WIDTH, 1, EGL_HEIGHT, 1, EGL_TEXTURE_TARGET,
+                EGL_NO_TEXTURE, EGL_TEXTURE_FORMAT, EGL_NO_TEXTURE,
+                EGL_NONE };
+			EGLSurface localSurface = eglCreatePbufferSurface(m_display, m_eglConfig, pbufferAttribs1);
+			eglMakeCurrent(m_display, localSurface, localSurface, m_textureContext);
+			checkEglError("eglMakeCurrent");
+
+        }
+
 		
 	}
 } // oppvs
