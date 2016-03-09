@@ -31,19 +31,24 @@ define all-cpp-files-inStreaming
 $(call all-cpp-files-indir,../../../components/streaming)
 endef
 
+define all-cpp-files-inVideo
+$(call all-cpp-files-indir,../../../components/video/android)
+endef
+
 
 include common.mk
 
 
 include $(CLEAR_VARS)
 LOCAL_MODULE	:= forthsdk
-LOCAL_SRC_FILES	:= forth_viewer.cpp forth_renderer.cpp
+LOCAL_SRC_FILES	:= forth_viewer.cpp forth_renderer.cpp forth_broadcaster.cpp
 LOCAL_SRC_FILES += $(call all-cpp-files-inThread)
 LOCAL_SRC_FILES += $(call all-cpp-files-inMisc)
 LOCAL_SRC_FILES += $(call all-cpp-files-inNetwork)
 LOCAL_SRC_FILES += $(call all-cpp-files-inYUV)
 LOCAL_SRC_FILES += $(call all-cpp-files-inEncoding)
 LOCAL_SRC_FILES += $(call all-cpp-files-inStreaming)
+LOCAL_SRC_FILES += $(call all-cpp-files-inVideo)
 
 TARGET_PLATFORM := android-16
 
