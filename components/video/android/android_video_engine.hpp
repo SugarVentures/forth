@@ -11,8 +11,16 @@ namespace oppvs {
 	public:
 		AndroidVideoEngine(frame_callback cb, void* user);
 
-		static void initialize(JNIEnv* env);
+		static void initialize(JNIEnv* env, jobject context);
 		static void deinitialize();
+
+		void setupCaptureSession(VideoActiveSource* source);
+		void startCaptureSession();
+		void runCaptureSession(jobject intent);
+	private:
+		jclass j_screen_recorder_class;
+		jobject j_screen_recorder;
+
 	};
 } // oppvs
 
