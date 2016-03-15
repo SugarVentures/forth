@@ -152,6 +152,10 @@ namespace oppvs {
 		    		{
 		    			return -1;
 		    		}
+		    		if (readUInt8Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_PIXEL_FORMAT, &m_serviceInfo.videoStreamInfo.sources[i].format) <  0)
+		    		{
+		    			return -1;
+		    		}
 	    			if (readUInt16Attribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH, &m_serviceInfo.videoStreamInfo.sources[i].width) < 0)
 	    			{
 	    				return -1;
@@ -164,8 +168,9 @@ namespace oppvs {
 	    			{
 	    				return -1;
 	    			}
-	    			printf("Source: %d order: %d width: %d height: %d stride: %d\n", m_serviceInfo.videoStreamInfo.sources[i].source,
+	    			printf("Source: %d order: %d format: %d width: %d height: %d stride: %d\n", m_serviceInfo.videoStreamInfo.sources[i].source,
 	    				m_serviceInfo.videoStreamInfo.sources[i].order,
+	    				m_serviceInfo.videoStreamInfo.sources[i].format,
 	    				m_serviceInfo.videoStreamInfo.sources[i].width,
 	    				m_serviceInfo.videoStreamInfo.sources[i].height,
 	    				m_serviceInfo.videoStreamInfo.sources[i].stride);

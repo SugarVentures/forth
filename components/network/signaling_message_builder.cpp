@@ -174,7 +174,7 @@ namespace oppvs {
 	{
 		uint8_t noSources = info.noSources;
 		uint16_t width, height, stride;
-		uint8_t sid, order;
+		uint8_t sid, order, format;
 		if (noSources == 0)
 			return -1;
 
@@ -194,9 +194,12 @@ namespace oppvs {
 			width = htons(info.sources[i].width);
 			height = htons(info.sources[i].height);
 			stride = htons(info.sources[i].stride);
+			format = info.sources[i].format;
 			if ((ret = addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ID, &sid, 1)) < 0)
 				break;
 			if ((ret = addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_ORDER, &order, 1)) < 0)
+				break;
+			if ((ret = addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_PIXEL_FORMAT, &format, 1)) < 0)
 				break;
 			if ((ret = addAttribute(SIGNALING_ATTRIBUTE_SOURCE_VIDEO_WIDTH, &width, 2)) < 0)
 				break;

@@ -18,23 +18,21 @@ namespace oppvs {
 	{
 		if (m_socket.Create(AF_INET, SOCK_STREAM, 0) < 0)
 		{
-			std::cout << "Open socket error "  << strerror(errno) << std::endl;
-			LOGD("Open socket error\n");
+			LOGD("Open socket error %s\n", strerror(errno));
 			return -1;
 		}
 		SocketAddress localAddress;
 		if (m_socket.Bind(localAddress) < 0)
 		{
-			std::cout << "Binding error " << strerror(errno) << std::endl;
+			LOGD("Binding error %s\n", strerror(errno));
 			return -1;
 		}
 
 		if (m_socket.Connect(m_serverAddress) < 0)
 		{
-			std::cout << "Cannot connect to signaling server:" << strerror(errno) << std::endl;
+			LOGD("Cannot connect to signaling server: %s\n", strerror(errno));
 			return -1;
 		}
-		std::cout << "Address for signaling: " << m_socket.getLocalAddress().toString() << std::endl;
 		//m_socket.setReceiveTimeOut(OPPVS_NETWORK_MAX_WAIT_TIME);
 		LOGD("Address for signaling: %s\n", m_socket.getLocalAddress().toString().c_str());
 		//Init buffer for response
@@ -140,18 +138,18 @@ namespace oppvs {
 		SharedDynamicBufferRef buffer;
 		if (m_messageBuilder.getResult(buffer) < 0)
 		{
-			std::cout << "Can not build the message to send" << std::endl;
+			LOGD("Can not build the message to send\n");
 			return -1;
 		}
 
 		if (m_socket.Send(m_socket.getSocketHandle(), buffer->data(), buffer->size(), m_serverAddress) < 0)
 		{
-			std::cout << "Send error " << strerror(errno);
+			LOGD("Send error %s",strerror(errno));
 			return -1;
 		}
 		else
 		{
-			std::cout << "sent done " << buffer->size() << " bytes" << std::endl;
+			LOGD("sent done %ld bytes \n", buffer->size());
 		}
 		return 0;
 	}
@@ -169,15 +167,14 @@ namespace oppvs {
 			if (ret > 0)
 			{
 				m_incomingBuffer->setSize(ret);
-				std::cout << "Receive " <<  ret << " bytes " << m_socket.getLocalAddress().toString() << " - " 
-				<< m_socket.getRemoteAddress().toString() << std::endl;
+				LOGD("Receive %d bytes at %s from %s\n", ret, m_socket.getLocalAddress().toString().c_str(), m_socket.getRemoteAddress().toString().c_str());
 				processResponse();
 			}
 			else
 			{
 				if (ret == 0)
 					break;
-				std::cout << "Receive error " << strerror(errno) << std::endl;
+				LOGD("Receive error %s\n", strerror(errno));
 			}
 		}
 	}
@@ -204,18 +201,18 @@ namespace oppvs {
 		switch (m_messageReader.getMessageType())
 		{
 			case SignalingIceRequest:
-				std::cout << "Receive Ice Request" << std::endl;
+				LOGD("Receive Ice Request\n");
 				m_interrupt = true;
 				break;
 			case SignalingIceResponse:
 			{
-				std::cout << "Receive Ice Response" << std::endl;
+				LOGD("Receive Ice Response\n");
 				std::vector<IceCandidate>& candidates = m_messageReader.getIceCandidates();
 				cbOnReceiveIceResponse(m_object, m_messageReader.getUsername(), m_messageReader.getPassword(), candidates);
 				break;
 			}
 			case SignalingStreamResponse:
-				std::cout << "Receive stream response" << std::endl;
+				LOGD("Receive stream response\n");
 				m_cbStreamResponse(m_messageReader.getServiceInfo());
 				break;
 			default:

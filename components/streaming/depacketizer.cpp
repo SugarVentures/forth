@@ -62,7 +62,7 @@ namespace oppvs {
 		memcpy(&sourceid, data + 4, 1);
 		memcpy(&type, data + 5, 2);
 		type = ntohs(type);
-		//printf("timestamp %u len: %u source: %d type: %d\n", timestamp, len, sourceid, type);
+		//LOGD("timestamp %u len: %u source: %d type: %d\n", timestamp, len, sourceid, type);
 		
 		IncomingStreamingMessageController* controller = getController(sourceid);
 		if (controller == nullptr)
@@ -109,16 +109,15 @@ namespace oppvs {
 			}
 			
 			thread->pushFrame(frame);
-			
 		}
 
 		//Push to send pool
-		/*if (p_segmentPool)
+		if (p_segmentPool)
 		{
 			SharedDynamicBufferRef segment = SharedDynamicBufferRef(new DynamicBuffer());
 			segment->setData(data, len);
 			p_segmentPool->push(segment);
-		}*/
+		}
 	}
 
 	int Depacketizer::pullFrame(PixelBuffer& pf, SharedDynamicBufferRef frame)
@@ -150,10 +149,13 @@ namespace oppvs {
 	{
 		if (frame.get() == NULL)
 			return;
+        
+        //printf("Timestamp: %u\n", frame->timestamp);
+        //printHash((char*)frame->data->data(), frame->data->size());
 
 		switch (frame->type)
 		{
-			case VP8_PAYLOAD_TYPE:					
+			case VP8_PAYLOAD_TYPE:
 				for (int i = 0; i < p_serviceInfo->videoStreamInfo.noSources; i++)
 				{
 					if (p_serviceInfo->videoStreamInfo.sources[i].source == frame->sourceid)
@@ -164,10 +166,11 @@ namespace oppvs {
 						pf.stride[0] = p_serviceInfo->videoStreamInfo.sources[i].stride;
 						pf.order = p_serviceInfo->videoStreamInfo.sources[i].order;
 						pf.source = p_serviceInfo->videoStreamInfo.sources[i].source;
+						pf.format = (PixelFormat)p_serviceInfo->videoStreamInfo.sources[i].format;
 						
 						if (pullFrame(pf, frame->data) < 0)
 						{
-							printf("Invalid video frame\n");
+							LOGD("Invalid video frame\n");
 						}
 						else
 						{
@@ -223,6 +226,7 @@ namespace oppvs {
 	void DepacketizerThread::pushFrame(SharedIncomingStreamingFrame frame)
 	{
 		frame->delay = frame->timestamp - m_lastPTS;
+        //printf("Push frame %d\n", frame->timestamp);
 		m_queue.push(frame);
 		m_lastPTS = frame->timestamp;
 	}

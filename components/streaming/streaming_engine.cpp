@@ -1,8 +1,5 @@
 #include "streaming_engine.hpp"
 
-//Fix for crash memory in vasprintf in glib
-#define NDEBUG
-
 namespace oppvs
 {
 	
@@ -162,6 +159,7 @@ namespace oppvs
             {
                 vsi->sources[i].source = it->id;
                 vsi->sources[i].order = it->order;
+                vsi->sources[i].format = it->pixel_format;
                 vsi->sources[i].width = it->rect.right - it->rect.left;
                 vsi->sources[i].height = it->rect.top - it->rect.bottom;
                 vsi->sources[i].stride = it->stride;
@@ -213,17 +211,18 @@ namespace oppvs
 
 	void StreamingEngine::printServiceInfo()
 	{
-		printf("Stream Info: Number of capture sources: %d\n", m_serviceInfo.videoStreamInfo.noSources);
+		LOGD("Stream Info: Number of capture video sources: %d\n", m_serviceInfo.videoStreamInfo.noSources);
 		for (int i = 0; i < m_serviceInfo.videoStreamInfo.noSources; i++)
 		{
-			printf("Source: %d Width: %d Height: %d Stride: %d Order: %d\n", m_serviceInfo.videoStreamInfo.sources[i].source, 
+			LOGD("Source: %d Width: %d Height: %d Stride: %d Order: %d Format: %d\n", m_serviceInfo.videoStreamInfo.sources[i].source, 
 				m_serviceInfo.videoStreamInfo.sources[i].width, m_serviceInfo.videoStreamInfo.sources[i].height,
-				m_serviceInfo.videoStreamInfo.sources[i].stride, m_serviceInfo.videoStreamInfo.sources[i].order);
+				m_serviceInfo.videoStreamInfo.sources[i].stride, m_serviceInfo.videoStreamInfo.sources[i].order,
+				m_serviceInfo.videoStreamInfo.sources[i].format);
 		}
-		printf("Stream Info: Number of capture sources: %d\n", m_serviceInfo.audioStreamInfo.noSources);
+		LOGD("Stream Info: Number of capture audio sources: %d\n", m_serviceInfo.audioStreamInfo.noSources);
 		for (int i = 0; i < m_serviceInfo.audioStreamInfo.noSources; i++)
 		{
-			printf("Source %d channels: %d sample rate: %d\n", m_serviceInfo.audioStreamInfo.sources[i].source, 
+			LOGD("Source %d channels: %d sample rate: %d\n", m_serviceInfo.audioStreamInfo.sources[i].source, 
 	    				m_serviceInfo.audioStreamInfo.sources[i].numberChannels,
 	    				m_serviceInfo.audioStreamInfo.sources[i].sampleRate);	
 		}
@@ -317,12 +316,13 @@ namespace oppvs
 	{
 		if (p_audioRingBuffer == NULL)
 		{
-			printf("Can not update stream info\n");
+			LOGD("Can not update stream info\n");
 			return -1;
 		}
 
-		std::cout << "Update stream info " << std::endl;
+		LOGD("Update stream info\n");
 		m_serviceInfo = info;
+		printServiceInfo();
 		p_audioRingBuffer->allocate(8, 10 * 512);
 		m_depacketizer.init(&m_serviceInfo, p_videoFrameBuffer, p_audioRingBuffer, &m_sendPool);
 		m_depacketizer.attachCallback(m_callback, m_frameUser);

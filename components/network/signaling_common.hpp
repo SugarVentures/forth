@@ -52,6 +52,8 @@ namespace oppvs {
 	const static uint16_t SIGNALING_ATTRIBUTE_DURATION_START = 0x0013;
 	const static uint16_t SIGNALING_ATTRIBUTE_DURATION_END = 0x0014;
 
+	const static uint16_t SIGNALING_ATTRIBUTE_SOURCE_VIDEO_PIXEL_FORMAT = 0x0015;
+
 	inline SignalingMessageType convertToSignalingMessageType(uint16_t value)
 	{
 		switch (value)
