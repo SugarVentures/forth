@@ -9,6 +9,8 @@
 #import "OpenGLFrame.h"
 #import "glUtil.h"
 
+
+
 static GLuint texID[5];
 
 @interface OpenGLFrame()
@@ -27,6 +29,7 @@ static GLuint texID[5];
 @synthesize frameWidth;
 @synthesize frameHeight;
 @synthesize stride;
+GLenum pfFormat;
 
 GLuint texName;
 GLuint progName;
@@ -55,12 +58,31 @@ static GLint default_frame_buffer = 0;
         frameWidth = 0;
         frameHeight = 0;
         stride = 0;
+        pfFormat = GL_BGRA;
         [self setInitialized:TRUE];
         [self setBorderWidth:1];
         
         pboIndex = 0;
     }
     return self;
+}
+
+- (void)setPixelFormat:(pixel_format_t)format
+{
+    pfFormat = [self getColorFormat: format];
+}
+
+- (GLenum) getColorFormat: (pixel_format_t)format
+{
+    switch (format) {
+        case PF_BGRA32:
+        return GL_BGRA;
+        case PF_RGBA32:
+        return GL_RGBA;
+        default:
+        return GL_BGRA;
+        break;
+    }
 }
 
 -(CGLPixelFormatObj)copyCGLPixelFormatForDisplayMask:(uint32_t)mask
@@ -146,7 +168,7 @@ static GLint default_frame_buffer = 0;
                     0,
                     frameWidth,
                     frameHeight,
-                    GL_BGRA,
+                    pfFormat,
                     GL_UNSIGNED_INT_8_8_8_8_REV,
                     0);
 
@@ -233,7 +255,8 @@ static GLint default_frame_buffer = 0;
                  frameWidth,
                  frameHeight,
                  0,
-                 GL_BGRA,
+                 //GL_BGRA,
+                 pfFormat,
                  GL_UNSIGNED_BYTE,
                  NULL);
     glBindTexture(GL_TEXTURE_2D, 0);

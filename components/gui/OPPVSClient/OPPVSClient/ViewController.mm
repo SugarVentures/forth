@@ -90,6 +90,7 @@
         [view setFrameHeight:pf->height[0]];
         [view setStride:pf->stride[0]];
         [view setPixelBuffer:pf->plane[0]];
+        [view setPixelFormat:pf->format];
         
         dispatch_sync(dispatch_get_main_queue(), ^{
             [view setNeedsDisplay];

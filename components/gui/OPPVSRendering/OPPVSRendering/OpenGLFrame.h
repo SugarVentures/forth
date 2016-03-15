@@ -13,6 +13,7 @@
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
 
+#include "graphic.h"
 
 @interface OpenGLFrame : CAOpenGLLayer
 {
@@ -30,6 +31,8 @@
 @property (assign,getter=isInitialized) BOOL initialized;
 
 @property NSInteger order;
+
+- (void) setPixelFormat: (pixel_format_t)format;
 
 @end
 
