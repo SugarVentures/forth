@@ -54,9 +54,9 @@ namespace oppvs {
 	    source->capture = (VideoCapture*)videocap;
 	}
 
-	void MacVideoEngine::startCaptureSession(VideoActiveSource& source)
+	int MacVideoEngine::startCaptureSession(VideoActiveSource& source)
 	{
-		source.capture->start();
+		return source.capture->start();
 	}
 
 	void MacVideoEngine::startRecording() {
@@ -103,9 +103,10 @@ namespace oppvs {
 
 	}
 
-	void MacVideoCapture::start()
+	int MacVideoCapture::start()
 	{
 		oppvs_start_video_recording(m_cap);
+		return 0;
 	}
 
 	void MacVideoCapture::stop()

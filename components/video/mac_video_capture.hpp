@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../interface/video_capture.hpp"
+#include "video_engine.hpp"
 
 namespace oppvs {
 
@@ -14,7 +14,7 @@ namespace oppvs {
 			~MacVideoCapture();
 
 			void setup();
-			void start();
+			int start();
 			void stop();
 			void updateConfiguration(const VideoActiveSource& source);
 	};
@@ -34,7 +34,7 @@ namespace oppvs {
 		void setupCaptureSessions();
 
 		void setupCaptureSession(VideoActiveSource* source);
-		void startCaptureSession(VideoActiveSource& source);
+		int startCaptureSession(VideoActiveSource& source);
 
 		void startRecording();
 
