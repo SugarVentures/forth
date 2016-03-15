@@ -11,6 +11,7 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 
+#include "graphic.h"
 
 @interface GLFrameView : UIView
 {
@@ -19,7 +20,7 @@
 }
 
 - (void)setupGL;
-- (void)render: (GLubyte*)data withWidth: (GLuint)width andHeight: (GLuint)height freeWhenDone: (bool)flag;
-- (void)render: (GLubyte*)data withWidth: (GLuint)width andHeight: (GLuint)height;
+- (void)render: (GLubyte*)data withWidth: (GLuint)width andHeight: (GLuint)height withFormat: (pixel_format_t)format freeWhenDone: (bool)flag;
+- (void)render: (GLubyte*)data withWidth: (GLuint)width andHeight: (GLuint)height withFormat: (pixel_format_t)format;
 
 @end

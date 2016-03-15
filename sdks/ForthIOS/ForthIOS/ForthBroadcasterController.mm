@@ -68,7 +68,7 @@ bool isValid = false;
     controller->render = (__bridge void*)self.frameView;
     controller->streamer = &mStreamingEngine;
     
-    oppvs::VideoActiveSource* activeVideoSource = mVideoEngine->addSource(oppvs::VST_WEBCAM, source, 24, sourceRect, sourceRect, (void*)controller, 0);
+    oppvs::VideoActiveSource* activeVideoSource = mVideoEngine->addSource(oppvs::VST_WEBCAM, source, 24, sourceRect, sourceRect, (void*)controller, 0, 0);
     
     if (activeVideoSource)
     {
@@ -144,7 +144,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     {
         GLFrameView* view = (__bridge GLFrameView*)controller->render;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [view render:(GLubyte*)[FrameStorage bytes] withWidth:pf.width[0] andHeight:pf.height[0]];
+            [view render:(GLubyte*)[FrameStorage bytes] withWidth:pf.width[0] andHeight:pf.height[0] withFormat:pf.format];
         });
         
         oppvs::StreamingEngine* streamer = (oppvs::StreamingEngine*)controller->streamer;
@@ -174,5 +174,6 @@ void audioCallback(oppvs::GenericAudioBufferList& ab)
         }
     }
 }
+
 
 @end

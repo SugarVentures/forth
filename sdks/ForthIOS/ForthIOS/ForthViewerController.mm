@@ -82,7 +82,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     GLFrameView* view = (__bridge GLFrameView*)pf.user;
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [view render:data withWidth:width andHeight:height freeWhenDone:YES];
+        [view render:data withWidth:width andHeight:height withFormat: pf.format freeWhenDone:YES];
     });
 }
 

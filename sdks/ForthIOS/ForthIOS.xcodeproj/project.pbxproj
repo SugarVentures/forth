@@ -32,6 +32,7 @@
 		D9488CE81BDF88FC00646B70 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D9488CE71BDF88FC00646B70 /* Constants.m */; };
 		D96B323C1BFDB12400CE8694 /* ForthIOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CB71BDF5C1E00646B70 /* ForthIOS.h */; };
 		D96B323D1BFDB12400CE8694 /* Constants.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9488CE51BDF889100646B70 /* Constants.h */; };
+		D98A4DFC1C9808F900FA7B3D /* graphic.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D98A4DFB1C9808F900FA7B3D /* graphic.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +187,7 @@
 			dstPath = "${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal/${PRODUCT_NAME}.framework/Versions/A/Headers";
 			dstSubfolderSpec = 0;
 			files = (
+				D98A4DFC1C9808F900FA7B3D /* graphic.h in CopyFiles */,
 				D925364A1C59D2F400911E24 /* ForthViewerController.h in CopyFiles */,
 				D92535D21C58B76A00911E24 /* GLFrameView.h in CopyFiles */,
 				D96B323C1BFDB12400CE8694 /* ForthIOS.h in CopyFiles */,
@@ -216,6 +218,7 @@
 		D9488CFC1BE0AECD00646B70 /* encoding_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = encoding_engine.xcodeproj; path = ../../components/encoding/ios/encoding_engine.xcodeproj; sourceTree = "<group>"; };
 		D9488D041BE0B00100646B70 /* thread_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = thread_engine.xcodeproj; path = ../../components/thread/ios/thread_engine.xcodeproj; sourceTree = "<group>"; };
 		D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = misc.xcodeproj; path = ../../components/misc/ios/misc.xcodeproj; sourceTree = "<group>"; };
+		D98A4DFB1C9808F900FA7B3D /* graphic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphic.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +251,7 @@
 		D9488CAB1BDF5C1E00646B70 = {
 			isa = PBXGroup;
 			children = (
+				D98A4DFB1C9808F900FA7B3D /* graphic.h */,
 				D92535D31C58BBFD00911E24 /* video_engine.xcodeproj */,
 				D9091AF31BE9B27D00AE988B /* audio_engine.xcodeproj */,
 				D9488D1A1BE0BFB900646B70 /* misc.xcodeproj */,

@@ -254,13 +254,27 @@ static const GLbyte indices[] = {
     return YES;
 }
 
-- (void)render:(GLubyte *)data withWidth:(GLuint)width andHeight:(GLuint)height
+- (GLenum) getColorFormat: (pixel_format_t)format
 {
-    [self render:data withWidth:width andHeight:height freeWhenDone:false];
+    switch (format) {
+        case PF_BGRA32:
+        return GL_BGRA;
+        case PF_RGBA32:
+        return GL_RGBA;
+        default:
+        return GL_BGRA;
+        break;
+    }
+}
+
+
+- (void)render:(GLubyte *)data withWidth:(GLuint)width andHeight:(GLuint)height withFormat:(pixel_format_t)format
+{
+    [self render:data withWidth:width andHeight:height withFormat:format freeWhenDone:false];
 
 }
 
-- (void)render:(GLubyte *)data withWidth:(GLuint)width andHeight:(GLuint)height freeWhenDone:(bool)flag
+- (void)render:(GLubyte *)data withWidth:(GLuint)width andHeight:(GLuint)height withFormat:(pixel_format_t)format freeWhenDone:(bool)flag
 {
     if (data == NULL)
         return;
@@ -284,7 +298,7 @@ static const GLbyte indices[] = {
                  width,
                  height,
                  0,
-                 GL_BGRA,
+                 [self getColorFormat:format],
                  GL_UNSIGNED_BYTE,
                  data);
     
