@@ -101,13 +101,13 @@ namespace oppvs {
 						m_object->pixelBuffer.width[0] = width;
 						m_object->pixelBuffer.height[0] = height;
 						m_object->pixelBuffer.stride[0] = stride;
-						m_object->pixelBuffer.nbytes = width * stride;
+						m_object->pixelBuffer.nbytes = stride * height;
+
 					}
 				}
 				m_object->pixelBuffer.plane[0] = (uint8_t*)data;
 				if (m_object->streamingEngine.isRunning())
 				{
-					LOGD("Push data");
 					m_object->streamingEngine.pushData(m_object->pixelBuffer);
 				}
 			}

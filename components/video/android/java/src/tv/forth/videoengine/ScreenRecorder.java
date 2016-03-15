@@ -118,11 +118,12 @@ public class ScreenRecorder {
                 image = mImageReader.acquireLatestImage();
                 if (image != null) {
                     Image.Plane[] planes = image.getPlanes();
-                    ByteBuffer buffer = planes[0].getBuffer();
+                    final ByteBuffer buffer = planes[0].getBuffer();
                     int pixelStride = planes[0].getPixelStride();
                     int rowStride = planes[0].getRowStride();
                     int rowPadding = rowStride - pixelStride * mWidth;
                     Log.e(TAG, "info: " + planes.length + " " + image.getWidth() + " " + image.getHeight());
+
 
                     mBroadcasterEngine.pushVideoFrame(buffer, image.getWidth(), image.getHeight(), rowStride);
                 }
