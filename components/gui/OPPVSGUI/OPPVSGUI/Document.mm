@@ -71,8 +71,9 @@ bool isStreaming;
     
     dispatch_queue_t queue = dispatch_queue_create("oppvs.streaming.queue", DISPATCH_QUEUE_SERIAL);
     dispatch_async(queue, ^{
-        if (streamingEngine.init(oppvs::ROLE_BROADCASTER, oppvs::STUN_SERVER_ADDRESS, oppvs::TURN_SERVER_ADDRESS, oppvs::TURN_SERVER_USER, oppvs::TURN_SERVER_PASS,
-                                 oppvs::SIGN_SERVER_ADDRESS, oppvs::SIGN_SERVER_PORT) < 0)
+        //std::string strServer("52.76.92.162");
+        std::string strServer("192.168.1.9");
+        if (streamingEngine.init(oppvs::ROLE_BROADCASTER, strServer, strServer, oppvs::TURN_SERVER_USER, oppvs::TURN_SERVER_PASS, strServer, oppvs::SIGN_SERVER_PORT) < 0)
         {
             NSLog(@"Failed to init streaming engine");
             return;
@@ -107,6 +108,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     [renderingView setFrameHeight:pf.height[0]];
     [renderingView setStride:pf.stride[0]];
     [renderingView setIndexTexture:pf.source];
+    [renderingView setPixelFormat:pf.format];
 
     pf.order = (uint8_t)renderingView.order;
     dispatch_async(dispatch_get_main_queue(), ^{

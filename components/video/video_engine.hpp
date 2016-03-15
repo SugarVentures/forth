@@ -13,6 +13,8 @@
 #include "datatypes.hpp"
 #include "video_capture.hpp"
 
+#include "logs.h"
+
 namespace oppvs {
 	
 
@@ -54,7 +56,7 @@ namespace oppvs {
 		uint8_t active_source_index = 0;
 
 		VideoActiveSource* addSource(video_source_type_t type, std::string sid, uint8_t fps, window_rect_t rect, 
-			window_rect_t renderRect, void* user, int index) {
+			window_rect_t renderRect, void* user, int index, uint8_t format) {
 			if (active_sources.size() >= MAX_ACTIVE_SOURCES)
 			{
 				return NULL;
@@ -69,6 +71,7 @@ namespace oppvs {
 			src.user = user;
 			src.order = index;
 			src.id = active_source_index++;
+			src.pixel_format = format;
 			active_sources.push_back(src);
 			return &active_sources.back();
 		}
@@ -91,7 +94,7 @@ namespace oppvs {
 			std::vector<VideoActiveSource>::const_iterator it;
 			for (it = active_sources.begin(); it != active_sources.end(); ++it)
 			{
-				printf("Source id %s Type %d \n", it->video_source_id.c_str(), it->video_source_type);
+				LOGD("Source id %s Type %d \n", it->video_source_id.c_str(), it->video_source_type);
 			}
 		}
 
@@ -102,7 +105,10 @@ namespace oppvs {
         
         VideoActiveSource* getSource()
         {
-            return &active_sources[0];
+        	if (active_sources.size() > 0)
+            	return &active_sources[0];
+            else
+            	return NULL;
         }
 
 	private:

@@ -476,6 +476,7 @@
             sourceInfo->rect.top = sourceInfo->rect.bottom + pixel_buffer.height[0];
             //printf("Stride: %d\n", pixel_buffer.stride[0]);
             sourceInfo->stride = pixel_buffer.stride[0];
+            sourceInfo->pixel_format = PF_BGRA32;
         }
         is_pixel_buffer_set = 1;
     }
@@ -484,16 +485,16 @@
     CVPixelBufferLockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
 
     CGSize imageSize = CVImageBufferGetEncodedSize(imageBuffer);
-    pixel_format = oppvs::PF_BGRA32;
-    if (oppvs::PF_YUYV422 == pixel_format     /* kCVPixelFormatType_422YpCbCr8_yuvs */
-        || oppvs::PF_UYVY422 == pixel_format  /* kCVPixelFormatType_422YpCbCr8 */
-        || oppvs::PF_BGRA32 == pixel_format   /* kCVPixelFormatType_32BGRA */
+    pixel_format = PF_BGRA32;
+    if (PF_YUYV422 == pixel_format     /* kCVPixelFormatType_422YpCbCr8_yuvs */
+        || PF_UYVY422 == pixel_format  /* kCVPixelFormatType_422YpCbCr8 */
+        || PF_BGRA32 == pixel_format   /* kCVPixelFormatType_32BGRA */
     )
     {
         pixel_buffer.plane[0] = (uint8_t*)CVPixelBufferGetBaseAddress(imageBuffer);
     }
-    else if (oppvs::PF_YUVJ420BP == pixel_format     /* kCVPixelFormatType_420YpCbCr8BiPlanarFullRange */
-             || oppvs::PF_YUV420BP == pixel_format) /* kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange */
+    else if (PF_YUVJ420BP == pixel_format     /* kCVPixelFormatType_420YpCbCr8BiPlanarFullRange */
+             || PF_YUV420BP == pixel_format) /* kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange */
     {
         pixel_buffer.plane[0] = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0);
         pixel_buffer.plane[1] = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 1);
@@ -502,7 +503,7 @@
         printf("Error: unhandled or unknown pixel format: %d.\n", pixel_format);
     }
 
-    pixel_buffer.format = oppvs::PF_BGRA32;
+    pixel_buffer.format = PF_BGRA32;
 
     callback_frame(pixel_buffer);
     
@@ -591,7 +592,7 @@
         pixels = new uint8_t[len];
         is_pixel_buffer_set = 1;
         pixel_buffer.nbytes = len;
-        pixel_buffer.format = oppvs::PF_BGRA32;
+        pixel_buffer.format = PF_BGRA32;
     }
     CFDataGetBytes(imageData, CFRangeMake(0, pixel_buffer.nbytes), pixels);
     
@@ -616,7 +617,7 @@
         pixel_buffer.width[0] = IOSurfaceGetWidthOfPlane(frameSurface, 0);
         pixel_buffer.height[0] = IOSurfaceGetHeightOfPlane(frameSurface, 0);
         pixel_buffer.stride[0] = IOSurfaceGetBytesPerRow(frameSurface);
-        pixel_buffer.format = oppvs::PF_BGRA32;
+        pixel_buffer.format = PF_BGRA32;
         pixel_buffer.nbytes = pixel_buffer.stride[0]*pixel_buffer.height[0];
         pixels = new uint8_t[pixel_buffer.nbytes];
 
