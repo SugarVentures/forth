@@ -65,6 +65,7 @@ LOCAL_C_INCLUDES += ../../../components/error
 LOCAL_C_INCLUDES += ../../../libs/libyuv/include
 LOCAL_C_INCLUDES += ../../../components/streaming
 LOCAL_C_INCLUDES += ../../../components/video
+LOCAL_C_INCLUDES += ../../../components/video/android
 LOCAL_C_INCLUDES += ../../../components/audio
 LOCAL_C_INCLUDES += /Users/caominhtrang/cerbero/dist/android_armv7/include
 LOCAL_C_INCLUDES += /Users/caominhtrang/cerbero/dist/android_armv7/include/glib-2.0

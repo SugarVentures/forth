@@ -1,5 +1,6 @@
 package tv.forth.forthbroadcasterandroiddemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,11 +9,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import tv.forth.broadcaster.ForthBroadcasterWrapper;
-import tv.forth.videoengine.AndroidVideoSourceInfo;
+import tv.forth.broadcaster.StreamingAsyncTask;
+import tv.forth.videoengine.ScreenRecorder;
 
 public class MainActivity extends AppCompatActivity {
+    private ForthBroadcasterWrapper mBroadcasterEngine;
+    private static final String TAG = "ForthTV";
+    private StreamingAsyncTask mStreamingTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +36,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ForthBroadcasterWrapper.Initialize();
+        ForthBroadcasterWrapper.Initialize(this);
+        mBroadcasterEngine = new ForthBroadcasterWrapper();
+        mBroadcasterEngine.setupCaptureSession(mBroadcasterEngine);
 
-        AndroidVideoSourceInfo videoSourceInfo = new AndroidVideoSourceInfo(this);
-        videoSourceInfo.getListCaptureDevices();
+        Button btnRecord = (Button) findViewById(R.id.btnRecord);
+        btnRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBroadcasterEngine.startCaptureSession();
+            }
+        });
+
+        Button btnGoLive = (Button) findViewById(R.id.btnGoLive);
+        btnGoLive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mStreamingTask = new StreamingAsyncTask("7116f0d7-5c27-44e6-8aa4-bc4ddeea9935", "192.168.1.9", mBroadcasterEngine);
+                mStreamingTask.execute();
+
+            }
+        });
 
     }
 
@@ -59,15 +82,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static boolean androidMinimum(int verCode) {
-        if (android.os.Build.VERSION.RELEASE.startsWith("1.0"))
-            return verCode == 1;
-        else if (android.os.Build.VERSION.RELEASE.startsWith("1.1")) {
-            return verCode <= 2;
-        } else if (android.os.Build.VERSION.RELEASE.startsWith("1.5")) {
-            return verCode <= 3;
-        } else {
-            return android.os.Build.VERSION.SDK_INT >= verCode;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ScreenRecorder.REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            mBroadcasterEngine.runCaptureSession(data);
         }
     }
 }
