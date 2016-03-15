@@ -60,7 +60,7 @@ namespace oppvs {
 			if (m_object->videoEngine)
 			{
 				window_rect_t sourceRect;
-				VideoActiveSource* activeSource = m_object->videoEngine->addSource(VST_WINDOW, "0", 24, sourceRect, sourceRect, (void*)wrapperObject, 0);
+				VideoActiveSource* activeSource = m_object->videoEngine->addSource(VST_WINDOW, "0", 24, sourceRect, sourceRect, (void*)wrapperObject, 0, 0);
 				m_object->videoEngine->setupCaptureSession(activeSource);
 			}
 		}	
@@ -95,6 +95,7 @@ namespace oppvs {
 						activeSource->rect.bottom = 0;
 						activeSource->rect.top = height;
 						activeSource->stride = stride;
+						activeSource->pixel_format = PF_RGBA32;
 						m_isSetPixelBuffer = true;
 
 						//Update pixel buffer
@@ -102,6 +103,7 @@ namespace oppvs {
 						m_object->pixelBuffer.height[0] = height;
 						m_object->pixelBuffer.stride[0] = stride;
 						m_object->pixelBuffer.nbytes = stride * height;
+						m_object->pixelBuffer.format = PF_RGBA32;
 
 					}
 				}
