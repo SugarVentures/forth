@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "logs.h"
+
 namespace oppvs
 {
 	int VPVideoEncoder::init(int width, int height)
@@ -144,7 +146,6 @@ namespace oppvs
 					*length = pkt->data.frame.sz;
 					*encoded_frame = static_cast<uint8_t*>(pkt->data.frame.buf);
 					*isKey = pkt->data.frame.flags & VPX_FRAME_IS_KEY;
-					//printHashCode(*encoded_frame, *length);
 					break;
 				default:
 					break;
@@ -159,11 +160,28 @@ namespace oppvs
 		uint16_t frame_width = pf.width[0];
 		uint16_t frame_height = pf.height[0];
 
-		int result = libyuv::ARGBToI420((const uint8_t*)pf.plane[0], pf.stride[0],
+
+		int result = 0;
+		switch (pf.format)
+		{
+			case PF_BGRA32:
+				result = libyuv::ARGBToI420((const uint8_t*)pf.plane[0], pf.stride[0],
 		      img->planes[0], img->stride[0],
 		      img->planes[1], img->stride[1],
 		      img->planes[2], img->stride[2],
 		      frame_width, frame_height);
+				break;
+			case PF_RGBA32:
+				result = libyuv::ABGRToI420((const uint8_t*)pf.plane[0], pf.stride[0],
+		      img->planes[0], img->stride[0],
+		      img->planes[1], img->stride[1],
+		      img->planes[2], img->stride[2],
+		      frame_width, frame_height);
+				break;
+		    default:
+		    	result = -1;
+		    	break;
+		}
 
 		img->w = img->d_w = frame_width;
 		img->h = img->d_h = frame_height;

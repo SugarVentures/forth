@@ -94,17 +94,34 @@ namespace oppvs
 		int result = 0;
 		
 #ifndef ANDROID
+		pf.format = PF_BGRA32;
 		result = libyuv::I420ToARGB(img->planes[0], img->stride[0],
 	               img->planes[1], img->stride[1],
 	               img->planes[2], img->stride[2],
 	               pf.plane[0], pf.stride[0],
 	               pf.width[0], pf.height[0]);
 #else
-		result = libyuv::I420ToABGR(img->planes[0], img->stride[0],
+		switch (pf.format)
+		{
+			case PF_BGRA32:
+				result = libyuv::I420ToABGR(img->planes[0], img->stride[0],
 	               img->planes[1], img->stride[1],
 	               img->planes[2], img->stride[2],
 	               pf.plane[0], pf.stride[0],
 	               pf.width[0], pf.height[0]);
+				break;
+			case PF_RGBA32:
+				result = libyuv::I420ToARGB(img->planes[0], img->stride[0],
+	               img->planes[1], img->stride[1],
+	               img->planes[2], img->stride[2],
+	               pf.plane[0], pf.stride[0],
+	               pf.width[0], pf.height[0]);
+				break;
+			default:
+				result = 0;
+				break;
+		}
+		
 #endif
 		pf.nbytes = pf.stride[0] * pf.height[0];
 		return result;
