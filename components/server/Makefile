@@ -22,15 +22,16 @@ rootDir = .
 all: sig_server forwarding_server
 
 sig_server: $(SIG_OBJS)
-	$(CXX) $(INCDIR) $(LDFLAGS) -o sig_server $(SIG_OBJS) $(LIBS)
+	mkdir -p bin
+	$(CXX) $(INCDIR) $(LDFLAGS) -o bin/sig_server $(SIG_OBJS) $(LIBS)
 
 forwarding_server: $(FORWD_OBJS)
-	$(CXX) $(INCDIR) $(LDFLAGS)  $(FORWD_OBJS) $(LIBS) -o forwarding_server
+	$(CXX) $(INCDIR) $(LDFLAGS)  $(FORWD_OBJS) $(LIBS) -o bin/forwarding_server
 
 %.o: %.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -c -o $@ $<	
 
 clean:
-	$(RM) *.o
+	$(RM) bin/*
 
  
