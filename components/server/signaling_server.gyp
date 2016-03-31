@@ -22,16 +22,8 @@
                     'xcode_settings': {
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                     },
-                    'libraries': [
-                        '../../libs/libsrtp.a',
-                    ],
-
                 }],
                 ['OS == "linux"', {
-                    'libraries': [
-                    
-                        '../../../libs/libsrtp.a',
-                    ],
                 }]
             ],
             'sources': [
