@@ -23,8 +23,6 @@
                         'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11'],
                     },
                 }],
-                ['OS == "linux"', {
-                }]
             ],
             'sources': [
                 'signaling_server_main.cpp'
