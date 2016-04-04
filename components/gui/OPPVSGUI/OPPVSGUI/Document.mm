@@ -303,7 +303,7 @@ NSString* screenNameForDisplay(CGDirectDisplayID displayID)
     oppvs::ControllerLinker *controller = new oppvs::ControllerLinker();
     controller->streamer = &streamingEngine;
     controller->render = (__bridge void*)viewid;
-    activeSource = mVideoEngine->addSource(type, source, 24, sourceRect, renderRect, (void*)controller, (int)index);
+    activeSource = mVideoEngine->addSource(type, source, 24, sourceRect, renderRect, (void*)controller, (int)index, 0);
     if (activeSource)
     {
         mVideoEngine->setupCaptureSession(activeSource);

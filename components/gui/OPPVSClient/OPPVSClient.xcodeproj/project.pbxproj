@@ -23,6 +23,7 @@
 		D9250F421AC558DB00858FF5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9250F411AC558DB00858FF5 /* Images.xcassets */; };
 		D9250F451AC558DB00858FF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9250F431AC558DB00858FF5 /* Main.storyboard */; };
 		D9250F511AC558DB00858FF5 /* OPPVSClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */; };
+		D9A264131CB24A49006F0EAE /* libvideo_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A264121CB24A49006F0EAE /* libvideo_engine.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		D9250F4A1AC558DB00858FF5 /* OPPVSClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OPPVSClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9250F4F1AC558DB00858FF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9250F501AC558DB00858FF5 /* OPPVSClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPPVSClientTests.m; sourceTree = "<group>"; };
+		D9A264121CB24A49006F0EAE /* libvideo_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvideo_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libvideo_engine.dylib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9A264131CB24A49006F0EAE /* libvideo_engine.dylib in Frameworks */,
 				D910EC711C4CF529000EE6F4 /* libaudio_engine.dylib in Frameworks */,
 				D910EC721C4CF529000EE6F4 /* libencoding_engine.dylib in Frameworks */,
 				D910EC731C4CF529000EE6F4 /* libmisc1.dylib in Frameworks */,
@@ -164,6 +167,7 @@
 		D9FD73241B8ABEC800AF2E71 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D9A264121CB24A49006F0EAE /* libvideo_engine.dylib */,
 				D910EC681C4CF529000EE6F4 /* libaudio_engine.dylib */,
 				D910EC691C4CF529000EE6F4 /* libencoding_engine.dylib */,
 				D910EC6A1C4CF529000EE6F4 /* libmisc1.dylib */,

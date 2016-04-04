@@ -16,7 +16,6 @@
 		D910EC651C4CF518000EE6F4 /* libstreaming_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC5C1C4CF518000EE6F4 /* libstreaming_engine.dylib */; };
 		D910EC661C4CF518000EE6F4 /* libthread_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC5D1C4CF518000EE6F4 /* libthread_engine.dylib */; };
 		D910EC671C4CF518000EE6F4 /* libyuv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D910EC5E1C4CF518000EE6F4 /* libyuv.dylib */; };
-		D92220361AC2BA310069116D /* libvideoengine.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D92220351AC2BA310069116D /* libvideoengine.so */; };
 		D9230F361BC5362500518664 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = D9230F351BC5362500518664 /* Util.m */; };
 		D924C6C91AB7DC2500586413 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6C81AB7DC2500586413 /* OpenGL.framework */; };
 		D924C6CB1AB805B100586413 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D924C6CA1AB805B100586413 /* QuartzCore.framework */; };
@@ -31,6 +30,8 @@
 		D97FC5561AB2EA4D00E3988E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D97FC5551AB2EA4D00E3988E /* Images.xcassets */; };
 		D97FC5591AB2EA4D00E3988E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D97FC5571AB2EA4D00E3988E /* Main.storyboard */; };
 		D97FC5651AB2EA4D00E3988E /* OPPVSGUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FC5641AB2EA4D00E3988E /* OPPVSGUITests.m */; };
+		D9A2640F1CB24902006F0EAE /* libvideo_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A2640E1CB24902006F0EAE /* libvideo_engine.dylib */; };
+		D9A264111CB24926006F0EAE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A264101CB24926006F0EAE /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +66,6 @@
 		D910EC5C1C4CF518000EE6F4 /* libstreaming_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreaming_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libstreaming_engine.dylib"; sourceTree = "<group>"; };
 		D910EC5D1C4CF518000EE6F4 /* libthread_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libthread_engine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libthread_engine.dylib"; sourceTree = "<group>"; };
 		D910EC5E1C4CF518000EE6F4 /* libyuv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libyuv.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/macgui-fpalbqwnkaknjvepwlnylsrwljda/Build/Products/Debug/libyuv.dylib"; sourceTree = "<group>"; };
-		D92220351AC2BA310069116D /* libvideoengine.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvideoengine.so; path = ../../../libs/libvideoengine.so; sourceTree = "<group>"; };
 		D9230F341BC5362500518664 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		D9230F351BC5362500518664 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 		D924C6C81AB7DC2500586413 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -90,6 +90,8 @@
 		D97FC55E1AB2EA4D00E3988E /* OPPVSGUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OPPVSGUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97FC5631AB2EA4D00E3988E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D97FC5641AB2EA4D00E3988E /* OPPVSGUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPPVSGUITests.m; sourceTree = "<group>"; };
+		D9A2640E1CB24902006F0EAE /* libvideo_engine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvideo_engine.dylib; path = ../../video/build/Debug/libvideo_engine.dylib; sourceTree = "<group>"; };
+		D9A264101CB24926006F0EAE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9A264111CB24926006F0EAE /* AVFoundation.framework in Frameworks */,
+				D9A2640F1CB24902006F0EAE /* libvideo_engine.dylib in Frameworks */,
 				D910EC5F1C4CF518000EE6F4 /* libaudio_engine.dylib in Frameworks */,
 				D910EC601C4CF518000EE6F4 /* libencoding_engine.dylib in Frameworks */,
 				D910EC611C4CF518000EE6F4 /* libmisc1.dylib in Frameworks */,
@@ -107,7 +111,6 @@
 				D910EC661C4CF518000EE6F4 /* libthread_engine.dylib in Frameworks */,
 				D910EC671C4CF518000EE6F4 /* libyuv.dylib in Frameworks */,
 				D93DD5FF1B04818100591808 /* IOKit.framework in Frameworks */,
-				D92220361AC2BA310069116D /* libvideoengine.so in Frameworks */,
 				D924C6CD1AB83E6600586413 /* CoreGraphics.framework in Frameworks */,
 				D924C6CB1AB805B100586413 /* QuartzCore.framework in Frameworks */,
 				D924C6C91AB7DC2500586413 /* OpenGL.framework in Frameworks */,
@@ -127,6 +130,8 @@
 		D9277A3C1AF0C07B00669ABF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D9A264101CB24926006F0EAE /* AVFoundation.framework */,
+				D9A2640E1CB24902006F0EAE /* libvideo_engine.dylib */,
 				D910EC561C4CF518000EE6F4 /* libaudio_engine.dylib */,
 				D910EC571C4CF518000EE6F4 /* libencoding_engine.dylib */,
 				D910EC581C4CF518000EE6F4 /* libmisc1.dylib */,
@@ -148,7 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				D9277A3C1AF0C07B00669ABF /* Frameworks */,
-				D92220351AC2BA310069116D /* libvideoengine.so */,
 				D97FC5471AB2EA4D00E3988E /* OPPVSGUI */,
 				D97FC5611AB2EA4D00E3988E /* OPPVSGUITests */,
 				D97FC5461AB2EA4D00E3988E /* Products */,

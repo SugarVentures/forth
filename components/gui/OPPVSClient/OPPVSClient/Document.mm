@@ -65,8 +65,9 @@ void streamingCallback(void* user)
     
     dispatch_queue_t queue = dispatch_queue_create("oppvs.streaming.queue", DISPATCH_QUEUE_SERIAL);
     dispatch_async(queue, ^{
-        if (streamEngine->init(oppvs::ROLE_VIEWER, oppvs::STUN_SERVER_ADDRESS, oppvs::TURN_SERVER_ADDRESS, oppvs::TURN_SERVER_USER, oppvs::TURN_SERVER_PASS,
-                               oppvs::SIGN_SERVER_ADDRESS, oppvs::SIGN_SERVER_PORT) < 0)
+        //std::string strServer("52.76.92.162");
+        std::string strServer("192.168.1.9");
+        if (streamEngine->init(oppvs::ROLE_VIEWER, strServer, strServer, oppvs::TURN_SERVER_USER, oppvs::TURN_SERVER_PASS, strServer, oppvs::SIGN_SERVER_PORT) < 0)
         {
             NSLog(@"Failed to init streaming engine");
             return;

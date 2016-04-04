@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../video/mac/video_engine.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:../streaming/mac/streaming_engine.xcodeproj">
    </FileRef>
    <FileRef

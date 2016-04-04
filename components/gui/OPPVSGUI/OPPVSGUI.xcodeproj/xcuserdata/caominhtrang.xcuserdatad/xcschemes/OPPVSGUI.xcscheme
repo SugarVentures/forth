@@ -92,8 +92,13 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
-            key = ""
-            value = ""
+            key = "G_MESSAGES_DEBUG"
+            value = "all"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "NICE_DEBUG"
+            value = "1"
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
