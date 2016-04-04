@@ -16,7 +16,7 @@
             ],
             'dependencies': [
                 '../thread/thread_engine.gyp:thread_engine',
-                '../network/network_engine.gyp:network_engine',
+                #'../network/network_engine.gyp:network_engine',
             ],
             'sources': [
                 'stun_server.hpp',
