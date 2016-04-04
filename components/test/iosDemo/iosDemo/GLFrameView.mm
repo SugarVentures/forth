@@ -258,6 +258,15 @@ static const GLbyte indices[] = {
 
 - (void)render:(GLubyte *)data withWidth:(GLuint)width andHeight:(GLuint)height
 {
+    [self render:data withWidth:width andHeight:height freeWhenDone:false];
+
+}
+
+- (void)render:(GLubyte *)data withWidth:(GLuint)width andHeight:(GLuint)height freeWhenDone:(bool)flag
+{
+    if (data == NULL)
+        return;
+    
     [EAGLContext setCurrentContext: _context];
     glClearColor(0, 104.0/255.0, 55.0/255.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -281,12 +290,13 @@ static const GLbyte indices[] = {
                  GL_UNSIGNED_BYTE,
                  data);
     
-    delete [] data;
-        
+    if (flag) {
+        delete [] data;
+    }
+    
     glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(indices[0]), GL_UNSIGNED_BYTE, 0);
     
     [_context presentRenderbuffer:GL_RENDERBUFFER];
-
 }
 
 -(void) loadVBO: (GLuint)proid

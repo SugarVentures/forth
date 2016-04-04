@@ -166,7 +166,7 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
             dispatch_release(queue);
         }
         
-        [self.session setSessionPreset:AVCaptureSessionPreset640x480];
+        [self.session setSessionPreset:AVCaptureSessionPresetMedium];
         [self.session commitConfiguration];
     } );
 }
@@ -209,6 +209,7 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
             pixel_buffer.height[0] = CVPixelBufferGetHeight(imageBuffer);
             pixel_buffer.stride[0] = CVPixelBufferGetBytesPerRow(imageBuffer);
             pixel_buffer.nbytes = pixel_buffer.stride[0] * pixel_buffer.height[0];
+            pixel_buffer.format = PF_BGRA32;
             
             //Update VideoActiveSource
             pSourceInfo->rect.right = pSourceInfo->rect.left + pixel_buffer.width[0];
@@ -222,16 +223,16 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
     CVPixelBufferLockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
     
     CGSize imageSize = CVImageBufferGetEncodedSize(imageBuffer);
-    pixel_format = oppvs::PF_BGRA32;
-    if (oppvs::PF_YUYV422 == pixel_format     /* kCVPixelFormatType_422YpCbCr8_yuvs */
-        || oppvs::PF_UYVY422 == pixel_format  /* kCVPixelFormatType_422YpCbCr8 */
-        || oppvs::PF_BGRA32 == pixel_format   /* kCVPixelFormatType_32BGRA */
+    pixel_format = PF_BGRA32;
+    if (PF_YUYV422 == pixel_format     /* kCVPixelFormatType_422YpCbCr8_yuvs */
+        || PF_UYVY422 == pixel_format  /* kCVPixelFormatType_422YpCbCr8 */
+        || PF_BGRA32 == pixel_format   /* kCVPixelFormatType_32BGRA */
         )
     {
         pixel_buffer.plane[0] = (uint8_t*)CVPixelBufferGetBaseAddress(imageBuffer);
     }
-    else if (oppvs::PF_YUVJ420BP == pixel_format     /* kCVPixelFormatType_420YpCbCr8BiPlanarFullRange */
-             || oppvs::PF_YUV420BP == pixel_format) /* kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange */
+    else if (PF_YUVJ420BP == pixel_format     /* kCVPixelFormatType_420YpCbCr8BiPlanarFullRange */
+             || PF_YUV420BP == pixel_format) /* kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange */
     {
         pixel_buffer.plane[0] = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0);
         pixel_buffer.plane[1] = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 1);
@@ -240,7 +241,7 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
         printf("Error: unhandled or unknown pixel format: %d.\n", pixel_format);
     }
     
-    pixel_buffer.format = oppvs::PF_BGRA32;
+    pixel_buffer.format = PF_BGRA32;
     
     callback_frame(pixel_buffer);
     

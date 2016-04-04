@@ -7,3 +7,17 @@
 //
 
 #import "Forth.h"
+#include "streaming_engine.hpp"
+
+@interface Forth()
+{
+@private
+    
+}
+@end
+
+@implementation Forth
+
+
+
+@end

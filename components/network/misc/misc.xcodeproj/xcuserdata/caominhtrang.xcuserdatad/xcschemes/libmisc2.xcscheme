@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BE0C37C3CD9ADF617F9763D5"
-               BuildableName = "libmisc2.a"
+               BuildableName = "libmisc2.dylib"
                BlueprintName = "libmisc2"
                ReferencedContainer = "container:../network/misc/misc.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BE0C37C3CD9ADF617F9763D5"
-            BuildableName = "libmisc2.a"
+            BuildableName = "libmisc2.dylib"
             BlueprintName = "libmisc2"
             ReferencedContainer = "container:../network/misc/misc.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BE0C37C3CD9ADF617F9763D5"
-            BuildableName = "libmisc2.a"
+            BuildableName = "libmisc2.dylib"
             BlueprintName = "libmisc2"
             ReferencedContainer = "container:../network/misc/misc.xcodeproj">
          </BuildableReference>

@@ -21,10 +21,16 @@ VIDEOLDFLAGS = -L$(rootDir)/../../libs
 VIDEOLIBS = -lvideoengine -lstreaming -lyuv
 
 NETWORKLDFLAGS = -L$(rootDir)/../../libs
-NETWORKLIBS = -lnetworkengine -lserver -lclient -lsrtp -lcrypto
+NETWORKLIBS = -lnetworkengine -lthreadengine
+
+STREAMLDFLAGS = -L$(rootDir)/../../libs
+STREAMLIBS = -lstreaming -lnetworkengine -lthreadengine
 
 ENCODINGFLAGS = -L$(rootDir)/../../libs -L/Users/caominhtrang/Downloads/libvpx
 ENCODINGLIBS = -lyuv -lvpx
+
+THREADLDFLAGS =-L$(rootDir)/../../libs
+THREADLIBS = -lthreadengine
 
 SRCS = testvideoengine.cpp
 OBJS = $(subst .cpp,.o,$(SRCS))
@@ -37,7 +43,7 @@ resample_CPPFLAGS = -DSPX_RESAMPLE_EXPORT= -DRANDOM_PREFIX=oppvs -DOUTSIDE_SPEEX
 rootDir = .
 
 #all: testvideoengine testnetworkengine teststream testvp teststun testbuffer testdatastream proclib
-all: testforwarding testnetworkengine proclib
+all: testforwarding testnetworkengine testcache testtimer testdatastream testice teststream proclib
 
 testvideoengine: $(OBJS)
 	$(CXX) $(INCDIR) $(CFLAGS) $(VIDEOLDFLAGS) $(VIDEOLIBS) $(OBJS) -o testvideoengine
@@ -53,7 +59,7 @@ testnetworkengine.o: testnetworkengine.cpp
 	$(CXX) $(INCDIR) $(CFLAGS)  -o $@ -c $< 
 
 teststream: teststream.o
-	$(CXX)  $(INCDIR) $(CFLAGS) $(NETWORKLDFLAGS) $< $(NETWORKLIBS) -o $@ 
+	$(CXX)  $(INCDIR) $(CFLAGS) $(STREAMLDFLAGS) $< $(STREAMLIBS) -o $@ 
 
 teststream.o: teststream.cpp
 	$(CXX) $(INCDIR) $(CFLAGS)  -o $@ -c $< 
@@ -83,7 +89,7 @@ testdatastream.o: testdatastream.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
 
 testice: testice.o
-	$(CXX) $(INCDIR) $(CFLAGS) $(NICELDFLAGS) $< $(NICELIBS) -o $@
+	$(CXX) $(INCDIR) $(CFLAGS) $(NETWORKLDFLAGS) $< $(NETWORKLIBS) -o $@
 
 testice.o: testice.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
@@ -98,6 +104,18 @@ testforwarding: testforwarding.o
 	$(CXX)  $(INCDIR) $(CFLAGS) $(NETWORKLDFLAGS) $< $(NETWORKLIBS) -o $@ 
 
 testforwarding.o: testforwardingserver.cpp
+	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
+
+testcache: testcachebuffer.o
+	$(CXX)  $(INCDIR) $(CFLAGS) $(NETWORKLDFLAGS) $< $(NETWORKLIBS) -o $@ 
+
+testcachebuffer.o: testcachebuffer.cpp
+	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
+
+testtimer: testtimer.o
+	$(CXX) $(INCDIR) $(CFLAGS) $(THREADLDFLAGS) $< $(THREADLIBS) -o $@ 
+
+testtimer.o: testtimer.cpp
 	$(CXX) $(INCDIR) $(CFLAGS) -o $@ -c $<
 
 proclib:

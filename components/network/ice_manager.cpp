@@ -77,7 +77,7 @@ namespace oppvs {
 		if (stream_id == 0)
 			return NULL;
 
-		std::cout << "Ice Stream id: " << stream_id << std::endl;
+		//std::cout << "Ice Stream id: " << stream_id << std::endl;
 		IceStream *stream = new IceStream(m_agent, stream_id, ncomponents);
 		m_streams.push_back(stream);	
 
@@ -89,7 +89,7 @@ namespace oppvs {
 	    // Setting turn server properties
 	    if (m_turnServer.serverAddress != "")
 	    {
-	        std::cout << "Setup TURN server info" << std::endl;
+	        //std::cout << "Setup TURN server info" << std::endl;
 	        for (guint component_id = 1; component_id <= ncomponents; component_id++)
 	        {
 	            nice_agent_set_relay_info(m_agent, stream_id, component_id, m_turnServer.serverAddress.c_str(), m_turnServer.port,
@@ -125,7 +125,7 @@ namespace oppvs {
 
 	void IceManager::cb_candidate_gathering_done(NiceAgent *agent, guint stream_id, gpointer user_data)
 	{
-		std::cout << "Gather candidate done (stream " << stream_id << ")" << std::endl;
+		//std::cout << "Gather candidate done (stream " << stream_id << ")" << std::endl;
 		IceManager* manager = (IceManager*)user_data;
 		IceStream* stream = manager->getStreamByID(stream_id);
 		GSList *cands = NULL;

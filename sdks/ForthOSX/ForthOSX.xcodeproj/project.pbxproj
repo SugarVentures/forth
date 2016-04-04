@@ -8,12 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		D9488E661BE21CCC00646B70 /* ForthOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = D9488E651BE21CCC00646B70 /* ForthOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9488E7A1BE2201400646B70 /* Forth.h in Headers */ = {isa = PBXBuildFile; fileRef = D9488E791BE2201400646B70 /* Forth.h */; settings = {ASSET_TAGS = (); }; };
+		D9488E7C1BE2204A00646B70 /* Forth.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9488E7B1BE2204A00646B70 /* Forth.mm */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D9488E771BE21E9400646B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9488E701BE21E9400646B70 /* streaming_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B5B9A720501094F8B1992207;
+			remoteInfo = streaming_engine;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		D9488E621BE21CCC00646B70 /* ForthOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ForthOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9488E651BE21CCC00646B70 /* ForthOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForthOSX.h; sourceTree = "<group>"; };
 		D9488E671BE21CCC00646B70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9488E701BE21E9400646B70 /* streaming_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = streaming_engine.xcodeproj; path = ../../components/streaming/mac/streaming_engine.xcodeproj; sourceTree = "<group>"; };
+		D9488E791BE2201400646B70 /* Forth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Forth.h; sourceTree = "<group>"; };
+		D9488E7B1BE2204A00646B70 /* Forth.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Forth.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +45,7 @@
 		D9488E581BE21CCC00646B70 = {
 			isa = PBXGroup;
 			children = (
+				D9488E701BE21E9400646B70 /* streaming_engine.xcodeproj */,
 				D9488E641BE21CCC00646B70 /* ForthOSX */,
 				D9488E631BE21CCC00646B70 /* Products */,
 			);
@@ -47,9 +63,19 @@
 			isa = PBXGroup;
 			children = (
 				D9488E651BE21CCC00646B70 /* ForthOSX.h */,
+				D9488E791BE2201400646B70 /* Forth.h */,
+				D9488E7B1BE2204A00646B70 /* Forth.mm */,
 				D9488E671BE21CCC00646B70 /* Info.plist */,
 			);
 			path = ForthOSX;
+			sourceTree = "<group>";
+		};
+		D9488E711BE21E9400646B70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9488E781BE21E9400646B70 /* libstreaming_engine.dylib */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -59,6 +85,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9488E7A1BE2201400646B70 /* Forth.h in Headers */,
 				D9488E661BE21CCC00646B70 /* ForthOSX.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -108,12 +135,28 @@
 			mainGroup = D9488E581BE21CCC00646B70;
 			productRefGroup = D9488E631BE21CCC00646B70 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D9488E711BE21E9400646B70 /* Products */;
+					ProjectRef = D9488E701BE21E9400646B70 /* streaming_engine.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				D9488E611BE21CCC00646B70 /* ForthOSX */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		D9488E781BE21E9400646B70 /* libstreaming_engine.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libstreaming_engine.dylib;
+			remoteRef = D9488E771BE21E9400646B70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D9488E601BE21CCC00646B70 /* Resources */ = {
@@ -130,6 +173,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9488E7C1BE2204A00646B70 /* Forth.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +272,21 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = (
+					../../components/streaming,
+					../../components/include,
+					../../components/thread,
+					../../components/interface,
+					../../components/audio,
+					../../components/encoding,
+					../../components/network,
+					"~/cerbero/dist/darwin_x86_64/include/**",
+					"~/cerbero/dist/darwin_x86_64/lib/glib-2.0/include",
+					../../components/error,
+					../../libs/libyuv/include,
+					../../components/misc,
+					../../libs/libsrtp/crypto/include,
+				);
 				INFOPLIST_FILE = ForthOSX/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
@@ -246,6 +305,21 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = (
+					../../components/streaming,
+					../../components/include,
+					../../components/thread,
+					../../components/interface,
+					../../components/audio,
+					../../components/encoding,
+					../../components/network,
+					"~/cerbero/dist/darwin_x86_64/include/**",
+					"~/cerbero/dist/darwin_x86_64/lib/glib-2.0/include",
+					../../components/error,
+					../../libs/libyuv/include,
+					../../components/misc,
+					../../libs/libsrtp/crypto/include,
+				);
 				INFOPLIST_FILE = ForthOSX/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";

@@ -358,6 +358,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
 				HEADER_SEARCH_PATHS = include;
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = yuv;
@@ -370,6 +371,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
 				HEADER_SEARCH_PATHS = include;
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = yuv;

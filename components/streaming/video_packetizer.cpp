@@ -36,6 +36,7 @@ namespace oppvs {
 	{
 		if (m_framePool.size() >= MAX_FRAMES_IN_POOL)
 			return;
+
 		std::shared_ptr<PixelBuffer> pixelbuffer(new PixelBuffer);
 		pixelbuffer->source = pf.source;
 		pixelbuffer->order = pf.order;
@@ -46,6 +47,8 @@ namespace oppvs {
 		pixelbuffer->height[0] = pf.height[0];
 		pixelbuffer->stride[0] = pf.stride[0];
 		pixelbuffer->timestamp = pf.timestamp;
+		pixelbuffer->format = pf.format;
+        
 		m_framePool.push(pixelbuffer);
 	}
 
@@ -68,7 +71,7 @@ namespace oppvs {
 		std::shared_ptr<PixelBuffer> frame = *ptrFrame;
 		PixelBuffer pf = *frame;
 		//uint32_t duration = pf.timestamp - m_timestamp;
-		m_timestamp = pf.timestamp;
+		//m_timestamp = pf.timestamp;
 
 		//Encoding		
 		if (m_encoder.encode(pf, &encodingLength, &data, &picID, &isKey, 1) < 0)
@@ -79,6 +82,8 @@ namespace oppvs {
 		delete [] pf.plane[0];
 
 		//printf("Encoding Length %u Key: %d timestamp: %u\n", encodingLength, isKey, 1);
+        //LOGD("Current timestamp: %u\n", m_timestamp);
+        printHash((char*)data, encodingLength);
 		sendLength = encodingLength;
 		uint8_t* curPos = data;
 		do
@@ -98,7 +103,9 @@ namespace oppvs {
 			if (flag)
 			{
 				if (m_builder.addVideoPayloadHeader(isKey, encodingLength) < 0)
+                {
 					return;
+                }
 				sentLength = sendLength > (OPPVS_NETWORK_PACKET_LENGTH - VP8_MAX_HEADER_SIZE) ? (OPPVS_NETWORK_PACKET_LENGTH - VP8_MAX_HEADER_SIZE) : sendLength;
 			}
 			else
@@ -107,15 +114,17 @@ namespace oppvs {
 				(OPPVS_NETWORK_PACKET_LENGTH - VP8_COMMON_HEADER_SIZE - RTP_HEADER_SIZE) : sendLength;
 			}
 			if (m_builder.addPayload(curPos, sentLength) < 0)
+            {
 				return;
+            }
 			sendLength -= sentLength;
 			curPos += sentLength;
 
-			//printf("Sent length: %u\n", sentLength);
+			//LOGD("Ts: %d Sent length: %u %zu\n", m_timestamp, sentLength, segment->size());
 			p_segmentPool->push(segment);
 		}
 		while (sendLength > 0);
-		//m_timestamp++;
+		m_timestamp++;
 	}
 
 	void* VideoPacketizer::run(void* object)

@@ -84,7 +84,7 @@ namespace oppvs {
 
 	void SignalingHandler::callbackCandidateGatheringDone(void* object, void* icemgr, uint32_t streamid, std::string username, std::string password, std::vector<oppvs::IceCandidate>& candidates)
 	{
-		/*std::cout << "Local credential: " << username << " " << password << std::endl;
+		std::cout << "Local credential: " << username << " " << password << std::endl;
 		for (int i = 0; i < candidates.size(); i++)
 		{
 	        std::cout << "Local Candidate: " << candidates[i].component << " "
@@ -95,7 +95,7 @@ namespace oppvs {
 				  << candidates[i].port << " "
 				  << candidates[i].type << std::endl;
 		}
-		std::cout << "Stream: " << streamid << std::endl;*/
+        
 		if (object == NULL || icemgr == NULL)
 		{
 			std::cout << "Unknown error in callbackCandidateGatheringDone" << std::endl;
@@ -126,7 +126,7 @@ namespace oppvs {
 	void SignalingHandler::callbackOnIceResponse(void* object, std::string& username, std::string& password, std::vector<IceCandidate>& candidates)
 	{
 
-		/*for (int i = 0; i < candidates.size(); i++)
+		for (int i = 0; i < candidates.size(); i++)
 		{
 	        std::cout << "Remote Candidate: " << candidates[i].component << " "
 				  << candidates[i].foundation << " "
@@ -135,7 +135,7 @@ namespace oppvs {
 				  << candidates[i].protocol << " "
 				  << candidates[i].port << " "
 				  << candidates[i].type << std::endl;
-		}*/
+		}
 		SignalingHandler* handler = (SignalingHandler*)object;
 		handler->prepareConnection(username, password, candidates);
 	}

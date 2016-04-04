@@ -7,31 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0BAB8714292C995D88FEB5BC /* physical_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE3D3138FAE375CAE63E6D5 /* physical_socket.cpp */; };
-		19333F8C0423A3ED45256286 /* libgobject-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A19F848B6398953D320746 /* libgobject-2.0.0.dylib */; };
-		211C00997F6D34ABFA12FDBF /* ice_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30B86D48A939B9507EE72ECF /* ice_manager.cpp */; };
-		2B62C2CD2B41C621CAA5FF8F /* dynamic_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBDF73A9B8BB93AC44609CF6 /* dynamic_buffer.cpp */; };
-		3755292296565BADE5B60DD0 /* stun_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23506EF17EF57A619D29EE2 /* stun_socket.cpp */; };
-		3C41861F00D29509C50797F3 /* ipaddress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2749152E1B5A9CD5C6AA0 /* ipaddress.cpp */; };
-		3D15AE5DF494C73B9AB72A37 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22B53B07C4466C44870A4AC0 /* data_stream.cpp */; };
-		485E80D9ED9876A74749CE92 /* srtp_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D7275FDADF133CB5FF7AC54 /* srtp_socket.cpp */; };
+		07CA0ECA245F07AA70FB1C05 /* client_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0150C5BEADC4795DFD86B1C3 /* client_socket.cpp */; };
+		24C989BECBD0CFEC03259357 /* libgobject-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A54566D6166A2A7A4EA66A /* libgobject-2.0.0.dylib */; };
+		275CD292078AD8C853EAA16E /* cache_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B67A09D4C290F7072209DD7 /* cache_buffer.cpp */; };
+		347AD8A993633435009D9C9A /* libgthread-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EED9538A64E5720EE9B9AF8 /* libgthread-2.0.0.dylib */; };
+		3F58AA674795BED1D7E1C3EC /* libglib-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 853418628391BC3CA7C4228E /* libglib-2.0.0.dylib */; };
 		4C0F5DE898D367162329B7B0 /* libmisc2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B7677F96DEDFB6D40B4D4CFE /* libmisc2.dylib */; };
-		6D2C1AFAA82CB533A06B3C51 /* stun_message_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB9E0848033C8FB4494029A9 /* stun_message_handler.cpp */; };
-		780E1A36A93308C8AE11DBC7 /* socket_address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22E227BFC04203BC423B8FF1 /* socket_address.cpp */; };
-		7A5419E87BA2D9815FB0F6D4 /* signaling_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E378578BC04DD4E2EDB69 /* signaling_manager.cpp */; };
-		7C6CAE7A10985FAD4AA586BA /* signaling_message_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C947873ABA6C41E7E97DD891 /* signaling_message_reader.cpp */; };
-		8177044C36EDE879B8ECB791 /* libgio-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D70AE1AF2B757777B75D6D /* libgio-2.0.0.dylib */; };
-		842ABAC966EE1D6117441138 /* stun_socket_address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9D6F2CD9BF33F08D696EA6D /* stun_socket_address.cpp */; };
-		8D296AF62DBCCAA0EEA5FDC0 /* signaling_message_builder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B121258131F9395309338DCF /* signaling_message_builder.cpp */; };
-		ABF266BB89C23C77B1C2DACE /* libgthread-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D39FB8FDBCC0BC9EFC6257C /* libgthread-2.0.0.dylib */; };
-		B04FF696729B207EE054BF8F /* libnice.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E8F7A607AEA3255EB5435B4 /* libnice.10.dylib */; };
-		B96E386E3CF4BDC397ADC1D0 /* client_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0150C5BEADC4795DFD86B1C3 /* client_socket.cpp */; };
-		BF37DB651B020480B48FCEC0 /* libintl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFDD64377229F0B2BF98ABAE /* libintl.a */; };
+		4D6366B054C3AD10644648BC /* ipaddress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2749152E1B5A9CD5C6AA0 /* ipaddress.cpp */; };
+		50AF72BF2254842BB04C8F59 /* libgio-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81C616E04FE0BE020253B25B /* libgio-2.0.0.dylib */; };
+		518DEFB4824E5A43617D8020 /* stun_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23506EF17EF57A619D29EE2 /* stun_socket.cpp */; };
+		533330F2294DD222D533EFE1 /* libintl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12136EC3BBF683FB038436AE /* libintl.dylib */; };
+		5E9A084FC11EF8E3C8E2A61F /* ice_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30B86D48A939B9507EE72ECF /* ice_manager.cpp */; };
+		78BF2E1E3AA80787DCB71F24 /* srtp_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D7275FDADF133CB5FF7AC54 /* srtp_socket.cpp */; };
+		86DE4C5547B286CFD47DF0DF /* libnice.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5B1B9D2854957EA70BCA32 /* libnice.dylib */; };
+		86EBCA58E21005654E41C6F0 /* ice_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F675F9CB12EF1469A3C91BA /* ice_stream.cpp */; };
+		93956504789ADF6CD502995F /* signaling_message_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C947873ABA6C41E7E97DD891 /* signaling_message_reader.cpp */; };
+		A487BA790E27F6C640454BE2 /* signaling_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E378578BC04DD4E2EDB69 /* signaling_manager.cpp */; };
+		AA25FBE0A45BF27EC0CE7F33 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22B53B07C4466C44870A4AC0 /* data_stream.cpp */; };
+		B0E41F636F0FA3D9786EB713 /* socket_address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22E227BFC04203BC423B8FF1 /* socket_address.cpp */; };
+		B909531F396905F52BBB59D0 /* signaling_message_builder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B121258131F9395309338DCF /* signaling_message_builder.cpp */; };
 		C48A78861F9F9853152DD672 /* libthread_engine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE0576E48EF71D9773B8E0B /* libthread_engine.dylib */; };
-		CB81F62C904269113733BABE /* server_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FDA22583E54011EE72944E /* server_socket.cpp */; };
-		E25124B966E748D7F229189B /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F55F95F987E4E74BBC2F0149 /* libsrtp.a */; };
-		E70F0125D6A6AC198DA2451F /* libglib-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 490CFD537F4B2E8E507EBBA8 /* libglib-2.0.0.dylib */; };
-		F1D1B2F394D52B48E70B9AB6 /* ice_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F675F9CB12EF1469A3C91BA /* ice_stream.cpp */; };
+		C580790B3CA5BDB02D17B719 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 498588B601EF4E2DFAD427FF /* libcrypto.dylib */; };
+		C8DF482F20D583261FE4D7B3 /* physical_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE3D3138FAE375CAE63E6D5 /* physical_socket.cpp */; };
+		DCA0DA2A0777C95E68D9F747 /* dynamic_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBDF73A9B8BB93AC44609CF6 /* dynamic_buffer.cpp */; };
+		E033E98AAB87AC43948DFAD7 /* libsrtp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D4A8044A213BFF3EEDC33FC /* libsrtp.dylib */; };
+		E2D2EC9ECE03FAC50960A31D /* stun_message_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB9E0848033C8FB4494029A9 /* stun_message_handler.cpp */; };
+		E3A6AF6CA554BFC4CB3439B6 /* server_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FDA22583E54011EE72944E /* server_socket.cpp */; };
+		EF0CCBCE022F9304C9DB15F9 /* stun_socket_address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9D6F2CD9BF33F08D696EA6D /* stun_socket_address.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,51 +84,54 @@
 /* Begin PBXFileReference section */
 		0150C5BEADC4795DFD86B1C3 /* client_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = client_socket.cpp; sourceTree = "<group>"; };
 		051C7C68A3E861FED7DEF6BE /* ice_manager.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = ice_manager.hpp; sourceTree = "<group>"; };
+		12136EC3BBF683FB038436AE /* libintl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libintl.dylib; path = /Users/caominhtrang/cerbero/dist/darwin_x86_64/lib/libintl.dylib; sourceTree = "<group>"; };
 		13EBD7ADBD4E297A3DDC3D3D /* stun_socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_socket.hpp; sourceTree = "<group>"; };
 		142BB0C53191B138893ACE4C /* signaling_manager.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = signaling_manager.hpp; sourceTree = "<group>"; };
 		1D6986FA5DF8D6EF1993D268 /* signaling_message_reader.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = signaling_message_reader.hpp; sourceTree = "<group>"; };
+		1F5B1B9D2854957EA70BCA32 /* libnice.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnice.dylib; path = /Users/caominhtrang/cerbero/dist/darwin_x86_64/lib/libnice.dylib; sourceTree = "<group>"; };
 		22B53B07C4466C44870A4AC0 /* data_stream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = data_stream.cpp; sourceTree = "<group>"; };
 		22E227BFC04203BC423B8FF1 /* socket_address.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = socket_address.cpp; sourceTree = "<group>"; };
 		27F8F9A51733545D37AFBD0F /* data_stream.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = data_stream.hpp; sourceTree = "<group>"; };
 		2B0030566163BCF665DB1981 /* srtp_socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = srtp_socket.hpp; sourceTree = "<group>"; };
-		2D39FB8FDBCC0BC9EFC6257C /* libgthread-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgthread-2.0.0.dylib"; path = "/usr/local/lib/libgthread-2.0.0.dylib"; sourceTree = "<group>"; };
+		2B67A09D4C290F7072209DD7 /* cache_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cache_buffer.cpp; sourceTree = "<group>"; };
+		2D4A8044A213BFF3EEDC33FC /* libsrtp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsrtp.dylib; path = /Users/caominhtrang/cerbero/dist/darwin_x86_64/lib/libsrtp.dylib; sourceTree = "<group>"; };
 		30B86D48A939B9507EE72ECF /* ice_manager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ice_manager.cpp; sourceTree = "<group>"; };
 		3F675F9CB12EF1469A3C91BA /* ice_stream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ice_stream.cpp; sourceTree = "<group>"; };
-		490CFD537F4B2E8E507EBBA8 /* libglib-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libglib-2.0.0.dylib"; path = "/usr/local/lib/libglib-2.0.0.dylib"; sourceTree = "<group>"; };
 		494F1B0BDA985CE71238D0AB /* stun_socket_address.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_socket_address.hpp; sourceTree = "<group>"; };
+		498588B601EF4E2DFAD427FF /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /Users/caominhtrang/cerbero/dist/darwin_x86_64/lib/libcrypto.dylib; sourceTree = "<group>"; };
+		5EED9538A64E5720EE9B9AF8 /* libgthread-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgthread-2.0.0.dylib"; path = "/Users/caominhtrang/cerbero/dist/darwin_x86_64/lib/libgthread-2.0.0.dylib"; sourceTree = "<group>"; };
 		61B15BDCBB1D603FA2CCCA47 /* stun_message_handler.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_message_handler.hpp; sourceTree = "<group>"; };
 		679B71C4F80529D017B0BE36 /* stun_auth.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_auth.hpp; sourceTree = "<group>"; };
 		6D7275FDADF133CB5FF7AC54 /* srtp_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = srtp_socket.cpp; sourceTree = "<group>"; };
 		70654BF91B67BCBADF991F62 /* dynamic_buffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = dynamic_buffer.hpp; sourceTree = "<group>"; };
 		716E5DCD64C7E18E2D6BB41B /* thread_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = thread_engine.xcodeproj; path = ../thread/thread_engine.xcodeproj; sourceTree = SOURCE_ROOT; };
 		7910601B897C9A6CE6602DB6 /* server_socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = server_socket.hpp; sourceTree = "<group>"; };
-		7E8F7A607AEA3255EB5435B4 /* libnice.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnice.10.dylib; path = ../../libs/libnice.10.dylib; sourceTree = "<group>"; };
+		81C616E04FE0BE020253B25B /* libgio-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgio-2.0.0.dylib"; path = "/Users/caominhtrang/cerbero/dist/darwin_x86_64/lib/libgio-2.0.0.dylib"; sourceTree = "<group>"; };
+		853418628391BC3CA7C4228E /* libglib-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libglib-2.0.0.dylib"; path = "/Users/caominhtrang/cerbero/dist/darwin_x86_64/lib/libglib-2.0.0.dylib"; sourceTree = "<group>"; };
 		9650ED4276959143F9D3195E /* misc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = misc.xcodeproj; path = ../misc/misc.xcodeproj; sourceTree = SOURCE_ROOT; };
 		9C5E378578BC04DD4E2EDB69 /* signaling_manager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = signaling_manager.cpp; sourceTree = "<group>"; };
 		A43F7E375A8990D4EC6E5B61 /* signaling_common.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = signaling_common.hpp; sourceTree = "<group>"; };
 		A7F6871F862C7E97C58BFF4C /* libnetwork_engine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libnetwork_engine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9252735E1036B032263D1AA /* ipaddress.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = ipaddress.hpp; sourceTree = "<group>"; };
-		A9A19F848B6398953D320746 /* libgobject-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgobject-2.0.0.dylib"; path = "/usr/local/lib/libgobject-2.0.0.dylib"; sourceTree = "<group>"; };
 		A9CD6518C0C765EEC817B629 /* network_engine.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = network_engine.gyp; sourceTree = "<group>"; };
 		B121258131F9395309338DCF /* signaling_message_builder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = signaling_message_builder.cpp; sourceTree = "<group>"; };
 		B23506EF17EF57A619D29EE2 /* stun_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stun_socket.cpp; sourceTree = "<group>"; };
 		B2C685C0EADA52C48AE7B9B6 /* socket_address.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = socket_address.hpp; sourceTree = "<group>"; };
 		BCE3D3138FAE375CAE63E6D5 /* physical_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = physical_socket.cpp; sourceTree = "<group>"; };
-		BFDD64377229F0B2BF98ABAE /* libintl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libintl.a; path = /usr/local/lib/libintl.a; sourceTree = "<group>"; };
 		C5800CDA84A10930468179FF /* ice_common.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = ice_common.hpp; sourceTree = "<group>"; };
 		C947873ABA6C41E7E97DD891 /* signaling_message_reader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = signaling_message_reader.cpp; sourceTree = "<group>"; };
 		CBD66D19F199163219100C48 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
 		CBDF73A9B8BB93AC44609CF6 /* dynamic_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = dynamic_buffer.cpp; sourceTree = "<group>"; };
 		CF07B07E97AE13D0FDEAB7D4 /* signaling_message_builder.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = signaling_message_builder.hpp; sourceTree = "<group>"; };
 		D1C2749152E1B5A9CD5C6AA0 /* ipaddress.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ipaddress.cpp; sourceTree = "<group>"; };
-		D1D70AE1AF2B757777B75D6D /* libgio-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgio-2.0.0.dylib"; path = "/usr/local/lib/libgio-2.0.0.dylib"; sourceTree = "<group>"; };
+		D2B070786FB30DCD7A091378 /* cache_buffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = cache_buffer.hpp; sourceTree = "<group>"; };
 		D4AEEB07944D92C2A785ECC5 /* stun_header.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_header.hpp; sourceTree = "<group>"; };
 		D9D6F2CD9BF33F08D696EA6D /* stun_socket_address.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stun_socket_address.cpp; sourceTree = "<group>"; };
 		DB9E0848033C8FB4494029A9 /* stun_message_handler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stun_message_handler.cpp; sourceTree = "<group>"; };
 		E66BBB86150F2FE432F65B6C /* client_socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = client_socket.hpp; sourceTree = "<group>"; };
 		E6FDA22583E54011EE72944E /* server_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = server_socket.cpp; sourceTree = "<group>"; };
+		E7A54566D6166A2A7A4EA66A /* libgobject-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgobject-2.0.0.dylib"; path = "/Users/caominhtrang/cerbero/dist/darwin_x86_64/lib/libgobject-2.0.0.dylib"; sourceTree = "<group>"; };
 		F2C28000F8358B8E9C0CB2BE /* physical_socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = physical_socket.hpp; sourceTree = "<group>"; };
-		F55F95F987E4E74BBC2F0149 /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsrtp.a; path = ../../libs/libsrtp.a; sourceTree = "<group>"; };
 		FEBDF694DDDC04CE374D2099 /* ice_stream.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = ice_stream.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,13 +142,14 @@
 			files = (
 				4C0F5DE898D367162329B7B0 /* libmisc2.dylib in Frameworks */,
 				C48A78861F9F9853152DD672 /* libthread_engine.dylib in Frameworks */,
-				E25124B966E748D7F229189B /* libsrtp.a in Frameworks */,
-				8177044C36EDE879B8ECB791 /* libgio-2.0.0.dylib in Frameworks */,
-				19333F8C0423A3ED45256286 /* libgobject-2.0.0.dylib in Frameworks */,
-				ABF266BB89C23C77B1C2DACE /* libgthread-2.0.0.dylib in Frameworks */,
-				E70F0125D6A6AC198DA2451F /* libglib-2.0.0.dylib in Frameworks */,
-				BF37DB651B020480B48FCEC0 /* libintl.a in Frameworks */,
-				B04FF696729B207EE054BF8F /* libnice.10.dylib in Frameworks */,
+				E033E98AAB87AC43948DFAD7 /* libsrtp.dylib in Frameworks */,
+				C580790B3CA5BDB02D17B719 /* libcrypto.dylib in Frameworks */,
+				50AF72BF2254842BB04C8F59 /* libgio-2.0.0.dylib in Frameworks */,
+				24C989BECBD0CFEC03259357 /* libgobject-2.0.0.dylib in Frameworks */,
+				347AD8A993633435009D9C9A /* libgthread-2.0.0.dylib in Frameworks */,
+				3F58AA674795BED1D7E1C3EC /* libglib-2.0.0.dylib in Frameworks */,
+				533330F2294DD222D533EFE1 /* libintl.dylib in Frameworks */,
+				86DE4C5547B286CFD47DF0DF /* libnice.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,20 +162,6 @@
 				A7F6871F862C7E97C58BFF4C /* libnetwork_engine.dylib */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		332F780BD932773D60009C8E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D1D70AE1AF2B757777B75D6D /* libgio-2.0.0.dylib */,
-				490CFD537F4B2E8E507EBBA8 /* libglib-2.0.0.dylib */,
-				A9A19F848B6398953D320746 /* libgobject-2.0.0.dylib */,
-				2D39FB8FDBCC0BC9EFC6257C /* libgthread-2.0.0.dylib */,
-				BFDD64377229F0B2BF98ABAE /* libintl.a */,
-				7E8F7A607AEA3255EB5435B4 /* libnice.10.dylib */,
-				F55F95F987E4E74BBC2F0149 /* libsrtp.a */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4550CD5943FA00DD7A6CF06D /* Products */ = {
@@ -185,9 +177,9 @@
 		699724E66E0D6DB898D5EB46 = {
 			isa = PBXGroup;
 			children = (
-				913EE79E452392EAC18D0D55 /* Source */,
+				AC8DC37FEB16E97AEAF33C93 /* Source */,
 				8173A006C2CF041019319ECC /* Projects */,
-				332F780BD932773D60009C8E /* Frameworks */,
+				BEF2118C0E9627D2B382D574 /* Frameworks */,
 				13CDF293D538778792C6ADAB /* Products */,
 				BED61ADE773AF1F9D8EB4D64 /* Build */,
 			);
@@ -202,9 +194,11 @@
 			name = Projects;
 			sourceTree = "<group>";
 		};
-		913EE79E452392EAC18D0D55 /* Source */ = {
+		AC8DC37FEB16E97AEAF33C93 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				2B67A09D4C290F7072209DD7 /* cache_buffer.cpp */,
+				D2B070786FB30DCD7A091378 /* cache_buffer.hpp */,
 				0150C5BEADC4795DFD86B1C3 /* client_socket.cpp */,
 				E66BBB86150F2FE432F65B6C /* client_socket.hpp */,
 				22B53B07C4466C44870A4AC0 /* data_stream.cpp */,
@@ -252,6 +246,21 @@
 				A9CD6518C0C765EEC817B629 /* network_engine.gyp */,
 			);
 			name = Build;
+			sourceTree = "<group>";
+		};
+		BEF2118C0E9627D2B382D574 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				498588B601EF4E2DFAD427FF /* libcrypto.dylib */,
+				81C616E04FE0BE020253B25B /* libgio-2.0.0.dylib */,
+				853418628391BC3CA7C4228E /* libglib-2.0.0.dylib */,
+				E7A54566D6166A2A7A4EA66A /* libgobject-2.0.0.dylib */,
+				5EED9538A64E5720EE9B9AF8 /* libgthread-2.0.0.dylib */,
+				12136EC3BBF683FB038436AE /* libintl.dylib */,
+				1F5B1B9D2854957EA70BCA32 /* libnice.dylib */,
+				2D4A8044A213BFF3EEDC33FC /* libsrtp.dylib */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E757AC17212EDB051E2C8AAA /* Products */ = {
@@ -349,22 +358,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B96E386E3CF4BDC397ADC1D0 /* client_socket.cpp in Sources */,
-				3D15AE5DF494C73B9AB72A37 /* data_stream.cpp in Sources */,
-				2B62C2CD2B41C621CAA5FF8F /* dynamic_buffer.cpp in Sources */,
-				3C41861F00D29509C50797F3 /* ipaddress.cpp in Sources */,
-				0BAB8714292C995D88FEB5BC /* physical_socket.cpp in Sources */,
-				CB81F62C904269113733BABE /* server_socket.cpp in Sources */,
-				780E1A36A93308C8AE11DBC7 /* socket_address.cpp in Sources */,
-				485E80D9ED9876A74749CE92 /* srtp_socket.cpp in Sources */,
-				6D2C1AFAA82CB533A06B3C51 /* stun_message_handler.cpp in Sources */,
-				842ABAC966EE1D6117441138 /* stun_socket_address.cpp in Sources */,
-				3755292296565BADE5B60DD0 /* stun_socket.cpp in Sources */,
-				7A5419E87BA2D9815FB0F6D4 /* signaling_manager.cpp in Sources */,
-				8D296AF62DBCCAA0EEA5FDC0 /* signaling_message_builder.cpp in Sources */,
-				7C6CAE7A10985FAD4AA586BA /* signaling_message_reader.cpp in Sources */,
-				211C00997F6D34ABFA12FDBF /* ice_manager.cpp in Sources */,
-				F1D1B2F394D52B48E70B9AB6 /* ice_stream.cpp in Sources */,
+				07CA0ECA245F07AA70FB1C05 /* client_socket.cpp in Sources */,
+				AA25FBE0A45BF27EC0CE7F33 /* data_stream.cpp in Sources */,
+				DCA0DA2A0777C95E68D9F747 /* dynamic_buffer.cpp in Sources */,
+				4D6366B054C3AD10644648BC /* ipaddress.cpp in Sources */,
+				C8DF482F20D583261FE4D7B3 /* physical_socket.cpp in Sources */,
+				E3A6AF6CA554BFC4CB3439B6 /* server_socket.cpp in Sources */,
+				B0E41F636F0FA3D9786EB713 /* socket_address.cpp in Sources */,
+				78BF2E1E3AA80787DCB71F24 /* srtp_socket.cpp in Sources */,
+				E2D2EC9ECE03FAC50960A31D /* stun_message_handler.cpp in Sources */,
+				EF0CCBCE022F9304C9DB15F9 /* stun_socket_address.cpp in Sources */,
+				518DEFB4824E5A43617D8020 /* stun_socket.cpp in Sources */,
+				A487BA790E27F6C640454BE2 /* signaling_manager.cpp in Sources */,
+				B909531F396905F52BBB59D0 /* signaling_message_builder.cpp in Sources */,
+				93956504789ADF6CD502995F /* signaling_message_reader.cpp in Sources */,
+				5E9A084FC11EF8E3C8E2A61F /* ice_manager.cpp in Sources */,
+				86EBCA58E21005654E41C6F0 /* ice_stream.cpp in Sources */,
+				275CD292078AD8C853EAA16E /* cache_buffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,20 +400,15 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = __APPLE_USE_RFC_3542;
 				HEADER_SEARCH_PATHS = (
-					../../libs/libsrtp/include,
-					../../libs/libsrtp/crypto/include,
 					../include,
 					../misc,
 					../thread,
-					../../libs/libnice,
-					../../libs/libnice/agent,
-					"/usr/local/include/glib-2.0",
-					../../libs/libnice/include,
+					/Users/caominhtrang/cerbero/dist/darwin_x86_64/include,
+					"/Users/caominhtrang/cerbero/dist/darwin_x86_64/include/glib-2.0",
+					"/Users/caominhtrang/cerbero/dist/darwin_x86_64/lib/glib-2.0/include",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					../../libs,
-					/usr/local/lib,
-				);
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = /Users/caominhtrang/cerbero/dist/darwin_x86_64/lib;
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = network_engine;
 			};
@@ -431,20 +436,15 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = __APPLE_USE_RFC_3542;
 				HEADER_SEARCH_PATHS = (
-					../../libs/libsrtp/include,
-					../../libs/libsrtp/crypto/include,
 					../include,
 					../misc,
 					../thread,
-					../../libs/libnice,
-					../../libs/libnice/agent,
-					"/usr/local/include/glib-2.0",
-					../../libs/libnice/include,
+					/Users/caominhtrang/cerbero/dist/darwin_x86_64/include,
+					"/Users/caominhtrang/cerbero/dist/darwin_x86_64/include/glib-2.0",
+					"/Users/caominhtrang/cerbero/dist/darwin_x86_64/lib/glib-2.0/include",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					../../libs,
-					/usr/local/lib,
-				);
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = /Users/caominhtrang/cerbero/dist/darwin_x86_64/lib;
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = network_engine;
 			};

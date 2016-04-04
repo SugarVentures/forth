@@ -10,6 +10,7 @@
 #include "ios_video_engine.hpp"
 #import <AVFoundation/AVFoundation.h>
 #import "GLFrameView.h"
+#include "video_encoding_vp.hpp"
 
 NSMutableData*   FrameStorage;
 
@@ -63,7 +64,8 @@ NSMutableData*   FrameStorage;
 void frameCallback(oppvs::PixelBuffer& pf)
 {
     if (pf.nbytes == 0)
-        return;
+        return;    
+    
     
     if ((UInt32)[FrameStorage length] < pf.nbytes)
     {
@@ -90,6 +92,7 @@ void frameCallback(oppvs::PixelBuffer& pf)
     NSString* source = @"1"; //Back Camera
     CGRect rect;
     [self addVideoSource:source hasType:oppvs::VST_WEBCAM sourceRect:rect renderRect:rect withViewID:nil atIndex:0];
+    
     
 }
 
@@ -178,6 +181,6 @@ static oppvs::window_rect_t createFromCGRect(CGRect rect)
             mVideoEngine->updateConfiguration(*activeSource);
         }
     }
-    
+
 }
 @end

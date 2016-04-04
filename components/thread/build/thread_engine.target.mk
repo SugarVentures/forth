@@ -6,7 +6,8 @@ DEFS_Default := \
 	'-DANDROID'
 
 # Flags passed to all source files.
-CFLAGS_Default :=
+CFLAGS_Default := \
+	-std=c++11
 
 # Flags passed to only C files.
 CFLAGS_C_Default :=
@@ -18,7 +19,9 @@ INCS_Default := \
 	-I$(srcdir)/../include
 
 OBJS := \
-	$(obj).target/$(TARGET)/thread.o
+	$(obj).target/$(TARGET)/thread.o \
+	$(obj).target/$(TARGET)/audio_ring_buffer.o \
+	$(obj).target/$(TARGET)/event_handler.o
 
 # Add to the list of files we specially track dependencies for.
 all_deps += $(OBJS)

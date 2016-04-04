@@ -2,6 +2,7 @@
 
 #include "random_unique32.h"
 
+
 static u_long md_32(char *string, int length)
 {
 	md5_state_t state;
@@ -22,6 +23,13 @@ static u_long md_32(char *string, int length)
 	}
 	return r;
 }
+
+#ifdef ANDROID
+static long gethostid(void)
+{   
+	return 0;
+}
+#endif
 
 /*
 * Return random unsigned 32-bit quantity. Use 'type' argument if you

@@ -143,8 +143,8 @@ public class ScreenRecorder {
         // get width and height
         Point size = new Point();
         mDisplay.getSize(size);
-        mWidth = size.x;
-        mHeight = size.y;
+        mWidth = size.x/3;
+        mHeight = size.y/3;
 
 
         // start capture reader

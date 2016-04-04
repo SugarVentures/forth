@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8ED49CB53A55D69F2749AAB7"
-               BuildableName = "libencoding_engine.dylib"
+               BuildableName = "libencoding_engine.a"
                BlueprintName = "encoding_engine"
                ReferencedContainer = "container:../test/encoding/encoding_engine.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8ED49CB53A55D69F2749AAB7"
-            BuildableName = "libencoding_engine.dylib"
+            BuildableName = "libencoding_engine.a"
             BlueprintName = "encoding_engine"
             ReferencedContainer = "container:../test/encoding/encoding_engine.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8ED49CB53A55D69F2749AAB7"
-            BuildableName = "libencoding_engine.dylib"
+            BuildableName = "libencoding_engine.a"
             BlueprintName = "encoding_engine"
             ReferencedContainer = "container:../test/encoding/encoding_engine.xcodeproj">
          </BuildableReference>

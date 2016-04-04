@@ -9,5 +9,14 @@
 #ifndef Forth_h
 #define Forth_h
 
+#import <Foundation/Foundation.h>
+
+@interface Forth : NSObject
+{
+@private
+    
+}
+
+@end
 
 #endif /* Forth_h */

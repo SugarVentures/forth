@@ -145,7 +145,8 @@ main(int argc, char *argv[])
   md5_append(&state, (const md5_byte_t *)s, strlen(s));
   md5_finish(&state, digest);
 
-  for (int di = 0; di < 16; di++)
+  int di;
+  for (di = 0; di < 16; di++)
     printf("%x", digest[di]);
 
   printf("\n");

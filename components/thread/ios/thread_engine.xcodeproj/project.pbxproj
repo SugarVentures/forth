@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0157236512FECC6385E670EB /* ring_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */; };
-		26FDDD0F9EA8028682267368 /* video_frame_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBA5530E39A73549FC10621 /* video_frame_buffer.cpp */; };
-		C288D637B8DEF93487371968 /* audio_ring_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */; };
-		EAD2DEC034B688252FC85105 /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 664245FF2A7AAA4A0CEBDF7C /* thread.cpp */; };
+		0DEF8F28288553642E9971B4 /* event_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43C2DAF7CD721250F0881799 /* event_handler.cpp */; };
+		734C836A4464E0CE7D79BD38 /* audio_ring_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */; };
+		7BCCEF59547FC32F66D846FA /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 664245FF2A7AAA4A0CEBDF7C /* thread.cpp */; };
+		FD61C192AA3F7E36E252ED47 /* ring_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0DBA5530E39A73549FC10621 /* video_frame_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = video_frame_buffer.cpp; sourceTree = "<group>"; };
-		178D0916E9DE2CF4A3DDB34D /* video_frame_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = video_frame_buffer.h; sourceTree = "<group>"; };
+		18D95BAF07DB850732022E57 /* event_handler.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = event_handler.hpp; sourceTree = "<group>"; };
+		43C2DAF7CD721250F0881799 /* event_handler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = event_handler.cpp; sourceTree = "<group>"; };
 		4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ring_buffer.cpp; sourceTree = "<group>"; };
 		56A7BEF83122E6E93D3F2728 /* audio_ring_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_ring_buffer.h; sourceTree = "<group>"; };
 		664245FF2A7AAA4A0CEBDF7C /* thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread.cpp; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 		2845B8981F9F4DF921F89516 = {
 			isa = PBXGroup;
 			children = (
-				F5650CEDA9505A318DA19550 /* Source */,
+				EA2DFDBBD3E781F82477C335 /* Source */,
 				2E5B295471092E289A95A5A3 /* Products */,
 				ABC5D748870E83CE29D9B32B /* Build */,
 			);
@@ -65,18 +65,18 @@
 			name = Build;
 			sourceTree = "<group>";
 		};
-		F5650CEDA9505A318DA19550 /* Source */ = {
+		EA2DFDBBD3E781F82477C335 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */,
 				56A7BEF83122E6E93D3F2728 /* audio_ring_buffer.h */,
+				43C2DAF7CD721250F0881799 /* event_handler.cpp */,
+				18D95BAF07DB850732022E57 /* event_handler.hpp */,
 				4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */,
 				69A036E19E16EF7C3E790468 /* ring_buffer.h */,
 				664245FF2A7AAA4A0CEBDF7C /* thread.cpp */,
 				F2B3B2119DEE055A1E290919 /* thread.hpp */,
 				AE004DD1378F0A438BFD5226 /* tsqueue.hpp */,
-				0DBA5530E39A73549FC10621 /* video_frame_buffer.cpp */,
-				178D0916E9DE2CF4A3DDB34D /* video_frame_buffer.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -125,10 +125,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAD2DEC034B688252FC85105 /* thread.cpp in Sources */,
-				0157236512FECC6385E670EB /* ring_buffer.cpp in Sources */,
-				C288D637B8DEF93487371968 /* audio_ring_buffer.cpp in Sources */,
-				26FDDD0F9EA8028682267368 /* video_frame_buffer.cpp in Sources */,
+				7BCCEF59547FC32F66D846FA /* thread.cpp in Sources */,
+				FD61C192AA3F7E36E252ED47 /* ring_buffer.cpp in Sources */,
+				734C836A4464E0CE7D79BD38 /* audio_ring_buffer.cpp in Sources */,
+				0DEF8F28288553642E9971B4 /* event_handler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +140,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
 				HEADER_SEARCH_PATHS = ../include;
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = thread_engine;
@@ -152,6 +153,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
 				HEADER_SEARCH_PATHS = ../include;
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = thread_engine;

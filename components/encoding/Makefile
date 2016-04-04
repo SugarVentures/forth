@@ -1,12 +1,8 @@
 
 include ../../Makefile.inc
-CXX = g++
-CX = gcc
-RM = rm -f
 
 INCDIR = -I$(rootDir)/../include -I$(rootDir)/../interface  -I$(rootDir)/../error  \
 		-I$(rootDir)/../../libs/libyuv/include \
-		-I$(rootDir)/../../libs/libsrtp/crypto/include  \
 		-I$(rootDir)/../misc \
 
 INCDIR += -I$(INCLUDE_PATHS)
@@ -15,7 +11,7 @@ CFLAGS = -Wall -g -std=c++11
 
 LDFLAGS = -L$(rootDir)/../../libs
 LDFLAGS += -L$(LIB_PATHS)
-LIBS = -lyuv -lvpx -lsrtp -lmisc -lopus
+LIBS = -lyuv -lvpx -lmisc -lopus
 
 OBJLIBS = libencodingengine.so
 
@@ -32,7 +28,7 @@ $(OBJLIBS): $(OBJS)
 
 
 %.o: %.cpp 
-	$(CXX) $(INCDIR) $(CFLAGS) $(resample_CPPFLAGS) -c -o $@ $<	
+	$(CXX) $(INCDIR) $(CFLAGS)  -c -o $@ $<	
 
 
 install:

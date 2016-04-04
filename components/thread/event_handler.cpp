@@ -44,7 +44,7 @@ namespace oppvs {
 		{
 			std::unique_lock<std::mutex> lk(m_mutex);
 			m_conditionVariable.wait(lk, [this]{return (m_activeEventsList.size() > 0);});
-			printf("Wake up. There is new event.\n");
+			//printf("Wake up. There is new event.\n");
 			if (processSignal() == 1)
 				break;
 		}
@@ -70,7 +70,7 @@ namespace oppvs {
 
 	void EventHandler::sendSignal(int sig, callbackFunctionType cb, void* param)
 	{
-		printf("Receive signal %d\n", sig);
+		//printf("Receive signal %d\n", sig);
 		ActiveEvent event;
 		event.signal = sig;
 		event.cb = cb;

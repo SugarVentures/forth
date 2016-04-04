@@ -10,6 +10,8 @@
 
 bool interrupt;
 int opt = 0;
+oppvs::IceStream* sendstream;
+oppvs::SignalingManager* pManager;
 
 void signalhandler(int param)
 {
@@ -43,22 +45,43 @@ void waitForAppExitSignal()
         int sig = 0;
         
         int ret = sigwait(&sigs, &sig);
+        printf("quit %d\n", ret);
         if ((sig == SIGINT) || (sig == SIGTERM))
         {
+        	
             break;
         }
     }
 }
 
-void callbackCandidateGatheringDone(void* object, std::string username, std::string password, std::vector<oppvs::IceCandidate>& candidates)
+void callbackOnReceiveImpl(void* object, uint8_t* data, uint32_t len)
+{
+	if (opt == 0)
+	{
+		
+	}
+	std::cout<< "Receive packets\n";
+}
+
+
+void callbackCandidateGatheringDone(void* object, void* icemgr, uint32_t streamid, std::string username, std::string password, std::vector<oppvs::IceCandidate>& candidates)
 {
 	std::cout << "call back " << std::endl;
 	std::cout << "Local credential: " << username << " " << password << std::endl;
 
-	if (opt == 1)
+	if (opt == 0)
 	{
-		oppvs::SignalingManager *sigManager = (oppvs::SignalingManager*)object;
-		sigManager->sendStreamRequest(username, password, candidates);
+		((oppvs::IceManager*)icemgr)->establishPeerConnection(streamid);
+	}
+	else if (opt == 1)
+	{
+		oppvs::SignalingManager* sig = (oppvs::SignalingManager*)object;
+		int ret = sig->sendStreamRequest(username, password, candidates);
+		std::cout << "Send stream request " << ret << "\n";
+	}
+	else
+	{
+		((oppvs::IceManager*)icemgr)->establishPeerConnection(streamid);
 	}
 
 	for (int i = 0; i < candidates.size(); i++)
@@ -76,17 +99,18 @@ void callbackCandidateGatheringDone(void* object, std::string username, std::str
 void callbackOnIceResponse(void* object, std::string& username, std::string& password, std::vector<oppvs::IceCandidate>& candidates)
 {
 	std::cout << "call back on ice response" << std::endl;
-	oppvs::IceManager* iceManager = (oppvs::IceManager*)object;
-	oppvs::IceStream* stream = iceManager->getStreamByID(1);
-	std::cout << "Username " << username << " password " << password << std::endl;
-	stream->setRemoteCredentials(username, password);
-	stream->setRemoteCandidates(candidates);
-
-	//gchar msg[] = "hello world!";
-    //stream->send(sizeof(msg), msg, 1);
+	//candidates.erase(candidates.begin(), candidates.begin() + candidates.size() - 1);
+	oppvs::IceManager* icemgr = (oppvs::IceManager*)object;
+	icemgr->setPeerInfo(username, password, candidates);
+	oppvs::IceStream* stream = icemgr->createStream();
+	icemgr->attachCallbackEvent(callbackOnReceiveImpl, object);
+	stream->requestLocalCandidates();
+	if (opt == 1)
+		opt = 3;
+	
 	for (int i = 0; i < candidates.size(); i++)
 	{
-        std::cout << "Candidate: " << candidates[i].component << " "
+        std::cout << "Remote Candidate: " << candidates[i].component << " "
 			  << candidates[i].foundation << " "
 			  << candidates[i].priority << " "
 			  << candidates[i].ip << " "
@@ -94,18 +118,26 @@ void callbackOnIceResponse(void* object, std::string& username, std::string& pas
 			  << candidates[i].port << " "
 			  << candidates[i].type << std::endl;
 	}
-	
 }
 
-void onNewSubscriber(void* object, oppvs::IceStream* stream)
+void callbackNewSubscriberImpl(void* object, oppvs::IceStream* stream)
 {
-	printf("New subscriber\n");
+	std::cout<<"New subs\n";
+	sendstream = stream;
+
+	gchar msg[] = "hello world!";
+	printf("Send message %d\n", sizeof(msg));
+	sendstream->send(sizeof(msg), (uint8_t*)msg, 1);
+		
 }
 
-void onReceiveSegment(void* object, uint8_t* data, uint32_t len)
+int updateStreamInfo(const oppvs::ServiceInfo& info)
 {
-	
+	std::cout << "Stream response\n";
+	pManager->sendPeerRegister();
+	return 0;
 }
+
 
 int main(int argc, char* argv[])
 {
@@ -136,24 +168,50 @@ int main(int argc, char* argv[])
 	signalingServerAddress.setIP(address);
 	signalingServerAddress.setPort(33333);
 
-	oppvs::SignalingHandler sigManager;
-	oppvs::VideoStreamInfo info;
-	info.noSources = 1;
-	info.sources = new oppvs::VideoSourceInfo[1];
-	info.sources[0].width = 1280;
-	info.sources[0].height = 780;
+	oppvs::SignalingManager sigManager(signalingServerAddress);
+	oppvs::ServiceInfo info;
+	info.videoStreamInfo.noSources = 1;
+	info.videoStreamInfo.sources = new oppvs::VideoSourceInfo[1];
+	info.videoStreamInfo.sources[0].width = 1280;
+	info.videoStreamInfo.sources[0].height = 780;
 
-	if (sigManager.init(stunServer, turnServer, signalingServerAddress, (oppvs::StreamingRole)opt, &info) < 0)
+	oppvs::IceManager* icemgr = new oppvs::IceManager();
+	pManager = &sigManager;
+
+	if (sigManager.init() < 0)
+		return -1;
+
+	if (opt == 0)
+	{
+		if (sigManager.sendStreamRegister("7116f0d7-5c27-44e6-8aa4-bc4ddeea9935", info) < 0)
+		{	
 			return -1;
+		}
+		icemgr->init(stunServer, turnServer, 1);
+		icemgr->attachCallbackEvent(callbackCandidateGatheringDone, (void*)&sigManager);
+		icemgr->attachCallbackEvent(callbackNewSubscriberImpl, NULL);
 
-	sigManager.attachCallback(onNewSubscriber, NULL);
-	sigManager.attachCallback(onReceiveSegment, NULL);	
+		sigManager.attachCallbackEvent(callbackOnIceResponse, (void*)icemgr);
+	}
+	else
+	{
+		sigManager.setStreamKey("7116f0d7-5c27-44e6-8aa4-bc4ddeea9935");
+		sigManager.attachCallback(updateStreamInfo);
+		icemgr->init(stunServer, turnServer, 0);
+		icemgr->attachCallbackEvent(callbackCandidateGatheringDone, (void*)&sigManager);
+		icemgr->attachCallbackEvent(callbackNewSubscriberImpl, NULL);
 
-	std::cout << "Server: " << turnServer.serverAddress << " port: " << turnServer.port << " user: " << turnServer.username << " " << turnServer.password << std::endl;
-	std::string streamKey = std::string("1234", oppvs::STREAM_KEY_SIZE);
-	sigManager.start(streamKey);	
+		icemgr->attachCallbackEvent(callbackOnReceiveImpl, (void*)icemgr);
+		oppvs::IceStream* stream = icemgr->createStream();
+		stream->requestLocalCandidates();
+		sigManager.attachCallbackEvent(callbackOnIceResponse, (void*)icemgr);
+	}
 	
+	std::thread waitThread(&oppvs::SignalingManager::waitResponse, &sigManager);
+	waitThread.join();
 	waitForAppExitSignal();
 	
+	icemgr->release();
+	delete icemgr;
 	return 0;
 }

@@ -35,6 +35,7 @@ int main()
 {
 	DataStream ds;
 	ds.grow(2);
+
 	std::cout << ds.size() << " " << ds.capacity() << std::endl;
 
 	SharedDynamicBufferRef bufRef(new DynamicBuffer());

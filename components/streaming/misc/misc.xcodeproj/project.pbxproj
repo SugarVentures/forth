@@ -23,14 +23,13 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		0388046998F30EC7692BDA76 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0656731A76338C515808BFA1 /* libsrtp.a */; };
-		1601AA724E71D677C87E5C51 /* libmisc1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41628BEE7EE039C4C1422B1E /* libmisc1.a */; };
-		2A2C5CAF857429BF2453629E /* fasthash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F3AFA5DA3AF838090D67CF7D /* fasthash.cpp */; };
-		416C451BDA720031370195E7 /* libmisc2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 866A5353924FAB37589B3106 /* libmisc2.a */; };
-		50C0AA6639E659455A8BD6C6 /* atomic_helper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556AA56588FC7602339CC94C /* atomic_helper.cpp */; };
-		7DF61D5D8D19083B1C757478 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = B9F62BED15BE22C57DCA487F /* md5.c */; };
-		A44E229522BD60A9C4520CB2 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = F573E731CA778C7C7AC76BE0 /* utility.c */; };
-		C2134185A81231E796A786B4 /* random_unique32.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D8231CAE8346B3BA62E2D59 /* random_unique32.c */; };
+		2D446716807E10B8E77B0B75 /* libmisc1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 62735BE20608A489F566957C /* libmisc1.dylib */; };
+		54875A6B036B85F9AF739311 /* atomic_helper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556AA56588FC7602339CC94C /* atomic_helper.cpp */; };
+		6C3FDEF1D15C7AC26694CC73 /* libmisc2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC49AA1DA067A1C8DE82739 /* libmisc2.dylib */; };
+		746F4EF5B1F2CC4F81E34463 /* fasthash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F3AFA5DA3AF838090D67CF7D /* fasthash.cpp */; };
+		786E6E784035E71174980751 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = F573E731CA778C7C7AC76BE0 /* utility.c */; };
+		7DC2A758CC56E4CECE2B1314 /* random_unique32.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D8231CAE8346B3BA62E2D59 /* random_unique32.c */; };
+		AEC99B730CE438CBBFC667E7 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = B9F62BED15BE22C57DCA487F /* md5.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,15 +71,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0656731A76338C515808BFA1 /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsrtp.a; path = ../../libs/libsrtp.a; sourceTree = "<group>"; };
 		112F9C5F9E6866F9853D78BB /* fasthash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fasthash.h; sourceTree = "<group>"; };
 		216623FC9ADEE984538060C7 /* md5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
-		41628BEE7EE039C4C1422B1E /* libmisc1.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmisc1.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		432C342B9B22736EADC67CFA /* random_unique32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = random_unique32.h; sourceTree = "<group>"; };
 		4E8015AF33C7C2A6E8DB91B3 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
+		4EC49AA1DA067A1C8DE82739 /* libmisc2.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libmisc2.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		556AA56588FC7602339CC94C /* atomic_helper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = atomic_helper.cpp; sourceTree = "<group>"; };
+		62735BE20608A489F566957C /* libmisc1.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libmisc1.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D8231CAE8346B3BA62E2D59 /* random_unique32.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = random_unique32.c; sourceTree = "<group>"; };
-		866A5353924FAB37589B3106 /* libmisc2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmisc2.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EC063B91534944B343F3ACB /* libmisc.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libmisc.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		B171FEC714B94E195E7557E5 /* crc.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = crc.hpp; sourceTree = "<group>"; };
 		B9F62BED15BE22C57DCA487F /* md5.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = md5.c; sourceTree = "<group>"; };
@@ -96,8 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1601AA724E71D677C87E5C51 /* libmisc1.a in Frameworks */,
-				416C451BDA720031370195E7 /* libmisc2.a in Frameworks */,
+				2D446716807E10B8E77B0B75 /* libmisc1.dylib in Frameworks */,
+				6C3FDEF1D15C7AC26694CC73 /* libmisc2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +103,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0388046998F30EC7692BDA76 /* libsrtp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,24 +116,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6483D7E011F4D93ED3398941 /* Products */ = {
+		98D8E080063793C61CC0585B /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				8EC063B91534944B343F3ACB /* libmisc.dylib */,
-				41628BEE7EE039C4C1422B1E /* libmisc1.a */,
-				866A5353924FAB37589B3106 /* libmisc2.a */,
+				62735BE20608A489F566957C /* libmisc1.dylib */,
+				4EC49AA1DA067A1C8DE82739 /* libmisc2.dylib */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		854D089C4C2FA2F0C227DF52 = {
-			isa = PBXGroup;
-			children = (
-				B442F3CE148ED635E81300B5 /* Source */,
-				BAA4E7AA6B638B944AF2734E /* Frameworks */,
-				6483D7E011F4D93ED3398941 /* Products */,
-				E1287B00814B48E7490B3BE8 /* Build */,
-			);
 			sourceTree = "<group>";
 		};
 		B442F3CE148ED635E81300B5 /* Source */ = {
@@ -157,14 +144,6 @@
 			name = Source;
 			sourceTree = "<group>";
 		};
-		BAA4E7AA6B638B944AF2734E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				0656731A76338C515808BFA1 /* libsrtp.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		E1287B00814B48E7490B3BE8 /* Build */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +151,15 @@
 				DA2D10FDB320BBC2736A4E25 /* misc.gyp */,
 			);
 			name = Build;
+			sourceTree = "<group>";
+		};
+		EF0331F3C0D027E8778A5041 = {
+			isa = PBXGroup;
+			children = (
+				B442F3CE148ED635E81300B5 /* Source */,
+				98D8E080063793C61CC0585B /* Products */,
+				E1287B00814B48E7490B3BE8 /* Build */,
+			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,8 +178,8 @@
 			);
 			name = libmisc2;
 			productName = misc2;
-			productReference = 866A5353924FAB37589B3106 /* libmisc2.a */;
-			productType = "com.apple.product-type.library.static";
+			productReference = 4EC49AA1DA067A1C8DE82739 /* libmisc2.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
 		};
 		CEC4126D233DEC51E7FA00D1 /* misc */ = {
 			isa = PBXNativeTarget;
@@ -224,8 +212,8 @@
 			);
 			name = libmisc1;
 			productName = misc1;
-			productReference = 41628BEE7EE039C4C1422B1E /* libmisc1.a */;
-			productType = "com.apple.product-type.library.static";
+			productReference = 62735BE20608A489F566957C /* libmisc1.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
 
@@ -238,7 +226,7 @@
 			buildConfigurationList = AF9F50042EDBC76FD9525D8B /* Build configuration list for PBXProject "misc" */;
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 1;
-			mainGroup = 854D089C4C2FA2F0C227DF52;
+			mainGroup = EF0331F3C0D027E8778A5041;
 			projectDirPath = ../../misc;
 			projectRoot = "";
 			targets = (
@@ -255,8 +243,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50C0AA6639E659455A8BD6C6 /* atomic_helper.cpp in Sources */,
-				2A2C5CAF857429BF2453629E /* fasthash.cpp in Sources */,
+				54875A6B036B85F9AF739311 /* atomic_helper.cpp in Sources */,
+				746F4EF5B1F2CC4F81E34463 /* fasthash.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,9 +259,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DF61D5D8D19083B1C757478 /* md5.c in Sources */,
-				C2134185A81231E796A786B4 /* random_unique32.c in Sources */,
-				A44E229522BD60A9C4520CB2 /* utility.c in Sources */,
+				AEC99B730CE438CBBFC667E7 /* md5.c in Sources */,
+				7DC2A758CC56E4CECE2B1314 /* random_unique32.c in Sources */,
+				786E6E784035E71174980751 /* utility.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,9 +299,7 @@
 		0B69CCE895798F808DD64D11 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
-				SDKROOT = iphoneos;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
 			};
 			name = Release;
@@ -321,9 +307,7 @@
 		1F7B255B183113CE428E240E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
-				SDKROOT = iphoneos;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
 			};
 			name = Debug;
@@ -331,22 +315,16 @@
 		49DA13F0FB3EEF86F8F662EB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
-				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Debug;
 		};
 		642AD3A5DB07D6C97FC47408 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
-				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Release;
 		};
@@ -360,16 +338,14 @@
 		9ACCC010DF6B59F1CC3ED523 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = (
-					../../libs/libsrtp/crypto/include,
+					/Users/caominhtrang/cerbero/dist/darwin_x86_64/include,
 					../include,
 				);
-				LIBRARY_SEARCH_PATHS = ../../libs;
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc1;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Debug;
 		};
@@ -383,40 +359,36 @@
 		B8844AD2FD89C1E6713E9760 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = ../include;
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc2;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Debug;
 		};
 		C1B51B3BCB6269A0D25C0ECD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = ../include;
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc2;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Release;
 		};
 		CB7985C70F19E010C61511EB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = (
-					../../libs/libsrtp/crypto/include,
+					/Users/caominhtrang/cerbero/dist/darwin_x86_64/include,
 					../include,
 				);
-				LIBRARY_SEARCH_PATHS = ../../libs;
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc1;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Release;
 		};

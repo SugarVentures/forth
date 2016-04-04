@@ -12,7 +12,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *streamKey;
 @property (strong, nonatomic) IBOutlet UIButton *playButton;
 - (IBAction)playStreaming:(id)sender;
-@property (strong, nonatomic) IBOutlet UIView *container;
+@property (strong, nonatomic) IBOutlet UIView *container    ;
 
 @end
 

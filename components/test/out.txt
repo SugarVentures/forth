@@ -1,0 +1,428 @@
+Address for signaling: 0.0.0.0:61313
+sent done 88 bytes
+Run global Ice main loop
+Receive 664 bytes 0.0.0.0:61313 - 192.168.1.9:33333
+Read 664 bytes
+3 624 7116f0d7-5c27-44e6-8aa4-bc4ddeea9935
+Username: 88ZN password: hw/rRav9tiq7cZhq4abLn1
+Candidates: 10
+Receive Ice Response
+call back on ice response
+(process:51881): libnice-DEBUG: Created NiceStream (1 created, 0 destroyed)
+(process:51881): libnice-DEBUG: Created NiceComponent (1 created, 0 destroyed)
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : allocating stream id 1 (0x7f8915001c00)
+Ice Stream id: 1
+Setup TURN server info
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: added relay server [192.168.1.9]:3478 of type 0 to s/c 1/1 with user/pass : turn -- password
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : In ICE-FULL mode, starting candidate gathering.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : libnice compiled without UPnP support
+(process:51881): libnice-DEBUG: Failed to convert address to string for interface ‘lo0’.
+(process:51881): libnice-DEBUG: Interface:  lo0
+(process:51881): libnice-DEBUG: IP Address: ::1
+(process:51881): libnice-DEBUG: Ignoring loopback interface
+(process:51881): libnice-DEBUG: Interface:  lo0
+(process:51881): libnice-DEBUG: IP Address: 127.0.0.1
+(process:51881): libnice-DEBUG: Ignoring loopback interface
+(process:51881): libnice-DEBUG: Interface:  lo0
+(process:51881): libnice-DEBUG: IP Address: fe80::1%lo0
+(process:51881): libnice-DEBUG: Ignoring loopback interface
+(process:51881): libnice-DEBUG: Failed to convert address to string for interface ‘en0’.
+(process:51881): libnice-DEBUG: Interface:  en0
+(process:51881): libnice-DEBUG: IP Address: fe80::62f8:1dff:fec8:d9b2%en0
+(process:51881): libnice-DEBUG: Interface:  en0
+(process:51881): libnice-DEBUG: IP Address: 192.168.1.9
+(process:51881): libnice-DEBUG: Failed to convert address to string for interface ‘en1’.
+(process:51881): libnice-DEBUG: Failed to convert address to string for interface ‘en2’.
+(process:51881): libnice-DEBUG: Failed to convert address to string for interface ‘p2p0’.
+(process:51881): libnice-DEBUG: Failed to convert address to string for interface ‘awdl0’.
+(process:51881): libnice-DEBUG: Interface:  awdl0
+(process:51881): libnice-DEBUG: IP Address: fe80::60ea:79ff:fe61:788d%awdl0
+(process:51881): libnice-DEBUG: Failed to convert address to string for interface ‘bridge0’.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Trying to create host candidate on port 0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Could not set socket ToS: P\x86\xd8O\xff\u007f
+(process:51881): libnice-DEBUG: Component 0x7f8915002200 (agent 0x7f89130130a0): Attach source (stream 1).
+(process:51881): libnice-DEBUG: Attaching source 0x7f8914903560 (socket 0x7f891300ec90, FD 9) to context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding new srv-rflx candidate discovery 0x7f891500d600
+
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding new relay-rflx candidate discovery 0x7f8915021000
+
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Trying to create host candidate on port 0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Trying to create host candidate on port 0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Could not set socket ToS: P\x86\xd8O\xff\u007f
+(process:51881): libnice-DEBUG: Component 0x7f8915002200 (agent 0x7f89130130a0): Attach source (stream 1).
+(process:51881): libnice-DEBUG: Attaching source 0x7f89149036c0 (socket 0x7f891500b260, FD 10) to context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Trying to create host candidate on port 0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Could not set IPV6 socket ToS: P\x86\xd8O\xff\u007f
+(process:51881): libnice-DEBUG: Component 0x7f8915002200 (agent 0x7f89130130a0): Attach source (stream 1).
+(process:51881): libnice-DEBUG: Attaching source 0x7f8914903760 (socket 0x7f891500b2d0, FD 11) to context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding new srv-rflx candidate discovery 0x7f8915035200
+
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding new relay-rflx candidate discovery 0x7f8915048c00
+
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Trying to create host candidate on port 0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Trying to create host candidate on port 0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Could not set IPV6 socket ToS: P\x86\xd8O\xff\u007f
+(process:51881): libnice-DEBUG: Component 0x7f8915002200 (agent 0x7f89130130a0): Attach source (stream 1).
+(process:51881): libnice-DEBUG: Attaching source 0x7f89149038c0 (socket 0x7f891500b400, FD 12) to context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Trying to create host candidate on port 0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Could not set socket ToS: P\x86\xd8O\xff\u007f
+(process:51881): libnice-DEBUG: Component 0x7f8915002200 (agent 0x7f89130130a0): Attach source (stream 1).
+(process:51881): libnice-DEBUG: Attaching source 0x7f8914904210 (socket 0x7f891500b470, FD 13) to context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding new srv-rflx candidate discovery 0x7f891505c600
+
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding new relay-rflx candidate discovery 0x7f8915070000
+
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Trying to create host candidate on port 0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Trying to create host candidate on port 0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Could not set socket ToS: P\x86\xd8O\xff\u007f
+(process:51881): libnice-DEBUG: Component 0x7f8915002200 (agent 0x7f89130130a0): Attach source (stream 1).
+(process:51881): libnice-DEBUG: Attaching source 0x7f8914904070 (socket 0x7f891500b550, FD 14) to context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : discovery tick #1 with list 0x7f8912c04990 (1)
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : discovery - scheduling cand type 1 addr 192.168.1.9.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : stream 1 component 1 STATE-CHANGE disconnected -> gathering.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : discovery - scheduling cand type 3 addr 192.168.1.9.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : discovery - scheduling cand type 1 addr 192.168.1.9.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : discovery - scheduling cand type 3 addr 192.168.1.9.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : discovery - scheduling cand type 1 addr 192.168.1.9.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : discovery - scheduling cand type 3 addr 192.168.1.9.
+SIGNAL: state changed Stream: 1 Component ID: 1 State: gathering
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 1 valid messages of length 92 from base socket 0x7f891500b2d0.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received on local socket 11 from [192.168.1.9]:3478 (92 octets).
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received from TURN server candidate.
+(process:51881): libnice-DEBUG: compact_input_message: **WARNING: SLOW PATH**
+(process:51881): libnice-DEBUG: Message 0x700000070cc0 (from: 0x700000070bd8, length: 92)
+(process:51881): libnice-DEBUG: 	Buffer 0x700000070d30 (length: 65535)
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: inbound STUN packet for 1/1 (stream/component) from [192.168.1.9]:3478 (92 octets) :
+(process:51881): libnice-stun-DEBUG: STUN demux error: no cookie!
+(process:51881): libnice-stun-DEBUG: STUN unknown: 0 mandatory attribute(s)!
+(process:51881): libnice-stun-DEBUG: Received 92-bytes STUN message
+(process:51881): libnice-stun-DEBUG:  No XOR-MAPPED-ADDRESS: 1
+(process:51881): libnice-stun-DEBUG:  Mapped address found!
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : stun_bind_process/disc for 0x7f8915035200 res 0.
+(process:51881): libnice-DEBUG: Candidate 0x7f8915084540 (component-id 1) redundant, ignoring.
+(process:51881): libnice-DEBUG: Candidate 0x7f89150845d0 (component-id 1) redundant, ignoring.
+(process:51881): libnice-DEBUG: Candidate 0x7f8915084660 (component-id 1) redundant, ignoring.
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Valid STUN packet received.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received 0 valid messages with 92 bytes
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 0 valid messages of length 0 from base socket 0x7f891500b2d0.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received -1 valid messages with 0 bytes
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 379ms).
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 379ms).
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 379ms).
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 379ms).
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 379ms).
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 1 valid messages of length 108 from base socket 0x7f891500b2d0.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received on local socket 11 from [192.168.1.9]:3478 (108 octets).
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received from TURN server candidate.
+(process:51881): libnice-DEBUG: compact_input_message: **WARNING: SLOW PATH**
+(process:51881): libnice-DEBUG: Message 0x700000070cc0 (from: 0x700000070bd8, length: 108)
+(process:51881): libnice-DEBUG: 	Buffer 0x700000070d30 (length: 65535)
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: inbound STUN packet for 1/1 (stream/component) from [192.168.1.9]:3478 (108 octets) :
+(process:51881): libnice-stun-DEBUG: STUN demux error: no FINGERPRINT attribute!
+(process:51881): libnice-stun-DEBUG: STUN unknown: 0 mandatory attribute(s)!
+(process:51881): libnice-stun-DEBUG:  STUN error message received (code: 401)
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : stun_turn_process/disc for 0x7f8915048c00 res 2.
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Valid STUN packet received.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received 0 valid messages with 108 bytes
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 0 valid messages of length 0 from base socket 0x7f891500b2d0.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received -1 valid messages with 0 bytes
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : discovery - scheduling cand type 3 addr 192.168.1.9.
+(process:51881): libnice-stun-DEBUG:  Message HMAC-SHA1 message integrity:
+(process:51881): libnice-stun-DEBUG:   key     : 0x70617373776f7264
+(process:51881): libnice-stun-DEBUG:   sent    : 0x26d93b3e66d9a6ef622e3a73bfac1ff189cffc8c
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 1 valid messages of length 112 from base socket 0x7f891500b2d0.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received on local socket 11 from [192.168.1.9]:3478 (112 octets).
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received from TURN server candidate.
+(process:51881): libnice-DEBUG: compact_input_message: **WARNING: SLOW PATH**
+(process:51881): libnice-DEBUG: Message 0x700000070cc0 (from: 0x700000070bd8, length: 112)
+(process:51881): libnice-DEBUG: 	Buffer 0x700000070d30 (length: 65535)
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: inbound STUN packet for 1/1 (stream/component) from [192.168.1.9]:3478 (112 octets) :
+(process:51881): libnice-stun-DEBUG: STUN demux error: no FINGERPRINT attribute!
+(process:51881): libnice-stun-DEBUG:  Message HMAC-SHA1 fingerprint:
+(process:51881): libnice-stun-DEBUG:   key     : 0x70617373776f7264
+(process:51881): libnice-stun-DEBUG:   expected: 0x0a2422ae26efab59f33394bb8301139c6602cdf4
+(process:51881): libnice-stun-DEBUG:   received: 0x0a2422ae26efab59f33394bb8301139c6602cdf4
+(process:51881): libnice-stun-DEBUG: STUN auth: OK!
+(process:51881): libnice-stun-DEBUG: STUN unknown: 0 mandatory attribute(s)!
+(process:51881): libnice-stun-DEBUG: Received 112-bytes STUN message
+(process:51881): libnice-stun-DEBUG:  Mapped address found!
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : stun_turn_process/disc for 0x7f8915048c00 res 1.
+(process:51881): libnice-DEBUG: Candidate 0x7f89150846f0 (component-id 1) redundant, ignoring.
+(process:51881): libnice-DEBUG: Candidate 0x7f8913803010 (component-id 1) redundant, ignoring.
+(process:51881): libnice-DEBUG: Candidate 0x7f89138030a0 (component-id 1) redundant, ignoring.
+(process:51881): libnice-DEBUG: Component 0x7f8915002200 (agent 0x7f89130130a0): Attach source (stream 1).
+(process:51881): libnice-DEBUG: Attaching source 0x7f8914800140 (socket 0x7f8915034cf0, FD 11) to context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding new refresh candidate 0x7f8915805c00 with timeout 540000
+(process:51881): libnice-DEBUG: timer source is : 0x7f89148004d0
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Valid STUN packet received.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received 0 valid messages with 112 bytes
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 0 valid messages of length 0 from base socket 0x7f891500b2d0.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received -1 valid messages with 0 bytes
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 789ms).
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 789ms).
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 789ms).
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 789ms).
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : discovery tick #51 with list 0x7f8912c04990 (1)
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 1594ms).
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 1594ms).
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 1594ms).
+(process:51881): libnice-stun-DEBUG: STUN transaction retransmitted (timeout 1594ms).
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : discovery tick #101 with list 0x7f8912c04990 (1)
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : bind discovery timed out, aborting discovery item.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : bind discovery timed out, aborting discovery item.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : bind discovery timed out, aborting discovery item.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : bind discovery timed out, aborting discovery item.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Candidate gathering FINISHED, stopping discovery timer.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: gathered UDP local candidate : [fe80::60ea:79ff:fe61:788d]:60606 for s1/c1. U/P '(null)'/'(null)'
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: gathered TCP-ACT local candidate : [fe80::60ea:79ff:fe61:788d]:0 for s1/c1. U/P '(null)'/'(null)'
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: gathered TCP-PASS local candidate : [fe80::60ea:79ff:fe61:788d]:61318 for s1/c1. U/P '(null)'/'(null)'
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: gathered UDP local candidate : [192.168.1.9]:51823 for s1/c1. U/P '(null)'/'(null)'
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: gathered TCP-ACT local candidate : [192.168.1.9]:0 for s1/c1. U/P '(null)'/'(null)'
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: gathered TCP-PASS local candidate : [192.168.1.9]:61319 for s1/c1. U/P '(null)'/'(null)'
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: gathered UDP local candidate : [fe80::62f8:1dff:fec8:d9b2]:51824 for s1/c1. U/P '(null)'/'(null)'
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: gathered TCP-ACT local candidate : [fe80::62f8:1dff:fec8:d9b2]:0 for s1/c1. U/P '(null)'/'(null)'
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: gathered TCP-PASS local candidate : [fe80::62f8:1dff:fec8:d9b2]:61320 for s1/c1. U/P '(null)'/'(null)'
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: gathered UDP local candidate : [192.168.1.9]:56959 for s1/c1. U/P '(null)'/'(null)'
+Gather candidate done
+call back 
+Local credential: o8F0 R/Z8gQwdGLTPEovbr+fnA3
+Selecting for component 1...
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: set_remote_candidates 1 1
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding UDP remote candidate with addr [fe80::60ea:79ff:fe61:788d]:61102 for s1/c1. U/P '(null)'/'(null)' prio: 2013266431
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 1 and 1
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914004200 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914004200 with foundation of '1:1' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : stream 1 component 1 STATE-CHANGE gathering -> connecting.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 7 and 1
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914001000 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914001000 with foundation of '7:1' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding UDP remote candidate with addr [fe80::60ea:79ff:fe61:788d]:0 for s1/c1. U/P '(null)'/'(null)' prio: 1019216383
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 1 and 2
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914001600 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914001600 with foundation of '1:2' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 7 and 2
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914005200 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914005200 with foundation of '7:2' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding UDP remote candidate with addr [fe80::60ea:79ff:fe61:788d]:61315 for s1/c1. U/P '(null)'/'(null)' prio: 1015022079
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 1 and 3
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914005800 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914005800 with foundation of '1:3' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 7 and 3
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914005e00 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914005e00 with foundation of '7:3' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding UDP remote candidate with addr [192.168.1.9]:60604 for s1/c1. U/P '(null)'/'(null)' prio: 2013266431
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 4 and 4
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914006400 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914006400 with foundation of '4:4' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 16 and 4
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914006a00 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914006a00 with foundation of '16:4' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding UDP remote candidate with addr [192.168.1.9]:0 for s1/c1. U/P '(null)'/'(null)' prio: 1019216383
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 4 and 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914007000 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914007000 with foundation of '4:5' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 16 and 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914007600 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914007600 with foundation of '16:5' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding UDP remote candidate with addr [192.168.1.9]:61316 for s1/c1. U/P '(null)'/'(null)' prio: 1015022079
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 4 and 6
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914007c00 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914007c00 with foundation of '4:6' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 16 and 6
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914008200 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914008200 with foundation of '16:6' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding UDP remote candidate with addr [fe80::62f8:1dff:fec8:d9b2]:60605 for s1/c1. U/P '(null)'/'(null)' prio: 2013266431
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 1 and 7
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914008800 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914008800 with foundation of '1:7' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 7 and 7
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914008e00 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914008e00 with foundation of '7:7' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding UDP remote candidate with addr [fe80::62f8:1dff:fec8:d9b2]:0 for s1/c1. U/P '(null)'/'(null)' prio: 1019216383
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 1 and 8
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914009400 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914009400 with foundation of '1:8' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 7 and 8
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f8914009a00 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f8914009a00 with foundation of '7:8' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding UDP remote candidate with addr [fe80::62f8:1dff:fec8:d9b2]:61317 for s1/c1. U/P '(null)'/'(null)' prio: 1015022079
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 1 and 9
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f891400a000 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f891400a000 with foundation of '1:9' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 7 and 9
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f891400a600 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f891400a600 with foundation of '7:9' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Adding UDP remote candidate with addr [192.168.1.9]:60985 for s1/c1. U/P '(null)'/'(null)' prio: 167772671
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 4 and 16
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f891400ac00 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f891400ac00 with foundation of '4:16' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, Adding check pair between 16 and 16
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : creating new pair 0x7f891400b200 state 5
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : added a new conncheck 0x7f891400b200 with foundation of '16:16' to list 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Pair 0x7f8914008e00 with s/c-id 1/1 (7:7) unfrozen.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : pair 0x7f8914008e00 state WAITING
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : priv_conn_check_unfreeze_next returned 1
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : pair 0x7f8914008e00 state IN_PROGRESS
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : STUN-CC REQ to 'fe80::62f8:1dff:fec8:d9b2:60605', socket=13, pair=7:7 (c-id:1), tie=6620137516587629680, username='88ZN:o8F0' (9), password='hw/rRav9tiq7cZhq4abLn1' (22), priority=1845494271.
+(process:51881): libnice-stun-DEBUG:  Message HMAC-SHA1 message integrity:
+(process:51881): libnice-stun-DEBUG:   key     : 0x68772f725261763974697137635a68713461624c6e31
+(process:51881): libnice-stun-DEBUG:   sent    : 0x82efcc21225f1b548e1b6195cbf74b70abc6cef1
+(process:51881): libnice-stun-DEBUG:  Message HMAC-SHA1 fingerprint: 0x44ee893f
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: conncheck created 92 - 0x7f8914008eb8
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : timer tick #1: 19 frozen, 1 in-progress, 0 waiting, 0 succeeded, 0 discovered, 0 nominated, 0 waiting-for-nom.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : priv_conn_check_tick_unlocked returned 1
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : conn_check_schedule_next returning 1
+SIGNAL: state changed Stream: 1 Component ID: 1 State: connecting
+Candidate: 1 1 2013266431 fe80::60ea:79ff:fe61:788d udp 60606 host
+Candidate: 1 2 1019216383 fe80::60ea:79ff:fe61:788d tcp active 0 host
+Candidate: 1 3 1015022079 fe80::60ea:79ff:fe61:788d tcp passive 61318 host
+Candidate: 1 4 2013266431 192.168.1.9 udp 51823 host
+Candidate: 1 5 1019216383 192.168.1.9 tcp active 0 host
+Candidate: 1 6 1015022079 192.168.1.9 tcp passive 61319 host
+Candidate: 1 7 2013266431 fe80::62f8:1dff:fec8:d9b2 udp 51824 host
+Candidate: 1 8 1019216383 fe80::62f8:1dff:fec8:d9b2 tcp active 0 host
+Candidate: 1 9 1015022079 fe80::62f8:1dff:fec8:d9b2 tcp passive 61320 host
+Candidate: 1 16 167772671 192.168.1.9 udp 56959 relay
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 1 valid messages of length 92 from base socket 0x7f891500b470.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received on local socket 13 from [fe80::62f8:1dff:fec8:d9b2]:60605 (92 octets).
+(process:51881): libnice-DEBUG: compact_input_message: **WARNING: SLOW PATH**
+(process:51881): libnice-DEBUG: Message 0x700000070cc0 (from: 0x700000070bd8, length: 92)
+(process:51881): libnice-DEBUG: 	Buffer 0x700000070d30 (length: 65535)
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: inbound STUN packet for 1/1 (stream/component) from [fe80::62f8:1dff:fec8:d9b2]:60605 (92 octets) :
+(process:51881): libnice-stun-DEBUG: STUN demux: OK!
+(process:51881): libnice-stun-DEBUG:  Message HMAC-SHA1 fingerprint:
+(process:51881): libnice-stun-DEBUG:   key     : 0x68772f725261763974697137635a68713461624c6e31
+(process:51881): libnice-stun-DEBUG:   expected: 0x4623f87bc36680e82eca60878056eba34de08022
+(process:51881): libnice-stun-DEBUG:   received: 0x4623f87bc36680e82eca60878056eba34de08022
+(process:51881): libnice-stun-DEBUG: STUN auth: OK!
+(process:51881): libnice-stun-DEBUG: STUN unknown: 0 mandatory attribute(s)!
+(process:51881): libnice-stun-DEBUG: Received 92-bytes STUN message
+(process:51881): libnice-stun-DEBUG: Mapped address found!
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : stun_bind_process/conncheck for 0x7f8914008e00 res 0 (controlling=1).
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : conncheck 0x7f8914008e00 MATCHED.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : conncheck 0x7f8914008e00 SUCCEEDED.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Pair 0x7f8914008800 with s/c-id 1/1 (1:7) unfrozen.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : pair 0x7f8914008800 state WAITING
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : changing SELECTED PAIR for component 1: 7:7 (prio:8646913483306173438).
+(process:51881): libnice-DEBUG: setting SELECTED PAIR for component 1: 7:7 (prio:8646913483306173438).
+(process:51881): libnice-stun-DEBUG:  Message HMAC-SHA1 fingerprint: 0xdb08b52f
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : stun_bind_keepalive for pair 0x7f8915002240 res 28.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : resending STUN on 1 to keep the candidate alive.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : resending STUN on 4 to keep the candidate alive.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : resending STUN on 7 to keep the candidate alive.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Local selected pair: 1:1 7 UDP fe80::62f8:1dff:fec8:d9b2:51824 HOST
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: Remote selected pair: 1:1 7 UDP fe80::62f8:1dff:fec8:d9b2:60605 HOST
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : stream 1 component 1 STATE-CHANGE connecting -> connected.
+(process:51881): libnice-DEBUG: Agent XXX: Finding highest priority for component 1
+(process:51881): libnice-DEBUG: Agent XXX: Pruning pending checks. Highest nominated priority is 8646913483306173438
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914008800 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914006400 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914001000 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914004200 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914009a00 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914009400 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914007000 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914005200 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914001600 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f891400a600 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f891400a000 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914007c00 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914005e00 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914005800 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f891400ac00 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914006a00 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914007600 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f8914008200 state CANCELED
+(process:51881): libnice-DEBUG: Agent XXX : pair 0x7f891400b200 state CANCELED
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : stream 1 component 1 STATE-CHANGE connected -> ready.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : conn.check list status: 1 nominated, 1 succeeded, c-id 1.
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Valid STUN packet received.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received 0 valid messages with 92 bytes
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 0 valid messages of length 0 from base socket 0x7f891500b470.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received -1 valid messages with 0 bytes
+SIGNAL: selected pair 7 7
+New subs
+SIGNAL: state changed Stream: 1 Component ID: 1 State: connected
+SIGNAL: state changed Stream: 1 Component ID: 1 State: ready
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 1 valid messages of length 92 from base socket 0x7f891500b2d0.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received on local socket 11 from [192.168.1.9]:3478 (92 octets).
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received from TURN server candidate.
+(process:51881): libnice-stun-DEBUG: STUN demux error: no cookie!
+(process:51881): libnice-DEBUG: compact_input_message: **WARNING: SLOW PATH**
+(process:51881): libnice-DEBUG: Message 0x700000070cc0 (from: 0x700000070bd8, length: 92)
+(process:51881): libnice-DEBUG: 	Buffer 0x700000070d30 (length: 65535)
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: inbound STUN packet for 1/1 (stream/component) from [192.168.1.9]:3478 (92 octets) :
+(process:51881): libnice-stun-DEBUG: STUN demux error: no cookie!
+(process:51881): libnice-DEBUG: Comparing 0x7f8915001c00 to 0x7f8915001c00, 0x7f8915002200 to 0x7f8915002200 and 0x7f891500b2d0 and 0x7f8915034cf0 to 0x7f891500b2d0
+(process:51881): libnice-stun-DEBUG: STUN demux error: no cookie!
+(process:51881): libnice-DEBUG: Validating gave 3
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Incorrectly multiplexed STUN message ignored.
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Packet passed fast STUN validation but failed slow validation.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received 1 valid messages with 92 bytes
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : s1:1: sending 1 messages to [fe80::62f8:1dff:fec8:d9b2]:60605
+(process:51881): libnice-DEBUG: nice_agent_send_messages_nonblocking_internal: n_sent: -1, n_messages: 1
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 0 valid messages of length 0 from base socket 0x7f891500b2d0.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received -1 valid messages with 0 bytes
+(process:51881): libnice-DEBUG: received message on TURN socket
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 0 valid messages of length 0 from base socket 0x7f8915034cf0.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received -1 valid messages with 0 bytes
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : timer tick #2: 0 frozen, 0 in-progress, 0 waiting, 1 succeeded, 0 discovered, 1 nominated, 0 waiting-for-nom.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : priv_conn_check_tick_unlocked: stopping conncheck timer
+(process:51881): libnice-DEBUG: Agent XXX: Finding highest priority for component 1
+(process:51881): libnice-DEBUG: Agent XXX: Pruning pending checks. Highest nominated priority is 8646913483306173438
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : conn.check list status: 1 nominated, 1 succeeded, c-id 1.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : changing conncheck state to COMPLETED.
+(process:51881): libnice-stun-DEBUG:  Message HMAC-SHA1 fingerprint: 0xe30b3c72
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : stun_bind_keepalive for pair 0x7f8915002240 res 28.
+(process:51881): libnice-stun-DEBUG:  Message HMAC-SHA1 message integrity:
+(process:51881): libnice-stun-DEBUG:   key     : 0x70617373776f7264
+(process:51881): libnice-stun-DEBUG:   sent    : 0x225468b77ee436d921a62f1ce0ffdfb0af6db592
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0, freeing conncheck_list of stream 0x7f8915001c00
+(process:51881): libnice-DEBUG: Free socket sources for component 0x7f8915002200.
+(process:51881): libnice-DEBUG: Detaching source 0x7f8914800140 (socket 0x7f8915034cf0, FD 11) from context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: Detaching source 0x7f8914904070 (socket 0x7f891500b550, FD 14) from context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: Detaching source 0x7f8914904210 (socket 0x7f891500b470, FD 13) from context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 1 valid messages of length 88 from base socket 0x7f891500b2d0.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received on local socket 11 from [192.168.1.9]:3478 (88 octets).
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received from TURN server candidate.
+(process:51881): libnice-DEBUG: compact_input_message: **WARNING: SLOW PATH**
+(process:51881): libnice-DEBUG: Message 0x700000070cc0 (from: 0x700000070bd8, length: 88)
+(process:51881): libnice-DEBUG: 	Buffer 0x700000070d30 (length: 65535)
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: inbound STUN packet for 1/1 (stream/component) from [192.168.1.9]:3478 (88 octets) :
+(process:51881): libnice-stun-DEBUG: STUN demux error: no FINGERPRINT attribute!
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Incorrectly multiplexed STUN message ignored.
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Packet passed fast STUN validation but failed slow validation.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received 1 valid messages with 88 bytes
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : s1:1: sending 1 messages to [`\u000b\u0007]:0
+(process:51881): libnice-DEBUG: nice_agent_send_messages_nonblocking_internal: n_sent: -1, n_messages: 1
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Received 1 valid messages of length 108 from base socket 0x7f891500b2d0.
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received on local socket 11 from [192.168.1.9]:3478 (108 octets).
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Packet received from TURN server candidate.
+(process:51881): libnice-DEBUG: compact_input_message: **WARNING: SLOW PATH**
+(process:51881): libnice-DEBUG: Message 0x700000070cc0 (from: 0x700000070bd8, length: 108)
+(process:51881): libnice-DEBUG: Detaching source 0x7f89149038c0 (socket 0x7f891500b400, FD 12) from context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: 	Buffer 0x700000070d30 (length: 65535)
+(process:51881): libnice-DEBUG: Detaching source 0x7f8914903760 (socket 0x7f891500b2d0, FD 11) from context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0: inbound STUN packet for 1/1 (stream/component) from [192.168.1.9]:3478 (108 octets) :
+(process:51881): libnice-stun-DEBUG: STUN demux error: no FINGERPRINT attribute!
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : Incorrectly multiplexed STUN message ignored.
+(process:51881): libnice-DEBUG: agent_recv_message_unlocked: Packet passed fast STUN validation but failed slow validation.
+(process:51881): libnice-DEBUG: component_io_cb: 0x7f89130130a0: received 1 valid messages with 108 bytes
+(process:51881): libnice-DEBUG: Agent 0x7f89130130a0 : s1:1: sending 1 messages to [`\u000b\u0007]:0
+(process:51881): libnice-DEBUG: nice_agent_send_messages_nonblocking_internal: n_sent: -1, n_messages: 1
+(process:51881): libnice-DEBUG: Component IO source disappeared during the callback
+(process:51881): libnice-DEBUG: Detaching source 0x7f89149036c0 (socket 0x7f891500b260, FD 10) from context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: Detaching source 0x7f8914903560 (socket 0x7f891300ec90, FD 9) from context 0x7f8912c051f0
+(process:51881): libnice-DEBUG: Destroyed NiceComponent (1 created, 1 destroyed)
+(process:51881): libnice-DEBUG: Destroyed NiceStream (1 created, 1 destroyed)
+
+Negotiation complete: ([fe80::62f8:1dff:fec8:d9b2]:51824, [fe80::62f8:1dff:fec8:d9b2]:60605)
+Send message
+Send failed -1
+Receive packets
+Send message
+Send failed -1
+Receive packets
+Send message
+Send failed -1
+Receive packets

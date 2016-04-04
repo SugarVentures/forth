@@ -30,9 +30,9 @@ void signalvideohandler(int param)
 void senddata(const char* filename, oppvs::SRTPSocket& svr, int dest)
 {
 	char word[MAX_DATA_LENGTH];
-	sha1_ctx_t ctx;
+	/*sha1_ctx_t ctx;
 	uint32_t hashcode[5];
-	sha1_init(&ctx);
+	sha1_init(&ctx);*/
 
 	FILE* infile = fopen (filename, "r");
 	if (infile == NULL) {
@@ -81,9 +81,9 @@ void senddata(const char* filename, oppvs::SRTPSocket& svr, int dest)
 int main(int argc, char* argv[])
 {
 	char key[oppvs::MAX_SRTP_KEY_LENGTH];
-	sha1_ctx_t ctx;
+	/*sha1_ctx_t ctx;
 	uint32_t hashcode[5];
-	sha1_init(&ctx);
+	sha1_init(&ctx);*/
 
 	std::cout << "Test network engine\n";
 	int opt;

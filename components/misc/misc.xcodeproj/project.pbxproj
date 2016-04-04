@@ -23,14 +23,13 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		0388046998F30EC7692BDA76 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0656731A76338C515808BFA1 /* libsrtp.a */; };
-		2A2C5CAF857429BF2453629E /* fasthash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F3AFA5DA3AF838090D67CF7D /* fasthash.cpp */; };
-		4F61D9379C4DC056A52626E9 /* libmisc1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 62735BE20608A489F566957C /* libmisc1.dylib */; };
-		50C0AA6639E659455A8BD6C6 /* atomic_helper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556AA56588FC7602339CC94C /* atomic_helper.cpp */; };
-		7DF61D5D8D19083B1C757478 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = B9F62BED15BE22C57DCA487F /* md5.c */; };
-		A44E229522BD60A9C4520CB2 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = F573E731CA778C7C7AC76BE0 /* utility.c */; };
-		BA84552CC52FB03433C377D9 /* libmisc2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC49AA1DA067A1C8DE82739 /* libmisc2.dylib */; };
-		C2134185A81231E796A786B4 /* random_unique32.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D8231CAE8346B3BA62E2D59 /* random_unique32.c */; };
+		2D446716807E10B8E77B0B75 /* libmisc1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 62735BE20608A489F566957C /* libmisc1.dylib */; };
+		54875A6B036B85F9AF739311 /* atomic_helper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556AA56588FC7602339CC94C /* atomic_helper.cpp */; };
+		6C3FDEF1D15C7AC26694CC73 /* libmisc2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC49AA1DA067A1C8DE82739 /* libmisc2.dylib */; };
+		746F4EF5B1F2CC4F81E34463 /* fasthash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F3AFA5DA3AF838090D67CF7D /* fasthash.cpp */; };
+		786E6E784035E71174980751 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = F573E731CA778C7C7AC76BE0 /* utility.c */; };
+		7DC2A758CC56E4CECE2B1314 /* random_unique32.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D8231CAE8346B3BA62E2D59 /* random_unique32.c */; };
+		AEC99B730CE438CBBFC667E7 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = B9F62BED15BE22C57DCA487F /* md5.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,7 +71,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0656731A76338C515808BFA1 /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsrtp.a; path = ../../libs/libsrtp.a; sourceTree = "<group>"; };
 		112F9C5F9E6866F9853D78BB /* fasthash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fasthash.h; sourceTree = "<group>"; };
 		216623FC9ADEE984538060C7 /* md5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
 		432C342B9B22736EADC67CFA /* random_unique32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = random_unique32.h; sourceTree = "<group>"; };
@@ -96,8 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F61D9379C4DC056A52626E9 /* libmisc1.dylib in Frameworks */,
-				BA84552CC52FB03433C377D9 /* libmisc2.dylib in Frameworks */,
+				2D446716807E10B8E77B0B75 /* libmisc1.dylib in Frameworks */,
+				6C3FDEF1D15C7AC26694CC73 /* libmisc2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +103,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0388046998F30EC7692BDA76 /* libsrtp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,16 +116,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		854D089C4C2FA2F0C227DF52 = {
-			isa = PBXGroup;
-			children = (
-				B442F3CE148ED635E81300B5 /* Source */,
-				BAA4E7AA6B638B944AF2734E /* Frameworks */,
-				98D8E080063793C61CC0585B /* Products */,
-				E1287B00814B48E7490B3BE8 /* Build */,
-			);
-			sourceTree = "<group>";
-		};
 		98D8E080063793C61CC0585B /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,14 +144,6 @@
 			name = Source;
 			sourceTree = "<group>";
 		};
-		BAA4E7AA6B638B944AF2734E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				0656731A76338C515808BFA1 /* libsrtp.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		E1287B00814B48E7490B3BE8 /* Build */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +151,15 @@
 				DA2D10FDB320BBC2736A4E25 /* misc.gyp */,
 			);
 			name = Build;
+			sourceTree = "<group>";
+		};
+		EF0331F3C0D027E8778A5041 = {
+			isa = PBXGroup;
+			children = (
+				B442F3CE148ED635E81300B5 /* Source */,
+				98D8E080063793C61CC0585B /* Products */,
+				E1287B00814B48E7490B3BE8 /* Build */,
+			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,7 +226,7 @@
 			buildConfigurationList = AF9F50042EDBC76FD9525D8B /* Build configuration list for PBXProject "misc" */;
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 1;
-			mainGroup = 854D089C4C2FA2F0C227DF52;
+			mainGroup = EF0331F3C0D027E8778A5041;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -255,8 +243,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50C0AA6639E659455A8BD6C6 /* atomic_helper.cpp in Sources */,
-				2A2C5CAF857429BF2453629E /* fasthash.cpp in Sources */,
+				54875A6B036B85F9AF739311 /* atomic_helper.cpp in Sources */,
+				746F4EF5B1F2CC4F81E34463 /* fasthash.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,9 +259,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DF61D5D8D19083B1C757478 /* md5.c in Sources */,
-				C2134185A81231E796A786B4 /* random_unique32.c in Sources */,
-				A44E229522BD60A9C4520CB2 /* utility.c in Sources */,
+				AEC99B730CE438CBBFC667E7 /* md5.c in Sources */,
+				7DC2A758CC56E4CECE2B1314 /* random_unique32.c in Sources */,
+				786E6E784035E71174980751 /* utility.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,10 +340,11 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = (
-					../../libs/libsrtp/crypto/include,
+					/Users/caominhtrang/cerbero/dist/darwin_x86_64/include,
 					../include,
 				);
-				LIBRARY_SEARCH_PATHS = ../../libs;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc1;
 			};
 			name = Debug;
@@ -372,6 +361,8 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = ../include;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc2;
 			};
 			name = Debug;
@@ -381,6 +372,8 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = ../include;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc2;
 			};
 			name = Release;
@@ -390,10 +383,11 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = (
-					../../libs/libsrtp/crypto/include,
+					/Users/caominhtrang/cerbero/dist/darwin_x86_64/include,
 					../include,
 				);
-				LIBRARY_SEARCH_PATHS = ../../libs;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = misc1;
 			};
 			name = Release;

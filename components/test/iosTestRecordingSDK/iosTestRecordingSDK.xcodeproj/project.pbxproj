@@ -17,8 +17,9 @@
 		D913AFA01C574FEC005EAD2C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D913AF9F1C574FEC005EAD2C /* AVFoundation.framework */; };
 		D913AFA21C576BB6005EAD2C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D913AFA11C576BB6005EAD2C /* CoreMedia.framework */; };
 		D913AFAE1C577DD8005EAD2C /* GLFrameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = D913AFA71C577DD8005EAD2C /* GLFrameView.mm */; };
-		D913AFAF1C577DD8005EAD2C /* matrixUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D913AFA91C577DD8005EAD2C /* matrixUtil.c */; };
-		D913AFB01C577DD8005EAD2C /* vectorUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D913AFAC1C577DD8005EAD2C /* vectorUtil.c */; };
+		D92535FE1C59275600911E24 /* libencoding_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D92535FC1C59274400911E24 /* libencoding_engine.a */; };
+		D92536001C5929CA00911E24 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D92535FF1C5929CA00911E24 /* libvpx.a */; };
+		D92536071C592AC000911E24 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D92536061C592AB100911E24 /* libyuv.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +29,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 456E667F09670CA81BB71D19;
 			remoteInfo = video_engine;
+		};
+		D92535FB1C59274400911E24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D92535F71C59274400911E24 /* encoding_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D66BAB0C49189CBA25E04F16;
+			remoteInfo = encoding_engine;
+		};
+		D92536051C592AB100911E24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D92536011C592AB100911E24 /* libyuv.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 568E3016DD2F308A82671925;
+			remoteInfo = yuv;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -48,10 +63,9 @@
 		D913AFA61C577DD8005EAD2C /* GLFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GLFrameView.h; path = ../../iosDemo/iosDemo/GLFrameView.h; sourceTree = "<group>"; };
 		D913AFA71C577DD8005EAD2C /* GLFrameView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GLFrameView.mm; path = ../../iosDemo/iosDemo/GLFrameView.mm; sourceTree = "<group>"; };
 		D913AFA81C577DD8005EAD2C /* glUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = glUtil.h; path = ../../iosDemo/iosDemo/glUtil.h; sourceTree = "<group>"; };
-		D913AFA91C577DD8005EAD2C /* matrixUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = matrixUtil.c; path = ../../iosDemo/iosDemo/matrixUtil.c; sourceTree = "<group>"; };
-		D913AFAA1C577DD8005EAD2C /* matrixUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = matrixUtil.h; path = ../../iosDemo/iosDemo/matrixUtil.h; sourceTree = "<group>"; };
-		D913AFAC1C577DD8005EAD2C /* vectorUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vectorUtil.c; path = ../../iosDemo/iosDemo/vectorUtil.c; sourceTree = "<group>"; };
-		D913AFAD1C577DD8005EAD2C /* vectorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vectorUtil.h; path = ../../iosDemo/iosDemo/vectorUtil.h; sourceTree = "<group>"; };
+		D92535F71C59274400911E24 /* encoding_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = encoding_engine.xcodeproj; path = ../../encoding/ios/encoding_engine.xcodeproj; sourceTree = "<group>"; };
+		D92535FF1C5929CA00911E24 /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvpx.a; path = ../../../../../../cerbero/dist/ios_universal/lib/libvpx.a; sourceTree = "<group>"; };
+		D92536011C592AB100911E24 /* libyuv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libyuv.xcodeproj; path = ../../../libs/libyuv/ios/libyuv.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +73,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D92536071C592AC000911E24 /* libyuv.a in Frameworks */,
+				D92536001C5929CA00911E24 /* libvpx.a in Frameworks */,
+				D92535FE1C59275600911E24 /* libencoding_engine.a in Frameworks */,
 				D913AFA21C576BB6005EAD2C /* CoreMedia.framework in Frameworks */,
 				D913AFA01C574FEC005EAD2C /* AVFoundation.framework in Frameworks */,
 				D913AF9E1C5744D9005EAD2C /* libvideo_engine.a in Frameworks */,
@@ -71,6 +88,9 @@
 		D913AF751C563861005EAD2C = {
 			isa = PBXGroup;
 			children = (
+				D92536011C592AB100911E24 /* libyuv.xcodeproj */,
+				D92535FF1C5929CA00911E24 /* libvpx.a */,
+				D92535F71C59274400911E24 /* encoding_engine.xcodeproj */,
 				D913AFA11C576BB6005EAD2C /* CoreMedia.framework */,
 				D913AF9F1C574FEC005EAD2C /* AVFoundation.framework */,
 				D913AF981C563896005EAD2C /* video_engine.xcodeproj */,
@@ -93,10 +113,6 @@
 				D913AFA61C577DD8005EAD2C /* GLFrameView.h */,
 				D913AFA71C577DD8005EAD2C /* GLFrameView.mm */,
 				D913AFA81C577DD8005EAD2C /* glUtil.h */,
-				D913AFA91C577DD8005EAD2C /* matrixUtil.c */,
-				D913AFAA1C577DD8005EAD2C /* matrixUtil.h */,
-				D913AFAC1C577DD8005EAD2C /* vectorUtil.c */,
-				D913AFAD1C577DD8005EAD2C /* vectorUtil.h */,
 				D913AF841C563861005EAD2C /* AppDelegate.h */,
 				D913AF851C563861005EAD2C /* AppDelegate.m */,
 				D913AF871C563861005EAD2C /* ViewController.h */,
@@ -122,6 +138,22 @@
 			isa = PBXGroup;
 			children = (
 				D913AF9D1C563896005EAD2C /* libvideo_engine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D92535F81C59274400911E24 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D92535FC1C59274400911E24 /* libencoding_engine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D92536021C592AB100911E24 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D92536061C592AB100911E24 /* libyuv.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -174,6 +206,14 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = D92535F81C59274400911E24 /* Products */;
+					ProjectRef = D92535F71C59274400911E24 /* encoding_engine.xcodeproj */;
+				},
+				{
+					ProductGroup = D92536021C592AB100911E24 /* Products */;
+					ProjectRef = D92536011C592AB100911E24 /* libyuv.xcodeproj */;
+				},
+				{
 					ProductGroup = D913AF991C563896005EAD2C /* Products */;
 					ProjectRef = D913AF981C563896005EAD2C /* video_engine.xcodeproj */;
 				},
@@ -191,6 +231,20 @@
 			fileType = archive.ar;
 			path = libvideo_engine.a;
 			remoteRef = D913AF9C1C563896005EAD2C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D92535FC1C59274400911E24 /* libencoding_engine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libencoding_engine.a;
+			remoteRef = D92535FB1C59274400911E24 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D92536061C592AB100911E24 /* libyuv.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libyuv.a;
+			remoteRef = D92536051C592AB100911E24 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -213,11 +267,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D913AFB01C577DD8005EAD2C /* vectorUtil.c in Sources */,
 				D913AF891C563861005EAD2C /* ViewController.mm in Sources */,
 				D913AFAE1C577DD8005EAD2C /* GLFrameView.mm in Sources */,
 				D913AF861C563861005EAD2C /* AppDelegate.m in Sources */,
-				D913AFAF1C577DD8005EAD2C /* matrixUtil.c in Sources */,
 				D913AF831C563861005EAD2C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,6 +316,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -308,6 +361,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -330,9 +384,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				HEADER_SEARCH_PATHS = "/Users/caominhtrang/Documents/ForthProject/forth-dev/components/**";
+				HEADER_SEARCH_PATHS = (
+					"/Users/caominhtrang/Documents/ForthProject/forth-dev/components/**",
+					"~/cerbero/dist/ios_universal/include",
+					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs/libyuv/include",
+				);
 				INFOPLIST_FILE = iosTestRecordingSDK/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "~/cerbero/dist/ios_universal/lib";
 				PRODUCT_BUNDLE_IDENTIFIER = Sugar.iosTestRecordingSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -342,9 +401,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				HEADER_SEARCH_PATHS = "/Users/caominhtrang/Documents/ForthProject/forth-dev/components/**";
+				HEADER_SEARCH_PATHS = (
+					"/Users/caominhtrang/Documents/ForthProject/forth-dev/components/**",
+					"~/cerbero/dist/ios_universal/include",
+					"/Users/caominhtrang/Documents/ForthProject/forth-dev/libs/libyuv/include",
+				);
 				INFOPLIST_FILE = iosTestRecordingSDK/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "~/cerbero/dist/ios_universal/lib";
 				PRODUCT_BUNDLE_IDENTIFIER = Sugar.iosTestRecordingSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

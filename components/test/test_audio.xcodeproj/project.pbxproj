@@ -18,19 +18,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		121620931274614F7160E521 /* PBXContainerItemProxy */ = {
+		2B0CA51CC3C60DE0D872D2F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 30BF75BAB98BCDBD71C6513A /* audio_engine.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = FB81B2EF1E59D2AA12E3431A;
-			remoteInfo = libaudio_engine;
+			remoteGlobalIDString = 07F24BD9DA0D6517AE684640;
+			remoteInfo = audio_engine;
 		};
 		58A77485DFD7BBCCEB3E0D4D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 30BF75BAB98BCDBD71C6513A /* audio_engine.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 79156A13FA0B6297EEB5593E;
-			remoteInfo = libaudio_engine;
+			remoteInfo = audio_engine;
 		};
 		AD3402D6ABC884F0056C42A5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -189,7 +189,7 @@
 			);
 			dependencies = (
 				D4F9712AC99EE46D26D91A31 /* PBXTargetDependency */,
-				2258A2D8CF29ED4752728428 /* PBXTargetDependency */,
+				6DBE638AA96707CD17BF3718 /* PBXTargetDependency */,
 				F06E256D608FDC5BE3F726D2 /* PBXTargetDependency */,
 			);
 			name = testaudio;
@@ -267,10 +267,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2258A2D8CF29ED4752728428 /* PBXTargetDependency */ = {
+		6DBE638AA96707CD17BF3718 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = libaudio_engine;
-			targetProxy = 121620931274614F7160E521 /* PBXContainerItemProxy */;
+			name = audio_engine;
+			targetProxy = 2B0CA51CC3C60DE0D872D2F5 /* PBXContainerItemProxy */;
 		};
 		D4F9712AC99EE46D26D91A31 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -294,7 +294,7 @@
 					../audio,
 					../thread,
 					../encoding,
-					../../libs/libopus/include,
+					/Users/caominhtrang/cerbero/dist/darwin_x86_64/include,
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/System/Library/Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
@@ -319,7 +319,7 @@
 					../audio,
 					../thread,
 					../encoding,
-					../../libs/libopus/include,
+					/Users/caominhtrang/cerbero/dist/darwin_x86_64/include,
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/System/Library/Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";

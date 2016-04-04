@@ -182,10 +182,11 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
-				GCC_PREPROCESSOR_DEFINITIONS = __APPLE_USE_RFC_3542;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					FORTH_IOS,
+					__APPLE_USE_RFC_3542,
+				);
 				HEADER_SEARCH_PATHS = (
-					../../libs/libsrtp/include,
-					../../libs/libsrtp/crypto/include,
 					../include,
 					../misc,
 					../thread,
@@ -195,12 +196,9 @@
 					../interface,
 					../audio,
 					../../libs/libyuv/include,
-					../../libs/libvpx,
-					../../libs/libopus/include,
-					../../libs/libnice,
-					../../libs/libnice/agent,
-					"/usr/local/include/glib-2.0",
-					../../libs/libnice/include,
+					/Users/caominhtrang/cerbero/dist/ios_universal/include,
+					"/Users/caominhtrang/cerbero/dist/ios_universal/include/glib-2.0",
+					"/Users/caominhtrang/cerbero/dist/ios_universal/lib/glib-2.0/include",
 				);
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = streaming_engine;
@@ -213,10 +211,11 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
-				GCC_PREPROCESSOR_DEFINITIONS = __APPLE_USE_RFC_3542;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					FORTH_IOS,
+					__APPLE_USE_RFC_3542,
+				);
 				HEADER_SEARCH_PATHS = (
-					../../libs/libsrtp/include,
-					../../libs/libsrtp/crypto/include,
 					../include,
 					../misc,
 					../thread,
@@ -226,12 +225,9 @@
 					../interface,
 					../audio,
 					../../libs/libyuv/include,
-					../../libs/libvpx,
-					../../libs/libopus/include,
-					../../libs/libnice,
-					../../libs/libnice/agent,
-					"/usr/local/include/glib-2.0",
-					../../libs/libnice/include,
+					/Users/caominhtrang/cerbero/dist/ios_universal/include,
+					"/Users/caominhtrang/cerbero/dist/ios_universal/include/glib-2.0",
+					"/Users/caominhtrang/cerbero/dist/ios_universal/lib/glib-2.0/include",
 				);
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = streaming_engine;

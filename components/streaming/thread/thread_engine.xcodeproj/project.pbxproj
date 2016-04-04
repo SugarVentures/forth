@@ -7,20 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0157236512FECC6385E670EB /* ring_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */; };
-		26FDDD0F9EA8028682267368 /* video_frame_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBA5530E39A73549FC10621 /* video_frame_buffer.cpp */; };
-		C288D637B8DEF93487371968 /* audio_ring_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */; };
-		EAD2DEC034B688252FC85105 /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 664245FF2A7AAA4A0CEBDF7C /* thread.cpp */; };
+		267AE28D636442B6A6094D6A /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 664245FF2A7AAA4A0CEBDF7C /* thread.cpp */; };
+		53B0937D7EE5BFB70189F37B /* audio_ring_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */; };
+		7A9E911FAC3E8DF53597B5B8 /* event_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43C2DAF7CD721250F0881799 /* event_handler.cpp */; };
+		DB0070CC465E45EFF60C4CAE /* ring_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0DBA5530E39A73549FC10621 /* video_frame_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = video_frame_buffer.cpp; sourceTree = "<group>"; };
-		178D0916E9DE2CF4A3DDB34D /* video_frame_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = video_frame_buffer.h; sourceTree = "<group>"; };
+		18D95BAF07DB850732022E57 /* event_handler.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = event_handler.hpp; sourceTree = "<group>"; };
+		18F92990A15D854AC10A1A3B /* libthread_engine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libthread_engine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		43C2DAF7CD721250F0881799 /* event_handler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = event_handler.cpp; sourceTree = "<group>"; };
 		4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ring_buffer.cpp; sourceTree = "<group>"; };
 		56A7BEF83122E6E93D3F2728 /* audio_ring_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_ring_buffer.h; sourceTree = "<group>"; };
 		664245FF2A7AAA4A0CEBDF7C /* thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread.cpp; sourceTree = "<group>"; };
 		69A036E19E16EF7C3E790468 /* ring_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ring_buffer.h; sourceTree = "<group>"; };
-		85B29969623F068F9144E752 /* libthread_engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libthread_engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CA144AA8CF389F6E5018D1D /* CAAtomic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAAtomic.h; sourceTree = "<group>"; };
 		AE004DD1378F0A438BFD5226 /* tsqueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = tsqueue.hpp; sourceTree = "<group>"; };
 		B5688B33306D04C73C068171 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
 		D93F42A8D93D134BAEEE5AA8 /* thread_engine.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = thread_engine.gyp; sourceTree = "<group>"; };
@@ -42,18 +43,35 @@
 		2845B8981F9F4DF921F89516 = {
 			isa = PBXGroup;
 			children = (
-				F5650CEDA9505A318DA19550 /* Source */,
-				2E5B295471092E289A95A5A3 /* Products */,
+				91DF03ED794F29DAE6DC9813 /* Source */,
+				41956C78EBE2331033BD3DB2 /* Products */,
 				ABC5D748870E83CE29D9B32B /* Build */,
 			);
 			sourceTree = "<group>";
 		};
-		2E5B295471092E289A95A5A3 /* Products */ = {
+		41956C78EBE2331033BD3DB2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				85B29969623F068F9144E752 /* libthread_engine.a */,
+				18F92990A15D854AC10A1A3B /* libthread_engine.dylib */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		91DF03ED794F29DAE6DC9813 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				8CA144AA8CF389F6E5018D1D /* CAAtomic.h */,
+				EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */,
+				56A7BEF83122E6E93D3F2728 /* audio_ring_buffer.h */,
+				43C2DAF7CD721250F0881799 /* event_handler.cpp */,
+				18D95BAF07DB850732022E57 /* event_handler.hpp */,
+				4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */,
+				69A036E19E16EF7C3E790468 /* ring_buffer.h */,
+				664245FF2A7AAA4A0CEBDF7C /* thread.cpp */,
+				F2B3B2119DEE055A1E290919 /* thread.hpp */,
+				AE004DD1378F0A438BFD5226 /* tsqueue.hpp */,
+			);
+			name = Source;
 			sourceTree = "<group>";
 		};
 		ABC5D748870E83CE29D9B32B /* Build */ = {
@@ -63,22 +81,6 @@
 				D93F42A8D93D134BAEEE5AA8 /* thread_engine.gyp */,
 			);
 			name = Build;
-			sourceTree = "<group>";
-		};
-		F5650CEDA9505A318DA19550 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				EC6BFE2381A25273D4E35C1A /* audio_ring_buffer.cpp */,
-				56A7BEF83122E6E93D3F2728 /* audio_ring_buffer.h */,
-				4FC759B5C837E750F5D6EBEF /* ring_buffer.cpp */,
-				69A036E19E16EF7C3E790468 /* ring_buffer.h */,
-				664245FF2A7AAA4A0CEBDF7C /* thread.cpp */,
-				F2B3B2119DEE055A1E290919 /* thread.hpp */,
-				AE004DD1378F0A438BFD5226 /* tsqueue.hpp */,
-				0DBA5530E39A73549FC10621 /* video_frame_buffer.cpp */,
-				178D0916E9DE2CF4A3DDB34D /* video_frame_buffer.h */,
-			);
-			name = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -97,8 +99,8 @@
 			);
 			name = thread_engine;
 			productName = thread_engine;
-			productReference = 85B29969623F068F9144E752 /* libthread_engine.a */;
-			productType = "com.apple.product-type.library.static";
+			productReference = 18F92990A15D854AC10A1A3B /* libthread_engine.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
 
@@ -125,10 +127,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAD2DEC034B688252FC85105 /* thread.cpp in Sources */,
-				0157236512FECC6385E670EB /* ring_buffer.cpp in Sources */,
-				C288D637B8DEF93487371968 /* audio_ring_buffer.cpp in Sources */,
-				26FDDD0F9EA8028682267368 /* video_frame_buffer.cpp in Sources */,
+				267AE28D636442B6A6094D6A /* thread.cpp in Sources */,
+				DB0070CC465E45EFF60C4CAE /* ring_buffer.cpp in Sources */,
+				53B0937D7EE5BFB70189F37B /* audio_ring_buffer.cpp in Sources */,
+				7A9E911FAC3E8DF53597B5B8 /* event_handler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,33 +140,29 @@
 		475EC3ECF04AB09427BEBDD2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = ../include;
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = thread_engine;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Release;
 		};
 		59442534B42E2468ED84735B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = ../include;
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = thread_engine;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Debug;
 		};
 		5A5A789B45AEA9B30395B492 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
-				SDKROOT = iphoneos;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
 			};
 			name = Release;
@@ -172,9 +170,7 @@
 		9B435202D4AF84DC2CC05B3F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
-				SDKROOT = iphoneos;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
 			};
 			name = Debug;

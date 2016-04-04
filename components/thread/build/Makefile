@@ -297,15 +297,10 @@ ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
                  $(join ^,thread_engine.target.mk)))),)
   include thread_engine.target.mk
 endif
-ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
-    $(findstring $(join ^,$(prefix)),\
-                 $(join ^,threadengine-jni.target.mk)))),)
-  include threadengine-jni.target.mk
-endif
 
 quiet_cmd_regen_makefile = ACTION Regenerating $@
-cmd_regen_makefile = cd $(srcdir); ./gyp_build -fmake --ignore-environment "--toplevel-dir=." -I/Users/caominhtrang/Documents/ForthProject/forth-dev/components/thread/../../common.gypi "--depth=." "--generator-output=build" "-Dlibrary=static_library" "-Dos_posix=1" "-DOS=android" "-Dtarget_arch=arm" "-Dclang=0" "-Dcomponent=static_library" "-Duse_system_stlport=0" thread_engine.gyp thread_engine_jni.gyp
-Makefile: $(srcdir)/../../common.gypi $(srcdir)/thread_engine.gyp $(srcdir)/thread_engine_jni.gyp
+cmd_regen_makefile = cd $(srcdir); ./gyp_build -fmake --ignore-environment "--toplevel-dir=." -I/Users/caominhtrang/Documents/ForthProject/forth-dev/components/thread/../../common.gypi "--depth=." "--generator-output=build" "-Dlibrary=static_library" "-Dos_posix=1" "-DOS=android" "-Dtarget_arch=arm" "-Dclang=0" "-Dcomponent=static_library" "-Duse_system_stlport=0" thread_engine.gyp
+Makefile: $(srcdir)/../../common.gypi $(srcdir)/thread_engine.gyp
 	$(call do_cmd,regen_makefile)
 
 # "all" is a concatenation of the "all" targets from all the included

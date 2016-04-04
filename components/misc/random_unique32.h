@@ -7,9 +7,9 @@
 
 #include <sys/types.h>   /* u_long */
 #include <sys/time.h>    /* gettimeofday() */
-#include <unistd.h>      /* get..() */
 #include <stdio.h>       /* printf() */
 #include <time.h>        /* clock() */
+#include <unistd.h>      /* get..() */
 #include <sys/utsname.h> /* uname() */
 #include "md5.h"
 

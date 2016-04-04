@@ -7,12 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4B1FD5C2889DB75917C5EED1 /* video_encoding_vp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1812ECE70FE479C91D331E07 /* video_encoding_vp.cpp */; };
-		6036D5B35D7CFA9B0E40EFE3 /* libopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD248B98EA9F68219602F76E /* libopus.a */; };
-		AEF7755D62D7F544668FCB75 /* video_decoding_vp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D7CF8A01D91853AA912B702 /* video_decoding_vp.cpp */; };
-		BCE68A1F12C014A76AFBDD63 /* audio_opus_encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C26845902A6F956085C088F /* audio_opus_encoder.cpp */; };
-		BEBB6E60046544AD30989691 /* audio_opus_decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D77B1ED9125F5D6DDA38ED /* audio_opus_decoder.cpp */; };
+		0BED0AEFC4530CBCAB812E4A /* video_encoding_vp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1812ECE70FE479C91D331E07 /* video_encoding_vp.cpp */; };
+		0FEC923045A036E6D9C8FF83 /* video_decoding_vp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D7CF8A01D91853AA912B702 /* video_decoding_vp.cpp */; };
+		15AF4BEEF16DF85E47AD00DC /* libyuv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 85AD12E831065FF7CB24DF60 /* libyuv.dylib */; };
+		3EC496E757C69F58C47140F6 /* audio_opus_encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C26845902A6F956085C088F /* audio_opus_encoder.cpp */; };
+		8897EB7CA5250DCE7595A829 /* audio_opus_decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D77B1ED9125F5D6DDA38ED /* audio_opus_decoder.cpp */; };
+		AC33FB3C8A5DFBF444AF8CAD /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 711D90EBDA80F9A3EE194FBF /* libvpx.a */; };
+		E9955667B2EF43975BAAB8D9 /* libopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC9478C2C85B4BF81B3A19E /* libopus.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		606797BC2973B4C15219DF4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 774927A9B8B0E4D37B3F2C9F /* libyuv.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 64320A5370A269382A793D07;
+			remoteInfo = yuv;
+		};
+		84C895FED4ED789B131FD810 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 774927A9B8B0E4D37B3F2C9F /* libyuv.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 985BD33250D9355177E4302F;
+			remoteInfo = yuv;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		15CF406F8E55FA9ADEBB9916 /* video_decoding_vp.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = video_decoding_vp.hpp; sourceTree = "<group>"; };
@@ -20,11 +39,13 @@
 		5323858206EF8A4A320A7975 /* video_encoding_vp.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = video_encoding_vp.hpp; sourceTree = "<group>"; };
 		5C26845902A6F956085C088F /* audio_opus_encoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_opus_encoder.cpp; sourceTree = "<group>"; };
 		5D7CF8A01D91853AA912B702 /* video_decoding_vp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = video_decoding_vp.cpp; sourceTree = "<group>"; };
+		711D90EBDA80F9A3EE194FBF /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvpx.a; path = /Users/caominhtrang/cerbero/dist/darwin_x86_64/lib/libvpx.a; sourceTree = "<group>"; };
+		774927A9B8B0E4D37B3F2C9F /* libyuv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libyuv.xcodeproj; path = ../../libs/libyuv/libyuv.xcodeproj; sourceTree = SOURCE_ROOT; };
 		7F6FB0887415EC41842CF4B0 /* audio_opus_encoder.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = audio_opus_encoder.hpp; sourceTree = "<group>"; };
 		A073B09079C2925443D0F45D /* audio_opus_decoder.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = audio_opus_decoder.hpp; sourceTree = "<group>"; };
 		A147194051591D3FA33578C6 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
-		BD248B98EA9F68219602F76E /* libopus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libopus.a; path = ../../libs/libopus.a; sourceTree = "<group>"; };
 		DC13720F9DFCE3EA5184E835 /* libencoding_engine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libencoding_engine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDC9478C2C85B4BF81B3A19E /* libopus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libopus.a; path = /Users/caominhtrang/cerbero/dist/darwin_x86_64/lib/libopus.a; sourceTree = "<group>"; };
 		E402A5F4C320829C1AF65566 /* encoding_engine.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = encoding_engine.gyp; sourceTree = "<group>"; };
 		E7D77B1ED9125F5D6DDA38ED /* audio_opus_decoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_opus_decoder.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -34,21 +55,49 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6036D5B35D7CFA9B0E40EFE3 /* libopus.a in Frameworks */,
+				15AF4BEEF16DF85E47AD00DC /* libyuv.dylib in Frameworks */,
+				E9955667B2EF43975BAAB8D9 /* libopus.a in Frameworks */,
+				AC33FB3C8A5DFBF444AF8CAD /* libvpx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00380F4EA99B2AAEBD90866D = {
+		07175122097E9A4F7B49B00E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DDC9478C2C85B4BF81B3A19E /* libopus.a */,
+				711D90EBDA80F9A3EE194FBF /* libvpx.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2EEA21A90AFA7166D1BADEA7 = {
 			isa = PBXGroup;
 			children = (
 				EB74C70EC2F8A0EA39A1DC76 /* Source */,
-				EE88BCC4331EF0E46BEAEEFA /* Frameworks */,
+				622F3A34E83AD397E8D70ED1 /* Projects */,
+				07175122097E9A4F7B49B00E /* Frameworks */,
 				7C72D0ACD9FDC3074A1502A2 /* Products */,
 				6F8193B83D229EF80723EBA1 /* Build */,
 			);
+			sourceTree = "<group>";
+		};
+		34CE7BFB87150990384B8C55 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				85AD12E831065FF7CB24DF60 /* libyuv.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		622F3A34E83AD397E8D70ED1 /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				774927A9B8B0E4D37B3F2C9F /* libyuv.xcodeproj */,
+			);
+			name = Projects;
 			sourceTree = "<group>";
 		};
 		6F8193B83D229EF80723EBA1 /* Build */ = {
@@ -83,14 +132,6 @@
 			name = Source;
 			sourceTree = "<group>";
 		};
-		EE88BCC4331EF0E46BEAEEFA /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BD248B98EA9F68219602F76E /* libopus.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -104,6 +145,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				6C51E341685F91E21989C0B9 /* PBXTargetDependency */,
 			);
 			name = encoding_engine;
 			productName = encoding_engine;
@@ -121,8 +163,14 @@
 			buildConfigurationList = 3EB720EB7B7BCFB1433B9387 /* Build configuration list for PBXProject "encoding_engine" */;
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 1;
-			mainGroup = 00380F4EA99B2AAEBD90866D;
+			mainGroup = 2EEA21A90AFA7166D1BADEA7;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 34CE7BFB87150990384B8C55 /* Products */;
+					ProjectRef = 774927A9B8B0E4D37B3F2C9F /* libyuv.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8ED49CB53A55D69F2749AAB7 /* encoding_engine */,
@@ -130,19 +178,37 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		85AD12E831065FF7CB24DF60 /* libyuv.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libyuv.dylib;
+			remoteRef = 606797BC2973B4C15219DF4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F2F2E5AA20DCAA68D8F87416 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCE68A1F12C014A76AFBDD63 /* audio_opus_encoder.cpp in Sources */,
-				BEBB6E60046544AD30989691 /* audio_opus_decoder.cpp in Sources */,
-				AEF7755D62D7F544668FCB75 /* video_decoding_vp.cpp in Sources */,
-				4B1FD5C2889DB75917C5EED1 /* video_encoding_vp.cpp in Sources */,
+				3EC496E757C69F58C47140F6 /* audio_opus_encoder.cpp in Sources */,
+				8897EB7CA5250DCE7595A829 /* audio_opus_decoder.cpp in Sources */,
+				0FEC923045A036E6D9C8FF83 /* video_decoding_vp.cpp in Sources */,
+				0BED0AEFC4530CBCAB812E4A /* video_encoding_vp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6C51E341685F91E21989C0B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = yuv;
+			targetProxy = 84C895FED4ED789B131FD810 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		01E977E96DB516CBB58985EA /* Debug */ = {
@@ -161,12 +227,11 @@
 					../include,
 					../error,
 					../misc,
-					../../libs/libsrtp/include,
-					../../libs/libsrtp/crypto/include,
-					../../libs/libopus/include,
+					/Users/caominhtrang/cerbero/dist/darwin_x86_64/include,
 					../../libs/libyuv/include,
 				);
-				LIBRARY_SEARCH_PATHS = ../../libs;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = /Users/caominhtrang/cerbero/dist/darwin_x86_64/lib;
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = encoding_engine;
 			};
@@ -188,12 +253,11 @@
 					../include,
 					../error,
 					../misc,
-					../../libs/libsrtp/include,
-					../../libs/libsrtp/crypto/include,
-					../../libs/libopus/include,
+					/Users/caominhtrang/cerbero/dist/darwin_x86_64/include,
 					../../libs/libyuv/include,
 				);
-				LIBRARY_SEARCH_PATHS = ../../libs;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = /Users/caominhtrang/cerbero/dist/darwin_x86_64/lib;
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = encoding_engine;
 			};

@@ -7,22 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D7E7E7DD0B2FDFF8D059CCF /* ice_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30B86D48A939B9507EE72ECF /* ice_manager.cpp */; };
-		2979E5D1A7C59432B9B1C13B /* stun_message_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB9E0848033C8FB4494029A9 /* stun_message_handler.cpp */; };
-		5CB64A843E6D013607B653F1 /* stun_socket_address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9D6F2CD9BF33F08D696EA6D /* stun_socket_address.cpp */; };
-		77A938E931F68319B5D2C919 /* signaling_message_builder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B121258131F9395309338DCF /* signaling_message_builder.cpp */; };
-		980F436DE9C6A9457543C4ED /* physical_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE3D3138FAE375CAE63E6D5 /* physical_socket.cpp */; };
-		98C6DF8CDABE0BFF60F24600 /* dynamic_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBDF73A9B8BB93AC44609CF6 /* dynamic_buffer.cpp */; };
-		ACDB58DCEEFCCAB56ED70EC9 /* client_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0150C5BEADC4795DFD86B1C3 /* client_socket.cpp */; };
-		B0FD37847F37C267C7114CF5 /* srtp_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D7275FDADF133CB5FF7AC54 /* srtp_socket.cpp */; };
-		BA1525BCA62AACEDF1A78290 /* server_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FDA22583E54011EE72944E /* server_socket.cpp */; };
-		C5726D78583D5F3EAF3F0F8A /* ice_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F675F9CB12EF1469A3C91BA /* ice_stream.cpp */; };
-		C677DBC39A5F501000592B6F /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22B53B07C4466C44870A4AC0 /* data_stream.cpp */; };
-		CDDAE2C3B76718D375F9A0F1 /* ipaddress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2749152E1B5A9CD5C6AA0 /* ipaddress.cpp */; };
-		D9B8D6EF8A6C71DB93BBB5B2 /* signaling_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E378578BC04DD4E2EDB69 /* signaling_manager.cpp */; };
-		DAD35E08F4A294C7165E4119 /* signaling_message_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C947873ABA6C41E7E97DD891 /* signaling_message_reader.cpp */; };
-		E047B20F603965E4114969C2 /* stun_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23506EF17EF57A619D29EE2 /* stun_socket.cpp */; };
-		E9216E06C956606C3BA433E4 /* socket_address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22E227BFC04203BC423B8FF1 /* socket_address.cpp */; };
+		17FCF0401B407DA82664CEF4 /* signaling_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E378578BC04DD4E2EDB69 /* signaling_manager.cpp */; };
+		1C65CD5BB83F234E38296F83 /* socket_address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22E227BFC04203BC423B8FF1 /* socket_address.cpp */; };
+		2F86170A003CE400A0AFCE54 /* dynamic_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBDF73A9B8BB93AC44609CF6 /* dynamic_buffer.cpp */; };
+		45EE8C310CE4A5192F5EEECF /* server_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FDA22583E54011EE72944E /* server_socket.cpp */; };
+		5E2BD72A2090332E95BC7F9D /* cache_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B67A09D4C290F7072209DD7 /* cache_buffer.cpp */; };
+		5E396EB7409C778B9F6C674E /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22B53B07C4466C44870A4AC0 /* data_stream.cpp */; };
+		6350193E0322AE805E77A396 /* stun_socket_address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9D6F2CD9BF33F08D696EA6D /* stun_socket_address.cpp */; };
+		78AEA4C48743180A9C183C7C /* stun_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23506EF17EF57A619D29EE2 /* stun_socket.cpp */; };
+		83B64720DA2D0271B08D8903 /* srtp_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D7275FDADF133CB5FF7AC54 /* srtp_socket.cpp */; };
+		855921C499425B2B60C359BD /* ice_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F675F9CB12EF1469A3C91BA /* ice_stream.cpp */; };
+		8B66931F05AF16407B1DDBAA /* ipaddress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2749152E1B5A9CD5C6AA0 /* ipaddress.cpp */; };
+		900F4B9F1425023702CB175F /* signaling_message_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C947873ABA6C41E7E97DD891 /* signaling_message_reader.cpp */; };
+		B35F7AA0336987959066385C /* stun_message_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB9E0848033C8FB4494029A9 /* stun_message_handler.cpp */; };
+		B6F4418115E03756B01C4B7B /* signaling_message_builder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B121258131F9395309338DCF /* signaling_message_builder.cpp */; };
+		DC2B94BA7034ED95D723BD64 /* physical_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCE3D3138FAE375CAE63E6D5 /* physical_socket.cpp */; };
+		E3BC6245F8A0B30697FDC228 /* ice_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30B86D48A939B9507EE72ECF /* ice_manager.cpp */; };
+		EEB9DDF1F8C297EA0850CC92 /* client_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0150C5BEADC4795DFD86B1C3 /* client_socket.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		22E227BFC04203BC423B8FF1 /* socket_address.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = socket_address.cpp; sourceTree = "<group>"; };
 		27F8F9A51733545D37AFBD0F /* data_stream.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = data_stream.hpp; sourceTree = "<group>"; };
 		2B0030566163BCF665DB1981 /* srtp_socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = srtp_socket.hpp; sourceTree = "<group>"; };
+		2B67A09D4C290F7072209DD7 /* cache_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cache_buffer.cpp; sourceTree = "<group>"; };
 		30B86D48A939B9507EE72ECF /* ice_manager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ice_manager.cpp; sourceTree = "<group>"; };
 		3F675F9CB12EF1469A3C91BA /* ice_stream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ice_stream.cpp; sourceTree = "<group>"; };
 		494F1B0BDA985CE71238D0AB /* stun_socket_address.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_socket_address.hpp; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 		CBDF73A9B8BB93AC44609CF6 /* dynamic_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = dynamic_buffer.cpp; sourceTree = "<group>"; };
 		CF07B07E97AE13D0FDEAB7D4 /* signaling_message_builder.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = signaling_message_builder.hpp; sourceTree = "<group>"; };
 		D1C2749152E1B5A9CD5C6AA0 /* ipaddress.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ipaddress.cpp; sourceTree = "<group>"; };
+		D2B070786FB30DCD7A091378 /* cache_buffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = cache_buffer.hpp; sourceTree = "<group>"; };
 		D4AEEB07944D92C2A785ECC5 /* stun_header.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = stun_header.hpp; sourceTree = "<group>"; };
 		D9D6F2CD9BF33F08D696EA6D /* stun_socket_address.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stun_socket_address.cpp; sourceTree = "<group>"; };
 		DB9E0848033C8FB4494029A9 /* stun_message_handler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stun_message_handler.cpp; sourceTree = "<group>"; };
@@ -89,15 +92,17 @@
 		45B5AD091D4EF2DF40116481 = {
 			isa = PBXGroup;
 			children = (
-				913EE79E452392EAC18D0D55 /* Source */,
+				AC8DC37FEB16E97AEAF33C93 /* Source */,
 				2D242C3F3B6E30CE7C47FA04 /* Products */,
 				BED61ADE773AF1F9D8EB4D64 /* Build */,
 			);
 			sourceTree = "<group>";
 		};
-		913EE79E452392EAC18D0D55 /* Source */ = {
+		AC8DC37FEB16E97AEAF33C93 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				2B67A09D4C290F7072209DD7 /* cache_buffer.cpp */,
+				D2B070786FB30DCD7A091378 /* cache_buffer.hpp */,
 				0150C5BEADC4795DFD86B1C3 /* client_socket.cpp */,
 				E66BBB86150F2FE432F65B6C /* client_socket.hpp */,
 				22B53B07C4466C44870A4AC0 /* data_stream.cpp */,
@@ -191,22 +196,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACDB58DCEEFCCAB56ED70EC9 /* client_socket.cpp in Sources */,
-				C677DBC39A5F501000592B6F /* data_stream.cpp in Sources */,
-				98C6DF8CDABE0BFF60F24600 /* dynamic_buffer.cpp in Sources */,
-				CDDAE2C3B76718D375F9A0F1 /* ipaddress.cpp in Sources */,
-				980F436DE9C6A9457543C4ED /* physical_socket.cpp in Sources */,
-				BA1525BCA62AACEDF1A78290 /* server_socket.cpp in Sources */,
-				E9216E06C956606C3BA433E4 /* socket_address.cpp in Sources */,
-				B0FD37847F37C267C7114CF5 /* srtp_socket.cpp in Sources */,
-				2979E5D1A7C59432B9B1C13B /* stun_message_handler.cpp in Sources */,
-				5CB64A843E6D013607B653F1 /* stun_socket_address.cpp in Sources */,
-				E047B20F603965E4114969C2 /* stun_socket.cpp in Sources */,
-				D9B8D6EF8A6C71DB93BBB5B2 /* signaling_manager.cpp in Sources */,
-				77A938E931F68319B5D2C919 /* signaling_message_builder.cpp in Sources */,
-				DAD35E08F4A294C7165E4119 /* signaling_message_reader.cpp in Sources */,
-				1D7E7E7DD0B2FDFF8D059CCF /* ice_manager.cpp in Sources */,
-				C5726D78583D5F3EAF3F0F8A /* ice_stream.cpp in Sources */,
+				EEB9DDF1F8C297EA0850CC92 /* client_socket.cpp in Sources */,
+				5E396EB7409C778B9F6C674E /* data_stream.cpp in Sources */,
+				2F86170A003CE400A0AFCE54 /* dynamic_buffer.cpp in Sources */,
+				8B66931F05AF16407B1DDBAA /* ipaddress.cpp in Sources */,
+				DC2B94BA7034ED95D723BD64 /* physical_socket.cpp in Sources */,
+				45EE8C310CE4A5192F5EEECF /* server_socket.cpp in Sources */,
+				1C65CD5BB83F234E38296F83 /* socket_address.cpp in Sources */,
+				83B64720DA2D0271B08D8903 /* srtp_socket.cpp in Sources */,
+				B35F7AA0336987959066385C /* stun_message_handler.cpp in Sources */,
+				6350193E0322AE805E77A396 /* stun_socket_address.cpp in Sources */,
+				78AEA4C48743180A9C183C7C /* stun_socket.cpp in Sources */,
+				17FCF0401B407DA82664CEF4 /* signaling_manager.cpp in Sources */,
+				B6F4418115E03756B01C4B7B /* signaling_message_builder.cpp in Sources */,
+				900F4B9F1425023702CB175F /* signaling_message_reader.cpp in Sources */,
+				E3BC6245F8A0B30697FDC228 /* ice_manager.cpp in Sources */,
+				855921C499425B2B60C359BD /* ice_stream.cpp in Sources */,
+				5E2BD72A2090332E95BC7F9D /* cache_buffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,17 +224,17 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
-				GCC_PREPROCESSOR_DEFINITIONS = __APPLE_USE_RFC_3542;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					FORTH_IOS,
+					__APPLE_USE_RFC_3542,
+				);
 				HEADER_SEARCH_PATHS = (
-					../../libs/libsrtp/include,
-					../../libs/libsrtp/crypto/include,
 					../include,
 					../misc,
 					../thread,
-					../../libs/libnice,
-					../../libs/libnice/agent,
-					"/usr/local/include/glib-2.0",
-					../../libs/libnice/include,
+					/Users/caominhtrang/cerbero/dist/ios_universal/include,
+					"/Users/caominhtrang/cerbero/dist/ios_universal/include/glib-2.0",
+					"/Users/caominhtrang/cerbero/dist/ios_universal/lib/glib-2.0/include",
 				);
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = network_engine;
@@ -261,17 +267,17 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
-				GCC_PREPROCESSOR_DEFINITIONS = __APPLE_USE_RFC_3542;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					FORTH_IOS,
+					__APPLE_USE_RFC_3542,
+				);
 				HEADER_SEARCH_PATHS = (
-					../../libs/libsrtp/include,
-					../../libs/libsrtp/crypto/include,
 					../include,
 					../misc,
 					../thread,
-					../../libs/libnice,
-					../../libs/libnice/agent,
-					"/usr/local/include/glib-2.0",
-					../../libs/libnice/include,
+					/Users/caominhtrang/cerbero/dist/ios_universal/include,
+					"/Users/caominhtrang/cerbero/dist/ios_universal/include/glib-2.0",
+					"/Users/caominhtrang/cerbero/dist/ios_universal/lib/glib-2.0/include",
 				);
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = network_engine;

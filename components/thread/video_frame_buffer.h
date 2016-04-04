@@ -1,20 +1,33 @@
 #ifndef OPPVS_VIDEO_FRAME_BUFFER_H
 #define OPPVS_VIDEO_FRAME_BUFFER_H
 
-#include "ring_buffer.h"
+#include "datatypes.hpp"
+#include <vector>
 
 namespace oppvs {
 
-	class VideoFrameBuffer : public RingBuffer
+	struct VideoFrameItem
+	{
+		void* data;
+		uint64_t timestamp;
+	};
+
+	class VideoFrameBuffer
 	{
 	public:
 		VideoFrameBuffer();
-		void allocate(uint32_t maxFrames);
-		RingBufferError store(PixelBuffer* pf, uint32_t timestamp);
-		RingBufferError fetch(PixelBuffer* pf, uint32_t timestamp);
-	protected:
-		uint32_t m_maxFrames;
-		uint32_t m_bytesPerFrame;
+		~VideoFrameBuffer();
+
+		int push(void* data, uint64_t timestamp);
+
+	private:
+		const int MAX_INDEX = 500;
+
+		uint64_t m_startTimeStamp;
+		uint64_t m_endTimeStamp;
+
+		std::vector<VideoFrameItem> mBuffer;
+		int m_hash[500];
 	};
 } // oppvs
 

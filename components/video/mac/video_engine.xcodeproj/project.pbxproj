@@ -7,25 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		202DBC9E79904FBBCF6CBBD2 /* mac_video_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C5601455F049B99DF4D2EF9 /* mac_video_capture.cpp */; };
-		B61A73BF3CD4A933F6402EB1 /* mac_video_source_info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 93AABD1DA91041A8ED4276E2 /* mac_video_source_info.mm */; };
-		F02CAF9757363C0E6611AF1F /* mac_video_engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CAB4E9B4D92A4468887F188 /* mac_video_engine.cpp */; };
-		F574EBECD238FF6A44C4FC16 /* mac_video_avfoundation_capture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3F5F06757DE3039DCF6FCF70 /* mac_video_avfoundation_capture.mm */; };
+		0196C93CCAC02B14F2113CA5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF3A1C72A40ADF1E282E6C36 /* QuartzCore.framework */; };
+		1FCE20D18AF13F262DE2B978 /* mac_video_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C5601455F049B99DF4D2EF9 /* mac_video_capture.cpp */; };
+		2CAAC7F5AF7354CAA0108620 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3496955C696703A92321806F /* CoreVideo.framework */; };
+		2D01F94D8A07B2613DE55E9E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CAE1EE067C155DE95E978A2 /* CoreMedia.framework */; };
+		43E6BDA200226E372F4D76DC /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 723C8B73DCE95818333D95B1 /* ApplicationServices.framework */; };
+		48BE611C6D4AFDD881E84E04 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B624B3D84234988C3888A11 /* AVFoundation.framework */; };
+		5C60C039AE30C79E94228695 /* IOSurface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA48706E870EFB34729C1920 /* IOSurface.framework */; };
+		66D3553A5ADF83B8E0DF6C6B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31047B8AA70D138340BA3700 /* CoreFoundation.framework */; };
+		78FBE805FAE4D94F8DB20501 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFF93548349AFEDB56814438 /* CoreGraphics.framework */; };
+		AC68572A82E85F91DB55A27C /* mac_video_source_info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 93AABD1DA91041A8ED4276E2 /* mac_video_source_info.mm */; };
+		E2F40FB7DE77BEA6F981788C /* mac_video_avfoundation_capture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3F5F06757DE3039DCF6FCF70 /* mac_video_avfoundation_capture.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0CAE1EE067C155DE95E978A2 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		190047CA3E4D026D25371347 /* mac_video_capture_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mac_video_capture_interface.h; sourceTree = "<group>"; };
 		1C5601455F049B99DF4D2EF9 /* mac_video_capture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mac_video_capture.cpp; sourceTree = "<group>"; };
 		1E024BB431D285E47876910F /* video_engine.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = video_engine.gyp; sourceTree = "<group>"; };
 		25DDA06F3DB8F5EA897DD84C /* video_engine.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = video_engine.hpp; sourceTree = "<group>"; };
+		31047B8AA70D138340BA3700 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		3496955C696703A92321806F /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		3F5F06757DE3039DCF6FCF70 /* mac_video_avfoundation_capture.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mac_video_avfoundation_capture.mm; sourceTree = "<group>"; };
-		456E667F09670CA81BB71D19 /* libvideo_engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		457B55B8968CECE3BA48C745 /* video_capture.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = video_capture.hpp; sourceTree = "<group>"; };
 		501A8947FB74628194746974 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
-		56F2F5C562A74A29AEB54D13 /* mac_video_engine.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = mac_video_engine.hpp; sourceTree = "<group>"; };
+		5B624B3D84234988C3888A11 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		723C8B73DCE95818333D95B1 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		78CF927ED9206A47C5F8DD2E /* mac_video_capture.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = mac_video_capture.hpp; sourceTree = "<group>"; };
+		8259A8F4147B9235DFEB871C /* libvideo_engine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libvideo_engine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		93AABD1DA91041A8ED4276E2 /* mac_video_source_info.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mac_video_source_info.mm; sourceTree = "<group>"; };
-		9CAB4E9B4D92A4468887F188 /* mac_video_engine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mac_video_engine.cpp; sourceTree = "<group>"; };
+		CA48706E870EFB34729C1920 /* IOSurface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOSurface.framework; path = System/Library/Frameworks/IOSurface.framework; sourceTree = SDKROOT; };
+		DFF93548349AFEDB56814438 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FF3A1C72A40ADF1E282E6C36 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,34 +46,50 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66D3553A5ADF83B8E0DF6C6B /* CoreFoundation.framework in Frameworks */,
+				48BE611C6D4AFDD881E84E04 /* AVFoundation.framework in Frameworks */,
+				2D01F94D8A07B2613DE55E9E /* CoreMedia.framework in Frameworks */,
+				78FBE805FAE4D94F8DB20501 /* CoreGraphics.framework in Frameworks */,
+				2CAAC7F5AF7354CAA0108620 /* CoreVideo.framework in Frameworks */,
+				0196C93CCAC02B14F2113CA5 /* QuartzCore.framework in Frameworks */,
+				43E6BDA200226E372F4D76DC /* ApplicationServices.framework in Frameworks */,
+				5C60C039AE30C79E94228695 /* IOSurface.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		38D996501A2F1A7C4D40196C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				456E667F09670CA81BB71D19 /* libvideo_engine.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		7EF514CBC763BD7AA912BC0C /* Source */ = {
+		0DA2FF490138A8C935C510A4 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				3F5F06757DE3039DCF6FCF70 /* mac_video_avfoundation_capture.mm */,
 				1C5601455F049B99DF4D2EF9 /* mac_video_capture.cpp */,
 				78CF927ED9206A47C5F8DD2E /* mac_video_capture.hpp */,
 				190047CA3E4D026D25371347 /* mac_video_capture_interface.h */,
-				9CAB4E9B4D92A4468887F188 /* mac_video_engine.cpp */,
-				56F2F5C562A74A29AEB54D13 /* mac_video_engine.hpp */,
 				93AABD1DA91041A8ED4276E2 /* mac_video_source_info.mm */,
 				457B55B8968CECE3BA48C745 /* video_capture.hpp */,
 				25DDA06F3DB8F5EA897DD84C /* video_engine.hpp */,
 			);
 			name = Source;
+			sourceTree = "<group>";
+		};
+		14E331572CD8135649461049 = {
+			isa = PBXGroup;
+			children = (
+				0DA2FF490138A8C935C510A4 /* Source */,
+				CBA8755B54C158B99EB30C2C /* Frameworks */,
+				51EEDDCC7546E3541051AF16 /* Products */,
+				C04451B08A41D238944C411B /* Build */,
+			);
+			sourceTree = "<group>";
+		};
+		51EEDDCC7546E3541051AF16 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8259A8F4147B9235DFEB871C /* libvideo_engine.dylib */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		C04451B08A41D238944C411B /* Build */ = {
@@ -72,13 +101,19 @@
 			name = Build;
 			sourceTree = "<group>";
 		};
-		D6AE97C91F3C5FA0E9A3D896 = {
+		CBA8755B54C158B99EB30C2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7EF514CBC763BD7AA912BC0C /* Source */,
-				38D996501A2F1A7C4D40196C /* Products */,
-				C04451B08A41D238944C411B /* Build */,
+				5B624B3D84234988C3888A11 /* AVFoundation.framework */,
+				723C8B73DCE95818333D95B1 /* ApplicationServices.framework */,
+				31047B8AA70D138340BA3700 /* CoreFoundation.framework */,
+				DFF93548349AFEDB56814438 /* CoreGraphics.framework */,
+				0CAE1EE067C155DE95E978A2 /* CoreMedia.framework */,
+				3496955C696703A92321806F /* CoreVideo.framework */,
+				CA48706E870EFB34729C1920 /* IOSurface.framework */,
+				FF3A1C72A40ADF1E282E6C36 /* QuartzCore.framework */,
 			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -97,8 +132,8 @@
 			);
 			name = video_engine;
 			productName = video_engine;
-			productReference = 456E667F09670CA81BB71D19 /* libvideo_engine.a */;
-			productType = "com.apple.product-type.library.static";
+			productReference = 8259A8F4147B9235DFEB871C /* libvideo_engine.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
 
@@ -111,7 +146,7 @@
 			buildConfigurationList = 4E700130979D1C438B5FD310 /* Build configuration list for PBXProject "video_engine" */;
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 1;
-			mainGroup = D6AE97C91F3C5FA0E9A3D896;
+			mainGroup = 14E331572CD8135649461049;
 			projectDirPath = ..;
 			projectRoot = "";
 			targets = (
@@ -125,10 +160,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				202DBC9E79904FBBCF6CBBD2 /* mac_video_capture.cpp in Sources */,
-				F574EBECD238FF6A44C4FC16 /* mac_video_avfoundation_capture.mm in Sources */,
-				F02CAF9757363C0E6611AF1F /* mac_video_engine.cpp in Sources */,
-				B61A73BF3CD4A933F6402EB1 /* mac_video_source_info.mm in Sources */,
+				1FCE20D18AF13F262DE2B978 /* mac_video_capture.cpp in Sources */,
+				E2F40FB7DE77BEA6F981788C /* mac_video_avfoundation_capture.mm in Sources */,
+				AC68572A82E85F91DB55A27C /* mac_video_source_info.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +178,7 @@
 					System/Library/Frameworks/CoreFoundation.Framework/Headers,
 					System/Library/Frameworks/AVFoundation.Framework/Headers,
 				);
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/System/Library/Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = video_engine;
 			};
@@ -166,6 +201,7 @@
 					System/Library/Frameworks/CoreFoundation.Framework/Headers,
 					System/Library/Frameworks/AVFoundation.Framework/Headers,
 				);
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/System/Library/Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = video_engine;
 			};

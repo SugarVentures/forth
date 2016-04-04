@@ -1,0 +1,222 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0D4918F743CB69BAF4570664 /* ios_video_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42597FC3F248B83A4B300506 /* ios_video_capture.cpp */; };
+		235ABB6D92E07BEEFFC9D3CD /* ios_video_source_info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8AE08845618C6A8EA1040D98 /* ios_video_source_info.mm */; };
+		3563C61211CB48ED8DF6C1AC /* ios_video_engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39370825A665F3341C8EE99 /* ios_video_engine.cpp */; };
+		A339C8C463F301E0C56A8339 /* ios_video_avfoundation_capture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 803FDD59519D692A94E671F7 /* ios_video_avfoundation_capture.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1E024BB431D285E47876910F /* video_engine.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = video_engine.gyp; sourceTree = "<group>"; };
+		25DDA06F3DB8F5EA897DD84C /* video_engine.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = video_engine.hpp; sourceTree = "<group>"; };
+		2F4590DB7EA4B0DD15D06BAF /* ios_video_engine.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = ios_video_engine.hpp; sourceTree = "<group>"; };
+		42597FC3F248B83A4B300506 /* ios_video_capture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ios_video_capture.cpp; sourceTree = "<group>"; };
+		456E667F09670CA81BB71D19 /* libvideo_engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		457B55B8968CECE3BA48C745 /* video_capture.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = video_capture.hpp; sourceTree = "<group>"; };
+		501A8947FB74628194746974 /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../common.gypi; sourceTree = "<group>"; };
+		803FDD59519D692A94E671F7 /* ios_video_avfoundation_capture.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ios_video_avfoundation_capture.mm; sourceTree = "<group>"; };
+		8AE08845618C6A8EA1040D98 /* ios_video_source_info.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ios_video_source_info.mm; sourceTree = "<group>"; };
+		A39370825A665F3341C8EE99 /* ios_video_engine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ios_video_engine.cpp; sourceTree = "<group>"; };
+		C17A52EFB298D1A37DB3D20A /* ios_video_capture.hpp */ = {isa = PBXFileReference; lastKnownFileType = text; path = ios_video_capture.hpp; sourceTree = "<group>"; };
+		C535FEE088F5E7345DB7FA5C /* ios_video_capture_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ios_video_capture_interface.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2A4A2A80BDB81A0C54BAE80F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		38D996501A2F1A7C4D40196C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				456E667F09670CA81BB71D19 /* libvideo_engine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9A107969B491922CBCF9E11F /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				803FDD59519D692A94E671F7 /* ios_video_avfoundation_capture.mm */,
+				42597FC3F248B83A4B300506 /* ios_video_capture.cpp */,
+				C17A52EFB298D1A37DB3D20A /* ios_video_capture.hpp */,
+				C535FEE088F5E7345DB7FA5C /* ios_video_capture_interface.h */,
+				A39370825A665F3341C8EE99 /* ios_video_engine.cpp */,
+				2F4590DB7EA4B0DD15D06BAF /* ios_video_engine.hpp */,
+				8AE08845618C6A8EA1040D98 /* ios_video_source_info.mm */,
+				457B55B8968CECE3BA48C745 /* video_capture.hpp */,
+				25DDA06F3DB8F5EA897DD84C /* video_engine.hpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		C04451B08A41D238944C411B /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				501A8947FB74628194746974 /* common.gypi */,
+				1E024BB431D285E47876910F /* video_engine.gyp */,
+			);
+			name = Build;
+			sourceTree = "<group>";
+		};
+		D6AE97C91F3C5FA0E9A3D896 = {
+			isa = PBXGroup;
+			children = (
+				9A107969B491922CBCF9E11F /* Source */,
+				38D996501A2F1A7C4D40196C /* Products */,
+				C04451B08A41D238944C411B /* Build */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		29933D8CBB47E76E03C0EC52 /* video_engine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB9B16A5FB23ED1F5D091609 /* Build configuration list for PBXNativeTarget "video_engine" */;
+			buildPhases = (
+				0E4E6B36722564BA8CF2DFFA /* Sources */,
+				2A4A2A80BDB81A0C54BAE80F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = video_engine;
+			productName = video_engine;
+			productReference = 456E667F09670CA81BB71D19 /* libvideo_engine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		89B610676921C5F6E85081C3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
+			buildConfigurationList = 4E700130979D1C438B5FD310 /* Build configuration list for PBXProject "video_engine" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = D6AE97C91F3C5FA0E9A3D896;
+			projectDirPath = ..;
+			projectRoot = "";
+			targets = (
+				29933D8CBB47E76E03C0EC52 /* video_engine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0E4E6B36722564BA8CF2DFFA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D4918F743CB69BAF4570664 /* ios_video_capture.cpp in Sources */,
+				A339C8C463F301E0C56A8339 /* ios_video_avfoundation_capture.mm in Sources */,
+				3563C61211CB48ED8DF6C1AC /* ios_video_engine.cpp in Sources */,
+				235ABB6D92E07BEEFFC9D3CD /* ios_video_source_info.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		11B400154E276026B805B1F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
+				HEADER_SEARCH_PATHS = (
+					../include,
+					System/Library/Frameworks/CoreFoundation.Framework/Headers,
+					System/Library/Frameworks/AVFoundation.Framework/Headers,
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-std=c++11",
+					"-std=c++11",
+				);
+				PRODUCT_NAME = video_engine;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Debug;
+		};
+		42108511DCE2D5F40B73F36D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SDKROOT = iphoneos;
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Release;
+		};
+		A67B0D77FBDC883313B8F4E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
+				HEADER_SEARCH_PATHS = (
+					../include,
+					System/Library/Frameworks/CoreFoundation.Framework/Headers,
+					System/Library/Frameworks/AVFoundation.Framework/Headers,
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-std=c++11",
+					"-std=c++11",
+				);
+				PRODUCT_NAME = video_engine;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Release;
+		};
+		E53EC6BDEABCCC97BD2DC066 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SDKROOT = iphoneos;
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4E700130979D1C438B5FD310 /* Build configuration list for PBXProject "video_engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E53EC6BDEABCCC97BD2DC066 /* Debug */,
+				42108511DCE2D5F40B73F36D /* Release */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Debug;
+		};
+		CB9B16A5FB23ED1F5D091609 /* Build configuration list for PBXNativeTarget "video_engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				11B400154E276026B805B1F9 /* Debug */,
+				A67B0D77FBDC883313B8F4E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 89B610676921C5F6E85081C3 /* Project object */;
+}

@@ -148,15 +148,13 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
 				HEADER_SEARCH_PATHS = (
 					../include,
 					../error,
 					../misc,
-					../../libs/libsrtp/include,
-					../../libs/libsrtp/crypto/include,
-					../../libs/libopus/include,
 					../../libs/libyuv/include,
-					"~/cerbero/dist/ios_universal/include",
+					/Users/caominhtrang/cerbero/dist/ios_universal/include,
 				);
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = encoding_engine;
@@ -179,15 +177,13 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*" = "iPhone Developer";
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = FORTH_IOS;
 				HEADER_SEARCH_PATHS = (
 					../include,
 					../error,
 					../misc,
-					../../libs/libsrtp/include,
-					../../libs/libsrtp/crypto/include,
-					../../libs/libopus/include,
 					../../libs/libyuv/include,
-					"~/cerbero/dist/ios_universal/include",
+					/Users/caominhtrang/cerbero/dist/ios_universal/include,
 				);
 				OTHER_CPLUSPLUSFLAGS = "-std=c++11";
 				PRODUCT_NAME = encoding_engine;
