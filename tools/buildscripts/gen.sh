@@ -35,3 +35,6 @@ gyp libyuv.gyp --depth=. -f xcode -DOS=${OS_VAR} --generator-output=${OUTPUT_DIR
 
 cd "${ROOT_DIR}/components/streaming"
 gyp streaming_engine.gyp --depth=. -f xcode -DOS=${OS_VAR} --generator-output=${OUTPUT_DIR}
+
+cd "${ROOT_DIR}/components/video"
+gyp video_engine.gyp --depth=. -f xcode -DOS=${OS_VAR} --generator-output=${OUTPUT_DIR}
