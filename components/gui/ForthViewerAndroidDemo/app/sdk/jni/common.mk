@@ -1,0 +1,76 @@
+LOCAL_SDK_PATH := $(call my-dir)/../3rdparty
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := gio-2.0
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libgio-2.0.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := gobject-2.0
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libgobject-2.0.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := gthread-2.0
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libgthread-2.0.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := gmodule-2.0
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libgmodule-2.0.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := intl
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libintl.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := glib-2.0
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libglib-2.0.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := nice
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libnice.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := iconv
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libiconv.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := ffi
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libffi.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := z
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libz.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := srtp
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libsrtp.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := crypto
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libcrypto.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := ssl
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libssl.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := vpx
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libvpx.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := opus
+LOCAL_SRC_FILES := $(LOCAL_SDK_PATH)/libopus.a
+include $(PREBUILT_STATIC_LIBRARY)
