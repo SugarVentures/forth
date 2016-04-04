@@ -312,9 +312,9 @@ g_vasprintf (gchar      **string,
     *string = NULL;
 
 #elif defined (HAVE_VASPRINTF)
-  if (format != NULL)  
-   len = vasprintf (string, format, args);
-  if (len < 0)
+
+  //len = vasprintf (string, format, args);
+  //if (len < 0)
     *string = NULL;
 
 #else
