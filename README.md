@@ -1,4 +1,4 @@
-#What is Forth
+#Forth
 Forth is a live streaming software using P2P technologies to broadcast video games playing or gaming-related events.
 
 #How to get Forth
@@ -7,5 +7,5 @@ In the toolbar, next the Stop button, choose OPPVSGUI to start Broadcaster. You 
 In the toolbar, next the Stop button, choose OPPVSClient to start User application. Enter the server address and port and click Play.
 
 #License
-Forth is released under the [GNU General Public License, version 3]: https://opensource.org/licenses/GPL-3.0 "GNU".
+Forth is released under the [GNU General Public License, version 3](https://opensource.org/licenses/GPL-3.0 "GNU").
 
