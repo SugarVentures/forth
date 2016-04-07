@@ -7,7 +7,7 @@ In the toolbar, next the Stop button, choose OPPVSGUI to start Broadcaster. You 
 In the toolbar, next the Stop button, choose OPPVSClient to start User application. Enter the server address and port and click Play.
 
 #forth.tv website
-[forth.tv](http://forth.tv/)
+[forth.tv](http://forth.tv/) is a website for P2P game streaming.
 
 #License
 Forth is released under the [GNU General Public License, version 3](https://opensource.org/licenses/GPL-3.0 "GNU").
